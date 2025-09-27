@@ -1,212 +1,131 @@
-# 科技新闻聚合平台 - 部署工作流
-# 自动部署到不同环境
-
-name: Deploy
+name: Deploy to Production
 
 on:
   push:
-    branches:
-      - main        # 生产环境
-      - develop     # 开发环境
-  release:
-    types: [published]
+    branches: [ main ]
+    tags: [ 'v*' ]
 
 env:
   NODE_VERSION: '18'
-  PNPM_VERSION: '8.15.0'
+  PNPM_VERSION: '8'
 
 jobs:
-  # 确定部署环境
-  setup:
-    name: 环境设置
+  # 部署到生产环境
+  deploy:
+    name: Deploy to Production
     runs-on: ubuntu-latest
-    outputs:
-      environment: ${{ steps.env.outputs.environment }}
-      deploy_frontend: ${{ steps.changes.outputs.frontend }}
-      deploy_api: ${{ steps.changes.outputs.api }}
-      deploy_functions: ${{ steps.changes.outputs.functions }}
+    environment: production
+    needs: []
+    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')
     
     steps:
-      - name: 检出代码
+      - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          
-      - name: 确定部署环境
-        id: env
-        run: |
-          if [[ ${{ github.ref }} == 'refs/heads/main' ]]; then
-            echo "environment=production" >> $GITHUB_OUTPUT
-          elif [[ ${{ github.ref }} == 'refs/heads/develop' ]]; then
-            echo "environment=staging" >> $GITHUB_OUTPUT
-          else
-            echo "environment=preview" >> $GITHUB_OUTPUT
-          fi
-          
-      - name: 检测变更
-        id: changes
-        uses: dorny/paths-filter@v2
-        with:
-          filters: |
-            frontend:
-              - 'apps/web/**'
-              - 'packages/ui/**'
-              - 'packages/shared/**'
-            api:
-              - 'apps/api/**'
-              - 'packages/database/**'
-              - 'packages/shared/**'
-            functions:
-              - 'apps/functions/**'
-              - 'packages/shared/**'
 
-  # 部署前端到 Vercel
-  deploy-frontend:
-    name: 部署前端
-    runs-on: ubuntu-latest
-    needs: setup
-    if: needs.setup.outputs.deploy_frontend == 'true'
-    environment: ${{ needs.setup.outputs.environment }}
-    
-    steps:
-      - name: 检出代码
-        uses: actions/checkout@v4
-        
-      - name: 设置 Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          
-      - name: 设置 pnpm
+
+      - name: Setup pnpm
         uses: pnpm/action-setup@v2
         with:
           version: ${{ env.PNPM_VERSION }}
-          
-      - name: 安装依赖
+
+      - name: Install dependencies
         run: pnpm install --frozen-lockfile
-        
-      - name: 构建前端
-        run: pnpm build --filter=web
-        env:
-          NEXT_PUBLIC_API_URL: ${{ vars.API_URL }}
-          NEXT_PUBLIC_ENVIRONMENT: ${{ needs.setup.outputs.environment }}
-          
-      - name: 部署到 Vercel
-        uses: vercel/action@v1
+
+      - name: Build applications
+        run: pnpm build
+
+      - name: Deploy to Vercel (Frontend)
+        uses: amondnet/vercel-action@v25
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-args: --prod=${{ needs.setup.outputs.environment == 'production' }}
+          working-directory: ./apps/web
+          vercel-args: '--prod'
 
-  # 部署 API 到 AWS
-  deploy-api:
-    name: 部署 API
+      # 可选：部署到其他平台
+      # - name: Deploy API to Railway
+      #   uses: railway-app/railway-action@v1
+      #   with:
+      #     api-token: ${{ secrets.RAILWAY_TOKEN }}
+      #     project-id: ${{ secrets.RAILWAY_PROJECT_ID }}
+      #     service: api
+
+      # - name: Deploy to AWS ECS
+      #   uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      #   with:
+      #     task-definition: .aws/task-definition.json
+      #     service: tech-news-service
+      #     cluster: tech-news-cluster
+
+  # 数据库迁移
+  migrate:
+    name: Database Migration
     runs-on: ubuntu-latest
-    needs: setup
-    if: needs.setup.outputs.deploy_api == 'true'
-    environment: ${{ needs.setup.outputs.environment }}
+    environment: production
+    if: github.ref == 'refs/heads/main'
     
     steps:
-      - name: 检出代码
+      - name: Checkout code
         uses: actions/checkout@v4
-        
-      - name: 配置 AWS 凭证
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ vars.AWS_REGION }}
-          
-      - name: 登录到 Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v2
-        
-      - name: 构建、标记并推送镜像到 ECR
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: technews-api
-          IMAGE_TAG: ${{ github.sha }}
-        run: |
-          docker build -f apps/api/Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
-          
-      - name: 部署到 ECS
-        run: |
-          aws ecs update-service \
-            --cluster technews-${{ needs.setup.outputs.environment }} \
-            --service technews-api \
-            --force-new-deployment
 
-  # 部署 Serverless Functions
-  deploy-functions:
-    name: 部署 Serverless Functions
-    runs-on: ubuntu-latest
-    needs: setup
-    if: needs.setup.outputs.deploy_functions == 'true'
-    environment: ${{ needs.setup.outputs.environment }}
-    
-    steps:
-      - name: 检出代码
-        uses: actions/checkout@v4
-        
-      - name: 设置 Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          
-      - name: 设置 pnpm
+
+      - name: Setup pnpm
         uses: pnpm/action-setup@v2
         with:
           version: ${{ env.PNPM_VERSION }}
-          
-      - name: 安装依赖
-        run: pnpm install --frozen-lockfile
-        
-      - name: 配置 AWS 凭证
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ vars.AWS_REGION }}
-          
-      - name: 安装 Serverless Framework
-        run: npm install -g serverless
-        
-      - name: 部署 Serverless Functions
-        run: |
-          cd apps/functions
-          serverless deploy --stage ${{ needs.setup.outputs.environment }}
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-  # 部署后验证
-  post-deploy:
-    name: 部署后验证
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run database migrations
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          cd packages/database
+          pnpm prisma migrate deploy
+
+  # 健康检查
+  health-check:
+    name: Post-Deploy Health Check
     runs-on: ubuntu-latest
-    needs: [setup, deploy-frontend, deploy-api, deploy-functions]
-    if: always() && (needs.deploy-frontend.result == 'success' || needs.deploy-api.result == 'success' || needs.deploy-functions.result == 'success')
+    needs: [deploy]
+    if: github.ref == 'refs/heads/main'
     
     steps:
-      - name: 健康检查 - API
-        if: needs.deploy-api.result == 'success'
+      - name: Wait for deployment
+        run: sleep 30
+
+      - name: Health check API
         run: |
-          curl -f ${{ vars.API_URL }}/health || exit 1
-          
-      - name: 健康检查 - 前端
-        if: needs.deploy-frontend.result == 'success'
+          curl -f ${{ secrets.API_URL }}/health || exit 1
+
+      - name: Health check Frontend
         run: |
-          curl -f ${{ vars.FRONTEND_URL }} || exit 1
-          
-      - name: 通知部署结果
+          curl -f ${{ secrets.FRONTEND_URL }} || exit 1
+
+      - name: Notify deployment success
+        if: success()
         uses: 8398a7/action-slack@v3
-        if: always()
         with:
-          status: ${{ job.status }}
-          channel: '#deployments'
-          webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+          status: success
+          text: '🚀 部署成功！生产环境已更新。'
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: Notify deployment failure
+        if: failure()
+        uses: 8398a7/action-slack@v3
+        with:
+          status: failure
+          text: '❌ 部署失败！请检查日志。'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
