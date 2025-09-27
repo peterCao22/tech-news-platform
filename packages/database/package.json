@@ -1,0 +1,36 @@
+{
+  "name": "@tech-news-platform/database",
+  "version": "1.0.0",
+  "description": "数据库模型、迁移和种子数据",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "migrations",
+    "seeds"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix",
+    "db:migrate": "node dist/scripts/migrate.js",
+    "db:seed": "node dist/scripts/seed.js",
+    "db:reset": "node dist/scripts/reset.js"
+  },
+  "dependencies": {
+    "prisma": "^5.7.0",
+    "@prisma/client": "^5.7.0",
+    "bcryptjs": "^2.4.3",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@tech-news-platform/config": "workspace:*",
+    "@types/bcryptjs": "^2.4.6",
+    "typescript": "^5.2.0"
+  },
+  "publishConfig": {
+    "access": "restricted"
+  }
+}

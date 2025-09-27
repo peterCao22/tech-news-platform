@@ -1,0 +1,97 @@
+# 科技新闻聚合平台 - Docker Compose 配置
+# 用于本地开发环境的数据库和缓存服务
+
+version: '3.8'
+
+services:
+  # PostgreSQL 数据库
+  postgres:
+    image: postgres:15-alpine
+    container_name: technews-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: technews
+      POSTGRES_USER: technews_user
+      POSTGRES_PASSWORD: technews_password
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --lc-collate=C --lc-ctype=C"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./infrastructure/docker/postgres/init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U technews_user -d technews"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - technews-network
+
+  # Redis 缓存
+  redis:
+    image: redis:7-alpine
+    container_name: technews-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass redis_password
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+      - ./infrastructure/docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    networks:
+      - technews-network
+
+  # pgAdmin (可选 - 数据库管理界面)
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: technews-pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@technews.local
+      PGADMIN_DEFAULT_PASSWORD: admin_password
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      - "8080:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - technews-network
+    profiles:
+      - tools
+
+  # Redis Commander (可选 - Redis 管理界面)
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: technews-redis-commander
+    restart: unless-stopped
+    environment:
+      REDIS_HOSTS: local:redis:6379:0:redis_password
+    ports:
+      - "8081:8081"
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - technews-network
+    profiles:
+      - tools
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  pgadmin_data:
+    driver: local
+
+networks:
+  technews-network:
+    driver: bridge

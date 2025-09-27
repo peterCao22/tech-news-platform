@@ -1,0 +1,27 @@
+{
+  "name": "@tech-news-platform/shared",
+  "version": "1.0.0",
+  "description": "共享类型定义、工具函数和常量",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix"
+  },
+  "dependencies": {
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@tech-news-platform/config": "workspace:*",
+    "typescript": "^5.2.0"
+  },
+  "publishConfig": {
+    "access": "restricted"
+  }
+}

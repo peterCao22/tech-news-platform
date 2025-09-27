@@ -1,0 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 基础样式重置和改进 */
+@layer base {
+  html {
+    @apply antialiased;
+  }
+  
+  body {
+    @apply bg-gray-50 text-gray-900;
+  }
+  
+  /* 改进表单元素的默认样式 */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  textarea,
+  select {
+    @apply border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500;
+  }
+  
+  /* 改进按钮的默认样式 */
+  button {
+    @apply font-medium rounded-md transition-colors duration-200;
+  }
+  
+  /* 链接样式 */
+  a {
+    @apply text-blue-600 hover:text-blue-700 transition-colors duration-200;
+  }
+}
+
+/* 自定义组件样式 */
+@layer components {
+  /* 卡片阴影效果 */
+  .card-shadow {
+    @apply shadow-soft hover:shadow-medium transition-shadow duration-300;
+  }
+  
+  /* 按钮变体 */
+  .btn-primary {
+    @apply bg-blue-600 text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+  }
+  
+  .btn-secondary {
+    @apply bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2;
+  }
+  
+  .btn-outline {
+    @apply border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+  }
+  
+  /* 输入框状态 */
+  .input-error {
+    @apply border-red-500 focus:border-red-500 focus:ring-red-500;
+  }
+  
+  /* 加载动画 */
+  .loading-spinner {
+    @apply animate-spin rounded-full border-2 border-gray-300 border-t-blue-600;
+  }
+}
+
+/* 工具类 */
+@layer utilities {
+  /* 文本省略 */
+  .text-ellipsis {
+    @apply truncate;
+  }
+  
+  /* 居中布局 */
+  .center {
+    @apply flex items-center justify-center;
+  }
+  
+  /* 响应式隐藏 */
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* 深色模式支持 */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "@tech-news-platform/config",
+  "version": "1.0.0",
+  "description": "共享配置文件和工具",
+  "main": "index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "eslint",
+    "tsconfig"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^5.2.0"
+  },
+  "publishConfig": {
+    "access": "restricted"
+  }
+}

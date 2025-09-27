@@ -1,0 +1,82 @@
+# 科技新闻聚合平台 - Dependabot 自动依赖更新
+
+version: 2
+updates:
+  # 根目录 package.json
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 10
+    reviewers:
+      - "tech-team"
+    assignees:
+      - "tech-lead"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "automated"
+
+  # Web 应用依赖
+  - package-ecosystem: "npm"
+    directory: "/apps/web"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "frontend-team"
+    labels:
+      - "dependencies"
+      - "frontend"
+
+  # API 应用依赖
+  - package-ecosystem: "npm"
+    directory: "/apps/api"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "backend-team"
+    labels:
+      - "dependencies"
+      - "backend"
+
+  # Functions 应用依赖
+  - package-ecosystem: "npm"
+    directory: "/apps/functions"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "backend-team"
+    labels:
+      - "dependencies"
+      - "serverless"
+
+  # GitHub Actions 依赖
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    labels:
+      - "dependencies"
+      - "github-actions"
+
+  # Docker 依赖
+  - package-ecosystem: "docker"
+    directory: "/apps/api"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+      - "docker"

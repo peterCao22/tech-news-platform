@@ -1,0 +1,25 @@
+{
+  "extends": "@tech-news-platform/config/tsconfig/node.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "../..",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "composite": true
+  },
+  "include": [
+    "src/**/*",
+    "../../packages/database/src/index.ts",
+    "../../packages/database/src/client.ts",
+    "../../packages/database/src/types/**/*",
+    "../../packages/database/src/repositories/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.test.ts",
+    "**/*.spec.ts",
+    "../../packages/database/src/generated/**/*"
+  ]
+}

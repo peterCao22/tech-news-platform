@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+pnpm-lock.yaml
+
+# Build outputs
+dist/
+.next/
+coverage/
+
+# Environment files
+.env*
+
+# Generated files
+*.log
+*.tsbuildinfo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Docker
+Dockerfile*
+docker-compose*.yml

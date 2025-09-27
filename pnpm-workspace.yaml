@@ -1,0 +1,14 @@
+# pnpm workspace configuration
+# 定义 monorepo 中的包位置
+
+packages:
+  # 应用程序包
+  - 'apps/*'
+  
+  # 共享包
+  - 'packages/*'
+  
+  # 排除测试和构建目录
+  - '!**/node_modules/**'
+  - '!**/dist/**'
+  - '!**/.next/**'
