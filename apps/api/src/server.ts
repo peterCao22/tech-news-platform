@@ -14,9 +14,9 @@ import { rateLimitMiddleware } from './middleware/rate-limit.middleware';
 import { logger } from './utils/logger';
 import { checkDatabaseConnection } from '@tech-news-platform/database';
 
-// 路由导入 - 暂时只启用健康检查
-// import authRoutes from './routes/auth.routes';
-// import userRoutes from './routes/user.routes';
+// 路由导入
+import authRoutes from './routes/auth.routes';
+import userRoutes from './routes/user.routes';
 import healthRoutes from './routes/health.routes';
 
 // 加载环境变量
@@ -67,10 +67,10 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 // 速率限制
 app.use(rateLimitMiddleware);
 
-// 路由 - 暂时只启用健康检查
+// 路由
 app.use('/health', healthRoutes);
-// app.use('/api/auth', authRoutes);
-// app.use('/api/users', userRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
 
 // 404 处理
 app.use(notFoundHandler);

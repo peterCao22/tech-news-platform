@@ -12,7 +12,7 @@ import {
   generateRefreshToken, 
   verifyRefreshToken 
 } from '../middleware/auth.middleware';
-import { EmailService } from '../services/email.service';
+// import { EmailService } from '../services/email.service';
 import { logger } from '../utils/logger';
 
 export class AuthController {
@@ -45,7 +45,7 @@ export class AuthController {
 
       // 发送验证邮件
       try {
-        await EmailService.sendVerificationEmail(user.email, user.id);
+        // await EmailService.sendVerificationEmail(user.email, user.id);
       } catch (emailError) {
         logger.error('发送验证邮件失败:', emailError);
         // 不阻止注册流程，但记录错误
@@ -268,7 +268,7 @@ export class AuthController {
       }
 
       // 发送验证邮件
-      await EmailService.sendVerificationEmail(user.email, user.id);
+      // await EmailService.sendVerificationEmail(user.email, user.id);
 
       res.json({
         success: true,
@@ -303,7 +303,7 @@ export class AuthController {
       const resetToken = await PasswordResetRepository.createToken(email);
 
       // 发送密码重置邮件
-      await EmailService.sendPasswordResetEmail(email, resetToken.token);
+      // await EmailService.sendPasswordResetEmail(email, resetToken.token);
 
       res.json({
         success: true,
