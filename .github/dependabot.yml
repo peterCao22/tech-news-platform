@@ -9,9 +9,9 @@ updates:
       time: "09:00"
     open-pull-requests-limit: 10
     reviewers:
-      - "your-github-username"
+      - "peterCao22"
     assignees:
-      - "your-github-username"
+      - "peterCao22"
     commit-message:
       prefix: "chore"
       include: "scope"
@@ -28,7 +28,7 @@ updates:
       time: "09:00"
     open-pull-requests-limit: 5
     reviewers:
-      - "your-github-username"
+      - "peterCao22"
     commit-message:
       prefix: "chore(api)"
     labels:
@@ -44,7 +44,7 @@ updates:
       time: "09:00"
     open-pull-requests-limit: 5
     reviewers:
-      - "your-github-username"
+      - "peterCao22"
     commit-message:
       prefix: "chore(web)"
     labels:
@@ -60,7 +60,7 @@ updates:
       time: "09:00"
     open-pull-requests-limit: 3
     reviewers:
-      - "your-github-username"
+      - "peterCao22"
     commit-message:
       prefix: "chore(database)"
     labels:
@@ -76,7 +76,7 @@ updates:
       time: "09:00"
     open-pull-requests-limit: 3
     reviewers:
-      - "your-github-username"
+      - "peterCao22"
     commit-message:
       prefix: "chore(ui)"
     labels:
@@ -92,7 +92,7 @@ updates:
       time: "09:00"
     open-pull-requests-limit: 3
     reviewers:
-      - "your-github-username"
+      - "peterCao22"
     commit-message:
       prefix: "chore(docker)"
     labels:
@@ -108,7 +108,7 @@ updates:
       time: "09:00"
     open-pull-requests-limit: 3
     reviewers:
-      - "your-github-username"
+      - "peterCao22"
     commit-message:
       prefix: "chore(ci)"
     labels:
