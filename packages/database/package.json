@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "prisma": "^5.7.0",
-    "@prisma/client": "^5.7.0",
+    "@prisma/client": "^6.16.2",
     "bcryptjs": "^2.4.3",
     "zod": "^3.22.0"
   },
