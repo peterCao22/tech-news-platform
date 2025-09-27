@@ -2,7 +2,7 @@
 # 多阶段构建，优化生产镜像大小
 
 # 基础镜像
-FROM node:18-alpine AS base
+FROM node:24-alpine AS base
 RUN apk add --no-cache libc6-compat
 RUN corepack enable && corepack prepare pnpm@8.15.0 --activate
 
