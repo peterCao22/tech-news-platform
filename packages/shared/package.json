@@ -15,7 +15,7 @@
     "lint:fix": "eslint src --ext .ts,.tsx --fix"
   },
   "dependencies": {
-    "zod": "^3.22.0"
+    "zod": "^4.1.11"
   },
   "devDependencies": {
     "@tech-news-platform/config": "workspace:*",

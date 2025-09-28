@@ -81,8 +81,8 @@ importers:
         specifier: ^3.11.0
         version: 3.17.0
       zod:
-        specifier: ^3.22.0
-        version: 3.25.76
+        specifier: ^4.1.11
+        version: 4.1.11
     devDependencies:
       '@tech-news-platform/config':
         specifier: workspace:*
@@ -169,8 +169,8 @@ importers:
         specifier: ^2.0.0
         version: 2.6.0
       zod:
-        specifier: ^3.22.0
-        version: 3.25.76
+        specifier: ^4.1.11
+        version: 4.1.11
       zustand:
         specifier: ^4.4.7
         version: 4.5.7(@types/react@18.3.24)(react@18.3.1)
@@ -233,8 +233,8 @@ importers:
         specifier: ^5.7.0
         version: 5.22.0
       zod:
-        specifier: ^3.22.0
-        version: 3.25.76
+        specifier: ^4.1.11
+        version: 4.1.11
     devDependencies:
       '@tech-news-platform/config':
         specifier: workspace:*
@@ -252,8 +252,8 @@ importers:
   packages/shared:
     dependencies:
       zod:
-        specifier: ^3.22.0
-        version: 3.25.76
+        specifier: ^4.1.11
+        version: 4.1.11
     devDependencies:
       '@tech-news-platform/config':
         specifier: workspace:*
@@ -7300,8 +7300,8 @@ packages:
     engines: {node: '>=12.20'}
     dev: true
 
-  /zod@3.25.76:
-    resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
+  /zod@4.1.11:
+    resolution: {integrity: sha512-WPsqwxITS2tzx1bzhIKsEs19ABD5vmCVa4xBo2tq/SrV4RNZtfws1EnCWQXM6yh8bD08a1idvkB5MZSBiZsjwg==}
     dev: false
 
   /zustand@4.5.7(@types/react@18.3.24)(react@18.3.1):
