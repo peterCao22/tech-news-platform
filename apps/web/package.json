@@ -34,7 +34,7 @@
     "@tailwindcss/forms": "^0.5.10",
     "@tailwindcss/typography": "^0.5.19",
     "@tech-news-platform/config": "workspace:*",
-    "@types/node": "^20.10.0",
+    "@types/node": "^24.5.2",
     "@types/react": "^18.2.42",
     "@types/react-dom": "^18.2.17",
     "autoprefixer": "^10.4.16",
