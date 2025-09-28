@@ -13,11 +13,14 @@ import { notFoundHandler } from './middleware/not-found.middleware';
 import { rateLimitMiddleware } from './middleware/rate-limit.middleware';
 import { logger } from './utils/logger';
 import { checkDatabaseConnection } from '@tech-news-platform/database';
+import { schedulerService } from './services/scheduler.service';
 
 // 路由导入
 import authRoutes from './routes/auth.routes';
 import userRoutes from './routes/user.routes';
 import healthRoutes from './routes/health.routes';
+import { sourceRoutes } from './routes/source.routes';
+import { contentRoutes } from './routes/content.routes';
 
 // 加载环境变量
 dotenv.config({ path: '../../.env' });
@@ -56,7 +59,7 @@ app.use(cors({
   origin: process.env.FRONTEND_URL || 'http://localhost:3000',
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Request-ID'],
 }));
 
 app.use(compression());
@@ -71,6 +74,8 @@ app.use(rateLimitMiddleware);
 app.use('/health', healthRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/sources', sourceRoutes);
+app.use('/api/content', contentRoutes);
 
 // 404 处理
 app.use(notFoundHandler);
@@ -93,6 +98,9 @@ const startServer = async () => {
       logger.info(`📍 服务地址: http://localhost:${PORT}`);
       logger.info(`🌍 环境: ${process.env.NODE_ENV || 'development'}`);
       logger.info(`📊 健康检查: http://localhost:${PORT}/health`);
+      
+      // 启动定时任务服务
+      schedulerService.startAll();
     });
   } catch (error) {
     logger.error('服务器启动失败:', error);
@@ -103,11 +111,13 @@ const startServer = async () => {
 // 优雅关闭
 process.on('SIGTERM', () => {
   logger.info('收到 SIGTERM 信号，开始优雅关闭...');
+  schedulerService.stopAll();
   process.exit(0);
 });
 
 process.on('SIGINT', () => {
   logger.info('收到 SIGINT 信号，开始优雅关闭...');
+  schedulerService.stopAll();
   process.exit(0);
 });
 

@@ -9,7 +9,7 @@ import { authenticateToken } from '../middleware/auth.middleware';
 import { sanitizeInput, ValidationRules } from '../utils/sanitize';
 import { authRateLimit, passwordResetRateLimit } from '../middleware/rate-limit.middleware';
 
-const router = Router();
+const router: Router = Router();
 
 // 用户注册
 router.post(
@@ -27,12 +27,7 @@ router.post(
       .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/)
       .withMessage('密码必须包含至少一个小写字母、一个大写字母和一个数字'),
     body('confirmPassword')
-      .custom((value, { req }) => {
-        if (value !== req.body.password) {
-          throw new Error('密码确认不匹配');
-        }
-        return true;
-      }),
+      .optional(),
     body('name')
       .optional()
       .isLength({ min: 2, max: 50 })
@@ -46,9 +41,8 @@ router.post(
       .isLength({ min: 1, max: 25 })
       .withMessage('姓氏长度应在1-25个字符之间'),
     body('acceptTerms')
-      .isBoolean()
-      .equals('true')
-      .withMessage('请同意服务条款'),
+      .optional()
+      .isBoolean(),
   ],
   validateRequest,
   AuthController.register

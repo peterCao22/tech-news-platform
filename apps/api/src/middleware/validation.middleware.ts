@@ -37,3 +37,6 @@ export const validateRequest = (
 
   next();
 };
+
+// 导出别名以保持一致性
+export const validationMiddleware = validateRequest;

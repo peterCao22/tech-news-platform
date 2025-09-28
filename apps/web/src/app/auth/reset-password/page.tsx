@@ -13,10 +13,9 @@ import toast from 'react-hot-toast';
 import { Lock, Eye, EyeOff, CheckCircle, AlertCircle, Key } from 'lucide-react';
 
 import { authApi } from '@/lib/api';
-// 暂时注释UI组件，使用原生HTML元素
-// import { Button } from '@/components/ui/button';
-// import { Input } from '@/components/ui/input';
-// import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@tech-news-platform/ui';
+import { Input } from '@tech-news-platform/ui';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@tech-news-platform/ui';
 
 // 重置密码表单验证模式
 const resetPasswordSchema = z.object({

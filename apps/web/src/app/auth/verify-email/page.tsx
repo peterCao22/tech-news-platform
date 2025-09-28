@@ -11,9 +11,8 @@ import { Mail, CheckCircle, AlertCircle, RefreshCw } from 'lucide-react';
 
 import { authApi } from '@/lib/api';
 import { useAuthStore } from '@/stores/auth.store';
-// 暂时注释UI组件，使用原生HTML元素
-// import { Button } from '@/components/ui/button';
-// import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@tech-news-platform/ui';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@tech-news-platform/ui';
 
 export default function VerifyEmailPage() {
   const router = useRouter();

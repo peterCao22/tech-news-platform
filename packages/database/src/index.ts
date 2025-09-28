@@ -7,6 +7,8 @@ export * from './client';
 // 仓库
 export * from './repositories/user.repository';
 export * from './repositories/password-reset.repository';
+export * from './repositories/source.repository';
+export * from './repositories/content.repository';
 
 // 类型定义
 export * from './types/user.types';

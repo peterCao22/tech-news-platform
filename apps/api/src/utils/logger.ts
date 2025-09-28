@@ -40,7 +40,7 @@ const productionFormat = winston.format.combine(
 );
 
 // 传输配置
-const transports = [
+const transports: winston.transport[] = [
   // 控制台输出
   new winston.transports.Console({
     format: process.env.NODE_ENV === 'production' ? productionFormat : format,
@@ -55,12 +55,12 @@ if (process.env.NODE_ENV === 'production') {
       filename: 'logs/error.log',
       level: 'error',
       format: productionFormat,
-    }),
+    }) as winston.transport,
     // 综合日志文件
     new winston.transports.File({
       filename: 'logs/combined.log',
       format: productionFormat,
-    })
+    }) as winston.transport
   );
 }
 

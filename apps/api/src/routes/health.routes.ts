@@ -7,7 +7,7 @@ import { Router, Request, Response } from 'express';
 // import { EmailService } from '../services/email.service';
 import { logger } from '../utils/logger';
 
-const router = Router();
+const router: Router = Router();
 
 // 基础健康检查
 router.get('/', async (req: Request, res: Response) => {

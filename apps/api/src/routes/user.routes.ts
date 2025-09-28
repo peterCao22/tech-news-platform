@@ -7,7 +7,7 @@ import { UserController } from '../controllers/user.controller';
 import { validateRequest } from '../middleware/validation.middleware';
 import { authenticateToken, requireAdmin } from '../middleware/auth.middleware';
 
-const router = Router();
+const router: Router = Router();
 
 // 获取用户资料
 router.get('/profile', authenticateToken, UserController.getProfile);
