@@ -27,6 +27,8 @@
     "db:migrate": "cd packages/database && pnpm prisma migrate deploy",
     "db:seed": "cd packages/database && pnpm prisma db seed",
     "db:studio": "cd packages/database && pnpm prisma studio",
+    "seed:rss": "cd packages/database && pnpm seed",
+    "seed:clear": "cd packages/database && pnpm seed:clear",
     "setup": "./scripts/setup-dev.sh",
     "prepare": "husky install"
   },

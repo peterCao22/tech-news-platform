@@ -17,7 +17,9 @@
     "lint:fix": "eslint src --ext .ts --fix",
     "db:migrate": "node dist/scripts/migrate.js",
     "db:seed": "node dist/scripts/seed.js",
-    "db:reset": "node dist/scripts/reset.js"
+    "db:reset": "node dist/scripts/reset.js",
+    "seed": "tsx src/seeds/index.ts seed",
+    "seed:clear": "tsx src/seeds/index.ts clear"
   },
   "dependencies": {
     "prisma": "^5.7.0",
@@ -28,7 +30,8 @@
   "devDependencies": {
     "@tech-news-platform/config": "workspace:*",
     "@types/bcryptjs": "^2.4.6",
-    "typescript": "^5.2.0"
+    "typescript": "^5.2.0",
+    "tsx": "^4.6.0"
   },
   "publishConfig": {
     "access": "restricted"
