@@ -28,31 +28,57 @@ export class ContentFilterService {
         {
           type: 'include',
           keywords: [
-            // 科技新闻
-            '科技新闻', '技术突破', '创新', '发明', '专利',
-            'breakthrough', 'innovation', 'patent', 'discovery',
-            '新产品', '产品发布', 'product launch', 'announcement',
-            
-            // 公司新闻
-            '融资', '投资', '上市', '收购', '合并',
-            'funding', 'investment', 'IPO', 'acquisition', 'merger',
-            '财报', '业绩', 'earnings', 'revenue', 'profit',
-            
-            // 行业动态
-            '市场', '行业', '趋势', '报告', '分析',
-            'market', 'industry', 'trend', 'report', 'analysis',
-            
-            // 金融科技
-            '金融科技', 'fintech', '数字货币', 'cryptocurrency',
-            '区块链应用', 'blockchain application', '支付',
-            
-            // 消费科技
-            '智能手机', 'smartphone', '电动汽车', 'electric vehicle',
-            '人工智能应用', 'AI application', '自动驾驶',
-            
-            // 企业科技
-            '云计算服务', 'cloud service', '企业软件', 'enterprise',
-            '数据安全', 'cybersecurity', '隐私保护'
+            // === 科技新闻 ===
+            '科技新闻', '技术突破', '创新技术', '新发明', '专利申请', '科研成果',
+            'breakthrough', 'technological innovation', 'patent filing', 'discovery', 'scientific result',
+            '新产品发布', '产品迭代', '产品升级', 'product launch', 'new release', 'product update',
+            '技术大会', 'conference', 'summit', 'expo',
+
+            // === 公司新闻 ===
+            '融资', '投资', 'Pre-A', 'A轮融资', 'B轮融资', 'C轮融资', 
+            'funding round', 'investment', 'IPO', 'initial public offering',
+            '收购', '合并', '并购', 'acquisition', 'merger',
+            '财报', '业绩报告', '季度财报', 'annual report',
+            'earnings', 'quarterly results', 'revenue', 'profit',
+
+            // === 行业趋势 ===
+            '市场趋势', '行业动态', '产业升级', '市场预测', '市场研究',
+            'market trend', 'industry report', 'sector analysis', 'market forecast',
+            '白皮书', 'bluebook', 'research report', 'analysis',
+
+            // === 金融科技 ===
+            '金融科技', 'fintech', '数字货币', '加密货币', '虚拟货币', 
+            'cryptocurrency', 'bitcoin', 'ethereum', 'stablecoin',
+            '区块链应用', 'blockchain technology', 'web3', '去中心化', 'DeFi',
+            '数字支付', '电子支付', '支付系统', 'mobile payment', 'digital wallet',
+
+            // === 消费科技 ===
+            '智能手机', '可折叠手机', 'wearable device', '智能手表', '智能眼镜',
+            'smartphone', 'smartwatch', 'wearables', 'AR glasses', 'VR headset',
+            '电动汽车', '新能源汽车', 'EV', 'electric vehicle', 'charging station',
+            '自动驾驶', 'autonomous driving', '无人驾驶', 'self-driving car',
+            '人工智能应用', 'AI应用', 'AI assistant', '智能助手',
+
+            // === 企业科技 ===
+            '云计算服务', '云原生', 'cloud computing', 'cloud service', 'SaaS',
+            '企业软件', 'enterprise solution', 'ERP', 'CRM', 'workflow automation',
+            '数据安全', 'cybersecurity', '网络攻击', '勒索软件', 'ransomware',
+            '隐私保护', 'data privacy', 'GDPR', 'compliance',
+
+            // === 人工智能 & 新兴技术 ===
+            '人工智能', '大模型', '生成式AI', '生成式人工智能', 
+            'AI application', 'AI model', 'foundation model', 'Generative AI', 'LLM',
+            '机器学习', '深度学习', 'machine learning', 'deep learning',
+            '机器人', '人形机器人', '工业机器人', 'service robot',
+            'robotics', 'humanoid robot', 'automation robot',
+            '半导体', '芯片', '集成电路', 'IC设计', 'GPU', 'CPU',
+            'semiconductor', 'chip', 'fab', 'chip design', 'TSMC', 'Intel', 'Nvidia',
+            '量子计算', 'quantum computing', '量子芯片',
+
+            // === 绿色科技 / 新能源（与投资热点相关）===
+            '新能源', '光伏', '风能', '氢能', '储能',
+            'renewable energy', 'solar power', 'wind energy', 'hydrogen energy',
+            'energy storage', 'battery technology', 'solid state battery'
           ],
           weight: 1.0
         }
@@ -102,8 +128,8 @@ export class ContentFilterService {
         }
       ],
       
-      minIncludeScore: 0.3, // 至少30%匹配度才包含
-      maxExcludeScore: 0.2  // 超过20%排除匹配度就过滤掉
+      minIncludeScore: 0.1, // 至少10%匹配度才包含（更宽松）
+      maxExcludeScore: 0.3  // 超过30%排除匹配度就过滤掉（更宽松）
     };
   }
 
