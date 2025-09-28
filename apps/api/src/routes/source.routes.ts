@@ -123,10 +123,17 @@ router.put('/:id',
   sourceController.updateSource
 );
 
+// 手动触发抓取
 router.post('/:id/fetch', 
   sourceIdValidation, 
   validationMiddleware, 
   sourceController.fetchSource
+);
+
+// 批量抓取所有活跃源
+router.post('/fetch-all', 
+  validationMiddleware, 
+  sourceController.fetchAllSources
 );
 
 // 需要管理员权限的路由
@@ -137,7 +144,5 @@ router.delete('/:id',
   validationMiddleware, 
   sourceController.deleteSource
 );
-
-router.post('/fetch-all', sourceController.fetchAllSources);
 
 export { router as sourceRoutes };

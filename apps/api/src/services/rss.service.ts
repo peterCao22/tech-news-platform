@@ -7,6 +7,7 @@ import {
   SourceType,
   SourceStatus 
 } from '@tech-news-platform/database';
+import { contentFilterService } from './content-filter.service';
 
 interface RSSItem {
   title?: string;
@@ -166,8 +167,8 @@ export class RSSService {
       const existingUrls = new Set(recentContent.map(c => c.url).filter(Boolean));
       const existingTitles = new Set(recentContent.map(c => c.title.toLowerCase()));
 
-      // 过滤新内容
-      const newItems = feed.items.filter(item => {
+      // 第一步：去重过滤
+      const deduplicatedItems = feed.items.filter(item => {
         if (item.link && existingUrls.has(item.link)) {
           return false;
         }
@@ -177,7 +178,43 @@ export class RSSService {
         return true;
       });
 
-      logger.info(`过滤后的新内容数量: ${newItems.length}`);
+      logger.info(`去重后的内容数量: ${deduplicatedItems.length}`);
+
+      // 第二步：内容质量过滤
+      const contentFilterResults = contentFilterService.filterContentBatch(
+        deduplicatedItems.map(item => ({
+          title: item.title || '',
+          description: item.contentSnippet || item.summary || '',
+          content: item.content || item['content:encoded'] || ''
+        }))
+      );
+
+      // 获取过滤统计
+      const filterStats = contentFilterService.getFilterStats(contentFilterResults);
+      logger.info(`内容过滤统计`, {
+        source: source.name,
+        total: filterStats.total,
+        filtered: filterStats.filtered,
+        kept: filterStats.kept,
+        filterRate: `${filterStats.filterRate.toFixed(1)}%`,
+        reasons: filterStats.reasons
+      });
+
+      // 只保留未被过滤的内容
+      const newItems = deduplicatedItems.filter((_, index) => {
+        const filterResult = contentFilterResults[index];
+        if (filterResult.shouldFilter) {
+          logger.debug(`过滤内容: ${deduplicatedItems[index].title}`, {
+            reason: filterResult.reason,
+            includeScore: `${(filterResult.includeScore * 100).toFixed(1)}%`,
+            excludeScore: `${(filterResult.excludeScore * 100).toFixed(1)}%`
+          });
+          return false;
+        }
+        return true;
+      });
+
+      logger.info(`最终保留的新内容数量: ${newItems.length}`);
 
       // 转换并保存新内容
       let savedCount = 0;
