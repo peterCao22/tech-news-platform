@@ -22,7 +22,7 @@
     "seed:clear": "tsx src/seeds/index.ts clear"
   },
   "dependencies": {
-    "prisma": "^5.7.0",
+    "prisma": "^6.16.2",
     "@prisma/client": "^5.7.0",
     "bcryptjs": "^2.4.3",
     "zod": "^3.22.0"
