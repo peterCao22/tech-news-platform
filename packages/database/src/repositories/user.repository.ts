@@ -173,7 +173,7 @@ export class UserRepository {
       [UserRole.ADMIN]: 2,
     };
 
-    return roleHierarchy[user.role] >= roleHierarchy[requiredRole];
+    return roleHierarchy[user.role as keyof typeof roleHierarchy] >= roleHierarchy[requiredRole as keyof typeof roleHierarchy];
   }
 
   // 获取用户统计信息
@@ -195,7 +195,7 @@ export class UserRepository {
       }),
     ]);
 
-    const roleStats = byRole.reduce((acc, item) => {
+    const roleStats = byRole.reduce((acc: any, item: any) => {
       acc[item.role] = item._count.role;
       return acc;
     }, {} as Record<UserRole, number>);

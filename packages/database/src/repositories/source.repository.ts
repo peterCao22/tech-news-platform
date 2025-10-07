@@ -157,7 +157,7 @@ export class SourceRepository {
       }),
     ]);
 
-    const typeStats = byType.reduce((acc, item) => {
+    const typeStats = byType.reduce((acc: any, item: any) => {
       acc[item.type] = item._count;
       return acc;
     }, {} as Record<SourceType, number>);

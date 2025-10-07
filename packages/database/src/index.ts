@@ -3,12 +3,25 @@
 
 // 客户端和类型
 export * from './client';
+export * from './generated';
 
 // 仓库
 export * from './repositories/user.repository';
 export * from './repositories/password-reset.repository';
 export * from './repositories/source.repository';
 export * from './repositories/content.repository';
+export * from './repositories/api-configuration.repository';
+export { 
+  ContentItemRepository,
+  CreateContentData as CreateContentItemData,
+  UpdateContentData as UpdateContentItemData,
+  ContentSearchFilters,
+  ContentWithRelations,
+  DuplicationCheckResult
+} from './repositories/content-item.repository';
+export * from './repositories/tag.repository';
+export * from './repositories/content-tag.repository';
+export * from './repositories/base.repository';
 
 // 类型定义
 export * from './types/user.types';

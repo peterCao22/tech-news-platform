@@ -309,24 +309,24 @@ export class ContentRepository {
       }),
     ]);
 
-    const statusStats = byStatus.reduce((acc, item) => {
+    const statusStats = byStatus.reduce((acc: any, item: any) => {
       acc[item.status] = item._count;
       return acc;
     }, {} as Record<ContentStatus, number>);
 
     // 获取源信息
-    const sourceIds = bySourceRaw.map(item => item.sourceId);
+    const sourceIds = bySourceRaw.map((item: any) => item.sourceId);
     const sources = await db.source.findMany({
       where: { id: { in: sourceIds } },
       select: { id: true, name: true },
     });
 
-    const sourceMap = sources.reduce((acc, source) => {
+    const sourceMap = sources.reduce((acc: any, source: any) => {
       acc[source.id] = source.name;
       return acc;
     }, {} as Record<string, string>);
 
-    const bySource = bySourceRaw.map(item => ({
+    const bySource = bySourceRaw.map((item: any) => ({
       sourceId: item.sourceId,
       sourceName: sourceMap[item.sourceId] || 'Unknown',
       count: item._count,
