@@ -99,17 +99,17 @@ export class AlphaVantageClient extends BaseApiClient {
    */
   public async healthCheck(): Promise<boolean> {
     try {
-      // 使用简单的查询来检查API是否可用
+      // 使用新闻情感分析来检查API是否可用
       const response = await this.get('', {
         params: {
-          function: 'TIME_SERIES_INTRADAY',
-          symbol: 'IBM',
-          interval: '1min',
-          apikey: this.config.auth?.apiKey
+          function: 'NEWS_SENTIMENT',
+          tickers: 'AAPL',
+          apikey: this.config.auth?.apiKey,
+          limit: 1
         }
       });
 
-      return response && !response['Error Message'] && !response['Note'];
+      return response && !response['Error Message'] && !response['Note'] && response.feed && Array.isArray(response.feed) && response.feed.length > 0;
     } catch (error) {
       logger.error('Alpha Vantage健康检查失败', { error });
       return false;

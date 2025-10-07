@@ -33,7 +33,7 @@ export interface ApiError {
 // 创建axios实例
 const createApiClient = (): AxiosInstance => {
   const client = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001',
+    baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://192.168.13.142:3001',
     timeout: 10000,
     headers: {
       'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ const createApiClient = (): AxiosInstance => {
           try {
             // 尝试刷新令牌
             const response = await axios.post(
-              `${process.env.NEXT_PUBLIC_API_URL}/api/auth/refresh`,
+              `${process.env.NEXT_PUBLIC_API_URL || 'http://192.168.13.142:3001'}/api/auth/refresh`,
               { refreshToken }
             );
 

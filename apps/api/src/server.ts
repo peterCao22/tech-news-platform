@@ -24,12 +24,15 @@ import { contentRoutes } from './routes/content.routes';
 import contentItemRoutes from './routes/content-item.routes';
 import { contentFilterRoutes } from './routes/content-filter.routes';
 import apiConfigRoutes from './routes/api-configuration.routes';
+import alphaVantageRoutes from './routes/alpha-vantage.routes';
+import finnhubRoutes from './routes/finnhub.routes';
+import polygonRoutes from './routes/polygon.routes';
 
 // 加载环境变量
 dotenv.config({ path: '../../.env' });
 
 const app: Express = express();
-const PORT = process.env.PORT || 3001;
+const PORT = parseInt(process.env.PORT || '3001', 10);
 
 // 基础中间件
 app.use(helmet({
@@ -39,7 +42,7 @@ app.use(helmet({
       styleSrc: ["'self'", "'unsafe-inline'"],
       scriptSrc: ["'self'"],
       imgSrc: ["'self'", "data:", "https:"],
-      connectSrc: ["'self'", process.env.FRONTEND_URL || 'http://localhost:3000'],
+      connectSrc: ["'self'", process.env.FRONTEND_URL || 'http://192.168.13.142:3000'],
       fontSrc: ["'self'", "https:", "data:"],
       objectSrc: ["'none'"],
       mediaSrc: ["'self'"],
@@ -59,7 +62,11 @@ app.use(helmet({
 }));
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  origin: [
+    'http://localhost:3000',
+    'http://192.168.13.142:3000',
+    ...(process.env.FRONTEND_URL ? [process.env.FRONTEND_URL] : [])
+  ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Request-ID'],
@@ -82,6 +89,9 @@ app.use('/api/content', contentRoutes);
 app.use('/api/content-items', contentItemRoutes);
 app.use('/api/content-filter', contentFilterRoutes);
 app.use('/api/api-configs', apiConfigRoutes);
+app.use('/api/alpha-vantage', alphaVantageRoutes);
+app.use('/api/finnhub', finnhubRoutes);
+app.use('/api/polygon', polygonRoutes);
 
 // 404 处理
 app.use(notFoundHandler);
@@ -99,7 +109,7 @@ const startServer = async () => {
       process.exit(1);
     }
 
-    app.listen(PORT, () => {
+    app.listen(PORT, '0.0.0.0', () => {
       logger.info(`🚀 API 服务器启动成功`);
       logger.info(`📍 服务地址: http://localhost:${PORT}`);
       logger.info(`🌍 环境: ${process.env.NODE_ENV || 'development'}`);

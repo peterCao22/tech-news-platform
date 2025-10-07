@@ -10,6 +10,8 @@ import {
   ApiConfigStatus
 } from '@tech-news-platform/database';
 import { AlphaVantageClient } from './api/alpha-vantage-client';
+import { FinnhubClient } from './api/finnhub-client';
+import { PolygonClient } from './api/polygon-client';
 import { BaseApiClient } from './api/base-api-client';
 import { logger } from '../utils/logger';
 
@@ -225,11 +227,19 @@ export class ApiConfigurationService {
         }
         return new AlphaVantageClient(config.apiKey);
 
+      case ApiProvider.FINNHUB:
+        if (!config.apiKey) {
+          throw new Error('Finnhub配置缺少API密钥');
+        }
+        return new FinnhubClient(config.apiKey);
+
+      case ApiProvider.POLYGON:
+        if (!config.apiKey) {
+          throw new Error('Polygon配置缺少API密钥');
+        }
+        return new PolygonClient(config.apiKey);
+
       // 其他API提供商的客户端可以在这里添加
-      // case ApiProvider.FINNHUB:
-      //   return new FinnhubClient(config);
-      // case ApiProvider.POLYGON:
-      //   return new PolygonClient(config);
 
       default:
         throw new Error(`不支持的API提供商: ${config.provider}`);
@@ -363,6 +373,28 @@ export class ApiConfigurationService {
     const client = await this.getApiClientByProvider(ApiProvider.ALPHA_VANTAGE);
     if (!(client instanceof AlphaVantageClient)) {
       throw new Error('获取的客户端不是AlphaVantageClient实例');
+    }
+    return client;
+  }
+
+  /**
+   * 获取Finnhub客户端（便捷方法）
+   */
+  static async getFinnhubClient(): Promise<FinnhubClient> {
+    const client = await this.getApiClientByProvider(ApiProvider.FINNHUB);
+    if (!(client instanceof FinnhubClient)) {
+      throw new Error('获取的客户端不是FinnhubClient实例');
+    }
+    return client;
+  }
+
+  /**
+   * 获取Polygon客户端（便捷方法）
+   */
+  static async getPolygonClient(): Promise<PolygonClient> {
+    const client = await this.getApiClientByProvider(ApiProvider.POLYGON);
+    if (!(client instanceof PolygonClient)) {
+      throw new Error('获取的客户端不是PolygonClient实例');
     }
     return client;
   }

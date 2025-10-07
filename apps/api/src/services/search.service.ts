@@ -348,7 +348,7 @@ export class SearchService {
     // 标签匹配
     const tagNames = content.contentTags.map((ct: any) => ct.tag.name.toLowerCase());
     const tagMatches = queryTerms.filter(term => 
-      tagNames.some(tagName => tagName.includes(term))
+      tagNames.some((tagName: string) => tagName.includes(term))
     ).length;
     score += tagMatches * 2;
 
@@ -534,10 +534,10 @@ export class SearchService {
     if (!content) return;
 
     // 提取关键词
-    const keywords = this.extractKeywords(content.title, content.content);
+    const keywords = this.extractKeywords(content.title, content.content || '');
     
     // 生成搜索向量（简化版本，实际可以使用更复杂的向量化）
-    const searchVector = this.generateSearchVector(content.title, content.description, content.content);
+    const searchVector = this.generateSearchVector(content.title, content.description || '', content.content || '');
 
     // 更新或创建搜索索引
     await prisma.searchIndex.upsert({

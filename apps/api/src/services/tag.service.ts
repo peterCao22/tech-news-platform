@@ -215,15 +215,16 @@ export class TagService {
    * 清理未使用的标签
    */
   async cleanupUnusedTags(): Promise<{ deletedCount: number; deletedTags: string[] }> {
-    const unusedTags = await this.tagRepository.findMany({
-      usageCount: 0,
-    }, {
-      limit: 1000, // 限制一次清理的数量
+    // 查找未使用的标签（通过关联查询）
+    const result = await this.tagRepository.findMany({}, {
+      limit: 1000 // 限制一次清理的数量
     });
+    
+    const unusedTags = result.tags.filter((tag: any) => tag._count?.contentTags === 0);
 
     const deletedTags: string[] = [];
 
-    for (const tag of unusedTags.tags) {
+    for (const tag of unusedTags) {
       try {
         await this.tagRepository.delete(tag.id);
         deletedTags.push(tag.name);
