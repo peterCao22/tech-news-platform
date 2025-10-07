@@ -173,36 +173,67 @@ model Source {
 
 // 内容状态枚举
 enum ContentStatus {
-  RAW
-  PROCESSING
-  PROCESSED
-  REVIEWED
-  PUBLISHED
-  REJECTED
+  RAW // 原始状态
+  PROCESSING // 处理中
+  PROCESSED // 已处理
+  REVIEWED // 已审核
+  PUBLISHED // 已发布
+  REJECTED // 已拒绝
+  ARCHIVED // 已归档
+  DUPLICATE // 重复内容
+}
+
+// 内容类型枚举
+enum ContentType {
+  NEWS // 新闻
+  ARTICLE // 文章
+  BLOG_POST // 博客文章
+  PRESS_RELEASE // 新闻稿
+  RESEARCH // 研究报告
+  ANNOUNCEMENT // 公告
+  OTHER // 其他
 }
 
 // 内容表
 model Content {
   id          String  @id @default(cuid())
-  title       String
+  title       String  @db.VarChar(500)
   description String? @db.Text
   content     String? @db.Text
-  url         String?
-  imageUrl    String? @map("image_url")
+  summary     String? @db.Text // AI生成的摘要
+  url         String? @db.VarChar(2000)
+  imageUrl    String? @map("image_url") @db.VarChar(2000)
 
-  // 分类和标签
-  category String?
-  tags     String[] @default([])
+  // 内容类型和分类
+  type     ContentType @default(NEWS)
+  category String?     @db.VarChar(100)
+  tags     String[]    @default([])
 
   // 状态和评分
-  status   ContentStatus @default(RAW)
-  score    Float? // AI评分
-  priority Int           @default(0)
+  status    ContentStatus @default(RAW)
+  score     Float? // AI评分 (0-1)
+  priority  Int           @default(0) // 优先级 (0-10)
+  quality   Float? // 内容质量评分 (0-1)
+  relevance Float? // 相关性评分 (0-1)
 
   // 来源信息
   sourceId    String    @map("source_id")
-  sourceUrl   String?   @map("source_url")
+  sourceUrl   String?   @map("source_url") @db.VarChar(2000)
   publishedAt DateTime? @map("published_at")
+  author      String?   @db.VarChar(200)
+
+  // 去重相关
+  contentHash String? @map("content_hash") @db.VarChar(64) // 内容哈希
+  titleHash   String? @map("title_hash") @db.VarChar(64) // 标题哈希
+  duplicateOf String? @map("duplicate_of") // 重复内容的原始ID
+
+  // 统计信息
+  viewCount  Int @default(0) @map("view_count")
+  shareCount Int @default(0) @map("share_count")
+
+  // 搜索和索引
+  searchVector String?  @map("search_vector") @db.Text // 全文搜索向量
+  keywords     String[] @default([]) // 关键词数组
 
   // 元数据
   metadata Json? // 额外的元数据
@@ -212,24 +243,76 @@ model Content {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   // 关联关系
-  source      Source          @relation(fields: [sourceId], references: [id])
+  source      Source           @relation(fields: [sourceId], references: [id])
   reviews     ContentReview[]
   contentTags ContentTag[]
+  versions    ContentVersion[]
 
+  @@index([status])
+  @@index([publishedAt])
+  @@index([score])
+  @@index([contentHash])
+  @@index([titleHash])
+  @@index([category])
+  @@index([createdAt])
   @@map("content")
 }
 
-// 内容标签表（多对多关系）
+// 标签类型枚举
+enum TagType {
+  CATEGORY // 分类标签
+  TECHNOLOGY // 技术标签
+  COMPANY // 公司标签
+  STOCK // 股票标签
+  TOPIC // 主题标签
+  CUSTOM // 自定义标签
+}
+
+// 标签表
+model Tag {
+  id          String  @id @default(cuid())
+  name        String  @unique @db.VarChar(100)
+  slug        String  @unique @db.VarChar(100) // URL友好的标识符
+  type        TagType @default(TOPIC)
+  description String? @db.Text
+  color       String? @db.VarChar(7) // 十六进制颜色代码
+
+  // 层级结构
+  parentId String? @map("parent_id")
+  parent   Tag?    @relation("TagHierarchy", fields: [parentId], references: [id])
+  children Tag[]   @relation("TagHierarchy")
+
+  // 统计信息
+  usageCount Int @default(0) @map("usage_count")
+
+  // 时间戳
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // 关联关系
+  contentTags ContentTag[]
+
+  @@index([type])
+  @@index([usageCount])
+  @@map("tags")
+}
+
+// 内容标签关联表（多对多关系）
 model ContentTag {
   id        String @id @default(cuid())
   contentId String @map("content_id")
-  tag       String
+  tagId     String @map("tag_id")
+
+  // 标签相关性评分
+  relevance Float? @default(1.0) // 标签与内容的相关性 (0-1)
 
   createdAt DateTime @default(now()) @map("created_at")
 
   content Content @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  tag     Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
 
-  @@unique([contentId, tag])
+  @@unique([contentId, tagId])
+  @@index([tagId])
   @@map("content_tags")
 }
 
@@ -324,4 +407,210 @@ model SystemConfig {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("system_configs")
+}
+
+// API配置状态枚举
+enum ApiConfigStatus {
+  ACTIVE
+  INACTIVE
+  ERROR
+  RATE_LIMITED
+}
+
+// API认证类型枚举
+enum ApiAuthType {
+  API_KEY
+  BEARER_TOKEN
+  OAUTH
+  BASIC_AUTH
+  NONE
+}
+
+// API配置表
+model ApiConfiguration {
+  id       String          @id @default(cuid())
+  name     String // API配置名称
+  provider String // API提供商 (alpha_vantage, finnhub, etc.)
+  baseUrl  String          @map("base_url")
+  authType ApiAuthType     @map("auth_type")
+  status   ApiConfigStatus @default(ACTIVE)
+
+  // 认证配置 (加密存储)
+  apiKey     String? @map("api_key")
+  token      String?
+  username   String?
+  password   String?
+  headerName String? @map("header_name")
+
+  // 速率限制配置
+  rateLimit Json? @map("rate_limit") // { maxRequests: number, windowMs: number }
+
+  // 其他配置
+  timeout       Int?  @default(30000)
+  retryAttempts Int?  @default(3) @map("retry_attempts")
+  retryDelay    Int?  @default(1000) @map("retry_delay")
+  headers       Json? // 自定义headers
+
+  // 统计信息
+  totalCalls      Int       @default(0) @map("total_calls")
+  successfulCalls Int       @default(0) @map("successful_calls")
+  failedCalls     Int       @default(0) @map("failed_calls")
+  lastCallAt      DateTime? @map("last_call_at")
+  lastError       String?   @map("last_error")
+
+  // 时间戳
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // 关联关系
+  apiCallLogs ApiCallLog[]
+
+  @@map("api_configurations")
+}
+
+// API调用日志表
+model ApiCallLog {
+  id       String @id @default(cuid())
+  configId String @map("config_id")
+  method   String // GET, POST, etc.
+  endpoint String // API端点
+
+  // 请求信息
+  requestHeaders Json? @map("request_headers")
+  requestBody    Json? @map("request_body")
+
+  // 响应信息
+  statusCode      Int?  @map("status_code")
+  responseHeaders Json? @map("response_headers")
+  responseBody    Json? @map("response_body")
+
+  // 执行信息
+  duration     Int? // 响应时间(ms)
+  success      Boolean
+  errorMessage String? @map("error_message")
+
+  // 时间戳
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // 关联关系
+  config ApiConfiguration @relation(fields: [configId], references: [id], onDelete: Cascade)
+
+  @@map("api_call_logs")
+}
+
+// 内容版本表
+model ContentVersion {
+  id        String @id @default(cuid())
+  contentId String @map("content_id")
+  version   Int // 版本号
+
+  // 版本数据快照
+  title       String   @db.VarChar(500)
+  description String?  @db.Text
+  contentText String?  @map("content_text") @db.Text
+  summary     String?  @db.Text
+  tags        String[] @default([])
+  metadata    Json?
+
+  // 变更信息
+  changeType String  @map("change_type") // CREATE, UPDATE, DELETE, RESTORE
+  changeNote String? @map("change_note") @db.Text
+  changedBy  String? @map("changed_by") // 用户ID
+
+  // 时间戳
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // 关联关系
+  contentItem Content @relation(fields: [contentId], references: [id], onDelete: Cascade)
+
+  @@unique([contentId, version])
+  @@index([contentId])
+  @@index([createdAt])
+  @@map("content_versions")
+}
+
+// 内容审计日志表
+model ContentAuditLog {
+  id        String  @id @default(cuid())
+  contentId String  @map("content_id")
+  userId    String? @map("user_id")
+
+  // 操作信息
+  action    String // CREATE, UPDATE, DELETE, PUBLISH, REJECT, etc.
+  tableName String @map("table_name") // 操作的表名
+  recordId  String @map("record_id") // 记录ID
+
+  // 变更数据
+  oldValues Json? @map("old_values") // 变更前的值
+  newValues Json? @map("new_values") // 变更后的值
+
+  // 元信息
+  ipAddress String? @map("ip_address")
+  userAgent String? @map("user_agent")
+  sessionId String? @map("session_id")
+
+  // 时间戳
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([contentId])
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt])
+  @@map("content_audit_logs")
+}
+
+// 内容去重记录表
+model ContentDuplication {
+  id          String @id @default(cuid())
+  originalId  String @map("original_id") // 原始内容ID
+  duplicateId String @map("duplicate_id") // 重复内容ID
+
+  // 相似度信息
+  titleSimilarity   Float @map("title_similarity") // 标题相似度 (0-1)
+  contentSimilarity Float @map("content_similarity") // 内容相似度 (0-1)
+  overallSimilarity Float @map("overall_similarity") // 总体相似度 (0-1)
+
+  // 检测信息
+  detectionMethod String @map("detection_method") // HASH, SIMILARITY, MANUAL
+  confidence      Float // 检测置信度 (0-1)
+
+  // 处理状态
+  status     String    @default("PENDING") // PENDING, CONFIRMED, REJECTED
+  reviewedBy String?   @map("reviewed_by")
+  reviewedAt DateTime? @map("reviewed_at")
+
+  // 时间戳
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@unique([originalId, duplicateId])
+  @@index([originalId])
+  @@index([duplicateId])
+  @@index([overallSimilarity])
+  @@index([status])
+  @@map("content_duplications")
+}
+
+// 搜索索引表
+model SearchIndex {
+  id        String @id @default(cuid())
+  contentId String @unique @map("content_id")
+
+  // 索引数据
+  titleTokens   String[] @map("title_tokens") // 标题分词
+  contentTokens String[] @map("content_tokens") // 内容分词
+  keywords      String[] @default([]) // 关键词
+
+  // 搜索权重
+  titleWeight   Float @default(1.0) @map("title_weight")
+  contentWeight Float @default(0.8) @map("content_weight")
+  keywordWeight Float @default(1.2) @map("keyword_weight")
+
+  // 时间戳
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([titleTokens])
+  @@index([contentTokens])
+  @@index([keywords])
+  @@map("search_indexes")
 }

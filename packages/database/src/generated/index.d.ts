@@ -49,6 +49,11 @@ export type Source = $Result.DefaultSelection<Prisma.$SourcePayload>
  */
 export type Content = $Result.DefaultSelection<Prisma.$ContentPayload>
 /**
+ * Model Tag
+ * 
+ */
+export type Tag = $Result.DefaultSelection<Prisma.$TagPayload>
+/**
  * Model ContentTag
  * 
  */
@@ -78,6 +83,36 @@ export type AITask = $Result.DefaultSelection<Prisma.$AITaskPayload>
  * 
  */
 export type SystemConfig = $Result.DefaultSelection<Prisma.$SystemConfigPayload>
+/**
+ * Model ApiConfiguration
+ * 
+ */
+export type ApiConfiguration = $Result.DefaultSelection<Prisma.$ApiConfigurationPayload>
+/**
+ * Model ApiCallLog
+ * 
+ */
+export type ApiCallLog = $Result.DefaultSelection<Prisma.$ApiCallLogPayload>
+/**
+ * Model ContentVersion
+ * 
+ */
+export type ContentVersion = $Result.DefaultSelection<Prisma.$ContentVersionPayload>
+/**
+ * Model ContentAuditLog
+ * 
+ */
+export type ContentAuditLog = $Result.DefaultSelection<Prisma.$ContentAuditLogPayload>
+/**
+ * Model ContentDuplication
+ * 
+ */
+export type ContentDuplication = $Result.DefaultSelection<Prisma.$ContentDuplicationPayload>
+/**
+ * Model SearchIndex
+ * 
+ */
+export type SearchIndex = $Result.DefaultSelection<Prisma.$SearchIndexPayload>
 
 /**
  * Enums
@@ -123,16 +158,43 @@ export const SourceStatus: {
 export type SourceStatus = (typeof SourceStatus)[keyof typeof SourceStatus]
 
 
+export const ContentType: {
+  NEWS: 'NEWS',
+  ARTICLE: 'ARTICLE',
+  BLOG_POST: 'BLOG_POST',
+  PRESS_RELEASE: 'PRESS_RELEASE',
+  RESEARCH: 'RESEARCH',
+  ANNOUNCEMENT: 'ANNOUNCEMENT',
+  OTHER: 'OTHER'
+};
+
+export type ContentType = (typeof ContentType)[keyof typeof ContentType]
+
+
 export const ContentStatus: {
   RAW: 'RAW',
   PROCESSING: 'PROCESSING',
   PROCESSED: 'PROCESSED',
   REVIEWED: 'REVIEWED',
   PUBLISHED: 'PUBLISHED',
-  REJECTED: 'REJECTED'
+  REJECTED: 'REJECTED',
+  ARCHIVED: 'ARCHIVED',
+  DUPLICATE: 'DUPLICATE'
 };
 
 export type ContentStatus = (typeof ContentStatus)[keyof typeof ContentStatus]
+
+
+export const TagType: {
+  CATEGORY: 'CATEGORY',
+  TECHNOLOGY: 'TECHNOLOGY',
+  COMPANY: 'COMPANY',
+  STOCK: 'STOCK',
+  TOPIC: 'TOPIC',
+  CUSTOM: 'CUSTOM'
+};
+
+export type TagType = (typeof TagType)[keyof typeof TagType]
 
 
 export const ReviewAction: {
@@ -145,6 +207,27 @@ export const ReviewAction: {
 };
 
 export type ReviewAction = (typeof ReviewAction)[keyof typeof ReviewAction]
+
+
+export const ApiAuthType: {
+  API_KEY: 'API_KEY',
+  BEARER_TOKEN: 'BEARER_TOKEN',
+  OAUTH: 'OAUTH',
+  BASIC_AUTH: 'BASIC_AUTH',
+  NONE: 'NONE'
+};
+
+export type ApiAuthType = (typeof ApiAuthType)[keyof typeof ApiAuthType]
+
+
+export const ApiConfigStatus: {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE',
+  ERROR: 'ERROR',
+  RATE_LIMITED: 'RATE_LIMITED'
+};
+
+export type ApiConfigStatus = (typeof ApiConfigStatus)[keyof typeof ApiConfigStatus]
 
 }
 
@@ -164,13 +247,29 @@ export type SourceStatus = $Enums.SourceStatus
 
 export const SourceStatus: typeof $Enums.SourceStatus
 
+export type ContentType = $Enums.ContentType
+
+export const ContentType: typeof $Enums.ContentType
+
 export type ContentStatus = $Enums.ContentStatus
 
 export const ContentStatus: typeof $Enums.ContentStatus
 
+export type TagType = $Enums.TagType
+
+export const TagType: typeof $Enums.TagType
+
 export type ReviewAction = $Enums.ReviewAction
 
 export const ReviewAction: typeof $Enums.ReviewAction
+
+export type ApiAuthType = $Enums.ApiAuthType
+
+export const ApiAuthType: typeof $Enums.ApiAuthType
+
+export type ApiConfigStatus = $Enums.ApiConfigStatus
+
+export const ApiConfigStatus: typeof $Enums.ApiConfigStatus
 
 /**
  * ##  Prisma Client ʲˢ
@@ -366,6 +465,16 @@ export class PrismaClient<
   get content(): Prisma.ContentDelegate<ExtArgs>;
 
   /**
+   * `prisma.tag`: Exposes CRUD operations for the **Tag** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Tags
+    * const tags = await prisma.tag.findMany()
+    * ```
+    */
+  get tag(): Prisma.TagDelegate<ExtArgs>;
+
+  /**
    * `prisma.contentTag`: Exposes CRUD operations for the **ContentTag** model.
     * Example usage:
     * ```ts
@@ -424,6 +533,66 @@ export class PrismaClient<
     * ```
     */
   get systemConfig(): Prisma.SystemConfigDelegate<ExtArgs>;
+
+  /**
+   * `prisma.apiConfiguration`: Exposes CRUD operations for the **ApiConfiguration** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ApiConfigurations
+    * const apiConfigurations = await prisma.apiConfiguration.findMany()
+    * ```
+    */
+  get apiConfiguration(): Prisma.ApiConfigurationDelegate<ExtArgs>;
+
+  /**
+   * `prisma.apiCallLog`: Exposes CRUD operations for the **ApiCallLog** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ApiCallLogs
+    * const apiCallLogs = await prisma.apiCallLog.findMany()
+    * ```
+    */
+  get apiCallLog(): Prisma.ApiCallLogDelegate<ExtArgs>;
+
+  /**
+   * `prisma.contentVersion`: Exposes CRUD operations for the **ContentVersion** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ContentVersions
+    * const contentVersions = await prisma.contentVersion.findMany()
+    * ```
+    */
+  get contentVersion(): Prisma.ContentVersionDelegate<ExtArgs>;
+
+  /**
+   * `prisma.contentAuditLog`: Exposes CRUD operations for the **ContentAuditLog** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ContentAuditLogs
+    * const contentAuditLogs = await prisma.contentAuditLog.findMany()
+    * ```
+    */
+  get contentAuditLog(): Prisma.ContentAuditLogDelegate<ExtArgs>;
+
+  /**
+   * `prisma.contentDuplication`: Exposes CRUD operations for the **ContentDuplication** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ContentDuplications
+    * const contentDuplications = await prisma.contentDuplication.findMany()
+    * ```
+    */
+  get contentDuplication(): Prisma.ContentDuplicationDelegate<ExtArgs>;
+
+  /**
+   * `prisma.searchIndex`: Exposes CRUD operations for the **SearchIndex** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SearchIndices
+    * const searchIndices = await prisma.searchIndex.findMany()
+    * ```
+    */
+  get searchIndex(): Prisma.SearchIndexDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -872,12 +1041,19 @@ export namespace Prisma {
     PasswordResetToken: 'PasswordResetToken',
     Source: 'Source',
     Content: 'Content',
+    Tag: 'Tag',
     ContentTag: 'ContentTag',
     ContentReview: 'ContentReview',
     DailyDigest: 'DailyDigest',
     UserActivity: 'UserActivity',
     AITask: 'AITask',
-    SystemConfig: 'SystemConfig'
+    SystemConfig: 'SystemConfig',
+    ApiConfiguration: 'ApiConfiguration',
+    ApiCallLog: 'ApiCallLog',
+    ContentVersion: 'ContentVersion',
+    ContentAuditLog: 'ContentAuditLog',
+    ContentDuplication: 'ContentDuplication',
+    SearchIndex: 'SearchIndex'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -893,7 +1069,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "user" | "account" | "session" | "verificationToken" | "passwordResetToken" | "source" | "content" | "contentTag" | "contentReview" | "dailyDigest" | "userActivity" | "aITask" | "systemConfig"
+      modelProps: "user" | "account" | "session" | "verificationToken" | "passwordResetToken" | "source" | "content" | "tag" | "contentTag" | "contentReview" | "dailyDigest" | "userActivity" | "aITask" | "systemConfig" | "apiConfiguration" | "apiCallLog" | "contentVersion" | "contentAuditLog" | "contentDuplication" | "searchIndex"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1387,6 +1563,76 @@ export namespace Prisma {
           }
         }
       }
+      Tag: {
+        payload: Prisma.$TagPayload<ExtArgs>
+        fields: Prisma.TagFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TagFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TagFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagPayload>
+          }
+          findFirst: {
+            args: Prisma.TagFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TagFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagPayload>
+          }
+          findMany: {
+            args: Prisma.TagFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagPayload>[]
+          }
+          create: {
+            args: Prisma.TagCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagPayload>
+          }
+          createMany: {
+            args: Prisma.TagCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TagCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagPayload>[]
+          }
+          delete: {
+            args: Prisma.TagDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagPayload>
+          }
+          update: {
+            args: Prisma.TagUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagPayload>
+          }
+          deleteMany: {
+            args: Prisma.TagDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TagUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.TagUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagPayload>
+          }
+          aggregate: {
+            args: Prisma.TagAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTag>
+          }
+          groupBy: {
+            args: Prisma.TagGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TagGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TagCountArgs<ExtArgs>
+            result: $Utils.Optional<TagCountAggregateOutputType> | number
+          }
+        }
+      }
       ContentTag: {
         payload: Prisma.$ContentTagPayload<ExtArgs>
         fields: Prisma.ContentTagFieldRefs
@@ -1807,6 +2053,426 @@ export namespace Prisma {
           }
         }
       }
+      ApiConfiguration: {
+        payload: Prisma.$ApiConfigurationPayload<ExtArgs>
+        fields: Prisma.ApiConfigurationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ApiConfigurationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApiConfigurationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ApiConfigurationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApiConfigurationPayload>
+          }
+          findFirst: {
+            args: Prisma.ApiConfigurationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApiConfigurationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ApiConfigurationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApiConfigurationPayload>
+          }
+          findMany: {
+            args: Prisma.ApiConfigurationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApiConfigurationPayload>[]
+          }
+          create: {
+            args: Prisma.ApiConfigurationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApiConfigurationPayload>
+          }
+          createMany: {
+            args: Prisma.ApiConfigurationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ApiConfigurationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApiConfigurationPayload>[]
+          }
+          delete: {
+            args: Prisma.ApiConfigurationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApiConfigurationPayload>
+          }
+          update: {
+            args: Prisma.ApiConfigurationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApiConfigurationPayload>
+          }
+          deleteMany: {
+            args: Prisma.ApiConfigurationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ApiConfigurationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ApiConfigurationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApiConfigurationPayload>
+          }
+          aggregate: {
+            args: Prisma.ApiConfigurationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateApiConfiguration>
+          }
+          groupBy: {
+            args: Prisma.ApiConfigurationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ApiConfigurationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ApiConfigurationCountArgs<ExtArgs>
+            result: $Utils.Optional<ApiConfigurationCountAggregateOutputType> | number
+          }
+        }
+      }
+      ApiCallLog: {
+        payload: Prisma.$ApiCallLogPayload<ExtArgs>
+        fields: Prisma.ApiCallLogFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ApiCallLogFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApiCallLogPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ApiCallLogFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApiCallLogPayload>
+          }
+          findFirst: {
+            args: Prisma.ApiCallLogFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApiCallLogPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ApiCallLogFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApiCallLogPayload>
+          }
+          findMany: {
+            args: Prisma.ApiCallLogFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApiCallLogPayload>[]
+          }
+          create: {
+            args: Prisma.ApiCallLogCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApiCallLogPayload>
+          }
+          createMany: {
+            args: Prisma.ApiCallLogCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ApiCallLogCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApiCallLogPayload>[]
+          }
+          delete: {
+            args: Prisma.ApiCallLogDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApiCallLogPayload>
+          }
+          update: {
+            args: Prisma.ApiCallLogUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApiCallLogPayload>
+          }
+          deleteMany: {
+            args: Prisma.ApiCallLogDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ApiCallLogUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ApiCallLogUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApiCallLogPayload>
+          }
+          aggregate: {
+            args: Prisma.ApiCallLogAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateApiCallLog>
+          }
+          groupBy: {
+            args: Prisma.ApiCallLogGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ApiCallLogGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ApiCallLogCountArgs<ExtArgs>
+            result: $Utils.Optional<ApiCallLogCountAggregateOutputType> | number
+          }
+        }
+      }
+      ContentVersion: {
+        payload: Prisma.$ContentVersionPayload<ExtArgs>
+        fields: Prisma.ContentVersionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ContentVersionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentVersionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ContentVersionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentVersionPayload>
+          }
+          findFirst: {
+            args: Prisma.ContentVersionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentVersionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ContentVersionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentVersionPayload>
+          }
+          findMany: {
+            args: Prisma.ContentVersionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentVersionPayload>[]
+          }
+          create: {
+            args: Prisma.ContentVersionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentVersionPayload>
+          }
+          createMany: {
+            args: Prisma.ContentVersionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ContentVersionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentVersionPayload>[]
+          }
+          delete: {
+            args: Prisma.ContentVersionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentVersionPayload>
+          }
+          update: {
+            args: Prisma.ContentVersionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentVersionPayload>
+          }
+          deleteMany: {
+            args: Prisma.ContentVersionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ContentVersionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ContentVersionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentVersionPayload>
+          }
+          aggregate: {
+            args: Prisma.ContentVersionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateContentVersion>
+          }
+          groupBy: {
+            args: Prisma.ContentVersionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ContentVersionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ContentVersionCountArgs<ExtArgs>
+            result: $Utils.Optional<ContentVersionCountAggregateOutputType> | number
+          }
+        }
+      }
+      ContentAuditLog: {
+        payload: Prisma.$ContentAuditLogPayload<ExtArgs>
+        fields: Prisma.ContentAuditLogFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ContentAuditLogFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentAuditLogPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ContentAuditLogFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentAuditLogPayload>
+          }
+          findFirst: {
+            args: Prisma.ContentAuditLogFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentAuditLogPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ContentAuditLogFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentAuditLogPayload>
+          }
+          findMany: {
+            args: Prisma.ContentAuditLogFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentAuditLogPayload>[]
+          }
+          create: {
+            args: Prisma.ContentAuditLogCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentAuditLogPayload>
+          }
+          createMany: {
+            args: Prisma.ContentAuditLogCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ContentAuditLogCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentAuditLogPayload>[]
+          }
+          delete: {
+            args: Prisma.ContentAuditLogDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentAuditLogPayload>
+          }
+          update: {
+            args: Prisma.ContentAuditLogUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentAuditLogPayload>
+          }
+          deleteMany: {
+            args: Prisma.ContentAuditLogDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ContentAuditLogUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ContentAuditLogUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentAuditLogPayload>
+          }
+          aggregate: {
+            args: Prisma.ContentAuditLogAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateContentAuditLog>
+          }
+          groupBy: {
+            args: Prisma.ContentAuditLogGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ContentAuditLogGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ContentAuditLogCountArgs<ExtArgs>
+            result: $Utils.Optional<ContentAuditLogCountAggregateOutputType> | number
+          }
+        }
+      }
+      ContentDuplication: {
+        payload: Prisma.$ContentDuplicationPayload<ExtArgs>
+        fields: Prisma.ContentDuplicationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ContentDuplicationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentDuplicationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ContentDuplicationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentDuplicationPayload>
+          }
+          findFirst: {
+            args: Prisma.ContentDuplicationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentDuplicationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ContentDuplicationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentDuplicationPayload>
+          }
+          findMany: {
+            args: Prisma.ContentDuplicationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentDuplicationPayload>[]
+          }
+          create: {
+            args: Prisma.ContentDuplicationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentDuplicationPayload>
+          }
+          createMany: {
+            args: Prisma.ContentDuplicationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ContentDuplicationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentDuplicationPayload>[]
+          }
+          delete: {
+            args: Prisma.ContentDuplicationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentDuplicationPayload>
+          }
+          update: {
+            args: Prisma.ContentDuplicationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentDuplicationPayload>
+          }
+          deleteMany: {
+            args: Prisma.ContentDuplicationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ContentDuplicationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ContentDuplicationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentDuplicationPayload>
+          }
+          aggregate: {
+            args: Prisma.ContentDuplicationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateContentDuplication>
+          }
+          groupBy: {
+            args: Prisma.ContentDuplicationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ContentDuplicationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ContentDuplicationCountArgs<ExtArgs>
+            result: $Utils.Optional<ContentDuplicationCountAggregateOutputType> | number
+          }
+        }
+      }
+      SearchIndex: {
+        payload: Prisma.$SearchIndexPayload<ExtArgs>
+        fields: Prisma.SearchIndexFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SearchIndexFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SearchIndexPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SearchIndexFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SearchIndexPayload>
+          }
+          findFirst: {
+            args: Prisma.SearchIndexFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SearchIndexPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SearchIndexFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SearchIndexPayload>
+          }
+          findMany: {
+            args: Prisma.SearchIndexFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SearchIndexPayload>[]
+          }
+          create: {
+            args: Prisma.SearchIndexCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SearchIndexPayload>
+          }
+          createMany: {
+            args: Prisma.SearchIndexCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SearchIndexCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SearchIndexPayload>[]
+          }
+          delete: {
+            args: Prisma.SearchIndexDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SearchIndexPayload>
+          }
+          update: {
+            args: Prisma.SearchIndexUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SearchIndexPayload>
+          }
+          deleteMany: {
+            args: Prisma.SearchIndexDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SearchIndexUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.SearchIndexUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SearchIndexPayload>
+          }
+          aggregate: {
+            args: Prisma.SearchIndexAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSearchIndex>
+          }
+          groupBy: {
+            args: Prisma.SearchIndexGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SearchIndexGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SearchIndexCountArgs<ExtArgs>
+            result: $Utils.Optional<SearchIndexCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -2059,11 +2725,13 @@ export namespace Prisma {
   export type ContentCountOutputType = {
     reviews: number
     contentTags: number
+    versions: number
   }
 
   export type ContentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     reviews?: boolean | ContentCountOutputTypeCountReviewsArgs
     contentTags?: boolean | ContentCountOutputTypeCountContentTagsArgs
+    versions?: boolean | ContentCountOutputTypeCountVersionsArgs
   }
 
   // Custom InputTypes
@@ -2089,6 +2757,84 @@ export namespace Prisma {
    */
   export type ContentCountOutputTypeCountContentTagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ContentTagWhereInput
+  }
+
+  /**
+   * ContentCountOutputType without action
+   */
+  export type ContentCountOutputTypeCountVersionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ContentVersionWhereInput
+  }
+
+
+  /**
+   * Count Type TagCountOutputType
+   */
+
+  export type TagCountOutputType = {
+    children: number
+    contentTags: number
+  }
+
+  export type TagCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    children?: boolean | TagCountOutputTypeCountChildrenArgs
+    contentTags?: boolean | TagCountOutputTypeCountContentTagsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * TagCountOutputType without action
+   */
+  export type TagCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TagCountOutputType
+     */
+    select?: TagCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * TagCountOutputType without action
+   */
+  export type TagCountOutputTypeCountChildrenArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TagWhereInput
+  }
+
+  /**
+   * TagCountOutputType without action
+   */
+  export type TagCountOutputTypeCountContentTagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ContentTagWhereInput
+  }
+
+
+  /**
+   * Count Type ApiConfigurationCountOutputType
+   */
+
+  export type ApiConfigurationCountOutputType = {
+    apiCallLogs: number
+  }
+
+  export type ApiConfigurationCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    apiCallLogs?: boolean | ApiConfigurationCountOutputTypeCountApiCallLogsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ApiConfigurationCountOutputType without action
+   */
+  export type ApiConfigurationCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiConfigurationCountOutputType
+     */
+    select?: ApiConfigurationCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ApiConfigurationCountOutputType without action
+   */
+  export type ApiConfigurationCountOutputTypeCountApiCallLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApiCallLogWhereInput
   }
 
 
@@ -8113,11 +8859,19 @@ export namespace Prisma {
   export type ContentAvgAggregateOutputType = {
     score: number | null
     priority: number | null
+    quality: number | null
+    relevance: number | null
+    viewCount: number | null
+    shareCount: number | null
   }
 
   export type ContentSumAggregateOutputType = {
     score: number | null
     priority: number | null
+    quality: number | null
+    relevance: number | null
+    viewCount: number | null
+    shareCount: number | null
   }
 
   export type ContentMinAggregateOutputType = {
@@ -8125,15 +8879,26 @@ export namespace Prisma {
     title: string | null
     description: string | null
     content: string | null
+    summary: string | null
     url: string | null
     imageUrl: string | null
+    type: $Enums.ContentType | null
     category: string | null
     status: $Enums.ContentStatus | null
     score: number | null
     priority: number | null
+    quality: number | null
+    relevance: number | null
     sourceId: string | null
     sourceUrl: string | null
     publishedAt: Date | null
+    author: string | null
+    contentHash: string | null
+    titleHash: string | null
+    duplicateOf: string | null
+    viewCount: number | null
+    shareCount: number | null
+    searchVector: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -8143,15 +8908,26 @@ export namespace Prisma {
     title: string | null
     description: string | null
     content: string | null
+    summary: string | null
     url: string | null
     imageUrl: string | null
+    type: $Enums.ContentType | null
     category: string | null
     status: $Enums.ContentStatus | null
     score: number | null
     priority: number | null
+    quality: number | null
+    relevance: number | null
     sourceId: string | null
     sourceUrl: string | null
     publishedAt: Date | null
+    author: string | null
+    contentHash: string | null
+    titleHash: string | null
+    duplicateOf: string | null
+    viewCount: number | null
+    shareCount: number | null
+    searchVector: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -8161,16 +8937,28 @@ export namespace Prisma {
     title: number
     description: number
     content: number
+    summary: number
     url: number
     imageUrl: number
+    type: number
     category: number
     tags: number
     status: number
     score: number
     priority: number
+    quality: number
+    relevance: number
     sourceId: number
     sourceUrl: number
     publishedAt: number
+    author: number
+    contentHash: number
+    titleHash: number
+    duplicateOf: number
+    viewCount: number
+    shareCount: number
+    searchVector: number
+    keywords: number
     metadata: number
     createdAt: number
     updatedAt: number
@@ -8181,11 +8969,19 @@ export namespace Prisma {
   export type ContentAvgAggregateInputType = {
     score?: true
     priority?: true
+    quality?: true
+    relevance?: true
+    viewCount?: true
+    shareCount?: true
   }
 
   export type ContentSumAggregateInputType = {
     score?: true
     priority?: true
+    quality?: true
+    relevance?: true
+    viewCount?: true
+    shareCount?: true
   }
 
   export type ContentMinAggregateInputType = {
@@ -8193,15 +8989,26 @@ export namespace Prisma {
     title?: true
     description?: true
     content?: true
+    summary?: true
     url?: true
     imageUrl?: true
+    type?: true
     category?: true
     status?: true
     score?: true
     priority?: true
+    quality?: true
+    relevance?: true
     sourceId?: true
     sourceUrl?: true
     publishedAt?: true
+    author?: true
+    contentHash?: true
+    titleHash?: true
+    duplicateOf?: true
+    viewCount?: true
+    shareCount?: true
+    searchVector?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -8211,15 +9018,26 @@ export namespace Prisma {
     title?: true
     description?: true
     content?: true
+    summary?: true
     url?: true
     imageUrl?: true
+    type?: true
     category?: true
     status?: true
     score?: true
     priority?: true
+    quality?: true
+    relevance?: true
     sourceId?: true
     sourceUrl?: true
     publishedAt?: true
+    author?: true
+    contentHash?: true
+    titleHash?: true
+    duplicateOf?: true
+    viewCount?: true
+    shareCount?: true
+    searchVector?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -8229,16 +9047,28 @@ export namespace Prisma {
     title?: true
     description?: true
     content?: true
+    summary?: true
     url?: true
     imageUrl?: true
+    type?: true
     category?: true
     tags?: true
     status?: true
     score?: true
     priority?: true
+    quality?: true
+    relevance?: true
     sourceId?: true
     sourceUrl?: true
     publishedAt?: true
+    author?: true
+    contentHash?: true
+    titleHash?: true
+    duplicateOf?: true
+    viewCount?: true
+    shareCount?: true
+    searchVector?: true
+    keywords?: true
     metadata?: true
     createdAt?: true
     updatedAt?: true
@@ -8336,16 +9166,28 @@ export namespace Prisma {
     title: string
     description: string | null
     content: string | null
+    summary: string | null
     url: string | null
     imageUrl: string | null
+    type: $Enums.ContentType
     category: string | null
     tags: string[]
     status: $Enums.ContentStatus
     score: number | null
     priority: number
+    quality: number | null
+    relevance: number | null
     sourceId: string
     sourceUrl: string | null
     publishedAt: Date | null
+    author: string | null
+    contentHash: string | null
+    titleHash: string | null
+    duplicateOf: string | null
+    viewCount: number
+    shareCount: number
+    searchVector: string | null
+    keywords: string[]
     metadata: JsonValue | null
     createdAt: Date
     updatedAt: Date
@@ -8375,22 +9217,35 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     content?: boolean
+    summary?: boolean
     url?: boolean
     imageUrl?: boolean
+    type?: boolean
     category?: boolean
     tags?: boolean
     status?: boolean
     score?: boolean
     priority?: boolean
+    quality?: boolean
+    relevance?: boolean
     sourceId?: boolean
     sourceUrl?: boolean
     publishedAt?: boolean
+    author?: boolean
+    contentHash?: boolean
+    titleHash?: boolean
+    duplicateOf?: boolean
+    viewCount?: boolean
+    shareCount?: boolean
+    searchVector?: boolean
+    keywords?: boolean
     metadata?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     source?: boolean | SourceDefaultArgs<ExtArgs>
     reviews?: boolean | Content$reviewsArgs<ExtArgs>
     contentTags?: boolean | Content$contentTagsArgs<ExtArgs>
+    versions?: boolean | Content$versionsArgs<ExtArgs>
     _count?: boolean | ContentCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["content"]>
 
@@ -8399,16 +9254,28 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     content?: boolean
+    summary?: boolean
     url?: boolean
     imageUrl?: boolean
+    type?: boolean
     category?: boolean
     tags?: boolean
     status?: boolean
     score?: boolean
     priority?: boolean
+    quality?: boolean
+    relevance?: boolean
     sourceId?: boolean
     sourceUrl?: boolean
     publishedAt?: boolean
+    author?: boolean
+    contentHash?: boolean
+    titleHash?: boolean
+    duplicateOf?: boolean
+    viewCount?: boolean
+    shareCount?: boolean
+    searchVector?: boolean
+    keywords?: boolean
     metadata?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -8420,16 +9287,28 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     content?: boolean
+    summary?: boolean
     url?: boolean
     imageUrl?: boolean
+    type?: boolean
     category?: boolean
     tags?: boolean
     status?: boolean
     score?: boolean
     priority?: boolean
+    quality?: boolean
+    relevance?: boolean
     sourceId?: boolean
     sourceUrl?: boolean
     publishedAt?: boolean
+    author?: boolean
+    contentHash?: boolean
+    titleHash?: boolean
+    duplicateOf?: boolean
+    viewCount?: boolean
+    shareCount?: boolean
+    searchVector?: boolean
+    keywords?: boolean
     metadata?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -8439,6 +9318,7 @@ export namespace Prisma {
     source?: boolean | SourceDefaultArgs<ExtArgs>
     reviews?: boolean | Content$reviewsArgs<ExtArgs>
     contentTags?: boolean | Content$contentTagsArgs<ExtArgs>
+    versions?: boolean | Content$versionsArgs<ExtArgs>
     _count?: boolean | ContentCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ContentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8451,22 +9331,35 @@ export namespace Prisma {
       source: Prisma.$SourcePayload<ExtArgs>
       reviews: Prisma.$ContentReviewPayload<ExtArgs>[]
       contentTags: Prisma.$ContentTagPayload<ExtArgs>[]
+      versions: Prisma.$ContentVersionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       title: string
       description: string | null
       content: string | null
+      summary: string | null
       url: string | null
       imageUrl: string | null
+      type: $Enums.ContentType
       category: string | null
       tags: string[]
       status: $Enums.ContentStatus
       score: number | null
       priority: number
+      quality: number | null
+      relevance: number | null
       sourceId: string
       sourceUrl: string | null
       publishedAt: Date | null
+      author: string | null
+      contentHash: string | null
+      titleHash: string | null
+      duplicateOf: string | null
+      viewCount: number
+      shareCount: number
+      searchVector: string | null
+      keywords: string[]
       metadata: Prisma.JsonValue | null
       createdAt: Date
       updatedAt: Date
@@ -8837,6 +9730,7 @@ export namespace Prisma {
     source<T extends SourceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SourceDefaultArgs<ExtArgs>>): Prisma__SourceClient<$Result.GetResult<Prisma.$SourcePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     reviews<T extends Content$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, Content$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContentReviewPayload<ExtArgs>, T, "findMany"> | Null>
     contentTags<T extends Content$contentTagsArgs<ExtArgs> = {}>(args?: Subset<T, Content$contentTagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContentTagPayload<ExtArgs>, T, "findMany"> | Null>
+    versions<T extends Content$versionsArgs<ExtArgs> = {}>(args?: Subset<T, Content$versionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContentVersionPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8870,16 +9764,28 @@ export namespace Prisma {
     readonly title: FieldRef<"Content", 'String'>
     readonly description: FieldRef<"Content", 'String'>
     readonly content: FieldRef<"Content", 'String'>
+    readonly summary: FieldRef<"Content", 'String'>
     readonly url: FieldRef<"Content", 'String'>
     readonly imageUrl: FieldRef<"Content", 'String'>
+    readonly type: FieldRef<"Content", 'ContentType'>
     readonly category: FieldRef<"Content", 'String'>
     readonly tags: FieldRef<"Content", 'String[]'>
     readonly status: FieldRef<"Content", 'ContentStatus'>
     readonly score: FieldRef<"Content", 'Float'>
     readonly priority: FieldRef<"Content", 'Int'>
+    readonly quality: FieldRef<"Content", 'Float'>
+    readonly relevance: FieldRef<"Content", 'Float'>
     readonly sourceId: FieldRef<"Content", 'String'>
     readonly sourceUrl: FieldRef<"Content", 'String'>
     readonly publishedAt: FieldRef<"Content", 'DateTime'>
+    readonly author: FieldRef<"Content", 'String'>
+    readonly contentHash: FieldRef<"Content", 'String'>
+    readonly titleHash: FieldRef<"Content", 'String'>
+    readonly duplicateOf: FieldRef<"Content", 'String'>
+    readonly viewCount: FieldRef<"Content", 'Int'>
+    readonly shareCount: FieldRef<"Content", 'Int'>
+    readonly searchVector: FieldRef<"Content", 'String'>
+    readonly keywords: FieldRef<"Content", 'String[]'>
     readonly metadata: FieldRef<"Content", 'Json'>
     readonly createdAt: FieldRef<"Content", 'DateTime'>
     readonly updatedAt: FieldRef<"Content", 'DateTime'>
@@ -9241,6 +10147,26 @@ export namespace Prisma {
   }
 
   /**
+   * Content.versions
+   */
+  export type Content$versionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentVersion
+     */
+    select?: ContentVersionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContentVersionInclude<ExtArgs> | null
+    where?: ContentVersionWhereInput
+    orderBy?: ContentVersionOrderByWithRelationInput | ContentVersionOrderByWithRelationInput[]
+    cursor?: ContentVersionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ContentVersionScalarFieldEnum | ContentVersionScalarFieldEnum[]
+  }
+
+  /**
    * Content without action
    */
   export type ContentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -9256,56 +10182,1172 @@ export namespace Prisma {
 
 
   /**
+   * Model Tag
+   */
+
+  export type AggregateTag = {
+    _count: TagCountAggregateOutputType | null
+    _avg: TagAvgAggregateOutputType | null
+    _sum: TagSumAggregateOutputType | null
+    _min: TagMinAggregateOutputType | null
+    _max: TagMaxAggregateOutputType | null
+  }
+
+  export type TagAvgAggregateOutputType = {
+    usageCount: number | null
+  }
+
+  export type TagSumAggregateOutputType = {
+    usageCount: number | null
+  }
+
+  export type TagMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    slug: string | null
+    type: $Enums.TagType | null
+    description: string | null
+    color: string | null
+    parentId: string | null
+    usageCount: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TagMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    slug: string | null
+    type: $Enums.TagType | null
+    description: string | null
+    color: string | null
+    parentId: string | null
+    usageCount: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TagCountAggregateOutputType = {
+    id: number
+    name: number
+    slug: number
+    type: number
+    description: number
+    color: number
+    parentId: number
+    usageCount: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type TagAvgAggregateInputType = {
+    usageCount?: true
+  }
+
+  export type TagSumAggregateInputType = {
+    usageCount?: true
+  }
+
+  export type TagMinAggregateInputType = {
+    id?: true
+    name?: true
+    slug?: true
+    type?: true
+    description?: true
+    color?: true
+    parentId?: true
+    usageCount?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TagMaxAggregateInputType = {
+    id?: true
+    name?: true
+    slug?: true
+    type?: true
+    description?: true
+    color?: true
+    parentId?: true
+    usageCount?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TagCountAggregateInputType = {
+    id?: true
+    name?: true
+    slug?: true
+    type?: true
+    description?: true
+    color?: true
+    parentId?: true
+    usageCount?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type TagAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Tag to aggregate.
+     */
+    where?: TagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Tags to fetch.
+     */
+    orderBy?: TagOrderByWithRelationInput | TagOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Tags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Tags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Tags
+    **/
+    _count?: true | TagCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: TagAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: TagSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TagMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TagMaxAggregateInputType
+  }
+
+  export type GetTagAggregateType<T extends TagAggregateArgs> = {
+        [P in keyof T & keyof AggregateTag]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTag[P]>
+      : GetScalarType<T[P], AggregateTag[P]>
+  }
+
+
+
+
+  export type TagGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TagWhereInput
+    orderBy?: TagOrderByWithAggregationInput | TagOrderByWithAggregationInput[]
+    by: TagScalarFieldEnum[] | TagScalarFieldEnum
+    having?: TagScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TagCountAggregateInputType | true
+    _avg?: TagAvgAggregateInputType
+    _sum?: TagSumAggregateInputType
+    _min?: TagMinAggregateInputType
+    _max?: TagMaxAggregateInputType
+  }
+
+  export type TagGroupByOutputType = {
+    id: string
+    name: string
+    slug: string
+    type: $Enums.TagType
+    description: string | null
+    color: string | null
+    parentId: string | null
+    usageCount: number
+    createdAt: Date
+    updatedAt: Date
+    _count: TagCountAggregateOutputType | null
+    _avg: TagAvgAggregateOutputType | null
+    _sum: TagSumAggregateOutputType | null
+    _min: TagMinAggregateOutputType | null
+    _max: TagMaxAggregateOutputType | null
+  }
+
+  type GetTagGroupByPayload<T extends TagGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TagGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TagGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TagGroupByOutputType[P]>
+            : GetScalarType<T[P], TagGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TagSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    type?: boolean
+    description?: boolean
+    color?: boolean
+    parentId?: boolean
+    usageCount?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    parent?: boolean | Tag$parentArgs<ExtArgs>
+    children?: boolean | Tag$childrenArgs<ExtArgs>
+    contentTags?: boolean | Tag$contentTagsArgs<ExtArgs>
+    _count?: boolean | TagCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["tag"]>
+
+  export type TagSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    type?: boolean
+    description?: boolean
+    color?: boolean
+    parentId?: boolean
+    usageCount?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    parent?: boolean | Tag$parentArgs<ExtArgs>
+  }, ExtArgs["result"]["tag"]>
+
+  export type TagSelectScalar = {
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    type?: boolean
+    description?: boolean
+    color?: boolean
+    parentId?: boolean
+    usageCount?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type TagInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    parent?: boolean | Tag$parentArgs<ExtArgs>
+    children?: boolean | Tag$childrenArgs<ExtArgs>
+    contentTags?: boolean | Tag$contentTagsArgs<ExtArgs>
+    _count?: boolean | TagCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type TagIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    parent?: boolean | Tag$parentArgs<ExtArgs>
+  }
+
+  export type $TagPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Tag"
+    objects: {
+      parent: Prisma.$TagPayload<ExtArgs> | null
+      children: Prisma.$TagPayload<ExtArgs>[]
+      contentTags: Prisma.$ContentTagPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      slug: string
+      type: $Enums.TagType
+      description: string | null
+      color: string | null
+      parentId: string | null
+      usageCount: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["tag"]>
+    composites: {}
+  }
+
+  type TagGetPayload<S extends boolean | null | undefined | TagDefaultArgs> = $Result.GetResult<Prisma.$TagPayload, S>
+
+  type TagCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<TagFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: TagCountAggregateInputType | true
+    }
+
+  export interface TagDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Tag'], meta: { name: 'Tag' } }
+    /**
+     * Find zero or one Tag that matches the filter.
+     * @param {TagFindUniqueArgs} args - Arguments to find a Tag
+     * @example
+     * // Get one Tag
+     * const tag = await prisma.tag.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TagFindUniqueArgs>(args: SelectSubset<T, TagFindUniqueArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Tag that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {TagFindUniqueOrThrowArgs} args - Arguments to find a Tag
+     * @example
+     * // Get one Tag
+     * const tag = await prisma.tag.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TagFindUniqueOrThrowArgs>(args: SelectSubset<T, TagFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Tag that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagFindFirstArgs} args - Arguments to find a Tag
+     * @example
+     * // Get one Tag
+     * const tag = await prisma.tag.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TagFindFirstArgs>(args?: SelectSubset<T, TagFindFirstArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Tag that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagFindFirstOrThrowArgs} args - Arguments to find a Tag
+     * @example
+     * // Get one Tag
+     * const tag = await prisma.tag.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TagFindFirstOrThrowArgs>(args?: SelectSubset<T, TagFindFirstOrThrowArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Tags that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Tags
+     * const tags = await prisma.tag.findMany()
+     * 
+     * // Get first 10 Tags
+     * const tags = await prisma.tag.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const tagWithIdOnly = await prisma.tag.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TagFindManyArgs>(args?: SelectSubset<T, TagFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Tag.
+     * @param {TagCreateArgs} args - Arguments to create a Tag.
+     * @example
+     * // Create one Tag
+     * const Tag = await prisma.tag.create({
+     *   data: {
+     *     // ... data to create a Tag
+     *   }
+     * })
+     * 
+     */
+    create<T extends TagCreateArgs>(args: SelectSubset<T, TagCreateArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Tags.
+     * @param {TagCreateManyArgs} args - Arguments to create many Tags.
+     * @example
+     * // Create many Tags
+     * const tag = await prisma.tag.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TagCreateManyArgs>(args?: SelectSubset<T, TagCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Tags and returns the data saved in the database.
+     * @param {TagCreateManyAndReturnArgs} args - Arguments to create many Tags.
+     * @example
+     * // Create many Tags
+     * const tag = await prisma.tag.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Tags and only return the `id`
+     * const tagWithIdOnly = await prisma.tag.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TagCreateManyAndReturnArgs>(args?: SelectSubset<T, TagCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Tag.
+     * @param {TagDeleteArgs} args - Arguments to delete one Tag.
+     * @example
+     * // Delete one Tag
+     * const Tag = await prisma.tag.delete({
+     *   where: {
+     *     // ... filter to delete one Tag
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TagDeleteArgs>(args: SelectSubset<T, TagDeleteArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Tag.
+     * @param {TagUpdateArgs} args - Arguments to update one Tag.
+     * @example
+     * // Update one Tag
+     * const tag = await prisma.tag.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TagUpdateArgs>(args: SelectSubset<T, TagUpdateArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Tags.
+     * @param {TagDeleteManyArgs} args - Arguments to filter Tags to delete.
+     * @example
+     * // Delete a few Tags
+     * const { count } = await prisma.tag.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TagDeleteManyArgs>(args?: SelectSubset<T, TagDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Tags.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Tags
+     * const tag = await prisma.tag.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TagUpdateManyArgs>(args: SelectSubset<T, TagUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Tag.
+     * @param {TagUpsertArgs} args - Arguments to update or create a Tag.
+     * @example
+     * // Update or create a Tag
+     * const tag = await prisma.tag.upsert({
+     *   create: {
+     *     // ... data to create a Tag
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Tag we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TagUpsertArgs>(args: SelectSubset<T, TagUpsertArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Tags.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagCountArgs} args - Arguments to filter Tags to count.
+     * @example
+     * // Count the number of Tags
+     * const count = await prisma.tag.count({
+     *   where: {
+     *     // ... the filter for the Tags we want to count
+     *   }
+     * })
+    **/
+    count<T extends TagCountArgs>(
+      args?: Subset<T, TagCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TagCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Tag.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TagAggregateArgs>(args: Subset<T, TagAggregateArgs>): Prisma.PrismaPromise<GetTagAggregateType<T>>
+
+    /**
+     * Group by Tag.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TagGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TagGroupByArgs['orderBy'] }
+        : { orderBy?: TagGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TagGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTagGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Tag model
+   */
+  readonly fields: TagFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Tag.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TagClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    parent<T extends Tag$parentArgs<ExtArgs> = {}>(args?: Subset<T, Tag$parentArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    children<T extends Tag$childrenArgs<ExtArgs> = {}>(args?: Subset<T, Tag$childrenArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findMany"> | Null>
+    contentTags<T extends Tag$contentTagsArgs<ExtArgs> = {}>(args?: Subset<T, Tag$contentTagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContentTagPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Tag model
+   */ 
+  interface TagFieldRefs {
+    readonly id: FieldRef<"Tag", 'String'>
+    readonly name: FieldRef<"Tag", 'String'>
+    readonly slug: FieldRef<"Tag", 'String'>
+    readonly type: FieldRef<"Tag", 'TagType'>
+    readonly description: FieldRef<"Tag", 'String'>
+    readonly color: FieldRef<"Tag", 'String'>
+    readonly parentId: FieldRef<"Tag", 'String'>
+    readonly usageCount: FieldRef<"Tag", 'Int'>
+    readonly createdAt: FieldRef<"Tag", 'DateTime'>
+    readonly updatedAt: FieldRef<"Tag", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Tag findUnique
+   */
+  export type TagFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+    /**
+     * Filter, which Tag to fetch.
+     */
+    where: TagWhereUniqueInput
+  }
+
+  /**
+   * Tag findUniqueOrThrow
+   */
+  export type TagFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+    /**
+     * Filter, which Tag to fetch.
+     */
+    where: TagWhereUniqueInput
+  }
+
+  /**
+   * Tag findFirst
+   */
+  export type TagFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+    /**
+     * Filter, which Tag to fetch.
+     */
+    where?: TagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Tags to fetch.
+     */
+    orderBy?: TagOrderByWithRelationInput | TagOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Tags.
+     */
+    cursor?: TagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Tags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Tags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Tags.
+     */
+    distinct?: TagScalarFieldEnum | TagScalarFieldEnum[]
+  }
+
+  /**
+   * Tag findFirstOrThrow
+   */
+  export type TagFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+    /**
+     * Filter, which Tag to fetch.
+     */
+    where?: TagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Tags to fetch.
+     */
+    orderBy?: TagOrderByWithRelationInput | TagOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Tags.
+     */
+    cursor?: TagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Tags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Tags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Tags.
+     */
+    distinct?: TagScalarFieldEnum | TagScalarFieldEnum[]
+  }
+
+  /**
+   * Tag findMany
+   */
+  export type TagFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+    /**
+     * Filter, which Tags to fetch.
+     */
+    where?: TagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Tags to fetch.
+     */
+    orderBy?: TagOrderByWithRelationInput | TagOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Tags.
+     */
+    cursor?: TagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Tags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Tags.
+     */
+    skip?: number
+    distinct?: TagScalarFieldEnum | TagScalarFieldEnum[]
+  }
+
+  /**
+   * Tag create
+   */
+  export type TagCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Tag.
+     */
+    data: XOR<TagCreateInput, TagUncheckedCreateInput>
+  }
+
+  /**
+   * Tag createMany
+   */
+  export type TagCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Tags.
+     */
+    data: TagCreateManyInput | TagCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Tag createManyAndReturn
+   */
+  export type TagCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Tags.
+     */
+    data: TagCreateManyInput | TagCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Tag update
+   */
+  export type TagUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Tag.
+     */
+    data: XOR<TagUpdateInput, TagUncheckedUpdateInput>
+    /**
+     * Choose, which Tag to update.
+     */
+    where: TagWhereUniqueInput
+  }
+
+  /**
+   * Tag updateMany
+   */
+  export type TagUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Tags.
+     */
+    data: XOR<TagUpdateManyMutationInput, TagUncheckedUpdateManyInput>
+    /**
+     * Filter which Tags to update
+     */
+    where?: TagWhereInput
+  }
+
+  /**
+   * Tag upsert
+   */
+  export type TagUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Tag to update in case it exists.
+     */
+    where: TagWhereUniqueInput
+    /**
+     * In case the Tag found by the `where` argument doesn't exist, create a new Tag with this data.
+     */
+    create: XOR<TagCreateInput, TagUncheckedCreateInput>
+    /**
+     * In case the Tag was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TagUpdateInput, TagUncheckedUpdateInput>
+  }
+
+  /**
+   * Tag delete
+   */
+  export type TagDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+    /**
+     * Filter which Tag to delete.
+     */
+    where: TagWhereUniqueInput
+  }
+
+  /**
+   * Tag deleteMany
+   */
+  export type TagDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Tags to delete
+     */
+    where?: TagWhereInput
+  }
+
+  /**
+   * Tag.parent
+   */
+  export type Tag$parentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+    where?: TagWhereInput
+  }
+
+  /**
+   * Tag.children
+   */
+  export type Tag$childrenArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+    where?: TagWhereInput
+    orderBy?: TagOrderByWithRelationInput | TagOrderByWithRelationInput[]
+    cursor?: TagWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TagScalarFieldEnum | TagScalarFieldEnum[]
+  }
+
+  /**
+   * Tag.contentTags
+   */
+  export type Tag$contentTagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentTag
+     */
+    select?: ContentTagSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContentTagInclude<ExtArgs> | null
+    where?: ContentTagWhereInput
+    orderBy?: ContentTagOrderByWithRelationInput | ContentTagOrderByWithRelationInput[]
+    cursor?: ContentTagWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ContentTagScalarFieldEnum | ContentTagScalarFieldEnum[]
+  }
+
+  /**
+   * Tag without action
+   */
+  export type TagDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model ContentTag
    */
 
   export type AggregateContentTag = {
     _count: ContentTagCountAggregateOutputType | null
+    _avg: ContentTagAvgAggregateOutputType | null
+    _sum: ContentTagSumAggregateOutputType | null
     _min: ContentTagMinAggregateOutputType | null
     _max: ContentTagMaxAggregateOutputType | null
+  }
+
+  export type ContentTagAvgAggregateOutputType = {
+    relevance: number | null
+  }
+
+  export type ContentTagSumAggregateOutputType = {
+    relevance: number | null
   }
 
   export type ContentTagMinAggregateOutputType = {
     id: string | null
     contentId: string | null
-    tag: string | null
+    tagId: string | null
+    relevance: number | null
     createdAt: Date | null
   }
 
   export type ContentTagMaxAggregateOutputType = {
     id: string | null
     contentId: string | null
-    tag: string | null
+    tagId: string | null
+    relevance: number | null
     createdAt: Date | null
   }
 
   export type ContentTagCountAggregateOutputType = {
     id: number
     contentId: number
-    tag: number
+    tagId: number
+    relevance: number
     createdAt: number
     _all: number
   }
 
 
+  export type ContentTagAvgAggregateInputType = {
+    relevance?: true
+  }
+
+  export type ContentTagSumAggregateInputType = {
+    relevance?: true
+  }
+
   export type ContentTagMinAggregateInputType = {
     id?: true
     contentId?: true
-    tag?: true
+    tagId?: true
+    relevance?: true
     createdAt?: true
   }
 
   export type ContentTagMaxAggregateInputType = {
     id?: true
     contentId?: true
-    tag?: true
+    tagId?: true
+    relevance?: true
     createdAt?: true
   }
 
   export type ContentTagCountAggregateInputType = {
     id?: true
     contentId?: true
-    tag?: true
+    tagId?: true
+    relevance?: true
     createdAt?: true
     _all?: true
   }
@@ -9348,6 +11390,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: ContentTagAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ContentTagSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: ContentTagMinAggregateInputType
@@ -9378,6 +11432,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: ContentTagCountAggregateInputType | true
+    _avg?: ContentTagAvgAggregateInputType
+    _sum?: ContentTagSumAggregateInputType
     _min?: ContentTagMinAggregateInputType
     _max?: ContentTagMaxAggregateInputType
   }
@@ -9385,9 +11441,12 @@ export namespace Prisma {
   export type ContentTagGroupByOutputType = {
     id: string
     contentId: string
-    tag: string
+    tagId: string
+    relevance: number | null
     createdAt: Date
     _count: ContentTagCountAggregateOutputType | null
+    _avg: ContentTagAvgAggregateOutputType | null
+    _sum: ContentTagSumAggregateOutputType | null
     _min: ContentTagMinAggregateOutputType | null
     _max: ContentTagMaxAggregateOutputType | null
   }
@@ -9409,42 +11468,51 @@ export namespace Prisma {
   export type ContentTagSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     contentId?: boolean
-    tag?: boolean
+    tagId?: boolean
+    relevance?: boolean
     createdAt?: boolean
     content?: boolean | ContentDefaultArgs<ExtArgs>
+    tag?: boolean | TagDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["contentTag"]>
 
   export type ContentTagSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     contentId?: boolean
-    tag?: boolean
+    tagId?: boolean
+    relevance?: boolean
     createdAt?: boolean
     content?: boolean | ContentDefaultArgs<ExtArgs>
+    tag?: boolean | TagDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["contentTag"]>
 
   export type ContentTagSelectScalar = {
     id?: boolean
     contentId?: boolean
-    tag?: boolean
+    tagId?: boolean
+    relevance?: boolean
     createdAt?: boolean
   }
 
   export type ContentTagInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     content?: boolean | ContentDefaultArgs<ExtArgs>
+    tag?: boolean | TagDefaultArgs<ExtArgs>
   }
   export type ContentTagIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     content?: boolean | ContentDefaultArgs<ExtArgs>
+    tag?: boolean | TagDefaultArgs<ExtArgs>
   }
 
   export type $ContentTagPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "ContentTag"
     objects: {
       content: Prisma.$ContentPayload<ExtArgs>
+      tag: Prisma.$TagPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       contentId: string
-      tag: string
+      tagId: string
+      relevance: number | null
       createdAt: Date
     }, ExtArgs["result"]["contentTag"]>
     composites: {}
@@ -9811,6 +11879,7 @@ export namespace Prisma {
   export interface Prisma__ContentTagClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     content<T extends ContentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ContentDefaultArgs<ExtArgs>>): Prisma__ContentClient<$Result.GetResult<Prisma.$ContentPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    tag<T extends TagDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TagDefaultArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9842,7 +11911,8 @@ export namespace Prisma {
   interface ContentTagFieldRefs {
     readonly id: FieldRef<"ContentTag", 'String'>
     readonly contentId: FieldRef<"ContentTag", 'String'>
-    readonly tag: FieldRef<"ContentTag", 'String'>
+    readonly tagId: FieldRef<"ContentTag", 'String'>
+    readonly relevance: FieldRef<"ContentTag", 'Float'>
     readonly createdAt: FieldRef<"ContentTag", 'DateTime'>
   }
     
@@ -14829,6 +16899,6252 @@ export namespace Prisma {
 
 
   /**
+   * Model ApiConfiguration
+   */
+
+  export type AggregateApiConfiguration = {
+    _count: ApiConfigurationCountAggregateOutputType | null
+    _avg: ApiConfigurationAvgAggregateOutputType | null
+    _sum: ApiConfigurationSumAggregateOutputType | null
+    _min: ApiConfigurationMinAggregateOutputType | null
+    _max: ApiConfigurationMaxAggregateOutputType | null
+  }
+
+  export type ApiConfigurationAvgAggregateOutputType = {
+    timeout: number | null
+    retryAttempts: number | null
+    retryDelay: number | null
+    totalCalls: number | null
+    successfulCalls: number | null
+    failedCalls: number | null
+  }
+
+  export type ApiConfigurationSumAggregateOutputType = {
+    timeout: number | null
+    retryAttempts: number | null
+    retryDelay: number | null
+    totalCalls: number | null
+    successfulCalls: number | null
+    failedCalls: number | null
+  }
+
+  export type ApiConfigurationMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    provider: string | null
+    baseUrl: string | null
+    authType: $Enums.ApiAuthType | null
+    status: $Enums.ApiConfigStatus | null
+    apiKey: string | null
+    token: string | null
+    username: string | null
+    password: string | null
+    headerName: string | null
+    timeout: number | null
+    retryAttempts: number | null
+    retryDelay: number | null
+    totalCalls: number | null
+    successfulCalls: number | null
+    failedCalls: number | null
+    lastCallAt: Date | null
+    lastError: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ApiConfigurationMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    provider: string | null
+    baseUrl: string | null
+    authType: $Enums.ApiAuthType | null
+    status: $Enums.ApiConfigStatus | null
+    apiKey: string | null
+    token: string | null
+    username: string | null
+    password: string | null
+    headerName: string | null
+    timeout: number | null
+    retryAttempts: number | null
+    retryDelay: number | null
+    totalCalls: number | null
+    successfulCalls: number | null
+    failedCalls: number | null
+    lastCallAt: Date | null
+    lastError: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ApiConfigurationCountAggregateOutputType = {
+    id: number
+    name: number
+    provider: number
+    baseUrl: number
+    authType: number
+    status: number
+    apiKey: number
+    token: number
+    username: number
+    password: number
+    headerName: number
+    rateLimit: number
+    timeout: number
+    retryAttempts: number
+    retryDelay: number
+    headers: number
+    totalCalls: number
+    successfulCalls: number
+    failedCalls: number
+    lastCallAt: number
+    lastError: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ApiConfigurationAvgAggregateInputType = {
+    timeout?: true
+    retryAttempts?: true
+    retryDelay?: true
+    totalCalls?: true
+    successfulCalls?: true
+    failedCalls?: true
+  }
+
+  export type ApiConfigurationSumAggregateInputType = {
+    timeout?: true
+    retryAttempts?: true
+    retryDelay?: true
+    totalCalls?: true
+    successfulCalls?: true
+    failedCalls?: true
+  }
+
+  export type ApiConfigurationMinAggregateInputType = {
+    id?: true
+    name?: true
+    provider?: true
+    baseUrl?: true
+    authType?: true
+    status?: true
+    apiKey?: true
+    token?: true
+    username?: true
+    password?: true
+    headerName?: true
+    timeout?: true
+    retryAttempts?: true
+    retryDelay?: true
+    totalCalls?: true
+    successfulCalls?: true
+    failedCalls?: true
+    lastCallAt?: true
+    lastError?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ApiConfigurationMaxAggregateInputType = {
+    id?: true
+    name?: true
+    provider?: true
+    baseUrl?: true
+    authType?: true
+    status?: true
+    apiKey?: true
+    token?: true
+    username?: true
+    password?: true
+    headerName?: true
+    timeout?: true
+    retryAttempts?: true
+    retryDelay?: true
+    totalCalls?: true
+    successfulCalls?: true
+    failedCalls?: true
+    lastCallAt?: true
+    lastError?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ApiConfigurationCountAggregateInputType = {
+    id?: true
+    name?: true
+    provider?: true
+    baseUrl?: true
+    authType?: true
+    status?: true
+    apiKey?: true
+    token?: true
+    username?: true
+    password?: true
+    headerName?: true
+    rateLimit?: true
+    timeout?: true
+    retryAttempts?: true
+    retryDelay?: true
+    headers?: true
+    totalCalls?: true
+    successfulCalls?: true
+    failedCalls?: true
+    lastCallAt?: true
+    lastError?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ApiConfigurationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ApiConfiguration to aggregate.
+     */
+    where?: ApiConfigurationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApiConfigurations to fetch.
+     */
+    orderBy?: ApiConfigurationOrderByWithRelationInput | ApiConfigurationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ApiConfigurationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApiConfigurations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApiConfigurations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ApiConfigurations
+    **/
+    _count?: true | ApiConfigurationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ApiConfigurationAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ApiConfigurationSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ApiConfigurationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ApiConfigurationMaxAggregateInputType
+  }
+
+  export type GetApiConfigurationAggregateType<T extends ApiConfigurationAggregateArgs> = {
+        [P in keyof T & keyof AggregateApiConfiguration]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateApiConfiguration[P]>
+      : GetScalarType<T[P], AggregateApiConfiguration[P]>
+  }
+
+
+
+
+  export type ApiConfigurationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApiConfigurationWhereInput
+    orderBy?: ApiConfigurationOrderByWithAggregationInput | ApiConfigurationOrderByWithAggregationInput[]
+    by: ApiConfigurationScalarFieldEnum[] | ApiConfigurationScalarFieldEnum
+    having?: ApiConfigurationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ApiConfigurationCountAggregateInputType | true
+    _avg?: ApiConfigurationAvgAggregateInputType
+    _sum?: ApiConfigurationSumAggregateInputType
+    _min?: ApiConfigurationMinAggregateInputType
+    _max?: ApiConfigurationMaxAggregateInputType
+  }
+
+  export type ApiConfigurationGroupByOutputType = {
+    id: string
+    name: string
+    provider: string
+    baseUrl: string
+    authType: $Enums.ApiAuthType
+    status: $Enums.ApiConfigStatus
+    apiKey: string | null
+    token: string | null
+    username: string | null
+    password: string | null
+    headerName: string | null
+    rateLimit: JsonValue | null
+    timeout: number | null
+    retryAttempts: number | null
+    retryDelay: number | null
+    headers: JsonValue | null
+    totalCalls: number
+    successfulCalls: number
+    failedCalls: number
+    lastCallAt: Date | null
+    lastError: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: ApiConfigurationCountAggregateOutputType | null
+    _avg: ApiConfigurationAvgAggregateOutputType | null
+    _sum: ApiConfigurationSumAggregateOutputType | null
+    _min: ApiConfigurationMinAggregateOutputType | null
+    _max: ApiConfigurationMaxAggregateOutputType | null
+  }
+
+  type GetApiConfigurationGroupByPayload<T extends ApiConfigurationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ApiConfigurationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ApiConfigurationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ApiConfigurationGroupByOutputType[P]>
+            : GetScalarType<T[P], ApiConfigurationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ApiConfigurationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    provider?: boolean
+    baseUrl?: boolean
+    authType?: boolean
+    status?: boolean
+    apiKey?: boolean
+    token?: boolean
+    username?: boolean
+    password?: boolean
+    headerName?: boolean
+    rateLimit?: boolean
+    timeout?: boolean
+    retryAttempts?: boolean
+    retryDelay?: boolean
+    headers?: boolean
+    totalCalls?: boolean
+    successfulCalls?: boolean
+    failedCalls?: boolean
+    lastCallAt?: boolean
+    lastError?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    apiCallLogs?: boolean | ApiConfiguration$apiCallLogsArgs<ExtArgs>
+    _count?: boolean | ApiConfigurationCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["apiConfiguration"]>
+
+  export type ApiConfigurationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    provider?: boolean
+    baseUrl?: boolean
+    authType?: boolean
+    status?: boolean
+    apiKey?: boolean
+    token?: boolean
+    username?: boolean
+    password?: boolean
+    headerName?: boolean
+    rateLimit?: boolean
+    timeout?: boolean
+    retryAttempts?: boolean
+    retryDelay?: boolean
+    headers?: boolean
+    totalCalls?: boolean
+    successfulCalls?: boolean
+    failedCalls?: boolean
+    lastCallAt?: boolean
+    lastError?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["apiConfiguration"]>
+
+  export type ApiConfigurationSelectScalar = {
+    id?: boolean
+    name?: boolean
+    provider?: boolean
+    baseUrl?: boolean
+    authType?: boolean
+    status?: boolean
+    apiKey?: boolean
+    token?: boolean
+    username?: boolean
+    password?: boolean
+    headerName?: boolean
+    rateLimit?: boolean
+    timeout?: boolean
+    retryAttempts?: boolean
+    retryDelay?: boolean
+    headers?: boolean
+    totalCalls?: boolean
+    successfulCalls?: boolean
+    failedCalls?: boolean
+    lastCallAt?: boolean
+    lastError?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ApiConfigurationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    apiCallLogs?: boolean | ApiConfiguration$apiCallLogsArgs<ExtArgs>
+    _count?: boolean | ApiConfigurationCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type ApiConfigurationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $ApiConfigurationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ApiConfiguration"
+    objects: {
+      apiCallLogs: Prisma.$ApiCallLogPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      provider: string
+      baseUrl: string
+      authType: $Enums.ApiAuthType
+      status: $Enums.ApiConfigStatus
+      apiKey: string | null
+      token: string | null
+      username: string | null
+      password: string | null
+      headerName: string | null
+      rateLimit: Prisma.JsonValue | null
+      timeout: number | null
+      retryAttempts: number | null
+      retryDelay: number | null
+      headers: Prisma.JsonValue | null
+      totalCalls: number
+      successfulCalls: number
+      failedCalls: number
+      lastCallAt: Date | null
+      lastError: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["apiConfiguration"]>
+    composites: {}
+  }
+
+  type ApiConfigurationGetPayload<S extends boolean | null | undefined | ApiConfigurationDefaultArgs> = $Result.GetResult<Prisma.$ApiConfigurationPayload, S>
+
+  type ApiConfigurationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<ApiConfigurationFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: ApiConfigurationCountAggregateInputType | true
+    }
+
+  export interface ApiConfigurationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ApiConfiguration'], meta: { name: 'ApiConfiguration' } }
+    /**
+     * Find zero or one ApiConfiguration that matches the filter.
+     * @param {ApiConfigurationFindUniqueArgs} args - Arguments to find a ApiConfiguration
+     * @example
+     * // Get one ApiConfiguration
+     * const apiConfiguration = await prisma.apiConfiguration.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ApiConfigurationFindUniqueArgs>(args: SelectSubset<T, ApiConfigurationFindUniqueArgs<ExtArgs>>): Prisma__ApiConfigurationClient<$Result.GetResult<Prisma.$ApiConfigurationPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one ApiConfiguration that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {ApiConfigurationFindUniqueOrThrowArgs} args - Arguments to find a ApiConfiguration
+     * @example
+     * // Get one ApiConfiguration
+     * const apiConfiguration = await prisma.apiConfiguration.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ApiConfigurationFindUniqueOrThrowArgs>(args: SelectSubset<T, ApiConfigurationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ApiConfigurationClient<$Result.GetResult<Prisma.$ApiConfigurationPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first ApiConfiguration that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApiConfigurationFindFirstArgs} args - Arguments to find a ApiConfiguration
+     * @example
+     * // Get one ApiConfiguration
+     * const apiConfiguration = await prisma.apiConfiguration.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ApiConfigurationFindFirstArgs>(args?: SelectSubset<T, ApiConfigurationFindFirstArgs<ExtArgs>>): Prisma__ApiConfigurationClient<$Result.GetResult<Prisma.$ApiConfigurationPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first ApiConfiguration that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApiConfigurationFindFirstOrThrowArgs} args - Arguments to find a ApiConfiguration
+     * @example
+     * // Get one ApiConfiguration
+     * const apiConfiguration = await prisma.apiConfiguration.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ApiConfigurationFindFirstOrThrowArgs>(args?: SelectSubset<T, ApiConfigurationFindFirstOrThrowArgs<ExtArgs>>): Prisma__ApiConfigurationClient<$Result.GetResult<Prisma.$ApiConfigurationPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more ApiConfigurations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApiConfigurationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ApiConfigurations
+     * const apiConfigurations = await prisma.apiConfiguration.findMany()
+     * 
+     * // Get first 10 ApiConfigurations
+     * const apiConfigurations = await prisma.apiConfiguration.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const apiConfigurationWithIdOnly = await prisma.apiConfiguration.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ApiConfigurationFindManyArgs>(args?: SelectSubset<T, ApiConfigurationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApiConfigurationPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a ApiConfiguration.
+     * @param {ApiConfigurationCreateArgs} args - Arguments to create a ApiConfiguration.
+     * @example
+     * // Create one ApiConfiguration
+     * const ApiConfiguration = await prisma.apiConfiguration.create({
+     *   data: {
+     *     // ... data to create a ApiConfiguration
+     *   }
+     * })
+     * 
+     */
+    create<T extends ApiConfigurationCreateArgs>(args: SelectSubset<T, ApiConfigurationCreateArgs<ExtArgs>>): Prisma__ApiConfigurationClient<$Result.GetResult<Prisma.$ApiConfigurationPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many ApiConfigurations.
+     * @param {ApiConfigurationCreateManyArgs} args - Arguments to create many ApiConfigurations.
+     * @example
+     * // Create many ApiConfigurations
+     * const apiConfiguration = await prisma.apiConfiguration.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ApiConfigurationCreateManyArgs>(args?: SelectSubset<T, ApiConfigurationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ApiConfigurations and returns the data saved in the database.
+     * @param {ApiConfigurationCreateManyAndReturnArgs} args - Arguments to create many ApiConfigurations.
+     * @example
+     * // Create many ApiConfigurations
+     * const apiConfiguration = await prisma.apiConfiguration.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ApiConfigurations and only return the `id`
+     * const apiConfigurationWithIdOnly = await prisma.apiConfiguration.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ApiConfigurationCreateManyAndReturnArgs>(args?: SelectSubset<T, ApiConfigurationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApiConfigurationPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a ApiConfiguration.
+     * @param {ApiConfigurationDeleteArgs} args - Arguments to delete one ApiConfiguration.
+     * @example
+     * // Delete one ApiConfiguration
+     * const ApiConfiguration = await prisma.apiConfiguration.delete({
+     *   where: {
+     *     // ... filter to delete one ApiConfiguration
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ApiConfigurationDeleteArgs>(args: SelectSubset<T, ApiConfigurationDeleteArgs<ExtArgs>>): Prisma__ApiConfigurationClient<$Result.GetResult<Prisma.$ApiConfigurationPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one ApiConfiguration.
+     * @param {ApiConfigurationUpdateArgs} args - Arguments to update one ApiConfiguration.
+     * @example
+     * // Update one ApiConfiguration
+     * const apiConfiguration = await prisma.apiConfiguration.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ApiConfigurationUpdateArgs>(args: SelectSubset<T, ApiConfigurationUpdateArgs<ExtArgs>>): Prisma__ApiConfigurationClient<$Result.GetResult<Prisma.$ApiConfigurationPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more ApiConfigurations.
+     * @param {ApiConfigurationDeleteManyArgs} args - Arguments to filter ApiConfigurations to delete.
+     * @example
+     * // Delete a few ApiConfigurations
+     * const { count } = await prisma.apiConfiguration.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ApiConfigurationDeleteManyArgs>(args?: SelectSubset<T, ApiConfigurationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ApiConfigurations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApiConfigurationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ApiConfigurations
+     * const apiConfiguration = await prisma.apiConfiguration.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ApiConfigurationUpdateManyArgs>(args: SelectSubset<T, ApiConfigurationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ApiConfiguration.
+     * @param {ApiConfigurationUpsertArgs} args - Arguments to update or create a ApiConfiguration.
+     * @example
+     * // Update or create a ApiConfiguration
+     * const apiConfiguration = await prisma.apiConfiguration.upsert({
+     *   create: {
+     *     // ... data to create a ApiConfiguration
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ApiConfiguration we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ApiConfigurationUpsertArgs>(args: SelectSubset<T, ApiConfigurationUpsertArgs<ExtArgs>>): Prisma__ApiConfigurationClient<$Result.GetResult<Prisma.$ApiConfigurationPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of ApiConfigurations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApiConfigurationCountArgs} args - Arguments to filter ApiConfigurations to count.
+     * @example
+     * // Count the number of ApiConfigurations
+     * const count = await prisma.apiConfiguration.count({
+     *   where: {
+     *     // ... the filter for the ApiConfigurations we want to count
+     *   }
+     * })
+    **/
+    count<T extends ApiConfigurationCountArgs>(
+      args?: Subset<T, ApiConfigurationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ApiConfigurationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ApiConfiguration.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApiConfigurationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ApiConfigurationAggregateArgs>(args: Subset<T, ApiConfigurationAggregateArgs>): Prisma.PrismaPromise<GetApiConfigurationAggregateType<T>>
+
+    /**
+     * Group by ApiConfiguration.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApiConfigurationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ApiConfigurationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ApiConfigurationGroupByArgs['orderBy'] }
+        : { orderBy?: ApiConfigurationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ApiConfigurationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetApiConfigurationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ApiConfiguration model
+   */
+  readonly fields: ApiConfigurationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ApiConfiguration.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ApiConfigurationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    apiCallLogs<T extends ApiConfiguration$apiCallLogsArgs<ExtArgs> = {}>(args?: Subset<T, ApiConfiguration$apiCallLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApiCallLogPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ApiConfiguration model
+   */ 
+  interface ApiConfigurationFieldRefs {
+    readonly id: FieldRef<"ApiConfiguration", 'String'>
+    readonly name: FieldRef<"ApiConfiguration", 'String'>
+    readonly provider: FieldRef<"ApiConfiguration", 'String'>
+    readonly baseUrl: FieldRef<"ApiConfiguration", 'String'>
+    readonly authType: FieldRef<"ApiConfiguration", 'ApiAuthType'>
+    readonly status: FieldRef<"ApiConfiguration", 'ApiConfigStatus'>
+    readonly apiKey: FieldRef<"ApiConfiguration", 'String'>
+    readonly token: FieldRef<"ApiConfiguration", 'String'>
+    readonly username: FieldRef<"ApiConfiguration", 'String'>
+    readonly password: FieldRef<"ApiConfiguration", 'String'>
+    readonly headerName: FieldRef<"ApiConfiguration", 'String'>
+    readonly rateLimit: FieldRef<"ApiConfiguration", 'Json'>
+    readonly timeout: FieldRef<"ApiConfiguration", 'Int'>
+    readonly retryAttempts: FieldRef<"ApiConfiguration", 'Int'>
+    readonly retryDelay: FieldRef<"ApiConfiguration", 'Int'>
+    readonly headers: FieldRef<"ApiConfiguration", 'Json'>
+    readonly totalCalls: FieldRef<"ApiConfiguration", 'Int'>
+    readonly successfulCalls: FieldRef<"ApiConfiguration", 'Int'>
+    readonly failedCalls: FieldRef<"ApiConfiguration", 'Int'>
+    readonly lastCallAt: FieldRef<"ApiConfiguration", 'DateTime'>
+    readonly lastError: FieldRef<"ApiConfiguration", 'String'>
+    readonly createdAt: FieldRef<"ApiConfiguration", 'DateTime'>
+    readonly updatedAt: FieldRef<"ApiConfiguration", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ApiConfiguration findUnique
+   */
+  export type ApiConfigurationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiConfiguration
+     */
+    select?: ApiConfigurationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApiConfigurationInclude<ExtArgs> | null
+    /**
+     * Filter, which ApiConfiguration to fetch.
+     */
+    where: ApiConfigurationWhereUniqueInput
+  }
+
+  /**
+   * ApiConfiguration findUniqueOrThrow
+   */
+  export type ApiConfigurationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiConfiguration
+     */
+    select?: ApiConfigurationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApiConfigurationInclude<ExtArgs> | null
+    /**
+     * Filter, which ApiConfiguration to fetch.
+     */
+    where: ApiConfigurationWhereUniqueInput
+  }
+
+  /**
+   * ApiConfiguration findFirst
+   */
+  export type ApiConfigurationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiConfiguration
+     */
+    select?: ApiConfigurationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApiConfigurationInclude<ExtArgs> | null
+    /**
+     * Filter, which ApiConfiguration to fetch.
+     */
+    where?: ApiConfigurationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApiConfigurations to fetch.
+     */
+    orderBy?: ApiConfigurationOrderByWithRelationInput | ApiConfigurationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ApiConfigurations.
+     */
+    cursor?: ApiConfigurationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApiConfigurations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApiConfigurations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ApiConfigurations.
+     */
+    distinct?: ApiConfigurationScalarFieldEnum | ApiConfigurationScalarFieldEnum[]
+  }
+
+  /**
+   * ApiConfiguration findFirstOrThrow
+   */
+  export type ApiConfigurationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiConfiguration
+     */
+    select?: ApiConfigurationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApiConfigurationInclude<ExtArgs> | null
+    /**
+     * Filter, which ApiConfiguration to fetch.
+     */
+    where?: ApiConfigurationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApiConfigurations to fetch.
+     */
+    orderBy?: ApiConfigurationOrderByWithRelationInput | ApiConfigurationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ApiConfigurations.
+     */
+    cursor?: ApiConfigurationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApiConfigurations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApiConfigurations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ApiConfigurations.
+     */
+    distinct?: ApiConfigurationScalarFieldEnum | ApiConfigurationScalarFieldEnum[]
+  }
+
+  /**
+   * ApiConfiguration findMany
+   */
+  export type ApiConfigurationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiConfiguration
+     */
+    select?: ApiConfigurationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApiConfigurationInclude<ExtArgs> | null
+    /**
+     * Filter, which ApiConfigurations to fetch.
+     */
+    where?: ApiConfigurationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApiConfigurations to fetch.
+     */
+    orderBy?: ApiConfigurationOrderByWithRelationInput | ApiConfigurationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ApiConfigurations.
+     */
+    cursor?: ApiConfigurationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApiConfigurations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApiConfigurations.
+     */
+    skip?: number
+    distinct?: ApiConfigurationScalarFieldEnum | ApiConfigurationScalarFieldEnum[]
+  }
+
+  /**
+   * ApiConfiguration create
+   */
+  export type ApiConfigurationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiConfiguration
+     */
+    select?: ApiConfigurationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApiConfigurationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ApiConfiguration.
+     */
+    data: XOR<ApiConfigurationCreateInput, ApiConfigurationUncheckedCreateInput>
+  }
+
+  /**
+   * ApiConfiguration createMany
+   */
+  export type ApiConfigurationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ApiConfigurations.
+     */
+    data: ApiConfigurationCreateManyInput | ApiConfigurationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ApiConfiguration createManyAndReturn
+   */
+  export type ApiConfigurationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiConfiguration
+     */
+    select?: ApiConfigurationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many ApiConfigurations.
+     */
+    data: ApiConfigurationCreateManyInput | ApiConfigurationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ApiConfiguration update
+   */
+  export type ApiConfigurationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiConfiguration
+     */
+    select?: ApiConfigurationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApiConfigurationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ApiConfiguration.
+     */
+    data: XOR<ApiConfigurationUpdateInput, ApiConfigurationUncheckedUpdateInput>
+    /**
+     * Choose, which ApiConfiguration to update.
+     */
+    where: ApiConfigurationWhereUniqueInput
+  }
+
+  /**
+   * ApiConfiguration updateMany
+   */
+  export type ApiConfigurationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ApiConfigurations.
+     */
+    data: XOR<ApiConfigurationUpdateManyMutationInput, ApiConfigurationUncheckedUpdateManyInput>
+    /**
+     * Filter which ApiConfigurations to update
+     */
+    where?: ApiConfigurationWhereInput
+  }
+
+  /**
+   * ApiConfiguration upsert
+   */
+  export type ApiConfigurationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiConfiguration
+     */
+    select?: ApiConfigurationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApiConfigurationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ApiConfiguration to update in case it exists.
+     */
+    where: ApiConfigurationWhereUniqueInput
+    /**
+     * In case the ApiConfiguration found by the `where` argument doesn't exist, create a new ApiConfiguration with this data.
+     */
+    create: XOR<ApiConfigurationCreateInput, ApiConfigurationUncheckedCreateInput>
+    /**
+     * In case the ApiConfiguration was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ApiConfigurationUpdateInput, ApiConfigurationUncheckedUpdateInput>
+  }
+
+  /**
+   * ApiConfiguration delete
+   */
+  export type ApiConfigurationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiConfiguration
+     */
+    select?: ApiConfigurationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApiConfigurationInclude<ExtArgs> | null
+    /**
+     * Filter which ApiConfiguration to delete.
+     */
+    where: ApiConfigurationWhereUniqueInput
+  }
+
+  /**
+   * ApiConfiguration deleteMany
+   */
+  export type ApiConfigurationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ApiConfigurations to delete
+     */
+    where?: ApiConfigurationWhereInput
+  }
+
+  /**
+   * ApiConfiguration.apiCallLogs
+   */
+  export type ApiConfiguration$apiCallLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiCallLog
+     */
+    select?: ApiCallLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApiCallLogInclude<ExtArgs> | null
+    where?: ApiCallLogWhereInput
+    orderBy?: ApiCallLogOrderByWithRelationInput | ApiCallLogOrderByWithRelationInput[]
+    cursor?: ApiCallLogWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ApiCallLogScalarFieldEnum | ApiCallLogScalarFieldEnum[]
+  }
+
+  /**
+   * ApiConfiguration without action
+   */
+  export type ApiConfigurationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiConfiguration
+     */
+    select?: ApiConfigurationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApiConfigurationInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ApiCallLog
+   */
+
+  export type AggregateApiCallLog = {
+    _count: ApiCallLogCountAggregateOutputType | null
+    _avg: ApiCallLogAvgAggregateOutputType | null
+    _sum: ApiCallLogSumAggregateOutputType | null
+    _min: ApiCallLogMinAggregateOutputType | null
+    _max: ApiCallLogMaxAggregateOutputType | null
+  }
+
+  export type ApiCallLogAvgAggregateOutputType = {
+    statusCode: number | null
+    duration: number | null
+  }
+
+  export type ApiCallLogSumAggregateOutputType = {
+    statusCode: number | null
+    duration: number | null
+  }
+
+  export type ApiCallLogMinAggregateOutputType = {
+    id: string | null
+    configId: string | null
+    method: string | null
+    endpoint: string | null
+    statusCode: number | null
+    duration: number | null
+    success: boolean | null
+    errorMessage: string | null
+    createdAt: Date | null
+  }
+
+  export type ApiCallLogMaxAggregateOutputType = {
+    id: string | null
+    configId: string | null
+    method: string | null
+    endpoint: string | null
+    statusCode: number | null
+    duration: number | null
+    success: boolean | null
+    errorMessage: string | null
+    createdAt: Date | null
+  }
+
+  export type ApiCallLogCountAggregateOutputType = {
+    id: number
+    configId: number
+    method: number
+    endpoint: number
+    requestHeaders: number
+    requestBody: number
+    statusCode: number
+    responseHeaders: number
+    responseBody: number
+    duration: number
+    success: number
+    errorMessage: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type ApiCallLogAvgAggregateInputType = {
+    statusCode?: true
+    duration?: true
+  }
+
+  export type ApiCallLogSumAggregateInputType = {
+    statusCode?: true
+    duration?: true
+  }
+
+  export type ApiCallLogMinAggregateInputType = {
+    id?: true
+    configId?: true
+    method?: true
+    endpoint?: true
+    statusCode?: true
+    duration?: true
+    success?: true
+    errorMessage?: true
+    createdAt?: true
+  }
+
+  export type ApiCallLogMaxAggregateInputType = {
+    id?: true
+    configId?: true
+    method?: true
+    endpoint?: true
+    statusCode?: true
+    duration?: true
+    success?: true
+    errorMessage?: true
+    createdAt?: true
+  }
+
+  export type ApiCallLogCountAggregateInputType = {
+    id?: true
+    configId?: true
+    method?: true
+    endpoint?: true
+    requestHeaders?: true
+    requestBody?: true
+    statusCode?: true
+    responseHeaders?: true
+    responseBody?: true
+    duration?: true
+    success?: true
+    errorMessage?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type ApiCallLogAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ApiCallLog to aggregate.
+     */
+    where?: ApiCallLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApiCallLogs to fetch.
+     */
+    orderBy?: ApiCallLogOrderByWithRelationInput | ApiCallLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ApiCallLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApiCallLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApiCallLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ApiCallLogs
+    **/
+    _count?: true | ApiCallLogCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ApiCallLogAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ApiCallLogSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ApiCallLogMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ApiCallLogMaxAggregateInputType
+  }
+
+  export type GetApiCallLogAggregateType<T extends ApiCallLogAggregateArgs> = {
+        [P in keyof T & keyof AggregateApiCallLog]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateApiCallLog[P]>
+      : GetScalarType<T[P], AggregateApiCallLog[P]>
+  }
+
+
+
+
+  export type ApiCallLogGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApiCallLogWhereInput
+    orderBy?: ApiCallLogOrderByWithAggregationInput | ApiCallLogOrderByWithAggregationInput[]
+    by: ApiCallLogScalarFieldEnum[] | ApiCallLogScalarFieldEnum
+    having?: ApiCallLogScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ApiCallLogCountAggregateInputType | true
+    _avg?: ApiCallLogAvgAggregateInputType
+    _sum?: ApiCallLogSumAggregateInputType
+    _min?: ApiCallLogMinAggregateInputType
+    _max?: ApiCallLogMaxAggregateInputType
+  }
+
+  export type ApiCallLogGroupByOutputType = {
+    id: string
+    configId: string
+    method: string
+    endpoint: string
+    requestHeaders: JsonValue | null
+    requestBody: JsonValue | null
+    statusCode: number | null
+    responseHeaders: JsonValue | null
+    responseBody: JsonValue | null
+    duration: number | null
+    success: boolean
+    errorMessage: string | null
+    createdAt: Date
+    _count: ApiCallLogCountAggregateOutputType | null
+    _avg: ApiCallLogAvgAggregateOutputType | null
+    _sum: ApiCallLogSumAggregateOutputType | null
+    _min: ApiCallLogMinAggregateOutputType | null
+    _max: ApiCallLogMaxAggregateOutputType | null
+  }
+
+  type GetApiCallLogGroupByPayload<T extends ApiCallLogGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ApiCallLogGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ApiCallLogGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ApiCallLogGroupByOutputType[P]>
+            : GetScalarType<T[P], ApiCallLogGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ApiCallLogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    configId?: boolean
+    method?: boolean
+    endpoint?: boolean
+    requestHeaders?: boolean
+    requestBody?: boolean
+    statusCode?: boolean
+    responseHeaders?: boolean
+    responseBody?: boolean
+    duration?: boolean
+    success?: boolean
+    errorMessage?: boolean
+    createdAt?: boolean
+    config?: boolean | ApiConfigurationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["apiCallLog"]>
+
+  export type ApiCallLogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    configId?: boolean
+    method?: boolean
+    endpoint?: boolean
+    requestHeaders?: boolean
+    requestBody?: boolean
+    statusCode?: boolean
+    responseHeaders?: boolean
+    responseBody?: boolean
+    duration?: boolean
+    success?: boolean
+    errorMessage?: boolean
+    createdAt?: boolean
+    config?: boolean | ApiConfigurationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["apiCallLog"]>
+
+  export type ApiCallLogSelectScalar = {
+    id?: boolean
+    configId?: boolean
+    method?: boolean
+    endpoint?: boolean
+    requestHeaders?: boolean
+    requestBody?: boolean
+    statusCode?: boolean
+    responseHeaders?: boolean
+    responseBody?: boolean
+    duration?: boolean
+    success?: boolean
+    errorMessage?: boolean
+    createdAt?: boolean
+  }
+
+  export type ApiCallLogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    config?: boolean | ApiConfigurationDefaultArgs<ExtArgs>
+  }
+  export type ApiCallLogIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    config?: boolean | ApiConfigurationDefaultArgs<ExtArgs>
+  }
+
+  export type $ApiCallLogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ApiCallLog"
+    objects: {
+      config: Prisma.$ApiConfigurationPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      configId: string
+      method: string
+      endpoint: string
+      requestHeaders: Prisma.JsonValue | null
+      requestBody: Prisma.JsonValue | null
+      statusCode: number | null
+      responseHeaders: Prisma.JsonValue | null
+      responseBody: Prisma.JsonValue | null
+      duration: number | null
+      success: boolean
+      errorMessage: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["apiCallLog"]>
+    composites: {}
+  }
+
+  type ApiCallLogGetPayload<S extends boolean | null | undefined | ApiCallLogDefaultArgs> = $Result.GetResult<Prisma.$ApiCallLogPayload, S>
+
+  type ApiCallLogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<ApiCallLogFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: ApiCallLogCountAggregateInputType | true
+    }
+
+  export interface ApiCallLogDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ApiCallLog'], meta: { name: 'ApiCallLog' } }
+    /**
+     * Find zero or one ApiCallLog that matches the filter.
+     * @param {ApiCallLogFindUniqueArgs} args - Arguments to find a ApiCallLog
+     * @example
+     * // Get one ApiCallLog
+     * const apiCallLog = await prisma.apiCallLog.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ApiCallLogFindUniqueArgs>(args: SelectSubset<T, ApiCallLogFindUniqueArgs<ExtArgs>>): Prisma__ApiCallLogClient<$Result.GetResult<Prisma.$ApiCallLogPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one ApiCallLog that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {ApiCallLogFindUniqueOrThrowArgs} args - Arguments to find a ApiCallLog
+     * @example
+     * // Get one ApiCallLog
+     * const apiCallLog = await prisma.apiCallLog.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ApiCallLogFindUniqueOrThrowArgs>(args: SelectSubset<T, ApiCallLogFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ApiCallLogClient<$Result.GetResult<Prisma.$ApiCallLogPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first ApiCallLog that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApiCallLogFindFirstArgs} args - Arguments to find a ApiCallLog
+     * @example
+     * // Get one ApiCallLog
+     * const apiCallLog = await prisma.apiCallLog.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ApiCallLogFindFirstArgs>(args?: SelectSubset<T, ApiCallLogFindFirstArgs<ExtArgs>>): Prisma__ApiCallLogClient<$Result.GetResult<Prisma.$ApiCallLogPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first ApiCallLog that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApiCallLogFindFirstOrThrowArgs} args - Arguments to find a ApiCallLog
+     * @example
+     * // Get one ApiCallLog
+     * const apiCallLog = await prisma.apiCallLog.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ApiCallLogFindFirstOrThrowArgs>(args?: SelectSubset<T, ApiCallLogFindFirstOrThrowArgs<ExtArgs>>): Prisma__ApiCallLogClient<$Result.GetResult<Prisma.$ApiCallLogPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more ApiCallLogs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApiCallLogFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ApiCallLogs
+     * const apiCallLogs = await prisma.apiCallLog.findMany()
+     * 
+     * // Get first 10 ApiCallLogs
+     * const apiCallLogs = await prisma.apiCallLog.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const apiCallLogWithIdOnly = await prisma.apiCallLog.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ApiCallLogFindManyArgs>(args?: SelectSubset<T, ApiCallLogFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApiCallLogPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a ApiCallLog.
+     * @param {ApiCallLogCreateArgs} args - Arguments to create a ApiCallLog.
+     * @example
+     * // Create one ApiCallLog
+     * const ApiCallLog = await prisma.apiCallLog.create({
+     *   data: {
+     *     // ... data to create a ApiCallLog
+     *   }
+     * })
+     * 
+     */
+    create<T extends ApiCallLogCreateArgs>(args: SelectSubset<T, ApiCallLogCreateArgs<ExtArgs>>): Prisma__ApiCallLogClient<$Result.GetResult<Prisma.$ApiCallLogPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many ApiCallLogs.
+     * @param {ApiCallLogCreateManyArgs} args - Arguments to create many ApiCallLogs.
+     * @example
+     * // Create many ApiCallLogs
+     * const apiCallLog = await prisma.apiCallLog.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ApiCallLogCreateManyArgs>(args?: SelectSubset<T, ApiCallLogCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ApiCallLogs and returns the data saved in the database.
+     * @param {ApiCallLogCreateManyAndReturnArgs} args - Arguments to create many ApiCallLogs.
+     * @example
+     * // Create many ApiCallLogs
+     * const apiCallLog = await prisma.apiCallLog.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ApiCallLogs and only return the `id`
+     * const apiCallLogWithIdOnly = await prisma.apiCallLog.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ApiCallLogCreateManyAndReturnArgs>(args?: SelectSubset<T, ApiCallLogCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApiCallLogPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a ApiCallLog.
+     * @param {ApiCallLogDeleteArgs} args - Arguments to delete one ApiCallLog.
+     * @example
+     * // Delete one ApiCallLog
+     * const ApiCallLog = await prisma.apiCallLog.delete({
+     *   where: {
+     *     // ... filter to delete one ApiCallLog
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ApiCallLogDeleteArgs>(args: SelectSubset<T, ApiCallLogDeleteArgs<ExtArgs>>): Prisma__ApiCallLogClient<$Result.GetResult<Prisma.$ApiCallLogPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one ApiCallLog.
+     * @param {ApiCallLogUpdateArgs} args - Arguments to update one ApiCallLog.
+     * @example
+     * // Update one ApiCallLog
+     * const apiCallLog = await prisma.apiCallLog.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ApiCallLogUpdateArgs>(args: SelectSubset<T, ApiCallLogUpdateArgs<ExtArgs>>): Prisma__ApiCallLogClient<$Result.GetResult<Prisma.$ApiCallLogPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more ApiCallLogs.
+     * @param {ApiCallLogDeleteManyArgs} args - Arguments to filter ApiCallLogs to delete.
+     * @example
+     * // Delete a few ApiCallLogs
+     * const { count } = await prisma.apiCallLog.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ApiCallLogDeleteManyArgs>(args?: SelectSubset<T, ApiCallLogDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ApiCallLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApiCallLogUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ApiCallLogs
+     * const apiCallLog = await prisma.apiCallLog.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ApiCallLogUpdateManyArgs>(args: SelectSubset<T, ApiCallLogUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ApiCallLog.
+     * @param {ApiCallLogUpsertArgs} args - Arguments to update or create a ApiCallLog.
+     * @example
+     * // Update or create a ApiCallLog
+     * const apiCallLog = await prisma.apiCallLog.upsert({
+     *   create: {
+     *     // ... data to create a ApiCallLog
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ApiCallLog we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ApiCallLogUpsertArgs>(args: SelectSubset<T, ApiCallLogUpsertArgs<ExtArgs>>): Prisma__ApiCallLogClient<$Result.GetResult<Prisma.$ApiCallLogPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of ApiCallLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApiCallLogCountArgs} args - Arguments to filter ApiCallLogs to count.
+     * @example
+     * // Count the number of ApiCallLogs
+     * const count = await prisma.apiCallLog.count({
+     *   where: {
+     *     // ... the filter for the ApiCallLogs we want to count
+     *   }
+     * })
+    **/
+    count<T extends ApiCallLogCountArgs>(
+      args?: Subset<T, ApiCallLogCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ApiCallLogCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ApiCallLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApiCallLogAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ApiCallLogAggregateArgs>(args: Subset<T, ApiCallLogAggregateArgs>): Prisma.PrismaPromise<GetApiCallLogAggregateType<T>>
+
+    /**
+     * Group by ApiCallLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApiCallLogGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ApiCallLogGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ApiCallLogGroupByArgs['orderBy'] }
+        : { orderBy?: ApiCallLogGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ApiCallLogGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetApiCallLogGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ApiCallLog model
+   */
+  readonly fields: ApiCallLogFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ApiCallLog.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ApiCallLogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    config<T extends ApiConfigurationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ApiConfigurationDefaultArgs<ExtArgs>>): Prisma__ApiConfigurationClient<$Result.GetResult<Prisma.$ApiConfigurationPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ApiCallLog model
+   */ 
+  interface ApiCallLogFieldRefs {
+    readonly id: FieldRef<"ApiCallLog", 'String'>
+    readonly configId: FieldRef<"ApiCallLog", 'String'>
+    readonly method: FieldRef<"ApiCallLog", 'String'>
+    readonly endpoint: FieldRef<"ApiCallLog", 'String'>
+    readonly requestHeaders: FieldRef<"ApiCallLog", 'Json'>
+    readonly requestBody: FieldRef<"ApiCallLog", 'Json'>
+    readonly statusCode: FieldRef<"ApiCallLog", 'Int'>
+    readonly responseHeaders: FieldRef<"ApiCallLog", 'Json'>
+    readonly responseBody: FieldRef<"ApiCallLog", 'Json'>
+    readonly duration: FieldRef<"ApiCallLog", 'Int'>
+    readonly success: FieldRef<"ApiCallLog", 'Boolean'>
+    readonly errorMessage: FieldRef<"ApiCallLog", 'String'>
+    readonly createdAt: FieldRef<"ApiCallLog", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ApiCallLog findUnique
+   */
+  export type ApiCallLogFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiCallLog
+     */
+    select?: ApiCallLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApiCallLogInclude<ExtArgs> | null
+    /**
+     * Filter, which ApiCallLog to fetch.
+     */
+    where: ApiCallLogWhereUniqueInput
+  }
+
+  /**
+   * ApiCallLog findUniqueOrThrow
+   */
+  export type ApiCallLogFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiCallLog
+     */
+    select?: ApiCallLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApiCallLogInclude<ExtArgs> | null
+    /**
+     * Filter, which ApiCallLog to fetch.
+     */
+    where: ApiCallLogWhereUniqueInput
+  }
+
+  /**
+   * ApiCallLog findFirst
+   */
+  export type ApiCallLogFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiCallLog
+     */
+    select?: ApiCallLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApiCallLogInclude<ExtArgs> | null
+    /**
+     * Filter, which ApiCallLog to fetch.
+     */
+    where?: ApiCallLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApiCallLogs to fetch.
+     */
+    orderBy?: ApiCallLogOrderByWithRelationInput | ApiCallLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ApiCallLogs.
+     */
+    cursor?: ApiCallLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApiCallLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApiCallLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ApiCallLogs.
+     */
+    distinct?: ApiCallLogScalarFieldEnum | ApiCallLogScalarFieldEnum[]
+  }
+
+  /**
+   * ApiCallLog findFirstOrThrow
+   */
+  export type ApiCallLogFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiCallLog
+     */
+    select?: ApiCallLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApiCallLogInclude<ExtArgs> | null
+    /**
+     * Filter, which ApiCallLog to fetch.
+     */
+    where?: ApiCallLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApiCallLogs to fetch.
+     */
+    orderBy?: ApiCallLogOrderByWithRelationInput | ApiCallLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ApiCallLogs.
+     */
+    cursor?: ApiCallLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApiCallLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApiCallLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ApiCallLogs.
+     */
+    distinct?: ApiCallLogScalarFieldEnum | ApiCallLogScalarFieldEnum[]
+  }
+
+  /**
+   * ApiCallLog findMany
+   */
+  export type ApiCallLogFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiCallLog
+     */
+    select?: ApiCallLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApiCallLogInclude<ExtArgs> | null
+    /**
+     * Filter, which ApiCallLogs to fetch.
+     */
+    where?: ApiCallLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApiCallLogs to fetch.
+     */
+    orderBy?: ApiCallLogOrderByWithRelationInput | ApiCallLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ApiCallLogs.
+     */
+    cursor?: ApiCallLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApiCallLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApiCallLogs.
+     */
+    skip?: number
+    distinct?: ApiCallLogScalarFieldEnum | ApiCallLogScalarFieldEnum[]
+  }
+
+  /**
+   * ApiCallLog create
+   */
+  export type ApiCallLogCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiCallLog
+     */
+    select?: ApiCallLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApiCallLogInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ApiCallLog.
+     */
+    data: XOR<ApiCallLogCreateInput, ApiCallLogUncheckedCreateInput>
+  }
+
+  /**
+   * ApiCallLog createMany
+   */
+  export type ApiCallLogCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ApiCallLogs.
+     */
+    data: ApiCallLogCreateManyInput | ApiCallLogCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ApiCallLog createManyAndReturn
+   */
+  export type ApiCallLogCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiCallLog
+     */
+    select?: ApiCallLogSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many ApiCallLogs.
+     */
+    data: ApiCallLogCreateManyInput | ApiCallLogCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApiCallLogIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ApiCallLog update
+   */
+  export type ApiCallLogUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiCallLog
+     */
+    select?: ApiCallLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApiCallLogInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ApiCallLog.
+     */
+    data: XOR<ApiCallLogUpdateInput, ApiCallLogUncheckedUpdateInput>
+    /**
+     * Choose, which ApiCallLog to update.
+     */
+    where: ApiCallLogWhereUniqueInput
+  }
+
+  /**
+   * ApiCallLog updateMany
+   */
+  export type ApiCallLogUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ApiCallLogs.
+     */
+    data: XOR<ApiCallLogUpdateManyMutationInput, ApiCallLogUncheckedUpdateManyInput>
+    /**
+     * Filter which ApiCallLogs to update
+     */
+    where?: ApiCallLogWhereInput
+  }
+
+  /**
+   * ApiCallLog upsert
+   */
+  export type ApiCallLogUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiCallLog
+     */
+    select?: ApiCallLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApiCallLogInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ApiCallLog to update in case it exists.
+     */
+    where: ApiCallLogWhereUniqueInput
+    /**
+     * In case the ApiCallLog found by the `where` argument doesn't exist, create a new ApiCallLog with this data.
+     */
+    create: XOR<ApiCallLogCreateInput, ApiCallLogUncheckedCreateInput>
+    /**
+     * In case the ApiCallLog was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ApiCallLogUpdateInput, ApiCallLogUncheckedUpdateInput>
+  }
+
+  /**
+   * ApiCallLog delete
+   */
+  export type ApiCallLogDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiCallLog
+     */
+    select?: ApiCallLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApiCallLogInclude<ExtArgs> | null
+    /**
+     * Filter which ApiCallLog to delete.
+     */
+    where: ApiCallLogWhereUniqueInput
+  }
+
+  /**
+   * ApiCallLog deleteMany
+   */
+  export type ApiCallLogDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ApiCallLogs to delete
+     */
+    where?: ApiCallLogWhereInput
+  }
+
+  /**
+   * ApiCallLog without action
+   */
+  export type ApiCallLogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApiCallLog
+     */
+    select?: ApiCallLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApiCallLogInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ContentVersion
+   */
+
+  export type AggregateContentVersion = {
+    _count: ContentVersionCountAggregateOutputType | null
+    _avg: ContentVersionAvgAggregateOutputType | null
+    _sum: ContentVersionSumAggregateOutputType | null
+    _min: ContentVersionMinAggregateOutputType | null
+    _max: ContentVersionMaxAggregateOutputType | null
+  }
+
+  export type ContentVersionAvgAggregateOutputType = {
+    version: number | null
+  }
+
+  export type ContentVersionSumAggregateOutputType = {
+    version: number | null
+  }
+
+  export type ContentVersionMinAggregateOutputType = {
+    id: string | null
+    contentId: string | null
+    version: number | null
+    title: string | null
+    description: string | null
+    contentText: string | null
+    summary: string | null
+    changeType: string | null
+    changeNote: string | null
+    changedBy: string | null
+    createdAt: Date | null
+  }
+
+  export type ContentVersionMaxAggregateOutputType = {
+    id: string | null
+    contentId: string | null
+    version: number | null
+    title: string | null
+    description: string | null
+    contentText: string | null
+    summary: string | null
+    changeType: string | null
+    changeNote: string | null
+    changedBy: string | null
+    createdAt: Date | null
+  }
+
+  export type ContentVersionCountAggregateOutputType = {
+    id: number
+    contentId: number
+    version: number
+    title: number
+    description: number
+    contentText: number
+    summary: number
+    tags: number
+    metadata: number
+    changeType: number
+    changeNote: number
+    changedBy: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type ContentVersionAvgAggregateInputType = {
+    version?: true
+  }
+
+  export type ContentVersionSumAggregateInputType = {
+    version?: true
+  }
+
+  export type ContentVersionMinAggregateInputType = {
+    id?: true
+    contentId?: true
+    version?: true
+    title?: true
+    description?: true
+    contentText?: true
+    summary?: true
+    changeType?: true
+    changeNote?: true
+    changedBy?: true
+    createdAt?: true
+  }
+
+  export type ContentVersionMaxAggregateInputType = {
+    id?: true
+    contentId?: true
+    version?: true
+    title?: true
+    description?: true
+    contentText?: true
+    summary?: true
+    changeType?: true
+    changeNote?: true
+    changedBy?: true
+    createdAt?: true
+  }
+
+  export type ContentVersionCountAggregateInputType = {
+    id?: true
+    contentId?: true
+    version?: true
+    title?: true
+    description?: true
+    contentText?: true
+    summary?: true
+    tags?: true
+    metadata?: true
+    changeType?: true
+    changeNote?: true
+    changedBy?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type ContentVersionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ContentVersion to aggregate.
+     */
+    where?: ContentVersionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ContentVersions to fetch.
+     */
+    orderBy?: ContentVersionOrderByWithRelationInput | ContentVersionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ContentVersionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ContentVersions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ContentVersions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ContentVersions
+    **/
+    _count?: true | ContentVersionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ContentVersionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ContentVersionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ContentVersionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ContentVersionMaxAggregateInputType
+  }
+
+  export type GetContentVersionAggregateType<T extends ContentVersionAggregateArgs> = {
+        [P in keyof T & keyof AggregateContentVersion]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateContentVersion[P]>
+      : GetScalarType<T[P], AggregateContentVersion[P]>
+  }
+
+
+
+
+  export type ContentVersionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ContentVersionWhereInput
+    orderBy?: ContentVersionOrderByWithAggregationInput | ContentVersionOrderByWithAggregationInput[]
+    by: ContentVersionScalarFieldEnum[] | ContentVersionScalarFieldEnum
+    having?: ContentVersionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ContentVersionCountAggregateInputType | true
+    _avg?: ContentVersionAvgAggregateInputType
+    _sum?: ContentVersionSumAggregateInputType
+    _min?: ContentVersionMinAggregateInputType
+    _max?: ContentVersionMaxAggregateInputType
+  }
+
+  export type ContentVersionGroupByOutputType = {
+    id: string
+    contentId: string
+    version: number
+    title: string
+    description: string | null
+    contentText: string | null
+    summary: string | null
+    tags: string[]
+    metadata: JsonValue | null
+    changeType: string
+    changeNote: string | null
+    changedBy: string | null
+    createdAt: Date
+    _count: ContentVersionCountAggregateOutputType | null
+    _avg: ContentVersionAvgAggregateOutputType | null
+    _sum: ContentVersionSumAggregateOutputType | null
+    _min: ContentVersionMinAggregateOutputType | null
+    _max: ContentVersionMaxAggregateOutputType | null
+  }
+
+  type GetContentVersionGroupByPayload<T extends ContentVersionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ContentVersionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ContentVersionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ContentVersionGroupByOutputType[P]>
+            : GetScalarType<T[P], ContentVersionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ContentVersionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    contentId?: boolean
+    version?: boolean
+    title?: boolean
+    description?: boolean
+    contentText?: boolean
+    summary?: boolean
+    tags?: boolean
+    metadata?: boolean
+    changeType?: boolean
+    changeNote?: boolean
+    changedBy?: boolean
+    createdAt?: boolean
+    contentItem?: boolean | ContentDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["contentVersion"]>
+
+  export type ContentVersionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    contentId?: boolean
+    version?: boolean
+    title?: boolean
+    description?: boolean
+    contentText?: boolean
+    summary?: boolean
+    tags?: boolean
+    metadata?: boolean
+    changeType?: boolean
+    changeNote?: boolean
+    changedBy?: boolean
+    createdAt?: boolean
+    contentItem?: boolean | ContentDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["contentVersion"]>
+
+  export type ContentVersionSelectScalar = {
+    id?: boolean
+    contentId?: boolean
+    version?: boolean
+    title?: boolean
+    description?: boolean
+    contentText?: boolean
+    summary?: boolean
+    tags?: boolean
+    metadata?: boolean
+    changeType?: boolean
+    changeNote?: boolean
+    changedBy?: boolean
+    createdAt?: boolean
+  }
+
+  export type ContentVersionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    contentItem?: boolean | ContentDefaultArgs<ExtArgs>
+  }
+  export type ContentVersionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    contentItem?: boolean | ContentDefaultArgs<ExtArgs>
+  }
+
+  export type $ContentVersionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ContentVersion"
+    objects: {
+      contentItem: Prisma.$ContentPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      contentId: string
+      version: number
+      title: string
+      description: string | null
+      contentText: string | null
+      summary: string | null
+      tags: string[]
+      metadata: Prisma.JsonValue | null
+      changeType: string
+      changeNote: string | null
+      changedBy: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["contentVersion"]>
+    composites: {}
+  }
+
+  type ContentVersionGetPayload<S extends boolean | null | undefined | ContentVersionDefaultArgs> = $Result.GetResult<Prisma.$ContentVersionPayload, S>
+
+  type ContentVersionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<ContentVersionFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: ContentVersionCountAggregateInputType | true
+    }
+
+  export interface ContentVersionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ContentVersion'], meta: { name: 'ContentVersion' } }
+    /**
+     * Find zero or one ContentVersion that matches the filter.
+     * @param {ContentVersionFindUniqueArgs} args - Arguments to find a ContentVersion
+     * @example
+     * // Get one ContentVersion
+     * const contentVersion = await prisma.contentVersion.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ContentVersionFindUniqueArgs>(args: SelectSubset<T, ContentVersionFindUniqueArgs<ExtArgs>>): Prisma__ContentVersionClient<$Result.GetResult<Prisma.$ContentVersionPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one ContentVersion that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {ContentVersionFindUniqueOrThrowArgs} args - Arguments to find a ContentVersion
+     * @example
+     * // Get one ContentVersion
+     * const contentVersion = await prisma.contentVersion.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ContentVersionFindUniqueOrThrowArgs>(args: SelectSubset<T, ContentVersionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ContentVersionClient<$Result.GetResult<Prisma.$ContentVersionPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first ContentVersion that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContentVersionFindFirstArgs} args - Arguments to find a ContentVersion
+     * @example
+     * // Get one ContentVersion
+     * const contentVersion = await prisma.contentVersion.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ContentVersionFindFirstArgs>(args?: SelectSubset<T, ContentVersionFindFirstArgs<ExtArgs>>): Prisma__ContentVersionClient<$Result.GetResult<Prisma.$ContentVersionPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first ContentVersion that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContentVersionFindFirstOrThrowArgs} args - Arguments to find a ContentVersion
+     * @example
+     * // Get one ContentVersion
+     * const contentVersion = await prisma.contentVersion.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ContentVersionFindFirstOrThrowArgs>(args?: SelectSubset<T, ContentVersionFindFirstOrThrowArgs<ExtArgs>>): Prisma__ContentVersionClient<$Result.GetResult<Prisma.$ContentVersionPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more ContentVersions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContentVersionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ContentVersions
+     * const contentVersions = await prisma.contentVersion.findMany()
+     * 
+     * // Get first 10 ContentVersions
+     * const contentVersions = await prisma.contentVersion.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const contentVersionWithIdOnly = await prisma.contentVersion.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ContentVersionFindManyArgs>(args?: SelectSubset<T, ContentVersionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContentVersionPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a ContentVersion.
+     * @param {ContentVersionCreateArgs} args - Arguments to create a ContentVersion.
+     * @example
+     * // Create one ContentVersion
+     * const ContentVersion = await prisma.contentVersion.create({
+     *   data: {
+     *     // ... data to create a ContentVersion
+     *   }
+     * })
+     * 
+     */
+    create<T extends ContentVersionCreateArgs>(args: SelectSubset<T, ContentVersionCreateArgs<ExtArgs>>): Prisma__ContentVersionClient<$Result.GetResult<Prisma.$ContentVersionPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many ContentVersions.
+     * @param {ContentVersionCreateManyArgs} args - Arguments to create many ContentVersions.
+     * @example
+     * // Create many ContentVersions
+     * const contentVersion = await prisma.contentVersion.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ContentVersionCreateManyArgs>(args?: SelectSubset<T, ContentVersionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ContentVersions and returns the data saved in the database.
+     * @param {ContentVersionCreateManyAndReturnArgs} args - Arguments to create many ContentVersions.
+     * @example
+     * // Create many ContentVersions
+     * const contentVersion = await prisma.contentVersion.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ContentVersions and only return the `id`
+     * const contentVersionWithIdOnly = await prisma.contentVersion.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ContentVersionCreateManyAndReturnArgs>(args?: SelectSubset<T, ContentVersionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContentVersionPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a ContentVersion.
+     * @param {ContentVersionDeleteArgs} args - Arguments to delete one ContentVersion.
+     * @example
+     * // Delete one ContentVersion
+     * const ContentVersion = await prisma.contentVersion.delete({
+     *   where: {
+     *     // ... filter to delete one ContentVersion
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ContentVersionDeleteArgs>(args: SelectSubset<T, ContentVersionDeleteArgs<ExtArgs>>): Prisma__ContentVersionClient<$Result.GetResult<Prisma.$ContentVersionPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one ContentVersion.
+     * @param {ContentVersionUpdateArgs} args - Arguments to update one ContentVersion.
+     * @example
+     * // Update one ContentVersion
+     * const contentVersion = await prisma.contentVersion.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ContentVersionUpdateArgs>(args: SelectSubset<T, ContentVersionUpdateArgs<ExtArgs>>): Prisma__ContentVersionClient<$Result.GetResult<Prisma.$ContentVersionPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more ContentVersions.
+     * @param {ContentVersionDeleteManyArgs} args - Arguments to filter ContentVersions to delete.
+     * @example
+     * // Delete a few ContentVersions
+     * const { count } = await prisma.contentVersion.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ContentVersionDeleteManyArgs>(args?: SelectSubset<T, ContentVersionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ContentVersions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContentVersionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ContentVersions
+     * const contentVersion = await prisma.contentVersion.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ContentVersionUpdateManyArgs>(args: SelectSubset<T, ContentVersionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ContentVersion.
+     * @param {ContentVersionUpsertArgs} args - Arguments to update or create a ContentVersion.
+     * @example
+     * // Update or create a ContentVersion
+     * const contentVersion = await prisma.contentVersion.upsert({
+     *   create: {
+     *     // ... data to create a ContentVersion
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ContentVersion we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ContentVersionUpsertArgs>(args: SelectSubset<T, ContentVersionUpsertArgs<ExtArgs>>): Prisma__ContentVersionClient<$Result.GetResult<Prisma.$ContentVersionPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of ContentVersions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContentVersionCountArgs} args - Arguments to filter ContentVersions to count.
+     * @example
+     * // Count the number of ContentVersions
+     * const count = await prisma.contentVersion.count({
+     *   where: {
+     *     // ... the filter for the ContentVersions we want to count
+     *   }
+     * })
+    **/
+    count<T extends ContentVersionCountArgs>(
+      args?: Subset<T, ContentVersionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ContentVersionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ContentVersion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContentVersionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ContentVersionAggregateArgs>(args: Subset<T, ContentVersionAggregateArgs>): Prisma.PrismaPromise<GetContentVersionAggregateType<T>>
+
+    /**
+     * Group by ContentVersion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContentVersionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ContentVersionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ContentVersionGroupByArgs['orderBy'] }
+        : { orderBy?: ContentVersionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ContentVersionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetContentVersionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ContentVersion model
+   */
+  readonly fields: ContentVersionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ContentVersion.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ContentVersionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    contentItem<T extends ContentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ContentDefaultArgs<ExtArgs>>): Prisma__ContentClient<$Result.GetResult<Prisma.$ContentPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ContentVersion model
+   */ 
+  interface ContentVersionFieldRefs {
+    readonly id: FieldRef<"ContentVersion", 'String'>
+    readonly contentId: FieldRef<"ContentVersion", 'String'>
+    readonly version: FieldRef<"ContentVersion", 'Int'>
+    readonly title: FieldRef<"ContentVersion", 'String'>
+    readonly description: FieldRef<"ContentVersion", 'String'>
+    readonly contentText: FieldRef<"ContentVersion", 'String'>
+    readonly summary: FieldRef<"ContentVersion", 'String'>
+    readonly tags: FieldRef<"ContentVersion", 'String[]'>
+    readonly metadata: FieldRef<"ContentVersion", 'Json'>
+    readonly changeType: FieldRef<"ContentVersion", 'String'>
+    readonly changeNote: FieldRef<"ContentVersion", 'String'>
+    readonly changedBy: FieldRef<"ContentVersion", 'String'>
+    readonly createdAt: FieldRef<"ContentVersion", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ContentVersion findUnique
+   */
+  export type ContentVersionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentVersion
+     */
+    select?: ContentVersionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContentVersionInclude<ExtArgs> | null
+    /**
+     * Filter, which ContentVersion to fetch.
+     */
+    where: ContentVersionWhereUniqueInput
+  }
+
+  /**
+   * ContentVersion findUniqueOrThrow
+   */
+  export type ContentVersionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentVersion
+     */
+    select?: ContentVersionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContentVersionInclude<ExtArgs> | null
+    /**
+     * Filter, which ContentVersion to fetch.
+     */
+    where: ContentVersionWhereUniqueInput
+  }
+
+  /**
+   * ContentVersion findFirst
+   */
+  export type ContentVersionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentVersion
+     */
+    select?: ContentVersionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContentVersionInclude<ExtArgs> | null
+    /**
+     * Filter, which ContentVersion to fetch.
+     */
+    where?: ContentVersionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ContentVersions to fetch.
+     */
+    orderBy?: ContentVersionOrderByWithRelationInput | ContentVersionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ContentVersions.
+     */
+    cursor?: ContentVersionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ContentVersions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ContentVersions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ContentVersions.
+     */
+    distinct?: ContentVersionScalarFieldEnum | ContentVersionScalarFieldEnum[]
+  }
+
+  /**
+   * ContentVersion findFirstOrThrow
+   */
+  export type ContentVersionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentVersion
+     */
+    select?: ContentVersionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContentVersionInclude<ExtArgs> | null
+    /**
+     * Filter, which ContentVersion to fetch.
+     */
+    where?: ContentVersionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ContentVersions to fetch.
+     */
+    orderBy?: ContentVersionOrderByWithRelationInput | ContentVersionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ContentVersions.
+     */
+    cursor?: ContentVersionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ContentVersions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ContentVersions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ContentVersions.
+     */
+    distinct?: ContentVersionScalarFieldEnum | ContentVersionScalarFieldEnum[]
+  }
+
+  /**
+   * ContentVersion findMany
+   */
+  export type ContentVersionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentVersion
+     */
+    select?: ContentVersionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContentVersionInclude<ExtArgs> | null
+    /**
+     * Filter, which ContentVersions to fetch.
+     */
+    where?: ContentVersionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ContentVersions to fetch.
+     */
+    orderBy?: ContentVersionOrderByWithRelationInput | ContentVersionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ContentVersions.
+     */
+    cursor?: ContentVersionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ContentVersions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ContentVersions.
+     */
+    skip?: number
+    distinct?: ContentVersionScalarFieldEnum | ContentVersionScalarFieldEnum[]
+  }
+
+  /**
+   * ContentVersion create
+   */
+  export type ContentVersionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentVersion
+     */
+    select?: ContentVersionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContentVersionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ContentVersion.
+     */
+    data: XOR<ContentVersionCreateInput, ContentVersionUncheckedCreateInput>
+  }
+
+  /**
+   * ContentVersion createMany
+   */
+  export type ContentVersionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ContentVersions.
+     */
+    data: ContentVersionCreateManyInput | ContentVersionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ContentVersion createManyAndReturn
+   */
+  export type ContentVersionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentVersion
+     */
+    select?: ContentVersionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many ContentVersions.
+     */
+    data: ContentVersionCreateManyInput | ContentVersionCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContentVersionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ContentVersion update
+   */
+  export type ContentVersionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentVersion
+     */
+    select?: ContentVersionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContentVersionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ContentVersion.
+     */
+    data: XOR<ContentVersionUpdateInput, ContentVersionUncheckedUpdateInput>
+    /**
+     * Choose, which ContentVersion to update.
+     */
+    where: ContentVersionWhereUniqueInput
+  }
+
+  /**
+   * ContentVersion updateMany
+   */
+  export type ContentVersionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ContentVersions.
+     */
+    data: XOR<ContentVersionUpdateManyMutationInput, ContentVersionUncheckedUpdateManyInput>
+    /**
+     * Filter which ContentVersions to update
+     */
+    where?: ContentVersionWhereInput
+  }
+
+  /**
+   * ContentVersion upsert
+   */
+  export type ContentVersionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentVersion
+     */
+    select?: ContentVersionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContentVersionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ContentVersion to update in case it exists.
+     */
+    where: ContentVersionWhereUniqueInput
+    /**
+     * In case the ContentVersion found by the `where` argument doesn't exist, create a new ContentVersion with this data.
+     */
+    create: XOR<ContentVersionCreateInput, ContentVersionUncheckedCreateInput>
+    /**
+     * In case the ContentVersion was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ContentVersionUpdateInput, ContentVersionUncheckedUpdateInput>
+  }
+
+  /**
+   * ContentVersion delete
+   */
+  export type ContentVersionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentVersion
+     */
+    select?: ContentVersionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContentVersionInclude<ExtArgs> | null
+    /**
+     * Filter which ContentVersion to delete.
+     */
+    where: ContentVersionWhereUniqueInput
+  }
+
+  /**
+   * ContentVersion deleteMany
+   */
+  export type ContentVersionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ContentVersions to delete
+     */
+    where?: ContentVersionWhereInput
+  }
+
+  /**
+   * ContentVersion without action
+   */
+  export type ContentVersionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentVersion
+     */
+    select?: ContentVersionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContentVersionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ContentAuditLog
+   */
+
+  export type AggregateContentAuditLog = {
+    _count: ContentAuditLogCountAggregateOutputType | null
+    _min: ContentAuditLogMinAggregateOutputType | null
+    _max: ContentAuditLogMaxAggregateOutputType | null
+  }
+
+  export type ContentAuditLogMinAggregateOutputType = {
+    id: string | null
+    contentId: string | null
+    userId: string | null
+    action: string | null
+    tableName: string | null
+    recordId: string | null
+    ipAddress: string | null
+    userAgent: string | null
+    sessionId: string | null
+    createdAt: Date | null
+  }
+
+  export type ContentAuditLogMaxAggregateOutputType = {
+    id: string | null
+    contentId: string | null
+    userId: string | null
+    action: string | null
+    tableName: string | null
+    recordId: string | null
+    ipAddress: string | null
+    userAgent: string | null
+    sessionId: string | null
+    createdAt: Date | null
+  }
+
+  export type ContentAuditLogCountAggregateOutputType = {
+    id: number
+    contentId: number
+    userId: number
+    action: number
+    tableName: number
+    recordId: number
+    oldValues: number
+    newValues: number
+    ipAddress: number
+    userAgent: number
+    sessionId: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type ContentAuditLogMinAggregateInputType = {
+    id?: true
+    contentId?: true
+    userId?: true
+    action?: true
+    tableName?: true
+    recordId?: true
+    ipAddress?: true
+    userAgent?: true
+    sessionId?: true
+    createdAt?: true
+  }
+
+  export type ContentAuditLogMaxAggregateInputType = {
+    id?: true
+    contentId?: true
+    userId?: true
+    action?: true
+    tableName?: true
+    recordId?: true
+    ipAddress?: true
+    userAgent?: true
+    sessionId?: true
+    createdAt?: true
+  }
+
+  export type ContentAuditLogCountAggregateInputType = {
+    id?: true
+    contentId?: true
+    userId?: true
+    action?: true
+    tableName?: true
+    recordId?: true
+    oldValues?: true
+    newValues?: true
+    ipAddress?: true
+    userAgent?: true
+    sessionId?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type ContentAuditLogAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ContentAuditLog to aggregate.
+     */
+    where?: ContentAuditLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ContentAuditLogs to fetch.
+     */
+    orderBy?: ContentAuditLogOrderByWithRelationInput | ContentAuditLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ContentAuditLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ContentAuditLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ContentAuditLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ContentAuditLogs
+    **/
+    _count?: true | ContentAuditLogCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ContentAuditLogMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ContentAuditLogMaxAggregateInputType
+  }
+
+  export type GetContentAuditLogAggregateType<T extends ContentAuditLogAggregateArgs> = {
+        [P in keyof T & keyof AggregateContentAuditLog]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateContentAuditLog[P]>
+      : GetScalarType<T[P], AggregateContentAuditLog[P]>
+  }
+
+
+
+
+  export type ContentAuditLogGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ContentAuditLogWhereInput
+    orderBy?: ContentAuditLogOrderByWithAggregationInput | ContentAuditLogOrderByWithAggregationInput[]
+    by: ContentAuditLogScalarFieldEnum[] | ContentAuditLogScalarFieldEnum
+    having?: ContentAuditLogScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ContentAuditLogCountAggregateInputType | true
+    _min?: ContentAuditLogMinAggregateInputType
+    _max?: ContentAuditLogMaxAggregateInputType
+  }
+
+  export type ContentAuditLogGroupByOutputType = {
+    id: string
+    contentId: string
+    userId: string | null
+    action: string
+    tableName: string
+    recordId: string
+    oldValues: JsonValue | null
+    newValues: JsonValue | null
+    ipAddress: string | null
+    userAgent: string | null
+    sessionId: string | null
+    createdAt: Date
+    _count: ContentAuditLogCountAggregateOutputType | null
+    _min: ContentAuditLogMinAggregateOutputType | null
+    _max: ContentAuditLogMaxAggregateOutputType | null
+  }
+
+  type GetContentAuditLogGroupByPayload<T extends ContentAuditLogGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ContentAuditLogGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ContentAuditLogGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ContentAuditLogGroupByOutputType[P]>
+            : GetScalarType<T[P], ContentAuditLogGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ContentAuditLogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    contentId?: boolean
+    userId?: boolean
+    action?: boolean
+    tableName?: boolean
+    recordId?: boolean
+    oldValues?: boolean
+    newValues?: boolean
+    ipAddress?: boolean
+    userAgent?: boolean
+    sessionId?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["contentAuditLog"]>
+
+  export type ContentAuditLogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    contentId?: boolean
+    userId?: boolean
+    action?: boolean
+    tableName?: boolean
+    recordId?: boolean
+    oldValues?: boolean
+    newValues?: boolean
+    ipAddress?: boolean
+    userAgent?: boolean
+    sessionId?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["contentAuditLog"]>
+
+  export type ContentAuditLogSelectScalar = {
+    id?: boolean
+    contentId?: boolean
+    userId?: boolean
+    action?: boolean
+    tableName?: boolean
+    recordId?: boolean
+    oldValues?: boolean
+    newValues?: boolean
+    ipAddress?: boolean
+    userAgent?: boolean
+    sessionId?: boolean
+    createdAt?: boolean
+  }
+
+
+  export type $ContentAuditLogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ContentAuditLog"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      contentId: string
+      userId: string | null
+      action: string
+      tableName: string
+      recordId: string
+      oldValues: Prisma.JsonValue | null
+      newValues: Prisma.JsonValue | null
+      ipAddress: string | null
+      userAgent: string | null
+      sessionId: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["contentAuditLog"]>
+    composites: {}
+  }
+
+  type ContentAuditLogGetPayload<S extends boolean | null | undefined | ContentAuditLogDefaultArgs> = $Result.GetResult<Prisma.$ContentAuditLogPayload, S>
+
+  type ContentAuditLogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<ContentAuditLogFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: ContentAuditLogCountAggregateInputType | true
+    }
+
+  export interface ContentAuditLogDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ContentAuditLog'], meta: { name: 'ContentAuditLog' } }
+    /**
+     * Find zero or one ContentAuditLog that matches the filter.
+     * @param {ContentAuditLogFindUniqueArgs} args - Arguments to find a ContentAuditLog
+     * @example
+     * // Get one ContentAuditLog
+     * const contentAuditLog = await prisma.contentAuditLog.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ContentAuditLogFindUniqueArgs>(args: SelectSubset<T, ContentAuditLogFindUniqueArgs<ExtArgs>>): Prisma__ContentAuditLogClient<$Result.GetResult<Prisma.$ContentAuditLogPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one ContentAuditLog that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {ContentAuditLogFindUniqueOrThrowArgs} args - Arguments to find a ContentAuditLog
+     * @example
+     * // Get one ContentAuditLog
+     * const contentAuditLog = await prisma.contentAuditLog.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ContentAuditLogFindUniqueOrThrowArgs>(args: SelectSubset<T, ContentAuditLogFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ContentAuditLogClient<$Result.GetResult<Prisma.$ContentAuditLogPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first ContentAuditLog that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContentAuditLogFindFirstArgs} args - Arguments to find a ContentAuditLog
+     * @example
+     * // Get one ContentAuditLog
+     * const contentAuditLog = await prisma.contentAuditLog.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ContentAuditLogFindFirstArgs>(args?: SelectSubset<T, ContentAuditLogFindFirstArgs<ExtArgs>>): Prisma__ContentAuditLogClient<$Result.GetResult<Prisma.$ContentAuditLogPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first ContentAuditLog that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContentAuditLogFindFirstOrThrowArgs} args - Arguments to find a ContentAuditLog
+     * @example
+     * // Get one ContentAuditLog
+     * const contentAuditLog = await prisma.contentAuditLog.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ContentAuditLogFindFirstOrThrowArgs>(args?: SelectSubset<T, ContentAuditLogFindFirstOrThrowArgs<ExtArgs>>): Prisma__ContentAuditLogClient<$Result.GetResult<Prisma.$ContentAuditLogPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more ContentAuditLogs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContentAuditLogFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ContentAuditLogs
+     * const contentAuditLogs = await prisma.contentAuditLog.findMany()
+     * 
+     * // Get first 10 ContentAuditLogs
+     * const contentAuditLogs = await prisma.contentAuditLog.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const contentAuditLogWithIdOnly = await prisma.contentAuditLog.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ContentAuditLogFindManyArgs>(args?: SelectSubset<T, ContentAuditLogFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContentAuditLogPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a ContentAuditLog.
+     * @param {ContentAuditLogCreateArgs} args - Arguments to create a ContentAuditLog.
+     * @example
+     * // Create one ContentAuditLog
+     * const ContentAuditLog = await prisma.contentAuditLog.create({
+     *   data: {
+     *     // ... data to create a ContentAuditLog
+     *   }
+     * })
+     * 
+     */
+    create<T extends ContentAuditLogCreateArgs>(args: SelectSubset<T, ContentAuditLogCreateArgs<ExtArgs>>): Prisma__ContentAuditLogClient<$Result.GetResult<Prisma.$ContentAuditLogPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many ContentAuditLogs.
+     * @param {ContentAuditLogCreateManyArgs} args - Arguments to create many ContentAuditLogs.
+     * @example
+     * // Create many ContentAuditLogs
+     * const contentAuditLog = await prisma.contentAuditLog.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ContentAuditLogCreateManyArgs>(args?: SelectSubset<T, ContentAuditLogCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ContentAuditLogs and returns the data saved in the database.
+     * @param {ContentAuditLogCreateManyAndReturnArgs} args - Arguments to create many ContentAuditLogs.
+     * @example
+     * // Create many ContentAuditLogs
+     * const contentAuditLog = await prisma.contentAuditLog.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ContentAuditLogs and only return the `id`
+     * const contentAuditLogWithIdOnly = await prisma.contentAuditLog.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ContentAuditLogCreateManyAndReturnArgs>(args?: SelectSubset<T, ContentAuditLogCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContentAuditLogPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a ContentAuditLog.
+     * @param {ContentAuditLogDeleteArgs} args - Arguments to delete one ContentAuditLog.
+     * @example
+     * // Delete one ContentAuditLog
+     * const ContentAuditLog = await prisma.contentAuditLog.delete({
+     *   where: {
+     *     // ... filter to delete one ContentAuditLog
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ContentAuditLogDeleteArgs>(args: SelectSubset<T, ContentAuditLogDeleteArgs<ExtArgs>>): Prisma__ContentAuditLogClient<$Result.GetResult<Prisma.$ContentAuditLogPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one ContentAuditLog.
+     * @param {ContentAuditLogUpdateArgs} args - Arguments to update one ContentAuditLog.
+     * @example
+     * // Update one ContentAuditLog
+     * const contentAuditLog = await prisma.contentAuditLog.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ContentAuditLogUpdateArgs>(args: SelectSubset<T, ContentAuditLogUpdateArgs<ExtArgs>>): Prisma__ContentAuditLogClient<$Result.GetResult<Prisma.$ContentAuditLogPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more ContentAuditLogs.
+     * @param {ContentAuditLogDeleteManyArgs} args - Arguments to filter ContentAuditLogs to delete.
+     * @example
+     * // Delete a few ContentAuditLogs
+     * const { count } = await prisma.contentAuditLog.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ContentAuditLogDeleteManyArgs>(args?: SelectSubset<T, ContentAuditLogDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ContentAuditLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContentAuditLogUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ContentAuditLogs
+     * const contentAuditLog = await prisma.contentAuditLog.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ContentAuditLogUpdateManyArgs>(args: SelectSubset<T, ContentAuditLogUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ContentAuditLog.
+     * @param {ContentAuditLogUpsertArgs} args - Arguments to update or create a ContentAuditLog.
+     * @example
+     * // Update or create a ContentAuditLog
+     * const contentAuditLog = await prisma.contentAuditLog.upsert({
+     *   create: {
+     *     // ... data to create a ContentAuditLog
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ContentAuditLog we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ContentAuditLogUpsertArgs>(args: SelectSubset<T, ContentAuditLogUpsertArgs<ExtArgs>>): Prisma__ContentAuditLogClient<$Result.GetResult<Prisma.$ContentAuditLogPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of ContentAuditLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContentAuditLogCountArgs} args - Arguments to filter ContentAuditLogs to count.
+     * @example
+     * // Count the number of ContentAuditLogs
+     * const count = await prisma.contentAuditLog.count({
+     *   where: {
+     *     // ... the filter for the ContentAuditLogs we want to count
+     *   }
+     * })
+    **/
+    count<T extends ContentAuditLogCountArgs>(
+      args?: Subset<T, ContentAuditLogCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ContentAuditLogCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ContentAuditLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContentAuditLogAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ContentAuditLogAggregateArgs>(args: Subset<T, ContentAuditLogAggregateArgs>): Prisma.PrismaPromise<GetContentAuditLogAggregateType<T>>
+
+    /**
+     * Group by ContentAuditLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContentAuditLogGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ContentAuditLogGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ContentAuditLogGroupByArgs['orderBy'] }
+        : { orderBy?: ContentAuditLogGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ContentAuditLogGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetContentAuditLogGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ContentAuditLog model
+   */
+  readonly fields: ContentAuditLogFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ContentAuditLog.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ContentAuditLogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ContentAuditLog model
+   */ 
+  interface ContentAuditLogFieldRefs {
+    readonly id: FieldRef<"ContentAuditLog", 'String'>
+    readonly contentId: FieldRef<"ContentAuditLog", 'String'>
+    readonly userId: FieldRef<"ContentAuditLog", 'String'>
+    readonly action: FieldRef<"ContentAuditLog", 'String'>
+    readonly tableName: FieldRef<"ContentAuditLog", 'String'>
+    readonly recordId: FieldRef<"ContentAuditLog", 'String'>
+    readonly oldValues: FieldRef<"ContentAuditLog", 'Json'>
+    readonly newValues: FieldRef<"ContentAuditLog", 'Json'>
+    readonly ipAddress: FieldRef<"ContentAuditLog", 'String'>
+    readonly userAgent: FieldRef<"ContentAuditLog", 'String'>
+    readonly sessionId: FieldRef<"ContentAuditLog", 'String'>
+    readonly createdAt: FieldRef<"ContentAuditLog", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ContentAuditLog findUnique
+   */
+  export type ContentAuditLogFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentAuditLog
+     */
+    select?: ContentAuditLogSelect<ExtArgs> | null
+    /**
+     * Filter, which ContentAuditLog to fetch.
+     */
+    where: ContentAuditLogWhereUniqueInput
+  }
+
+  /**
+   * ContentAuditLog findUniqueOrThrow
+   */
+  export type ContentAuditLogFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentAuditLog
+     */
+    select?: ContentAuditLogSelect<ExtArgs> | null
+    /**
+     * Filter, which ContentAuditLog to fetch.
+     */
+    where: ContentAuditLogWhereUniqueInput
+  }
+
+  /**
+   * ContentAuditLog findFirst
+   */
+  export type ContentAuditLogFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentAuditLog
+     */
+    select?: ContentAuditLogSelect<ExtArgs> | null
+    /**
+     * Filter, which ContentAuditLog to fetch.
+     */
+    where?: ContentAuditLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ContentAuditLogs to fetch.
+     */
+    orderBy?: ContentAuditLogOrderByWithRelationInput | ContentAuditLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ContentAuditLogs.
+     */
+    cursor?: ContentAuditLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ContentAuditLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ContentAuditLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ContentAuditLogs.
+     */
+    distinct?: ContentAuditLogScalarFieldEnum | ContentAuditLogScalarFieldEnum[]
+  }
+
+  /**
+   * ContentAuditLog findFirstOrThrow
+   */
+  export type ContentAuditLogFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentAuditLog
+     */
+    select?: ContentAuditLogSelect<ExtArgs> | null
+    /**
+     * Filter, which ContentAuditLog to fetch.
+     */
+    where?: ContentAuditLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ContentAuditLogs to fetch.
+     */
+    orderBy?: ContentAuditLogOrderByWithRelationInput | ContentAuditLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ContentAuditLogs.
+     */
+    cursor?: ContentAuditLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ContentAuditLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ContentAuditLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ContentAuditLogs.
+     */
+    distinct?: ContentAuditLogScalarFieldEnum | ContentAuditLogScalarFieldEnum[]
+  }
+
+  /**
+   * ContentAuditLog findMany
+   */
+  export type ContentAuditLogFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentAuditLog
+     */
+    select?: ContentAuditLogSelect<ExtArgs> | null
+    /**
+     * Filter, which ContentAuditLogs to fetch.
+     */
+    where?: ContentAuditLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ContentAuditLogs to fetch.
+     */
+    orderBy?: ContentAuditLogOrderByWithRelationInput | ContentAuditLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ContentAuditLogs.
+     */
+    cursor?: ContentAuditLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ContentAuditLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ContentAuditLogs.
+     */
+    skip?: number
+    distinct?: ContentAuditLogScalarFieldEnum | ContentAuditLogScalarFieldEnum[]
+  }
+
+  /**
+   * ContentAuditLog create
+   */
+  export type ContentAuditLogCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentAuditLog
+     */
+    select?: ContentAuditLogSelect<ExtArgs> | null
+    /**
+     * The data needed to create a ContentAuditLog.
+     */
+    data: XOR<ContentAuditLogCreateInput, ContentAuditLogUncheckedCreateInput>
+  }
+
+  /**
+   * ContentAuditLog createMany
+   */
+  export type ContentAuditLogCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ContentAuditLogs.
+     */
+    data: ContentAuditLogCreateManyInput | ContentAuditLogCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ContentAuditLog createManyAndReturn
+   */
+  export type ContentAuditLogCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentAuditLog
+     */
+    select?: ContentAuditLogSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many ContentAuditLogs.
+     */
+    data: ContentAuditLogCreateManyInput | ContentAuditLogCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ContentAuditLog update
+   */
+  export type ContentAuditLogUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentAuditLog
+     */
+    select?: ContentAuditLogSelect<ExtArgs> | null
+    /**
+     * The data needed to update a ContentAuditLog.
+     */
+    data: XOR<ContentAuditLogUpdateInput, ContentAuditLogUncheckedUpdateInput>
+    /**
+     * Choose, which ContentAuditLog to update.
+     */
+    where: ContentAuditLogWhereUniqueInput
+  }
+
+  /**
+   * ContentAuditLog updateMany
+   */
+  export type ContentAuditLogUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ContentAuditLogs.
+     */
+    data: XOR<ContentAuditLogUpdateManyMutationInput, ContentAuditLogUncheckedUpdateManyInput>
+    /**
+     * Filter which ContentAuditLogs to update
+     */
+    where?: ContentAuditLogWhereInput
+  }
+
+  /**
+   * ContentAuditLog upsert
+   */
+  export type ContentAuditLogUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentAuditLog
+     */
+    select?: ContentAuditLogSelect<ExtArgs> | null
+    /**
+     * The filter to search for the ContentAuditLog to update in case it exists.
+     */
+    where: ContentAuditLogWhereUniqueInput
+    /**
+     * In case the ContentAuditLog found by the `where` argument doesn't exist, create a new ContentAuditLog with this data.
+     */
+    create: XOR<ContentAuditLogCreateInput, ContentAuditLogUncheckedCreateInput>
+    /**
+     * In case the ContentAuditLog was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ContentAuditLogUpdateInput, ContentAuditLogUncheckedUpdateInput>
+  }
+
+  /**
+   * ContentAuditLog delete
+   */
+  export type ContentAuditLogDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentAuditLog
+     */
+    select?: ContentAuditLogSelect<ExtArgs> | null
+    /**
+     * Filter which ContentAuditLog to delete.
+     */
+    where: ContentAuditLogWhereUniqueInput
+  }
+
+  /**
+   * ContentAuditLog deleteMany
+   */
+  export type ContentAuditLogDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ContentAuditLogs to delete
+     */
+    where?: ContentAuditLogWhereInput
+  }
+
+  /**
+   * ContentAuditLog without action
+   */
+  export type ContentAuditLogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentAuditLog
+     */
+    select?: ContentAuditLogSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ContentDuplication
+   */
+
+  export type AggregateContentDuplication = {
+    _count: ContentDuplicationCountAggregateOutputType | null
+    _avg: ContentDuplicationAvgAggregateOutputType | null
+    _sum: ContentDuplicationSumAggregateOutputType | null
+    _min: ContentDuplicationMinAggregateOutputType | null
+    _max: ContentDuplicationMaxAggregateOutputType | null
+  }
+
+  export type ContentDuplicationAvgAggregateOutputType = {
+    titleSimilarity: number | null
+    contentSimilarity: number | null
+    overallSimilarity: number | null
+    confidence: number | null
+  }
+
+  export type ContentDuplicationSumAggregateOutputType = {
+    titleSimilarity: number | null
+    contentSimilarity: number | null
+    overallSimilarity: number | null
+    confidence: number | null
+  }
+
+  export type ContentDuplicationMinAggregateOutputType = {
+    id: string | null
+    originalId: string | null
+    duplicateId: string | null
+    titleSimilarity: number | null
+    contentSimilarity: number | null
+    overallSimilarity: number | null
+    detectionMethod: string | null
+    confidence: number | null
+    status: string | null
+    reviewedBy: string | null
+    reviewedAt: Date | null
+    createdAt: Date | null
+  }
+
+  export type ContentDuplicationMaxAggregateOutputType = {
+    id: string | null
+    originalId: string | null
+    duplicateId: string | null
+    titleSimilarity: number | null
+    contentSimilarity: number | null
+    overallSimilarity: number | null
+    detectionMethod: string | null
+    confidence: number | null
+    status: string | null
+    reviewedBy: string | null
+    reviewedAt: Date | null
+    createdAt: Date | null
+  }
+
+  export type ContentDuplicationCountAggregateOutputType = {
+    id: number
+    originalId: number
+    duplicateId: number
+    titleSimilarity: number
+    contentSimilarity: number
+    overallSimilarity: number
+    detectionMethod: number
+    confidence: number
+    status: number
+    reviewedBy: number
+    reviewedAt: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type ContentDuplicationAvgAggregateInputType = {
+    titleSimilarity?: true
+    contentSimilarity?: true
+    overallSimilarity?: true
+    confidence?: true
+  }
+
+  export type ContentDuplicationSumAggregateInputType = {
+    titleSimilarity?: true
+    contentSimilarity?: true
+    overallSimilarity?: true
+    confidence?: true
+  }
+
+  export type ContentDuplicationMinAggregateInputType = {
+    id?: true
+    originalId?: true
+    duplicateId?: true
+    titleSimilarity?: true
+    contentSimilarity?: true
+    overallSimilarity?: true
+    detectionMethod?: true
+    confidence?: true
+    status?: true
+    reviewedBy?: true
+    reviewedAt?: true
+    createdAt?: true
+  }
+
+  export type ContentDuplicationMaxAggregateInputType = {
+    id?: true
+    originalId?: true
+    duplicateId?: true
+    titleSimilarity?: true
+    contentSimilarity?: true
+    overallSimilarity?: true
+    detectionMethod?: true
+    confidence?: true
+    status?: true
+    reviewedBy?: true
+    reviewedAt?: true
+    createdAt?: true
+  }
+
+  export type ContentDuplicationCountAggregateInputType = {
+    id?: true
+    originalId?: true
+    duplicateId?: true
+    titleSimilarity?: true
+    contentSimilarity?: true
+    overallSimilarity?: true
+    detectionMethod?: true
+    confidence?: true
+    status?: true
+    reviewedBy?: true
+    reviewedAt?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type ContentDuplicationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ContentDuplication to aggregate.
+     */
+    where?: ContentDuplicationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ContentDuplications to fetch.
+     */
+    orderBy?: ContentDuplicationOrderByWithRelationInput | ContentDuplicationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ContentDuplicationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ContentDuplications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ContentDuplications.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ContentDuplications
+    **/
+    _count?: true | ContentDuplicationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ContentDuplicationAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ContentDuplicationSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ContentDuplicationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ContentDuplicationMaxAggregateInputType
+  }
+
+  export type GetContentDuplicationAggregateType<T extends ContentDuplicationAggregateArgs> = {
+        [P in keyof T & keyof AggregateContentDuplication]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateContentDuplication[P]>
+      : GetScalarType<T[P], AggregateContentDuplication[P]>
+  }
+
+
+
+
+  export type ContentDuplicationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ContentDuplicationWhereInput
+    orderBy?: ContentDuplicationOrderByWithAggregationInput | ContentDuplicationOrderByWithAggregationInput[]
+    by: ContentDuplicationScalarFieldEnum[] | ContentDuplicationScalarFieldEnum
+    having?: ContentDuplicationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ContentDuplicationCountAggregateInputType | true
+    _avg?: ContentDuplicationAvgAggregateInputType
+    _sum?: ContentDuplicationSumAggregateInputType
+    _min?: ContentDuplicationMinAggregateInputType
+    _max?: ContentDuplicationMaxAggregateInputType
+  }
+
+  export type ContentDuplicationGroupByOutputType = {
+    id: string
+    originalId: string
+    duplicateId: string
+    titleSimilarity: number
+    contentSimilarity: number
+    overallSimilarity: number
+    detectionMethod: string
+    confidence: number
+    status: string
+    reviewedBy: string | null
+    reviewedAt: Date | null
+    createdAt: Date
+    _count: ContentDuplicationCountAggregateOutputType | null
+    _avg: ContentDuplicationAvgAggregateOutputType | null
+    _sum: ContentDuplicationSumAggregateOutputType | null
+    _min: ContentDuplicationMinAggregateOutputType | null
+    _max: ContentDuplicationMaxAggregateOutputType | null
+  }
+
+  type GetContentDuplicationGroupByPayload<T extends ContentDuplicationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ContentDuplicationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ContentDuplicationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ContentDuplicationGroupByOutputType[P]>
+            : GetScalarType<T[P], ContentDuplicationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ContentDuplicationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    originalId?: boolean
+    duplicateId?: boolean
+    titleSimilarity?: boolean
+    contentSimilarity?: boolean
+    overallSimilarity?: boolean
+    detectionMethod?: boolean
+    confidence?: boolean
+    status?: boolean
+    reviewedBy?: boolean
+    reviewedAt?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["contentDuplication"]>
+
+  export type ContentDuplicationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    originalId?: boolean
+    duplicateId?: boolean
+    titleSimilarity?: boolean
+    contentSimilarity?: boolean
+    overallSimilarity?: boolean
+    detectionMethod?: boolean
+    confidence?: boolean
+    status?: boolean
+    reviewedBy?: boolean
+    reviewedAt?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["contentDuplication"]>
+
+  export type ContentDuplicationSelectScalar = {
+    id?: boolean
+    originalId?: boolean
+    duplicateId?: boolean
+    titleSimilarity?: boolean
+    contentSimilarity?: boolean
+    overallSimilarity?: boolean
+    detectionMethod?: boolean
+    confidence?: boolean
+    status?: boolean
+    reviewedBy?: boolean
+    reviewedAt?: boolean
+    createdAt?: boolean
+  }
+
+
+  export type $ContentDuplicationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ContentDuplication"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      originalId: string
+      duplicateId: string
+      titleSimilarity: number
+      contentSimilarity: number
+      overallSimilarity: number
+      detectionMethod: string
+      confidence: number
+      status: string
+      reviewedBy: string | null
+      reviewedAt: Date | null
+      createdAt: Date
+    }, ExtArgs["result"]["contentDuplication"]>
+    composites: {}
+  }
+
+  type ContentDuplicationGetPayload<S extends boolean | null | undefined | ContentDuplicationDefaultArgs> = $Result.GetResult<Prisma.$ContentDuplicationPayload, S>
+
+  type ContentDuplicationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<ContentDuplicationFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: ContentDuplicationCountAggregateInputType | true
+    }
+
+  export interface ContentDuplicationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ContentDuplication'], meta: { name: 'ContentDuplication' } }
+    /**
+     * Find zero or one ContentDuplication that matches the filter.
+     * @param {ContentDuplicationFindUniqueArgs} args - Arguments to find a ContentDuplication
+     * @example
+     * // Get one ContentDuplication
+     * const contentDuplication = await prisma.contentDuplication.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ContentDuplicationFindUniqueArgs>(args: SelectSubset<T, ContentDuplicationFindUniqueArgs<ExtArgs>>): Prisma__ContentDuplicationClient<$Result.GetResult<Prisma.$ContentDuplicationPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one ContentDuplication that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {ContentDuplicationFindUniqueOrThrowArgs} args - Arguments to find a ContentDuplication
+     * @example
+     * // Get one ContentDuplication
+     * const contentDuplication = await prisma.contentDuplication.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ContentDuplicationFindUniqueOrThrowArgs>(args: SelectSubset<T, ContentDuplicationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ContentDuplicationClient<$Result.GetResult<Prisma.$ContentDuplicationPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first ContentDuplication that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContentDuplicationFindFirstArgs} args - Arguments to find a ContentDuplication
+     * @example
+     * // Get one ContentDuplication
+     * const contentDuplication = await prisma.contentDuplication.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ContentDuplicationFindFirstArgs>(args?: SelectSubset<T, ContentDuplicationFindFirstArgs<ExtArgs>>): Prisma__ContentDuplicationClient<$Result.GetResult<Prisma.$ContentDuplicationPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first ContentDuplication that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContentDuplicationFindFirstOrThrowArgs} args - Arguments to find a ContentDuplication
+     * @example
+     * // Get one ContentDuplication
+     * const contentDuplication = await prisma.contentDuplication.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ContentDuplicationFindFirstOrThrowArgs>(args?: SelectSubset<T, ContentDuplicationFindFirstOrThrowArgs<ExtArgs>>): Prisma__ContentDuplicationClient<$Result.GetResult<Prisma.$ContentDuplicationPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more ContentDuplications that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContentDuplicationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ContentDuplications
+     * const contentDuplications = await prisma.contentDuplication.findMany()
+     * 
+     * // Get first 10 ContentDuplications
+     * const contentDuplications = await prisma.contentDuplication.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const contentDuplicationWithIdOnly = await prisma.contentDuplication.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ContentDuplicationFindManyArgs>(args?: SelectSubset<T, ContentDuplicationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContentDuplicationPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a ContentDuplication.
+     * @param {ContentDuplicationCreateArgs} args - Arguments to create a ContentDuplication.
+     * @example
+     * // Create one ContentDuplication
+     * const ContentDuplication = await prisma.contentDuplication.create({
+     *   data: {
+     *     // ... data to create a ContentDuplication
+     *   }
+     * })
+     * 
+     */
+    create<T extends ContentDuplicationCreateArgs>(args: SelectSubset<T, ContentDuplicationCreateArgs<ExtArgs>>): Prisma__ContentDuplicationClient<$Result.GetResult<Prisma.$ContentDuplicationPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many ContentDuplications.
+     * @param {ContentDuplicationCreateManyArgs} args - Arguments to create many ContentDuplications.
+     * @example
+     * // Create many ContentDuplications
+     * const contentDuplication = await prisma.contentDuplication.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ContentDuplicationCreateManyArgs>(args?: SelectSubset<T, ContentDuplicationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ContentDuplications and returns the data saved in the database.
+     * @param {ContentDuplicationCreateManyAndReturnArgs} args - Arguments to create many ContentDuplications.
+     * @example
+     * // Create many ContentDuplications
+     * const contentDuplication = await prisma.contentDuplication.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ContentDuplications and only return the `id`
+     * const contentDuplicationWithIdOnly = await prisma.contentDuplication.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ContentDuplicationCreateManyAndReturnArgs>(args?: SelectSubset<T, ContentDuplicationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContentDuplicationPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a ContentDuplication.
+     * @param {ContentDuplicationDeleteArgs} args - Arguments to delete one ContentDuplication.
+     * @example
+     * // Delete one ContentDuplication
+     * const ContentDuplication = await prisma.contentDuplication.delete({
+     *   where: {
+     *     // ... filter to delete one ContentDuplication
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ContentDuplicationDeleteArgs>(args: SelectSubset<T, ContentDuplicationDeleteArgs<ExtArgs>>): Prisma__ContentDuplicationClient<$Result.GetResult<Prisma.$ContentDuplicationPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one ContentDuplication.
+     * @param {ContentDuplicationUpdateArgs} args - Arguments to update one ContentDuplication.
+     * @example
+     * // Update one ContentDuplication
+     * const contentDuplication = await prisma.contentDuplication.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ContentDuplicationUpdateArgs>(args: SelectSubset<T, ContentDuplicationUpdateArgs<ExtArgs>>): Prisma__ContentDuplicationClient<$Result.GetResult<Prisma.$ContentDuplicationPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more ContentDuplications.
+     * @param {ContentDuplicationDeleteManyArgs} args - Arguments to filter ContentDuplications to delete.
+     * @example
+     * // Delete a few ContentDuplications
+     * const { count } = await prisma.contentDuplication.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ContentDuplicationDeleteManyArgs>(args?: SelectSubset<T, ContentDuplicationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ContentDuplications.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContentDuplicationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ContentDuplications
+     * const contentDuplication = await prisma.contentDuplication.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ContentDuplicationUpdateManyArgs>(args: SelectSubset<T, ContentDuplicationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ContentDuplication.
+     * @param {ContentDuplicationUpsertArgs} args - Arguments to update or create a ContentDuplication.
+     * @example
+     * // Update or create a ContentDuplication
+     * const contentDuplication = await prisma.contentDuplication.upsert({
+     *   create: {
+     *     // ... data to create a ContentDuplication
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ContentDuplication we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ContentDuplicationUpsertArgs>(args: SelectSubset<T, ContentDuplicationUpsertArgs<ExtArgs>>): Prisma__ContentDuplicationClient<$Result.GetResult<Prisma.$ContentDuplicationPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of ContentDuplications.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContentDuplicationCountArgs} args - Arguments to filter ContentDuplications to count.
+     * @example
+     * // Count the number of ContentDuplications
+     * const count = await prisma.contentDuplication.count({
+     *   where: {
+     *     // ... the filter for the ContentDuplications we want to count
+     *   }
+     * })
+    **/
+    count<T extends ContentDuplicationCountArgs>(
+      args?: Subset<T, ContentDuplicationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ContentDuplicationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ContentDuplication.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContentDuplicationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ContentDuplicationAggregateArgs>(args: Subset<T, ContentDuplicationAggregateArgs>): Prisma.PrismaPromise<GetContentDuplicationAggregateType<T>>
+
+    /**
+     * Group by ContentDuplication.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContentDuplicationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ContentDuplicationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ContentDuplicationGroupByArgs['orderBy'] }
+        : { orderBy?: ContentDuplicationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ContentDuplicationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetContentDuplicationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ContentDuplication model
+   */
+  readonly fields: ContentDuplicationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ContentDuplication.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ContentDuplicationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ContentDuplication model
+   */ 
+  interface ContentDuplicationFieldRefs {
+    readonly id: FieldRef<"ContentDuplication", 'String'>
+    readonly originalId: FieldRef<"ContentDuplication", 'String'>
+    readonly duplicateId: FieldRef<"ContentDuplication", 'String'>
+    readonly titleSimilarity: FieldRef<"ContentDuplication", 'Float'>
+    readonly contentSimilarity: FieldRef<"ContentDuplication", 'Float'>
+    readonly overallSimilarity: FieldRef<"ContentDuplication", 'Float'>
+    readonly detectionMethod: FieldRef<"ContentDuplication", 'String'>
+    readonly confidence: FieldRef<"ContentDuplication", 'Float'>
+    readonly status: FieldRef<"ContentDuplication", 'String'>
+    readonly reviewedBy: FieldRef<"ContentDuplication", 'String'>
+    readonly reviewedAt: FieldRef<"ContentDuplication", 'DateTime'>
+    readonly createdAt: FieldRef<"ContentDuplication", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ContentDuplication findUnique
+   */
+  export type ContentDuplicationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentDuplication
+     */
+    select?: ContentDuplicationSelect<ExtArgs> | null
+    /**
+     * Filter, which ContentDuplication to fetch.
+     */
+    where: ContentDuplicationWhereUniqueInput
+  }
+
+  /**
+   * ContentDuplication findUniqueOrThrow
+   */
+  export type ContentDuplicationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentDuplication
+     */
+    select?: ContentDuplicationSelect<ExtArgs> | null
+    /**
+     * Filter, which ContentDuplication to fetch.
+     */
+    where: ContentDuplicationWhereUniqueInput
+  }
+
+  /**
+   * ContentDuplication findFirst
+   */
+  export type ContentDuplicationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentDuplication
+     */
+    select?: ContentDuplicationSelect<ExtArgs> | null
+    /**
+     * Filter, which ContentDuplication to fetch.
+     */
+    where?: ContentDuplicationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ContentDuplications to fetch.
+     */
+    orderBy?: ContentDuplicationOrderByWithRelationInput | ContentDuplicationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ContentDuplications.
+     */
+    cursor?: ContentDuplicationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ContentDuplications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ContentDuplications.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ContentDuplications.
+     */
+    distinct?: ContentDuplicationScalarFieldEnum | ContentDuplicationScalarFieldEnum[]
+  }
+
+  /**
+   * ContentDuplication findFirstOrThrow
+   */
+  export type ContentDuplicationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentDuplication
+     */
+    select?: ContentDuplicationSelect<ExtArgs> | null
+    /**
+     * Filter, which ContentDuplication to fetch.
+     */
+    where?: ContentDuplicationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ContentDuplications to fetch.
+     */
+    orderBy?: ContentDuplicationOrderByWithRelationInput | ContentDuplicationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ContentDuplications.
+     */
+    cursor?: ContentDuplicationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ContentDuplications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ContentDuplications.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ContentDuplications.
+     */
+    distinct?: ContentDuplicationScalarFieldEnum | ContentDuplicationScalarFieldEnum[]
+  }
+
+  /**
+   * ContentDuplication findMany
+   */
+  export type ContentDuplicationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentDuplication
+     */
+    select?: ContentDuplicationSelect<ExtArgs> | null
+    /**
+     * Filter, which ContentDuplications to fetch.
+     */
+    where?: ContentDuplicationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ContentDuplications to fetch.
+     */
+    orderBy?: ContentDuplicationOrderByWithRelationInput | ContentDuplicationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ContentDuplications.
+     */
+    cursor?: ContentDuplicationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ContentDuplications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ContentDuplications.
+     */
+    skip?: number
+    distinct?: ContentDuplicationScalarFieldEnum | ContentDuplicationScalarFieldEnum[]
+  }
+
+  /**
+   * ContentDuplication create
+   */
+  export type ContentDuplicationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentDuplication
+     */
+    select?: ContentDuplicationSelect<ExtArgs> | null
+    /**
+     * The data needed to create a ContentDuplication.
+     */
+    data: XOR<ContentDuplicationCreateInput, ContentDuplicationUncheckedCreateInput>
+  }
+
+  /**
+   * ContentDuplication createMany
+   */
+  export type ContentDuplicationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ContentDuplications.
+     */
+    data: ContentDuplicationCreateManyInput | ContentDuplicationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ContentDuplication createManyAndReturn
+   */
+  export type ContentDuplicationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentDuplication
+     */
+    select?: ContentDuplicationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many ContentDuplications.
+     */
+    data: ContentDuplicationCreateManyInput | ContentDuplicationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ContentDuplication update
+   */
+  export type ContentDuplicationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentDuplication
+     */
+    select?: ContentDuplicationSelect<ExtArgs> | null
+    /**
+     * The data needed to update a ContentDuplication.
+     */
+    data: XOR<ContentDuplicationUpdateInput, ContentDuplicationUncheckedUpdateInput>
+    /**
+     * Choose, which ContentDuplication to update.
+     */
+    where: ContentDuplicationWhereUniqueInput
+  }
+
+  /**
+   * ContentDuplication updateMany
+   */
+  export type ContentDuplicationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ContentDuplications.
+     */
+    data: XOR<ContentDuplicationUpdateManyMutationInput, ContentDuplicationUncheckedUpdateManyInput>
+    /**
+     * Filter which ContentDuplications to update
+     */
+    where?: ContentDuplicationWhereInput
+  }
+
+  /**
+   * ContentDuplication upsert
+   */
+  export type ContentDuplicationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentDuplication
+     */
+    select?: ContentDuplicationSelect<ExtArgs> | null
+    /**
+     * The filter to search for the ContentDuplication to update in case it exists.
+     */
+    where: ContentDuplicationWhereUniqueInput
+    /**
+     * In case the ContentDuplication found by the `where` argument doesn't exist, create a new ContentDuplication with this data.
+     */
+    create: XOR<ContentDuplicationCreateInput, ContentDuplicationUncheckedCreateInput>
+    /**
+     * In case the ContentDuplication was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ContentDuplicationUpdateInput, ContentDuplicationUncheckedUpdateInput>
+  }
+
+  /**
+   * ContentDuplication delete
+   */
+  export type ContentDuplicationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentDuplication
+     */
+    select?: ContentDuplicationSelect<ExtArgs> | null
+    /**
+     * Filter which ContentDuplication to delete.
+     */
+    where: ContentDuplicationWhereUniqueInput
+  }
+
+  /**
+   * ContentDuplication deleteMany
+   */
+  export type ContentDuplicationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ContentDuplications to delete
+     */
+    where?: ContentDuplicationWhereInput
+  }
+
+  /**
+   * ContentDuplication without action
+   */
+  export type ContentDuplicationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentDuplication
+     */
+    select?: ContentDuplicationSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SearchIndex
+   */
+
+  export type AggregateSearchIndex = {
+    _count: SearchIndexCountAggregateOutputType | null
+    _avg: SearchIndexAvgAggregateOutputType | null
+    _sum: SearchIndexSumAggregateOutputType | null
+    _min: SearchIndexMinAggregateOutputType | null
+    _max: SearchIndexMaxAggregateOutputType | null
+  }
+
+  export type SearchIndexAvgAggregateOutputType = {
+    titleWeight: number | null
+    contentWeight: number | null
+    keywordWeight: number | null
+  }
+
+  export type SearchIndexSumAggregateOutputType = {
+    titleWeight: number | null
+    contentWeight: number | null
+    keywordWeight: number | null
+  }
+
+  export type SearchIndexMinAggregateOutputType = {
+    id: string | null
+    contentId: string | null
+    titleWeight: number | null
+    contentWeight: number | null
+    keywordWeight: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SearchIndexMaxAggregateOutputType = {
+    id: string | null
+    contentId: string | null
+    titleWeight: number | null
+    contentWeight: number | null
+    keywordWeight: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SearchIndexCountAggregateOutputType = {
+    id: number
+    contentId: number
+    titleTokens: number
+    contentTokens: number
+    keywords: number
+    titleWeight: number
+    contentWeight: number
+    keywordWeight: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SearchIndexAvgAggregateInputType = {
+    titleWeight?: true
+    contentWeight?: true
+    keywordWeight?: true
+  }
+
+  export type SearchIndexSumAggregateInputType = {
+    titleWeight?: true
+    contentWeight?: true
+    keywordWeight?: true
+  }
+
+  export type SearchIndexMinAggregateInputType = {
+    id?: true
+    contentId?: true
+    titleWeight?: true
+    contentWeight?: true
+    keywordWeight?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SearchIndexMaxAggregateInputType = {
+    id?: true
+    contentId?: true
+    titleWeight?: true
+    contentWeight?: true
+    keywordWeight?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SearchIndexCountAggregateInputType = {
+    id?: true
+    contentId?: true
+    titleTokens?: true
+    contentTokens?: true
+    keywords?: true
+    titleWeight?: true
+    contentWeight?: true
+    keywordWeight?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SearchIndexAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SearchIndex to aggregate.
+     */
+    where?: SearchIndexWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SearchIndices to fetch.
+     */
+    orderBy?: SearchIndexOrderByWithRelationInput | SearchIndexOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SearchIndexWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SearchIndices from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SearchIndices.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SearchIndices
+    **/
+    _count?: true | SearchIndexCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SearchIndexAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SearchIndexSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SearchIndexMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SearchIndexMaxAggregateInputType
+  }
+
+  export type GetSearchIndexAggregateType<T extends SearchIndexAggregateArgs> = {
+        [P in keyof T & keyof AggregateSearchIndex]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSearchIndex[P]>
+      : GetScalarType<T[P], AggregateSearchIndex[P]>
+  }
+
+
+
+
+  export type SearchIndexGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SearchIndexWhereInput
+    orderBy?: SearchIndexOrderByWithAggregationInput | SearchIndexOrderByWithAggregationInput[]
+    by: SearchIndexScalarFieldEnum[] | SearchIndexScalarFieldEnum
+    having?: SearchIndexScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SearchIndexCountAggregateInputType | true
+    _avg?: SearchIndexAvgAggregateInputType
+    _sum?: SearchIndexSumAggregateInputType
+    _min?: SearchIndexMinAggregateInputType
+    _max?: SearchIndexMaxAggregateInputType
+  }
+
+  export type SearchIndexGroupByOutputType = {
+    id: string
+    contentId: string
+    titleTokens: string[]
+    contentTokens: string[]
+    keywords: string[]
+    titleWeight: number
+    contentWeight: number
+    keywordWeight: number
+    createdAt: Date
+    updatedAt: Date
+    _count: SearchIndexCountAggregateOutputType | null
+    _avg: SearchIndexAvgAggregateOutputType | null
+    _sum: SearchIndexSumAggregateOutputType | null
+    _min: SearchIndexMinAggregateOutputType | null
+    _max: SearchIndexMaxAggregateOutputType | null
+  }
+
+  type GetSearchIndexGroupByPayload<T extends SearchIndexGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SearchIndexGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SearchIndexGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SearchIndexGroupByOutputType[P]>
+            : GetScalarType<T[P], SearchIndexGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SearchIndexSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    contentId?: boolean
+    titleTokens?: boolean
+    contentTokens?: boolean
+    keywords?: boolean
+    titleWeight?: boolean
+    contentWeight?: boolean
+    keywordWeight?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["searchIndex"]>
+
+  export type SearchIndexSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    contentId?: boolean
+    titleTokens?: boolean
+    contentTokens?: boolean
+    keywords?: boolean
+    titleWeight?: boolean
+    contentWeight?: boolean
+    keywordWeight?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["searchIndex"]>
+
+  export type SearchIndexSelectScalar = {
+    id?: boolean
+    contentId?: boolean
+    titleTokens?: boolean
+    contentTokens?: boolean
+    keywords?: boolean
+    titleWeight?: boolean
+    contentWeight?: boolean
+    keywordWeight?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type $SearchIndexPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SearchIndex"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      contentId: string
+      titleTokens: string[]
+      contentTokens: string[]
+      keywords: string[]
+      titleWeight: number
+      contentWeight: number
+      keywordWeight: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["searchIndex"]>
+    composites: {}
+  }
+
+  type SearchIndexGetPayload<S extends boolean | null | undefined | SearchIndexDefaultArgs> = $Result.GetResult<Prisma.$SearchIndexPayload, S>
+
+  type SearchIndexCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<SearchIndexFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: SearchIndexCountAggregateInputType | true
+    }
+
+  export interface SearchIndexDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SearchIndex'], meta: { name: 'SearchIndex' } }
+    /**
+     * Find zero or one SearchIndex that matches the filter.
+     * @param {SearchIndexFindUniqueArgs} args - Arguments to find a SearchIndex
+     * @example
+     * // Get one SearchIndex
+     * const searchIndex = await prisma.searchIndex.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SearchIndexFindUniqueArgs>(args: SelectSubset<T, SearchIndexFindUniqueArgs<ExtArgs>>): Prisma__SearchIndexClient<$Result.GetResult<Prisma.$SearchIndexPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one SearchIndex that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {SearchIndexFindUniqueOrThrowArgs} args - Arguments to find a SearchIndex
+     * @example
+     * // Get one SearchIndex
+     * const searchIndex = await prisma.searchIndex.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SearchIndexFindUniqueOrThrowArgs>(args: SelectSubset<T, SearchIndexFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SearchIndexClient<$Result.GetResult<Prisma.$SearchIndexPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first SearchIndex that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SearchIndexFindFirstArgs} args - Arguments to find a SearchIndex
+     * @example
+     * // Get one SearchIndex
+     * const searchIndex = await prisma.searchIndex.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SearchIndexFindFirstArgs>(args?: SelectSubset<T, SearchIndexFindFirstArgs<ExtArgs>>): Prisma__SearchIndexClient<$Result.GetResult<Prisma.$SearchIndexPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first SearchIndex that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SearchIndexFindFirstOrThrowArgs} args - Arguments to find a SearchIndex
+     * @example
+     * // Get one SearchIndex
+     * const searchIndex = await prisma.searchIndex.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SearchIndexFindFirstOrThrowArgs>(args?: SelectSubset<T, SearchIndexFindFirstOrThrowArgs<ExtArgs>>): Prisma__SearchIndexClient<$Result.GetResult<Prisma.$SearchIndexPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more SearchIndices that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SearchIndexFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SearchIndices
+     * const searchIndices = await prisma.searchIndex.findMany()
+     * 
+     * // Get first 10 SearchIndices
+     * const searchIndices = await prisma.searchIndex.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const searchIndexWithIdOnly = await prisma.searchIndex.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SearchIndexFindManyArgs>(args?: SelectSubset<T, SearchIndexFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SearchIndexPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a SearchIndex.
+     * @param {SearchIndexCreateArgs} args - Arguments to create a SearchIndex.
+     * @example
+     * // Create one SearchIndex
+     * const SearchIndex = await prisma.searchIndex.create({
+     *   data: {
+     *     // ... data to create a SearchIndex
+     *   }
+     * })
+     * 
+     */
+    create<T extends SearchIndexCreateArgs>(args: SelectSubset<T, SearchIndexCreateArgs<ExtArgs>>): Prisma__SearchIndexClient<$Result.GetResult<Prisma.$SearchIndexPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many SearchIndices.
+     * @param {SearchIndexCreateManyArgs} args - Arguments to create many SearchIndices.
+     * @example
+     * // Create many SearchIndices
+     * const searchIndex = await prisma.searchIndex.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SearchIndexCreateManyArgs>(args?: SelectSubset<T, SearchIndexCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SearchIndices and returns the data saved in the database.
+     * @param {SearchIndexCreateManyAndReturnArgs} args - Arguments to create many SearchIndices.
+     * @example
+     * // Create many SearchIndices
+     * const searchIndex = await prisma.searchIndex.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SearchIndices and only return the `id`
+     * const searchIndexWithIdOnly = await prisma.searchIndex.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SearchIndexCreateManyAndReturnArgs>(args?: SelectSubset<T, SearchIndexCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SearchIndexPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a SearchIndex.
+     * @param {SearchIndexDeleteArgs} args - Arguments to delete one SearchIndex.
+     * @example
+     * // Delete one SearchIndex
+     * const SearchIndex = await prisma.searchIndex.delete({
+     *   where: {
+     *     // ... filter to delete one SearchIndex
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SearchIndexDeleteArgs>(args: SelectSubset<T, SearchIndexDeleteArgs<ExtArgs>>): Prisma__SearchIndexClient<$Result.GetResult<Prisma.$SearchIndexPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one SearchIndex.
+     * @param {SearchIndexUpdateArgs} args - Arguments to update one SearchIndex.
+     * @example
+     * // Update one SearchIndex
+     * const searchIndex = await prisma.searchIndex.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SearchIndexUpdateArgs>(args: SelectSubset<T, SearchIndexUpdateArgs<ExtArgs>>): Prisma__SearchIndexClient<$Result.GetResult<Prisma.$SearchIndexPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more SearchIndices.
+     * @param {SearchIndexDeleteManyArgs} args - Arguments to filter SearchIndices to delete.
+     * @example
+     * // Delete a few SearchIndices
+     * const { count } = await prisma.searchIndex.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SearchIndexDeleteManyArgs>(args?: SelectSubset<T, SearchIndexDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SearchIndices.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SearchIndexUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SearchIndices
+     * const searchIndex = await prisma.searchIndex.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SearchIndexUpdateManyArgs>(args: SelectSubset<T, SearchIndexUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one SearchIndex.
+     * @param {SearchIndexUpsertArgs} args - Arguments to update or create a SearchIndex.
+     * @example
+     * // Update or create a SearchIndex
+     * const searchIndex = await prisma.searchIndex.upsert({
+     *   create: {
+     *     // ... data to create a SearchIndex
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SearchIndex we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SearchIndexUpsertArgs>(args: SelectSubset<T, SearchIndexUpsertArgs<ExtArgs>>): Prisma__SearchIndexClient<$Result.GetResult<Prisma.$SearchIndexPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of SearchIndices.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SearchIndexCountArgs} args - Arguments to filter SearchIndices to count.
+     * @example
+     * // Count the number of SearchIndices
+     * const count = await prisma.searchIndex.count({
+     *   where: {
+     *     // ... the filter for the SearchIndices we want to count
+     *   }
+     * })
+    **/
+    count<T extends SearchIndexCountArgs>(
+      args?: Subset<T, SearchIndexCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SearchIndexCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SearchIndex.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SearchIndexAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SearchIndexAggregateArgs>(args: Subset<T, SearchIndexAggregateArgs>): Prisma.PrismaPromise<GetSearchIndexAggregateType<T>>
+
+    /**
+     * Group by SearchIndex.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SearchIndexGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SearchIndexGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SearchIndexGroupByArgs['orderBy'] }
+        : { orderBy?: SearchIndexGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SearchIndexGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSearchIndexGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SearchIndex model
+   */
+  readonly fields: SearchIndexFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SearchIndex.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SearchIndexClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SearchIndex model
+   */ 
+  interface SearchIndexFieldRefs {
+    readonly id: FieldRef<"SearchIndex", 'String'>
+    readonly contentId: FieldRef<"SearchIndex", 'String'>
+    readonly titleTokens: FieldRef<"SearchIndex", 'String[]'>
+    readonly contentTokens: FieldRef<"SearchIndex", 'String[]'>
+    readonly keywords: FieldRef<"SearchIndex", 'String[]'>
+    readonly titleWeight: FieldRef<"SearchIndex", 'Float'>
+    readonly contentWeight: FieldRef<"SearchIndex", 'Float'>
+    readonly keywordWeight: FieldRef<"SearchIndex", 'Float'>
+    readonly createdAt: FieldRef<"SearchIndex", 'DateTime'>
+    readonly updatedAt: FieldRef<"SearchIndex", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SearchIndex findUnique
+   */
+  export type SearchIndexFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SearchIndex
+     */
+    select?: SearchIndexSelect<ExtArgs> | null
+    /**
+     * Filter, which SearchIndex to fetch.
+     */
+    where: SearchIndexWhereUniqueInput
+  }
+
+  /**
+   * SearchIndex findUniqueOrThrow
+   */
+  export type SearchIndexFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SearchIndex
+     */
+    select?: SearchIndexSelect<ExtArgs> | null
+    /**
+     * Filter, which SearchIndex to fetch.
+     */
+    where: SearchIndexWhereUniqueInput
+  }
+
+  /**
+   * SearchIndex findFirst
+   */
+  export type SearchIndexFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SearchIndex
+     */
+    select?: SearchIndexSelect<ExtArgs> | null
+    /**
+     * Filter, which SearchIndex to fetch.
+     */
+    where?: SearchIndexWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SearchIndices to fetch.
+     */
+    orderBy?: SearchIndexOrderByWithRelationInput | SearchIndexOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SearchIndices.
+     */
+    cursor?: SearchIndexWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SearchIndices from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SearchIndices.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SearchIndices.
+     */
+    distinct?: SearchIndexScalarFieldEnum | SearchIndexScalarFieldEnum[]
+  }
+
+  /**
+   * SearchIndex findFirstOrThrow
+   */
+  export type SearchIndexFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SearchIndex
+     */
+    select?: SearchIndexSelect<ExtArgs> | null
+    /**
+     * Filter, which SearchIndex to fetch.
+     */
+    where?: SearchIndexWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SearchIndices to fetch.
+     */
+    orderBy?: SearchIndexOrderByWithRelationInput | SearchIndexOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SearchIndices.
+     */
+    cursor?: SearchIndexWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SearchIndices from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SearchIndices.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SearchIndices.
+     */
+    distinct?: SearchIndexScalarFieldEnum | SearchIndexScalarFieldEnum[]
+  }
+
+  /**
+   * SearchIndex findMany
+   */
+  export type SearchIndexFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SearchIndex
+     */
+    select?: SearchIndexSelect<ExtArgs> | null
+    /**
+     * Filter, which SearchIndices to fetch.
+     */
+    where?: SearchIndexWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SearchIndices to fetch.
+     */
+    orderBy?: SearchIndexOrderByWithRelationInput | SearchIndexOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SearchIndices.
+     */
+    cursor?: SearchIndexWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SearchIndices from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SearchIndices.
+     */
+    skip?: number
+    distinct?: SearchIndexScalarFieldEnum | SearchIndexScalarFieldEnum[]
+  }
+
+  /**
+   * SearchIndex create
+   */
+  export type SearchIndexCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SearchIndex
+     */
+    select?: SearchIndexSelect<ExtArgs> | null
+    /**
+     * The data needed to create a SearchIndex.
+     */
+    data: XOR<SearchIndexCreateInput, SearchIndexUncheckedCreateInput>
+  }
+
+  /**
+   * SearchIndex createMany
+   */
+  export type SearchIndexCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SearchIndices.
+     */
+    data: SearchIndexCreateManyInput | SearchIndexCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SearchIndex createManyAndReturn
+   */
+  export type SearchIndexCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SearchIndex
+     */
+    select?: SearchIndexSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many SearchIndices.
+     */
+    data: SearchIndexCreateManyInput | SearchIndexCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SearchIndex update
+   */
+  export type SearchIndexUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SearchIndex
+     */
+    select?: SearchIndexSelect<ExtArgs> | null
+    /**
+     * The data needed to update a SearchIndex.
+     */
+    data: XOR<SearchIndexUpdateInput, SearchIndexUncheckedUpdateInput>
+    /**
+     * Choose, which SearchIndex to update.
+     */
+    where: SearchIndexWhereUniqueInput
+  }
+
+  /**
+   * SearchIndex updateMany
+   */
+  export type SearchIndexUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SearchIndices.
+     */
+    data: XOR<SearchIndexUpdateManyMutationInput, SearchIndexUncheckedUpdateManyInput>
+    /**
+     * Filter which SearchIndices to update
+     */
+    where?: SearchIndexWhereInput
+  }
+
+  /**
+   * SearchIndex upsert
+   */
+  export type SearchIndexUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SearchIndex
+     */
+    select?: SearchIndexSelect<ExtArgs> | null
+    /**
+     * The filter to search for the SearchIndex to update in case it exists.
+     */
+    where: SearchIndexWhereUniqueInput
+    /**
+     * In case the SearchIndex found by the `where` argument doesn't exist, create a new SearchIndex with this data.
+     */
+    create: XOR<SearchIndexCreateInput, SearchIndexUncheckedCreateInput>
+    /**
+     * In case the SearchIndex was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SearchIndexUpdateInput, SearchIndexUncheckedUpdateInput>
+  }
+
+  /**
+   * SearchIndex delete
+   */
+  export type SearchIndexDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SearchIndex
+     */
+    select?: SearchIndexSelect<ExtArgs> | null
+    /**
+     * Filter which SearchIndex to delete.
+     */
+    where: SearchIndexWhereUniqueInput
+  }
+
+  /**
+   * SearchIndex deleteMany
+   */
+  export type SearchIndexDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SearchIndices to delete
+     */
+    where?: SearchIndexWhereInput
+  }
+
+  /**
+   * SearchIndex without action
+   */
+  export type SearchIndexDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SearchIndex
+     */
+    select?: SearchIndexSelect<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -14942,16 +23258,28 @@ export namespace Prisma {
     title: 'title',
     description: 'description',
     content: 'content',
+    summary: 'summary',
     url: 'url',
     imageUrl: 'imageUrl',
+    type: 'type',
     category: 'category',
     tags: 'tags',
     status: 'status',
     score: 'score',
     priority: 'priority',
+    quality: 'quality',
+    relevance: 'relevance',
     sourceId: 'sourceId',
     sourceUrl: 'sourceUrl',
     publishedAt: 'publishedAt',
+    author: 'author',
+    contentHash: 'contentHash',
+    titleHash: 'titleHash',
+    duplicateOf: 'duplicateOf',
+    viewCount: 'viewCount',
+    shareCount: 'shareCount',
+    searchVector: 'searchVector',
+    keywords: 'keywords',
     metadata: 'metadata',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -14960,10 +23288,27 @@ export namespace Prisma {
   export type ContentScalarFieldEnum = (typeof ContentScalarFieldEnum)[keyof typeof ContentScalarFieldEnum]
 
 
+  export const TagScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    slug: 'slug',
+    type: 'type',
+    description: 'description',
+    color: 'color',
+    parentId: 'parentId',
+    usageCount: 'usageCount',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type TagScalarFieldEnum = (typeof TagScalarFieldEnum)[keyof typeof TagScalarFieldEnum]
+
+
   export const ContentTagScalarFieldEnum: {
     id: 'id',
     contentId: 'contentId',
-    tag: 'tag',
+    tagId: 'tagId',
+    relevance: 'relevance',
     createdAt: 'createdAt'
   };
 
@@ -15034,6 +23379,125 @@ export namespace Prisma {
   };
 
   export type SystemConfigScalarFieldEnum = (typeof SystemConfigScalarFieldEnum)[keyof typeof SystemConfigScalarFieldEnum]
+
+
+  export const ApiConfigurationScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    provider: 'provider',
+    baseUrl: 'baseUrl',
+    authType: 'authType',
+    status: 'status',
+    apiKey: 'apiKey',
+    token: 'token',
+    username: 'username',
+    password: 'password',
+    headerName: 'headerName',
+    rateLimit: 'rateLimit',
+    timeout: 'timeout',
+    retryAttempts: 'retryAttempts',
+    retryDelay: 'retryDelay',
+    headers: 'headers',
+    totalCalls: 'totalCalls',
+    successfulCalls: 'successfulCalls',
+    failedCalls: 'failedCalls',
+    lastCallAt: 'lastCallAt',
+    lastError: 'lastError',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ApiConfigurationScalarFieldEnum = (typeof ApiConfigurationScalarFieldEnum)[keyof typeof ApiConfigurationScalarFieldEnum]
+
+
+  export const ApiCallLogScalarFieldEnum: {
+    id: 'id',
+    configId: 'configId',
+    method: 'method',
+    endpoint: 'endpoint',
+    requestHeaders: 'requestHeaders',
+    requestBody: 'requestBody',
+    statusCode: 'statusCode',
+    responseHeaders: 'responseHeaders',
+    responseBody: 'responseBody',
+    duration: 'duration',
+    success: 'success',
+    errorMessage: 'errorMessage',
+    createdAt: 'createdAt'
+  };
+
+  export type ApiCallLogScalarFieldEnum = (typeof ApiCallLogScalarFieldEnum)[keyof typeof ApiCallLogScalarFieldEnum]
+
+
+  export const ContentVersionScalarFieldEnum: {
+    id: 'id',
+    contentId: 'contentId',
+    version: 'version',
+    title: 'title',
+    description: 'description',
+    contentText: 'contentText',
+    summary: 'summary',
+    tags: 'tags',
+    metadata: 'metadata',
+    changeType: 'changeType',
+    changeNote: 'changeNote',
+    changedBy: 'changedBy',
+    createdAt: 'createdAt'
+  };
+
+  export type ContentVersionScalarFieldEnum = (typeof ContentVersionScalarFieldEnum)[keyof typeof ContentVersionScalarFieldEnum]
+
+
+  export const ContentAuditLogScalarFieldEnum: {
+    id: 'id',
+    contentId: 'contentId',
+    userId: 'userId',
+    action: 'action',
+    tableName: 'tableName',
+    recordId: 'recordId',
+    oldValues: 'oldValues',
+    newValues: 'newValues',
+    ipAddress: 'ipAddress',
+    userAgent: 'userAgent',
+    sessionId: 'sessionId',
+    createdAt: 'createdAt'
+  };
+
+  export type ContentAuditLogScalarFieldEnum = (typeof ContentAuditLogScalarFieldEnum)[keyof typeof ContentAuditLogScalarFieldEnum]
+
+
+  export const ContentDuplicationScalarFieldEnum: {
+    id: 'id',
+    originalId: 'originalId',
+    duplicateId: 'duplicateId',
+    titleSimilarity: 'titleSimilarity',
+    contentSimilarity: 'contentSimilarity',
+    overallSimilarity: 'overallSimilarity',
+    detectionMethod: 'detectionMethod',
+    confidence: 'confidence',
+    status: 'status',
+    reviewedBy: 'reviewedBy',
+    reviewedAt: 'reviewedAt',
+    createdAt: 'createdAt'
+  };
+
+  export type ContentDuplicationScalarFieldEnum = (typeof ContentDuplicationScalarFieldEnum)[keyof typeof ContentDuplicationScalarFieldEnum]
+
+
+  export const SearchIndexScalarFieldEnum: {
+    id: 'id',
+    contentId: 'contentId',
+    titleTokens: 'titleTokens',
+    contentTokens: 'contentTokens',
+    keywords: 'keywords',
+    titleWeight: 'titleWeight',
+    contentWeight: 'contentWeight',
+    keywordWeight: 'keywordWeight',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type SearchIndexScalarFieldEnum = (typeof SearchIndexScalarFieldEnum)[keyof typeof SearchIndexScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -15202,6 +23666,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'ContentType'
+   */
+  export type EnumContentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContentType'>
+    
+
+
+  /**
+   * Reference to a field of type 'ContentType[]'
+   */
+  export type ListEnumContentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContentType[]'>
+    
+
+
+  /**
    * Reference to a field of type 'ContentStatus'
    */
   export type EnumContentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContentStatus'>
@@ -15230,6 +23708,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'TagType'
+   */
+  export type EnumTagTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TagType'>
+    
+
+
+  /**
+   * Reference to a field of type 'TagType[]'
+   */
+  export type ListEnumTagTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TagType[]'>
+    
+
+
+  /**
    * Reference to a field of type 'ReviewAction'
    */
   export type EnumReviewActionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReviewAction'>
@@ -15240,6 +23732,34 @@ export namespace Prisma {
    * Reference to a field of type 'ReviewAction[]'
    */
   export type ListEnumReviewActionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReviewAction[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'ApiAuthType'
+   */
+  export type EnumApiAuthTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ApiAuthType'>
+    
+
+
+  /**
+   * Reference to a field of type 'ApiAuthType[]'
+   */
+  export type ListEnumApiAuthTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ApiAuthType[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'ApiConfigStatus'
+   */
+  export type EnumApiConfigStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ApiConfigStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'ApiConfigStatus[]'
+   */
+  export type ListEnumApiConfigStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ApiConfigStatus[]'>
     
   /**
    * Deep Input Types
@@ -15738,22 +24258,35 @@ export namespace Prisma {
     title?: StringFilter<"Content"> | string
     description?: StringNullableFilter<"Content"> | string | null
     content?: StringNullableFilter<"Content"> | string | null
+    summary?: StringNullableFilter<"Content"> | string | null
     url?: StringNullableFilter<"Content"> | string | null
     imageUrl?: StringNullableFilter<"Content"> | string | null
+    type?: EnumContentTypeFilter<"Content"> | $Enums.ContentType
     category?: StringNullableFilter<"Content"> | string | null
     tags?: StringNullableListFilter<"Content">
     status?: EnumContentStatusFilter<"Content"> | $Enums.ContentStatus
     score?: FloatNullableFilter<"Content"> | number | null
     priority?: IntFilter<"Content"> | number
+    quality?: FloatNullableFilter<"Content"> | number | null
+    relevance?: FloatNullableFilter<"Content"> | number | null
     sourceId?: StringFilter<"Content"> | string
     sourceUrl?: StringNullableFilter<"Content"> | string | null
     publishedAt?: DateTimeNullableFilter<"Content"> | Date | string | null
+    author?: StringNullableFilter<"Content"> | string | null
+    contentHash?: StringNullableFilter<"Content"> | string | null
+    titleHash?: StringNullableFilter<"Content"> | string | null
+    duplicateOf?: StringNullableFilter<"Content"> | string | null
+    viewCount?: IntFilter<"Content"> | number
+    shareCount?: IntFilter<"Content"> | number
+    searchVector?: StringNullableFilter<"Content"> | string | null
+    keywords?: StringNullableListFilter<"Content">
     metadata?: JsonNullableFilter<"Content">
     createdAt?: DateTimeFilter<"Content"> | Date | string
     updatedAt?: DateTimeFilter<"Content"> | Date | string
     source?: XOR<SourceRelationFilter, SourceWhereInput>
     reviews?: ContentReviewListRelationFilter
     contentTags?: ContentTagListRelationFilter
+    versions?: ContentVersionListRelationFilter
   }
 
   export type ContentOrderByWithRelationInput = {
@@ -15761,22 +24294,35 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrderInput | SortOrder
     content?: SortOrderInput | SortOrder
+    summary?: SortOrderInput | SortOrder
     url?: SortOrderInput | SortOrder
     imageUrl?: SortOrderInput | SortOrder
+    type?: SortOrder
     category?: SortOrderInput | SortOrder
     tags?: SortOrder
     status?: SortOrder
     score?: SortOrderInput | SortOrder
     priority?: SortOrder
+    quality?: SortOrderInput | SortOrder
+    relevance?: SortOrderInput | SortOrder
     sourceId?: SortOrder
     sourceUrl?: SortOrderInput | SortOrder
     publishedAt?: SortOrderInput | SortOrder
+    author?: SortOrderInput | SortOrder
+    contentHash?: SortOrderInput | SortOrder
+    titleHash?: SortOrderInput | SortOrder
+    duplicateOf?: SortOrderInput | SortOrder
+    viewCount?: SortOrder
+    shareCount?: SortOrder
+    searchVector?: SortOrderInput | SortOrder
+    keywords?: SortOrder
     metadata?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     source?: SourceOrderByWithRelationInput
     reviews?: ContentReviewOrderByRelationAggregateInput
     contentTags?: ContentTagOrderByRelationAggregateInput
+    versions?: ContentVersionOrderByRelationAggregateInput
   }
 
   export type ContentWhereUniqueInput = Prisma.AtLeast<{
@@ -15787,22 +24333,35 @@ export namespace Prisma {
     title?: StringFilter<"Content"> | string
     description?: StringNullableFilter<"Content"> | string | null
     content?: StringNullableFilter<"Content"> | string | null
+    summary?: StringNullableFilter<"Content"> | string | null
     url?: StringNullableFilter<"Content"> | string | null
     imageUrl?: StringNullableFilter<"Content"> | string | null
+    type?: EnumContentTypeFilter<"Content"> | $Enums.ContentType
     category?: StringNullableFilter<"Content"> | string | null
     tags?: StringNullableListFilter<"Content">
     status?: EnumContentStatusFilter<"Content"> | $Enums.ContentStatus
     score?: FloatNullableFilter<"Content"> | number | null
     priority?: IntFilter<"Content"> | number
+    quality?: FloatNullableFilter<"Content"> | number | null
+    relevance?: FloatNullableFilter<"Content"> | number | null
     sourceId?: StringFilter<"Content"> | string
     sourceUrl?: StringNullableFilter<"Content"> | string | null
     publishedAt?: DateTimeNullableFilter<"Content"> | Date | string | null
+    author?: StringNullableFilter<"Content"> | string | null
+    contentHash?: StringNullableFilter<"Content"> | string | null
+    titleHash?: StringNullableFilter<"Content"> | string | null
+    duplicateOf?: StringNullableFilter<"Content"> | string | null
+    viewCount?: IntFilter<"Content"> | number
+    shareCount?: IntFilter<"Content"> | number
+    searchVector?: StringNullableFilter<"Content"> | string | null
+    keywords?: StringNullableListFilter<"Content">
     metadata?: JsonNullableFilter<"Content">
     createdAt?: DateTimeFilter<"Content"> | Date | string
     updatedAt?: DateTimeFilter<"Content"> | Date | string
     source?: XOR<SourceRelationFilter, SourceWhereInput>
     reviews?: ContentReviewListRelationFilter
     contentTags?: ContentTagListRelationFilter
+    versions?: ContentVersionListRelationFilter
   }, "id">
 
   export type ContentOrderByWithAggregationInput = {
@@ -15810,16 +24369,28 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrderInput | SortOrder
     content?: SortOrderInput | SortOrder
+    summary?: SortOrderInput | SortOrder
     url?: SortOrderInput | SortOrder
     imageUrl?: SortOrderInput | SortOrder
+    type?: SortOrder
     category?: SortOrderInput | SortOrder
     tags?: SortOrder
     status?: SortOrder
     score?: SortOrderInput | SortOrder
     priority?: SortOrder
+    quality?: SortOrderInput | SortOrder
+    relevance?: SortOrderInput | SortOrder
     sourceId?: SortOrder
     sourceUrl?: SortOrderInput | SortOrder
     publishedAt?: SortOrderInput | SortOrder
+    author?: SortOrderInput | SortOrder
+    contentHash?: SortOrderInput | SortOrder
+    titleHash?: SortOrderInput | SortOrder
+    duplicateOf?: SortOrderInput | SortOrder
+    viewCount?: SortOrder
+    shareCount?: SortOrder
+    searchVector?: SortOrderInput | SortOrder
+    keywords?: SortOrder
     metadata?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -15838,19 +24409,119 @@ export namespace Prisma {
     title?: StringWithAggregatesFilter<"Content"> | string
     description?: StringNullableWithAggregatesFilter<"Content"> | string | null
     content?: StringNullableWithAggregatesFilter<"Content"> | string | null
+    summary?: StringNullableWithAggregatesFilter<"Content"> | string | null
     url?: StringNullableWithAggregatesFilter<"Content"> | string | null
     imageUrl?: StringNullableWithAggregatesFilter<"Content"> | string | null
+    type?: EnumContentTypeWithAggregatesFilter<"Content"> | $Enums.ContentType
     category?: StringNullableWithAggregatesFilter<"Content"> | string | null
     tags?: StringNullableListFilter<"Content">
     status?: EnumContentStatusWithAggregatesFilter<"Content"> | $Enums.ContentStatus
     score?: FloatNullableWithAggregatesFilter<"Content"> | number | null
     priority?: IntWithAggregatesFilter<"Content"> | number
+    quality?: FloatNullableWithAggregatesFilter<"Content"> | number | null
+    relevance?: FloatNullableWithAggregatesFilter<"Content"> | number | null
     sourceId?: StringWithAggregatesFilter<"Content"> | string
     sourceUrl?: StringNullableWithAggregatesFilter<"Content"> | string | null
     publishedAt?: DateTimeNullableWithAggregatesFilter<"Content"> | Date | string | null
+    author?: StringNullableWithAggregatesFilter<"Content"> | string | null
+    contentHash?: StringNullableWithAggregatesFilter<"Content"> | string | null
+    titleHash?: StringNullableWithAggregatesFilter<"Content"> | string | null
+    duplicateOf?: StringNullableWithAggregatesFilter<"Content"> | string | null
+    viewCount?: IntWithAggregatesFilter<"Content"> | number
+    shareCount?: IntWithAggregatesFilter<"Content"> | number
+    searchVector?: StringNullableWithAggregatesFilter<"Content"> | string | null
+    keywords?: StringNullableListFilter<"Content">
     metadata?: JsonNullableWithAggregatesFilter<"Content">
     createdAt?: DateTimeWithAggregatesFilter<"Content"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Content"> | Date | string
+  }
+
+  export type TagWhereInput = {
+    AND?: TagWhereInput | TagWhereInput[]
+    OR?: TagWhereInput[]
+    NOT?: TagWhereInput | TagWhereInput[]
+    id?: StringFilter<"Tag"> | string
+    name?: StringFilter<"Tag"> | string
+    slug?: StringFilter<"Tag"> | string
+    type?: EnumTagTypeFilter<"Tag"> | $Enums.TagType
+    description?: StringNullableFilter<"Tag"> | string | null
+    color?: StringNullableFilter<"Tag"> | string | null
+    parentId?: StringNullableFilter<"Tag"> | string | null
+    usageCount?: IntFilter<"Tag"> | number
+    createdAt?: DateTimeFilter<"Tag"> | Date | string
+    updatedAt?: DateTimeFilter<"Tag"> | Date | string
+    parent?: XOR<TagNullableRelationFilter, TagWhereInput> | null
+    children?: TagListRelationFilter
+    contentTags?: ContentTagListRelationFilter
+  }
+
+  export type TagOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    type?: SortOrder
+    description?: SortOrderInput | SortOrder
+    color?: SortOrderInput | SortOrder
+    parentId?: SortOrderInput | SortOrder
+    usageCount?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    parent?: TagOrderByWithRelationInput
+    children?: TagOrderByRelationAggregateInput
+    contentTags?: ContentTagOrderByRelationAggregateInput
+  }
+
+  export type TagWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    name?: string
+    slug?: string
+    AND?: TagWhereInput | TagWhereInput[]
+    OR?: TagWhereInput[]
+    NOT?: TagWhereInput | TagWhereInput[]
+    type?: EnumTagTypeFilter<"Tag"> | $Enums.TagType
+    description?: StringNullableFilter<"Tag"> | string | null
+    color?: StringNullableFilter<"Tag"> | string | null
+    parentId?: StringNullableFilter<"Tag"> | string | null
+    usageCount?: IntFilter<"Tag"> | number
+    createdAt?: DateTimeFilter<"Tag"> | Date | string
+    updatedAt?: DateTimeFilter<"Tag"> | Date | string
+    parent?: XOR<TagNullableRelationFilter, TagWhereInput> | null
+    children?: TagListRelationFilter
+    contentTags?: ContentTagListRelationFilter
+  }, "id" | "name" | "slug">
+
+  export type TagOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    type?: SortOrder
+    description?: SortOrderInput | SortOrder
+    color?: SortOrderInput | SortOrder
+    parentId?: SortOrderInput | SortOrder
+    usageCount?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: TagCountOrderByAggregateInput
+    _avg?: TagAvgOrderByAggregateInput
+    _max?: TagMaxOrderByAggregateInput
+    _min?: TagMinOrderByAggregateInput
+    _sum?: TagSumOrderByAggregateInput
+  }
+
+  export type TagScalarWhereWithAggregatesInput = {
+    AND?: TagScalarWhereWithAggregatesInput | TagScalarWhereWithAggregatesInput[]
+    OR?: TagScalarWhereWithAggregatesInput[]
+    NOT?: TagScalarWhereWithAggregatesInput | TagScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Tag"> | string
+    name?: StringWithAggregatesFilter<"Tag"> | string
+    slug?: StringWithAggregatesFilter<"Tag"> | string
+    type?: EnumTagTypeWithAggregatesFilter<"Tag"> | $Enums.TagType
+    description?: StringNullableWithAggregatesFilter<"Tag"> | string | null
+    color?: StringNullableWithAggregatesFilter<"Tag"> | string | null
+    parentId?: StringNullableWithAggregatesFilter<"Tag"> | string | null
+    usageCount?: IntWithAggregatesFilter<"Tag"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"Tag"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Tag"> | Date | string
   }
 
   export type ContentTagWhereInput = {
@@ -15859,39 +24530,48 @@ export namespace Prisma {
     NOT?: ContentTagWhereInput | ContentTagWhereInput[]
     id?: StringFilter<"ContentTag"> | string
     contentId?: StringFilter<"ContentTag"> | string
-    tag?: StringFilter<"ContentTag"> | string
+    tagId?: StringFilter<"ContentTag"> | string
+    relevance?: FloatNullableFilter<"ContentTag"> | number | null
     createdAt?: DateTimeFilter<"ContentTag"> | Date | string
     content?: XOR<ContentRelationFilter, ContentWhereInput>
+    tag?: XOR<TagRelationFilter, TagWhereInput>
   }
 
   export type ContentTagOrderByWithRelationInput = {
     id?: SortOrder
     contentId?: SortOrder
-    tag?: SortOrder
+    tagId?: SortOrder
+    relevance?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     content?: ContentOrderByWithRelationInput
+    tag?: TagOrderByWithRelationInput
   }
 
   export type ContentTagWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    contentId_tag?: ContentTagContentIdTagCompoundUniqueInput
+    contentId_tagId?: ContentTagContentIdTagIdCompoundUniqueInput
     AND?: ContentTagWhereInput | ContentTagWhereInput[]
     OR?: ContentTagWhereInput[]
     NOT?: ContentTagWhereInput | ContentTagWhereInput[]
     contentId?: StringFilter<"ContentTag"> | string
-    tag?: StringFilter<"ContentTag"> | string
+    tagId?: StringFilter<"ContentTag"> | string
+    relevance?: FloatNullableFilter<"ContentTag"> | number | null
     createdAt?: DateTimeFilter<"ContentTag"> | Date | string
     content?: XOR<ContentRelationFilter, ContentWhereInput>
-  }, "id" | "contentId_tag">
+    tag?: XOR<TagRelationFilter, TagWhereInput>
+  }, "id" | "contentId_tagId">
 
   export type ContentTagOrderByWithAggregationInput = {
     id?: SortOrder
     contentId?: SortOrder
-    tag?: SortOrder
+    tagId?: SortOrder
+    relevance?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     _count?: ContentTagCountOrderByAggregateInput
+    _avg?: ContentTagAvgOrderByAggregateInput
     _max?: ContentTagMaxOrderByAggregateInput
     _min?: ContentTagMinOrderByAggregateInput
+    _sum?: ContentTagSumOrderByAggregateInput
   }
 
   export type ContentTagScalarWhereWithAggregatesInput = {
@@ -15900,7 +24580,8 @@ export namespace Prisma {
     NOT?: ContentTagScalarWhereWithAggregatesInput | ContentTagScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"ContentTag"> | string
     contentId?: StringWithAggregatesFilter<"ContentTag"> | string
-    tag?: StringWithAggregatesFilter<"ContentTag"> | string
+    tagId?: StringWithAggregatesFilter<"ContentTag"> | string
+    relevance?: FloatNullableWithAggregatesFilter<"ContentTag"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"ContentTag"> | Date | string
   }
 
@@ -16228,6 +24909,604 @@ export namespace Prisma {
     value?: JsonWithAggregatesFilter<"SystemConfig">
     createdAt?: DateTimeWithAggregatesFilter<"SystemConfig"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"SystemConfig"> | Date | string
+  }
+
+  export type ApiConfigurationWhereInput = {
+    AND?: ApiConfigurationWhereInput | ApiConfigurationWhereInput[]
+    OR?: ApiConfigurationWhereInput[]
+    NOT?: ApiConfigurationWhereInput | ApiConfigurationWhereInput[]
+    id?: StringFilter<"ApiConfiguration"> | string
+    name?: StringFilter<"ApiConfiguration"> | string
+    provider?: StringFilter<"ApiConfiguration"> | string
+    baseUrl?: StringFilter<"ApiConfiguration"> | string
+    authType?: EnumApiAuthTypeFilter<"ApiConfiguration"> | $Enums.ApiAuthType
+    status?: EnumApiConfigStatusFilter<"ApiConfiguration"> | $Enums.ApiConfigStatus
+    apiKey?: StringNullableFilter<"ApiConfiguration"> | string | null
+    token?: StringNullableFilter<"ApiConfiguration"> | string | null
+    username?: StringNullableFilter<"ApiConfiguration"> | string | null
+    password?: StringNullableFilter<"ApiConfiguration"> | string | null
+    headerName?: StringNullableFilter<"ApiConfiguration"> | string | null
+    rateLimit?: JsonNullableFilter<"ApiConfiguration">
+    timeout?: IntNullableFilter<"ApiConfiguration"> | number | null
+    retryAttempts?: IntNullableFilter<"ApiConfiguration"> | number | null
+    retryDelay?: IntNullableFilter<"ApiConfiguration"> | number | null
+    headers?: JsonNullableFilter<"ApiConfiguration">
+    totalCalls?: IntFilter<"ApiConfiguration"> | number
+    successfulCalls?: IntFilter<"ApiConfiguration"> | number
+    failedCalls?: IntFilter<"ApiConfiguration"> | number
+    lastCallAt?: DateTimeNullableFilter<"ApiConfiguration"> | Date | string | null
+    lastError?: StringNullableFilter<"ApiConfiguration"> | string | null
+    createdAt?: DateTimeFilter<"ApiConfiguration"> | Date | string
+    updatedAt?: DateTimeFilter<"ApiConfiguration"> | Date | string
+    apiCallLogs?: ApiCallLogListRelationFilter
+  }
+
+  export type ApiConfigurationOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    provider?: SortOrder
+    baseUrl?: SortOrder
+    authType?: SortOrder
+    status?: SortOrder
+    apiKey?: SortOrderInput | SortOrder
+    token?: SortOrderInput | SortOrder
+    username?: SortOrderInput | SortOrder
+    password?: SortOrderInput | SortOrder
+    headerName?: SortOrderInput | SortOrder
+    rateLimit?: SortOrderInput | SortOrder
+    timeout?: SortOrderInput | SortOrder
+    retryAttempts?: SortOrderInput | SortOrder
+    retryDelay?: SortOrderInput | SortOrder
+    headers?: SortOrderInput | SortOrder
+    totalCalls?: SortOrder
+    successfulCalls?: SortOrder
+    failedCalls?: SortOrder
+    lastCallAt?: SortOrderInput | SortOrder
+    lastError?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    apiCallLogs?: ApiCallLogOrderByRelationAggregateInput
+  }
+
+  export type ApiConfigurationWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ApiConfigurationWhereInput | ApiConfigurationWhereInput[]
+    OR?: ApiConfigurationWhereInput[]
+    NOT?: ApiConfigurationWhereInput | ApiConfigurationWhereInput[]
+    name?: StringFilter<"ApiConfiguration"> | string
+    provider?: StringFilter<"ApiConfiguration"> | string
+    baseUrl?: StringFilter<"ApiConfiguration"> | string
+    authType?: EnumApiAuthTypeFilter<"ApiConfiguration"> | $Enums.ApiAuthType
+    status?: EnumApiConfigStatusFilter<"ApiConfiguration"> | $Enums.ApiConfigStatus
+    apiKey?: StringNullableFilter<"ApiConfiguration"> | string | null
+    token?: StringNullableFilter<"ApiConfiguration"> | string | null
+    username?: StringNullableFilter<"ApiConfiguration"> | string | null
+    password?: StringNullableFilter<"ApiConfiguration"> | string | null
+    headerName?: StringNullableFilter<"ApiConfiguration"> | string | null
+    rateLimit?: JsonNullableFilter<"ApiConfiguration">
+    timeout?: IntNullableFilter<"ApiConfiguration"> | number | null
+    retryAttempts?: IntNullableFilter<"ApiConfiguration"> | number | null
+    retryDelay?: IntNullableFilter<"ApiConfiguration"> | number | null
+    headers?: JsonNullableFilter<"ApiConfiguration">
+    totalCalls?: IntFilter<"ApiConfiguration"> | number
+    successfulCalls?: IntFilter<"ApiConfiguration"> | number
+    failedCalls?: IntFilter<"ApiConfiguration"> | number
+    lastCallAt?: DateTimeNullableFilter<"ApiConfiguration"> | Date | string | null
+    lastError?: StringNullableFilter<"ApiConfiguration"> | string | null
+    createdAt?: DateTimeFilter<"ApiConfiguration"> | Date | string
+    updatedAt?: DateTimeFilter<"ApiConfiguration"> | Date | string
+    apiCallLogs?: ApiCallLogListRelationFilter
+  }, "id">
+
+  export type ApiConfigurationOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    provider?: SortOrder
+    baseUrl?: SortOrder
+    authType?: SortOrder
+    status?: SortOrder
+    apiKey?: SortOrderInput | SortOrder
+    token?: SortOrderInput | SortOrder
+    username?: SortOrderInput | SortOrder
+    password?: SortOrderInput | SortOrder
+    headerName?: SortOrderInput | SortOrder
+    rateLimit?: SortOrderInput | SortOrder
+    timeout?: SortOrderInput | SortOrder
+    retryAttempts?: SortOrderInput | SortOrder
+    retryDelay?: SortOrderInput | SortOrder
+    headers?: SortOrderInput | SortOrder
+    totalCalls?: SortOrder
+    successfulCalls?: SortOrder
+    failedCalls?: SortOrder
+    lastCallAt?: SortOrderInput | SortOrder
+    lastError?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ApiConfigurationCountOrderByAggregateInput
+    _avg?: ApiConfigurationAvgOrderByAggregateInput
+    _max?: ApiConfigurationMaxOrderByAggregateInput
+    _min?: ApiConfigurationMinOrderByAggregateInput
+    _sum?: ApiConfigurationSumOrderByAggregateInput
+  }
+
+  export type ApiConfigurationScalarWhereWithAggregatesInput = {
+    AND?: ApiConfigurationScalarWhereWithAggregatesInput | ApiConfigurationScalarWhereWithAggregatesInput[]
+    OR?: ApiConfigurationScalarWhereWithAggregatesInput[]
+    NOT?: ApiConfigurationScalarWhereWithAggregatesInput | ApiConfigurationScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ApiConfiguration"> | string
+    name?: StringWithAggregatesFilter<"ApiConfiguration"> | string
+    provider?: StringWithAggregatesFilter<"ApiConfiguration"> | string
+    baseUrl?: StringWithAggregatesFilter<"ApiConfiguration"> | string
+    authType?: EnumApiAuthTypeWithAggregatesFilter<"ApiConfiguration"> | $Enums.ApiAuthType
+    status?: EnumApiConfigStatusWithAggregatesFilter<"ApiConfiguration"> | $Enums.ApiConfigStatus
+    apiKey?: StringNullableWithAggregatesFilter<"ApiConfiguration"> | string | null
+    token?: StringNullableWithAggregatesFilter<"ApiConfiguration"> | string | null
+    username?: StringNullableWithAggregatesFilter<"ApiConfiguration"> | string | null
+    password?: StringNullableWithAggregatesFilter<"ApiConfiguration"> | string | null
+    headerName?: StringNullableWithAggregatesFilter<"ApiConfiguration"> | string | null
+    rateLimit?: JsonNullableWithAggregatesFilter<"ApiConfiguration">
+    timeout?: IntNullableWithAggregatesFilter<"ApiConfiguration"> | number | null
+    retryAttempts?: IntNullableWithAggregatesFilter<"ApiConfiguration"> | number | null
+    retryDelay?: IntNullableWithAggregatesFilter<"ApiConfiguration"> | number | null
+    headers?: JsonNullableWithAggregatesFilter<"ApiConfiguration">
+    totalCalls?: IntWithAggregatesFilter<"ApiConfiguration"> | number
+    successfulCalls?: IntWithAggregatesFilter<"ApiConfiguration"> | number
+    failedCalls?: IntWithAggregatesFilter<"ApiConfiguration"> | number
+    lastCallAt?: DateTimeNullableWithAggregatesFilter<"ApiConfiguration"> | Date | string | null
+    lastError?: StringNullableWithAggregatesFilter<"ApiConfiguration"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"ApiConfiguration"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ApiConfiguration"> | Date | string
+  }
+
+  export type ApiCallLogWhereInput = {
+    AND?: ApiCallLogWhereInput | ApiCallLogWhereInput[]
+    OR?: ApiCallLogWhereInput[]
+    NOT?: ApiCallLogWhereInput | ApiCallLogWhereInput[]
+    id?: StringFilter<"ApiCallLog"> | string
+    configId?: StringFilter<"ApiCallLog"> | string
+    method?: StringFilter<"ApiCallLog"> | string
+    endpoint?: StringFilter<"ApiCallLog"> | string
+    requestHeaders?: JsonNullableFilter<"ApiCallLog">
+    requestBody?: JsonNullableFilter<"ApiCallLog">
+    statusCode?: IntNullableFilter<"ApiCallLog"> | number | null
+    responseHeaders?: JsonNullableFilter<"ApiCallLog">
+    responseBody?: JsonNullableFilter<"ApiCallLog">
+    duration?: IntNullableFilter<"ApiCallLog"> | number | null
+    success?: BoolFilter<"ApiCallLog"> | boolean
+    errorMessage?: StringNullableFilter<"ApiCallLog"> | string | null
+    createdAt?: DateTimeFilter<"ApiCallLog"> | Date | string
+    config?: XOR<ApiConfigurationRelationFilter, ApiConfigurationWhereInput>
+  }
+
+  export type ApiCallLogOrderByWithRelationInput = {
+    id?: SortOrder
+    configId?: SortOrder
+    method?: SortOrder
+    endpoint?: SortOrder
+    requestHeaders?: SortOrderInput | SortOrder
+    requestBody?: SortOrderInput | SortOrder
+    statusCode?: SortOrderInput | SortOrder
+    responseHeaders?: SortOrderInput | SortOrder
+    responseBody?: SortOrderInput | SortOrder
+    duration?: SortOrderInput | SortOrder
+    success?: SortOrder
+    errorMessage?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    config?: ApiConfigurationOrderByWithRelationInput
+  }
+
+  export type ApiCallLogWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ApiCallLogWhereInput | ApiCallLogWhereInput[]
+    OR?: ApiCallLogWhereInput[]
+    NOT?: ApiCallLogWhereInput | ApiCallLogWhereInput[]
+    configId?: StringFilter<"ApiCallLog"> | string
+    method?: StringFilter<"ApiCallLog"> | string
+    endpoint?: StringFilter<"ApiCallLog"> | string
+    requestHeaders?: JsonNullableFilter<"ApiCallLog">
+    requestBody?: JsonNullableFilter<"ApiCallLog">
+    statusCode?: IntNullableFilter<"ApiCallLog"> | number | null
+    responseHeaders?: JsonNullableFilter<"ApiCallLog">
+    responseBody?: JsonNullableFilter<"ApiCallLog">
+    duration?: IntNullableFilter<"ApiCallLog"> | number | null
+    success?: BoolFilter<"ApiCallLog"> | boolean
+    errorMessage?: StringNullableFilter<"ApiCallLog"> | string | null
+    createdAt?: DateTimeFilter<"ApiCallLog"> | Date | string
+    config?: XOR<ApiConfigurationRelationFilter, ApiConfigurationWhereInput>
+  }, "id">
+
+  export type ApiCallLogOrderByWithAggregationInput = {
+    id?: SortOrder
+    configId?: SortOrder
+    method?: SortOrder
+    endpoint?: SortOrder
+    requestHeaders?: SortOrderInput | SortOrder
+    requestBody?: SortOrderInput | SortOrder
+    statusCode?: SortOrderInput | SortOrder
+    responseHeaders?: SortOrderInput | SortOrder
+    responseBody?: SortOrderInput | SortOrder
+    duration?: SortOrderInput | SortOrder
+    success?: SortOrder
+    errorMessage?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: ApiCallLogCountOrderByAggregateInput
+    _avg?: ApiCallLogAvgOrderByAggregateInput
+    _max?: ApiCallLogMaxOrderByAggregateInput
+    _min?: ApiCallLogMinOrderByAggregateInput
+    _sum?: ApiCallLogSumOrderByAggregateInput
+  }
+
+  export type ApiCallLogScalarWhereWithAggregatesInput = {
+    AND?: ApiCallLogScalarWhereWithAggregatesInput | ApiCallLogScalarWhereWithAggregatesInput[]
+    OR?: ApiCallLogScalarWhereWithAggregatesInput[]
+    NOT?: ApiCallLogScalarWhereWithAggregatesInput | ApiCallLogScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ApiCallLog"> | string
+    configId?: StringWithAggregatesFilter<"ApiCallLog"> | string
+    method?: StringWithAggregatesFilter<"ApiCallLog"> | string
+    endpoint?: StringWithAggregatesFilter<"ApiCallLog"> | string
+    requestHeaders?: JsonNullableWithAggregatesFilter<"ApiCallLog">
+    requestBody?: JsonNullableWithAggregatesFilter<"ApiCallLog">
+    statusCode?: IntNullableWithAggregatesFilter<"ApiCallLog"> | number | null
+    responseHeaders?: JsonNullableWithAggregatesFilter<"ApiCallLog">
+    responseBody?: JsonNullableWithAggregatesFilter<"ApiCallLog">
+    duration?: IntNullableWithAggregatesFilter<"ApiCallLog"> | number | null
+    success?: BoolWithAggregatesFilter<"ApiCallLog"> | boolean
+    errorMessage?: StringNullableWithAggregatesFilter<"ApiCallLog"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"ApiCallLog"> | Date | string
+  }
+
+  export type ContentVersionWhereInput = {
+    AND?: ContentVersionWhereInput | ContentVersionWhereInput[]
+    OR?: ContentVersionWhereInput[]
+    NOT?: ContentVersionWhereInput | ContentVersionWhereInput[]
+    id?: StringFilter<"ContentVersion"> | string
+    contentId?: StringFilter<"ContentVersion"> | string
+    version?: IntFilter<"ContentVersion"> | number
+    title?: StringFilter<"ContentVersion"> | string
+    description?: StringNullableFilter<"ContentVersion"> | string | null
+    contentText?: StringNullableFilter<"ContentVersion"> | string | null
+    summary?: StringNullableFilter<"ContentVersion"> | string | null
+    tags?: StringNullableListFilter<"ContentVersion">
+    metadata?: JsonNullableFilter<"ContentVersion">
+    changeType?: StringFilter<"ContentVersion"> | string
+    changeNote?: StringNullableFilter<"ContentVersion"> | string | null
+    changedBy?: StringNullableFilter<"ContentVersion"> | string | null
+    createdAt?: DateTimeFilter<"ContentVersion"> | Date | string
+    contentItem?: XOR<ContentRelationFilter, ContentWhereInput>
+  }
+
+  export type ContentVersionOrderByWithRelationInput = {
+    id?: SortOrder
+    contentId?: SortOrder
+    version?: SortOrder
+    title?: SortOrder
+    description?: SortOrderInput | SortOrder
+    contentText?: SortOrderInput | SortOrder
+    summary?: SortOrderInput | SortOrder
+    tags?: SortOrder
+    metadata?: SortOrderInput | SortOrder
+    changeType?: SortOrder
+    changeNote?: SortOrderInput | SortOrder
+    changedBy?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    contentItem?: ContentOrderByWithRelationInput
+  }
+
+  export type ContentVersionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    contentId_version?: ContentVersionContentIdVersionCompoundUniqueInput
+    AND?: ContentVersionWhereInput | ContentVersionWhereInput[]
+    OR?: ContentVersionWhereInput[]
+    NOT?: ContentVersionWhereInput | ContentVersionWhereInput[]
+    contentId?: StringFilter<"ContentVersion"> | string
+    version?: IntFilter<"ContentVersion"> | number
+    title?: StringFilter<"ContentVersion"> | string
+    description?: StringNullableFilter<"ContentVersion"> | string | null
+    contentText?: StringNullableFilter<"ContentVersion"> | string | null
+    summary?: StringNullableFilter<"ContentVersion"> | string | null
+    tags?: StringNullableListFilter<"ContentVersion">
+    metadata?: JsonNullableFilter<"ContentVersion">
+    changeType?: StringFilter<"ContentVersion"> | string
+    changeNote?: StringNullableFilter<"ContentVersion"> | string | null
+    changedBy?: StringNullableFilter<"ContentVersion"> | string | null
+    createdAt?: DateTimeFilter<"ContentVersion"> | Date | string
+    contentItem?: XOR<ContentRelationFilter, ContentWhereInput>
+  }, "id" | "contentId_version">
+
+  export type ContentVersionOrderByWithAggregationInput = {
+    id?: SortOrder
+    contentId?: SortOrder
+    version?: SortOrder
+    title?: SortOrder
+    description?: SortOrderInput | SortOrder
+    contentText?: SortOrderInput | SortOrder
+    summary?: SortOrderInput | SortOrder
+    tags?: SortOrder
+    metadata?: SortOrderInput | SortOrder
+    changeType?: SortOrder
+    changeNote?: SortOrderInput | SortOrder
+    changedBy?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: ContentVersionCountOrderByAggregateInput
+    _avg?: ContentVersionAvgOrderByAggregateInput
+    _max?: ContentVersionMaxOrderByAggregateInput
+    _min?: ContentVersionMinOrderByAggregateInput
+    _sum?: ContentVersionSumOrderByAggregateInput
+  }
+
+  export type ContentVersionScalarWhereWithAggregatesInput = {
+    AND?: ContentVersionScalarWhereWithAggregatesInput | ContentVersionScalarWhereWithAggregatesInput[]
+    OR?: ContentVersionScalarWhereWithAggregatesInput[]
+    NOT?: ContentVersionScalarWhereWithAggregatesInput | ContentVersionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ContentVersion"> | string
+    contentId?: StringWithAggregatesFilter<"ContentVersion"> | string
+    version?: IntWithAggregatesFilter<"ContentVersion"> | number
+    title?: StringWithAggregatesFilter<"ContentVersion"> | string
+    description?: StringNullableWithAggregatesFilter<"ContentVersion"> | string | null
+    contentText?: StringNullableWithAggregatesFilter<"ContentVersion"> | string | null
+    summary?: StringNullableWithAggregatesFilter<"ContentVersion"> | string | null
+    tags?: StringNullableListFilter<"ContentVersion">
+    metadata?: JsonNullableWithAggregatesFilter<"ContentVersion">
+    changeType?: StringWithAggregatesFilter<"ContentVersion"> | string
+    changeNote?: StringNullableWithAggregatesFilter<"ContentVersion"> | string | null
+    changedBy?: StringNullableWithAggregatesFilter<"ContentVersion"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"ContentVersion"> | Date | string
+  }
+
+  export type ContentAuditLogWhereInput = {
+    AND?: ContentAuditLogWhereInput | ContentAuditLogWhereInput[]
+    OR?: ContentAuditLogWhereInput[]
+    NOT?: ContentAuditLogWhereInput | ContentAuditLogWhereInput[]
+    id?: StringFilter<"ContentAuditLog"> | string
+    contentId?: StringFilter<"ContentAuditLog"> | string
+    userId?: StringNullableFilter<"ContentAuditLog"> | string | null
+    action?: StringFilter<"ContentAuditLog"> | string
+    tableName?: StringFilter<"ContentAuditLog"> | string
+    recordId?: StringFilter<"ContentAuditLog"> | string
+    oldValues?: JsonNullableFilter<"ContentAuditLog">
+    newValues?: JsonNullableFilter<"ContentAuditLog">
+    ipAddress?: StringNullableFilter<"ContentAuditLog"> | string | null
+    userAgent?: StringNullableFilter<"ContentAuditLog"> | string | null
+    sessionId?: StringNullableFilter<"ContentAuditLog"> | string | null
+    createdAt?: DateTimeFilter<"ContentAuditLog"> | Date | string
+  }
+
+  export type ContentAuditLogOrderByWithRelationInput = {
+    id?: SortOrder
+    contentId?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    action?: SortOrder
+    tableName?: SortOrder
+    recordId?: SortOrder
+    oldValues?: SortOrderInput | SortOrder
+    newValues?: SortOrderInput | SortOrder
+    ipAddress?: SortOrderInput | SortOrder
+    userAgent?: SortOrderInput | SortOrder
+    sessionId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ContentAuditLogWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ContentAuditLogWhereInput | ContentAuditLogWhereInput[]
+    OR?: ContentAuditLogWhereInput[]
+    NOT?: ContentAuditLogWhereInput | ContentAuditLogWhereInput[]
+    contentId?: StringFilter<"ContentAuditLog"> | string
+    userId?: StringNullableFilter<"ContentAuditLog"> | string | null
+    action?: StringFilter<"ContentAuditLog"> | string
+    tableName?: StringFilter<"ContentAuditLog"> | string
+    recordId?: StringFilter<"ContentAuditLog"> | string
+    oldValues?: JsonNullableFilter<"ContentAuditLog">
+    newValues?: JsonNullableFilter<"ContentAuditLog">
+    ipAddress?: StringNullableFilter<"ContentAuditLog"> | string | null
+    userAgent?: StringNullableFilter<"ContentAuditLog"> | string | null
+    sessionId?: StringNullableFilter<"ContentAuditLog"> | string | null
+    createdAt?: DateTimeFilter<"ContentAuditLog"> | Date | string
+  }, "id">
+
+  export type ContentAuditLogOrderByWithAggregationInput = {
+    id?: SortOrder
+    contentId?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    action?: SortOrder
+    tableName?: SortOrder
+    recordId?: SortOrder
+    oldValues?: SortOrderInput | SortOrder
+    newValues?: SortOrderInput | SortOrder
+    ipAddress?: SortOrderInput | SortOrder
+    userAgent?: SortOrderInput | SortOrder
+    sessionId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: ContentAuditLogCountOrderByAggregateInput
+    _max?: ContentAuditLogMaxOrderByAggregateInput
+    _min?: ContentAuditLogMinOrderByAggregateInput
+  }
+
+  export type ContentAuditLogScalarWhereWithAggregatesInput = {
+    AND?: ContentAuditLogScalarWhereWithAggregatesInput | ContentAuditLogScalarWhereWithAggregatesInput[]
+    OR?: ContentAuditLogScalarWhereWithAggregatesInput[]
+    NOT?: ContentAuditLogScalarWhereWithAggregatesInput | ContentAuditLogScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ContentAuditLog"> | string
+    contentId?: StringWithAggregatesFilter<"ContentAuditLog"> | string
+    userId?: StringNullableWithAggregatesFilter<"ContentAuditLog"> | string | null
+    action?: StringWithAggregatesFilter<"ContentAuditLog"> | string
+    tableName?: StringWithAggregatesFilter<"ContentAuditLog"> | string
+    recordId?: StringWithAggregatesFilter<"ContentAuditLog"> | string
+    oldValues?: JsonNullableWithAggregatesFilter<"ContentAuditLog">
+    newValues?: JsonNullableWithAggregatesFilter<"ContentAuditLog">
+    ipAddress?: StringNullableWithAggregatesFilter<"ContentAuditLog"> | string | null
+    userAgent?: StringNullableWithAggregatesFilter<"ContentAuditLog"> | string | null
+    sessionId?: StringNullableWithAggregatesFilter<"ContentAuditLog"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"ContentAuditLog"> | Date | string
+  }
+
+  export type ContentDuplicationWhereInput = {
+    AND?: ContentDuplicationWhereInput | ContentDuplicationWhereInput[]
+    OR?: ContentDuplicationWhereInput[]
+    NOT?: ContentDuplicationWhereInput | ContentDuplicationWhereInput[]
+    id?: StringFilter<"ContentDuplication"> | string
+    originalId?: StringFilter<"ContentDuplication"> | string
+    duplicateId?: StringFilter<"ContentDuplication"> | string
+    titleSimilarity?: FloatFilter<"ContentDuplication"> | number
+    contentSimilarity?: FloatFilter<"ContentDuplication"> | number
+    overallSimilarity?: FloatFilter<"ContentDuplication"> | number
+    detectionMethod?: StringFilter<"ContentDuplication"> | string
+    confidence?: FloatFilter<"ContentDuplication"> | number
+    status?: StringFilter<"ContentDuplication"> | string
+    reviewedBy?: StringNullableFilter<"ContentDuplication"> | string | null
+    reviewedAt?: DateTimeNullableFilter<"ContentDuplication"> | Date | string | null
+    createdAt?: DateTimeFilter<"ContentDuplication"> | Date | string
+  }
+
+  export type ContentDuplicationOrderByWithRelationInput = {
+    id?: SortOrder
+    originalId?: SortOrder
+    duplicateId?: SortOrder
+    titleSimilarity?: SortOrder
+    contentSimilarity?: SortOrder
+    overallSimilarity?: SortOrder
+    detectionMethod?: SortOrder
+    confidence?: SortOrder
+    status?: SortOrder
+    reviewedBy?: SortOrderInput | SortOrder
+    reviewedAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ContentDuplicationWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    originalId_duplicateId?: ContentDuplicationOriginalIdDuplicateIdCompoundUniqueInput
+    AND?: ContentDuplicationWhereInput | ContentDuplicationWhereInput[]
+    OR?: ContentDuplicationWhereInput[]
+    NOT?: ContentDuplicationWhereInput | ContentDuplicationWhereInput[]
+    originalId?: StringFilter<"ContentDuplication"> | string
+    duplicateId?: StringFilter<"ContentDuplication"> | string
+    titleSimilarity?: FloatFilter<"ContentDuplication"> | number
+    contentSimilarity?: FloatFilter<"ContentDuplication"> | number
+    overallSimilarity?: FloatFilter<"ContentDuplication"> | number
+    detectionMethod?: StringFilter<"ContentDuplication"> | string
+    confidence?: FloatFilter<"ContentDuplication"> | number
+    status?: StringFilter<"ContentDuplication"> | string
+    reviewedBy?: StringNullableFilter<"ContentDuplication"> | string | null
+    reviewedAt?: DateTimeNullableFilter<"ContentDuplication"> | Date | string | null
+    createdAt?: DateTimeFilter<"ContentDuplication"> | Date | string
+  }, "id" | "originalId_duplicateId">
+
+  export type ContentDuplicationOrderByWithAggregationInput = {
+    id?: SortOrder
+    originalId?: SortOrder
+    duplicateId?: SortOrder
+    titleSimilarity?: SortOrder
+    contentSimilarity?: SortOrder
+    overallSimilarity?: SortOrder
+    detectionMethod?: SortOrder
+    confidence?: SortOrder
+    status?: SortOrder
+    reviewedBy?: SortOrderInput | SortOrder
+    reviewedAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: ContentDuplicationCountOrderByAggregateInput
+    _avg?: ContentDuplicationAvgOrderByAggregateInput
+    _max?: ContentDuplicationMaxOrderByAggregateInput
+    _min?: ContentDuplicationMinOrderByAggregateInput
+    _sum?: ContentDuplicationSumOrderByAggregateInput
+  }
+
+  export type ContentDuplicationScalarWhereWithAggregatesInput = {
+    AND?: ContentDuplicationScalarWhereWithAggregatesInput | ContentDuplicationScalarWhereWithAggregatesInput[]
+    OR?: ContentDuplicationScalarWhereWithAggregatesInput[]
+    NOT?: ContentDuplicationScalarWhereWithAggregatesInput | ContentDuplicationScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ContentDuplication"> | string
+    originalId?: StringWithAggregatesFilter<"ContentDuplication"> | string
+    duplicateId?: StringWithAggregatesFilter<"ContentDuplication"> | string
+    titleSimilarity?: FloatWithAggregatesFilter<"ContentDuplication"> | number
+    contentSimilarity?: FloatWithAggregatesFilter<"ContentDuplication"> | number
+    overallSimilarity?: FloatWithAggregatesFilter<"ContentDuplication"> | number
+    detectionMethod?: StringWithAggregatesFilter<"ContentDuplication"> | string
+    confidence?: FloatWithAggregatesFilter<"ContentDuplication"> | number
+    status?: StringWithAggregatesFilter<"ContentDuplication"> | string
+    reviewedBy?: StringNullableWithAggregatesFilter<"ContentDuplication"> | string | null
+    reviewedAt?: DateTimeNullableWithAggregatesFilter<"ContentDuplication"> | Date | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"ContentDuplication"> | Date | string
+  }
+
+  export type SearchIndexWhereInput = {
+    AND?: SearchIndexWhereInput | SearchIndexWhereInput[]
+    OR?: SearchIndexWhereInput[]
+    NOT?: SearchIndexWhereInput | SearchIndexWhereInput[]
+    id?: StringFilter<"SearchIndex"> | string
+    contentId?: StringFilter<"SearchIndex"> | string
+    titleTokens?: StringNullableListFilter<"SearchIndex">
+    contentTokens?: StringNullableListFilter<"SearchIndex">
+    keywords?: StringNullableListFilter<"SearchIndex">
+    titleWeight?: FloatFilter<"SearchIndex"> | number
+    contentWeight?: FloatFilter<"SearchIndex"> | number
+    keywordWeight?: FloatFilter<"SearchIndex"> | number
+    createdAt?: DateTimeFilter<"SearchIndex"> | Date | string
+    updatedAt?: DateTimeFilter<"SearchIndex"> | Date | string
+  }
+
+  export type SearchIndexOrderByWithRelationInput = {
+    id?: SortOrder
+    contentId?: SortOrder
+    titleTokens?: SortOrder
+    contentTokens?: SortOrder
+    keywords?: SortOrder
+    titleWeight?: SortOrder
+    contentWeight?: SortOrder
+    keywordWeight?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SearchIndexWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    contentId?: string
+    AND?: SearchIndexWhereInput | SearchIndexWhereInput[]
+    OR?: SearchIndexWhereInput[]
+    NOT?: SearchIndexWhereInput | SearchIndexWhereInput[]
+    titleTokens?: StringNullableListFilter<"SearchIndex">
+    contentTokens?: StringNullableListFilter<"SearchIndex">
+    keywords?: StringNullableListFilter<"SearchIndex">
+    titleWeight?: FloatFilter<"SearchIndex"> | number
+    contentWeight?: FloatFilter<"SearchIndex"> | number
+    keywordWeight?: FloatFilter<"SearchIndex"> | number
+    createdAt?: DateTimeFilter<"SearchIndex"> | Date | string
+    updatedAt?: DateTimeFilter<"SearchIndex"> | Date | string
+  }, "id" | "contentId">
+
+  export type SearchIndexOrderByWithAggregationInput = {
+    id?: SortOrder
+    contentId?: SortOrder
+    titleTokens?: SortOrder
+    contentTokens?: SortOrder
+    keywords?: SortOrder
+    titleWeight?: SortOrder
+    contentWeight?: SortOrder
+    keywordWeight?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: SearchIndexCountOrderByAggregateInput
+    _avg?: SearchIndexAvgOrderByAggregateInput
+    _max?: SearchIndexMaxOrderByAggregateInput
+    _min?: SearchIndexMinOrderByAggregateInput
+    _sum?: SearchIndexSumOrderByAggregateInput
+  }
+
+  export type SearchIndexScalarWhereWithAggregatesInput = {
+    AND?: SearchIndexScalarWhereWithAggregatesInput | SearchIndexScalarWhereWithAggregatesInput[]
+    OR?: SearchIndexScalarWhereWithAggregatesInput[]
+    NOT?: SearchIndexScalarWhereWithAggregatesInput | SearchIndexScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"SearchIndex"> | string
+    contentId?: StringWithAggregatesFilter<"SearchIndex"> | string
+    titleTokens?: StringNullableListFilter<"SearchIndex">
+    contentTokens?: StringNullableListFilter<"SearchIndex">
+    keywords?: StringNullableListFilter<"SearchIndex">
+    titleWeight?: FloatWithAggregatesFilter<"SearchIndex"> | number
+    contentWeight?: FloatWithAggregatesFilter<"SearchIndex"> | number
+    keywordWeight?: FloatWithAggregatesFilter<"SearchIndex"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"SearchIndex"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"SearchIndex"> | Date | string
   }
 
   export type UserCreateInput = {
@@ -16792,21 +26071,34 @@ export namespace Prisma {
     title: string
     description?: string | null
     content?: string | null
+    summary?: string | null
     url?: string | null
     imageUrl?: string | null
+    type?: $Enums.ContentType
     category?: string | null
     tags?: ContentCreatetagsInput | string[]
     status?: $Enums.ContentStatus
     score?: number | null
     priority?: number
+    quality?: number | null
+    relevance?: number | null
     sourceUrl?: string | null
     publishedAt?: Date | string | null
+    author?: string | null
+    contentHash?: string | null
+    titleHash?: string | null
+    duplicateOf?: string | null
+    viewCount?: number
+    shareCount?: number
+    searchVector?: string | null
+    keywords?: ContentCreatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     source: SourceCreateNestedOneWithoutContentInput
     reviews?: ContentReviewCreateNestedManyWithoutContentInput
     contentTags?: ContentTagCreateNestedManyWithoutContentInput
+    versions?: ContentVersionCreateNestedManyWithoutContentItemInput
   }
 
   export type ContentUncheckedCreateInput = {
@@ -16814,21 +26106,34 @@ export namespace Prisma {
     title: string
     description?: string | null
     content?: string | null
+    summary?: string | null
     url?: string | null
     imageUrl?: string | null
+    type?: $Enums.ContentType
     category?: string | null
     tags?: ContentCreatetagsInput | string[]
     status?: $Enums.ContentStatus
     score?: number | null
     priority?: number
+    quality?: number | null
+    relevance?: number | null
     sourceId: string
     sourceUrl?: string | null
     publishedAt?: Date | string | null
+    author?: string | null
+    contentHash?: string | null
+    titleHash?: string | null
+    duplicateOf?: string | null
+    viewCount?: number
+    shareCount?: number
+    searchVector?: string | null
+    keywords?: ContentCreatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     reviews?: ContentReviewUncheckedCreateNestedManyWithoutContentInput
     contentTags?: ContentTagUncheckedCreateNestedManyWithoutContentInput
+    versions?: ContentVersionUncheckedCreateNestedManyWithoutContentItemInput
   }
 
   export type ContentUpdateInput = {
@@ -16836,21 +26141,34 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
     category?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ContentUpdatetagsInput | string[]
     status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     priority?: IntFieldUpdateOperationsInput | number
+    quality?: NullableFloatFieldUpdateOperationsInput | number | null
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    author?: NullableStringFieldUpdateOperationsInput | string | null
+    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
+    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
+    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
+    viewCount?: IntFieldUpdateOperationsInput | number
+    shareCount?: IntFieldUpdateOperationsInput | number
+    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: ContentUpdatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     source?: SourceUpdateOneRequiredWithoutContentNestedInput
     reviews?: ContentReviewUpdateManyWithoutContentNestedInput
     contentTags?: ContentTagUpdateManyWithoutContentNestedInput
+    versions?: ContentVersionUpdateManyWithoutContentItemNestedInput
   }
 
   export type ContentUncheckedUpdateInput = {
@@ -16858,21 +26176,34 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
     category?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ContentUpdatetagsInput | string[]
     status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     priority?: IntFieldUpdateOperationsInput | number
+    quality?: NullableFloatFieldUpdateOperationsInput | number | null
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     sourceId?: StringFieldUpdateOperationsInput | string
     sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    author?: NullableStringFieldUpdateOperationsInput | string | null
+    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
+    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
+    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
+    viewCount?: IntFieldUpdateOperationsInput | number
+    shareCount?: IntFieldUpdateOperationsInput | number
+    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: ContentUpdatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     reviews?: ContentReviewUncheckedUpdateManyWithoutContentNestedInput
     contentTags?: ContentTagUncheckedUpdateManyWithoutContentNestedInput
+    versions?: ContentVersionUncheckedUpdateManyWithoutContentItemNestedInput
   }
 
   export type ContentCreateManyInput = {
@@ -16880,16 +26211,28 @@ export namespace Prisma {
     title: string
     description?: string | null
     content?: string | null
+    summary?: string | null
     url?: string | null
     imageUrl?: string | null
+    type?: $Enums.ContentType
     category?: string | null
     tags?: ContentCreatetagsInput | string[]
     status?: $Enums.ContentStatus
     score?: number | null
     priority?: number
+    quality?: number | null
+    relevance?: number | null
     sourceId: string
     sourceUrl?: string | null
     publishedAt?: Date | string | null
+    author?: string | null
+    contentHash?: string | null
+    titleHash?: string | null
+    duplicateOf?: string | null
+    viewCount?: number
+    shareCount?: number
+    searchVector?: string | null
+    keywords?: ContentCreatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -16900,15 +26243,27 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
     category?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ContentUpdatetagsInput | string[]
     status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     priority?: IntFieldUpdateOperationsInput | number
+    quality?: NullableFloatFieldUpdateOperationsInput | number | null
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    author?: NullableStringFieldUpdateOperationsInput | string | null
+    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
+    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
+    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
+    viewCount?: IntFieldUpdateOperationsInput | number
+    shareCount?: IntFieldUpdateOperationsInput | number
+    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: ContentUpdatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16919,66 +26274,182 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
     category?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ContentUpdatetagsInput | string[]
     status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     priority?: IntFieldUpdateOperationsInput | number
+    quality?: NullableFloatFieldUpdateOperationsInput | number | null
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     sourceId?: StringFieldUpdateOperationsInput | string
     sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    author?: NullableStringFieldUpdateOperationsInput | string | null
+    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
+    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
+    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
+    viewCount?: IntFieldUpdateOperationsInput | number
+    shareCount?: IntFieldUpdateOperationsInput | number
+    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: ContentUpdatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TagCreateInput = {
+    id?: string
+    name: string
+    slug: string
+    type?: $Enums.TagType
+    description?: string | null
+    color?: string | null
+    usageCount?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    parent?: TagCreateNestedOneWithoutChildrenInput
+    children?: TagCreateNestedManyWithoutParentInput
+    contentTags?: ContentTagCreateNestedManyWithoutTagInput
+  }
+
+  export type TagUncheckedCreateInput = {
+    id?: string
+    name: string
+    slug: string
+    type?: $Enums.TagType
+    description?: string | null
+    color?: string | null
+    parentId?: string | null
+    usageCount?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    children?: TagUncheckedCreateNestedManyWithoutParentInput
+    contentTags?: ContentTagUncheckedCreateNestedManyWithoutTagInput
+  }
+
+  export type TagUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    type?: EnumTagTypeFieldUpdateOperationsInput | $Enums.TagType
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    usageCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    parent?: TagUpdateOneWithoutChildrenNestedInput
+    children?: TagUpdateManyWithoutParentNestedInput
+    contentTags?: ContentTagUpdateManyWithoutTagNestedInput
+  }
+
+  export type TagUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    type?: EnumTagTypeFieldUpdateOperationsInput | $Enums.TagType
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    usageCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    children?: TagUncheckedUpdateManyWithoutParentNestedInput
+    contentTags?: ContentTagUncheckedUpdateManyWithoutTagNestedInput
+  }
+
+  export type TagCreateManyInput = {
+    id?: string
+    name: string
+    slug: string
+    type?: $Enums.TagType
+    description?: string | null
+    color?: string | null
+    parentId?: string | null
+    usageCount?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TagUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    type?: EnumTagTypeFieldUpdateOperationsInput | $Enums.TagType
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    usageCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TagUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    type?: EnumTagTypeFieldUpdateOperationsInput | $Enums.TagType
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    usageCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ContentTagCreateInput = {
     id?: string
-    tag: string
+    relevance?: number | null
     createdAt?: Date | string
     content: ContentCreateNestedOneWithoutContentTagsInput
+    tag: TagCreateNestedOneWithoutContentTagsInput
   }
 
   export type ContentTagUncheckedCreateInput = {
     id?: string
     contentId: string
-    tag: string
+    tagId: string
+    relevance?: number | null
     createdAt?: Date | string
   }
 
   export type ContentTagUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    tag?: StringFieldUpdateOperationsInput | string
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     content?: ContentUpdateOneRequiredWithoutContentTagsNestedInput
+    tag?: TagUpdateOneRequiredWithoutContentTagsNestedInput
   }
 
   export type ContentTagUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     contentId?: StringFieldUpdateOperationsInput | string
-    tag?: StringFieldUpdateOperationsInput | string
+    tagId?: StringFieldUpdateOperationsInput | string
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ContentTagCreateManyInput = {
     id?: string
     contentId: string
-    tag: string
+    tagId: string
+    relevance?: number | null
     createdAt?: Date | string
   }
 
   export type ContentTagUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    tag?: StringFieldUpdateOperationsInput | string
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ContentTagUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     contentId?: StringFieldUpdateOperationsInput | string
-    tag?: StringFieldUpdateOperationsInput | string
+    tagId?: StringFieldUpdateOperationsInput | string
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -17332,6 +26803,715 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     key?: StringFieldUpdateOperationsInput | string
     value?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApiConfigurationCreateInput = {
+    id?: string
+    name: string
+    provider: string
+    baseUrl: string
+    authType: $Enums.ApiAuthType
+    status?: $Enums.ApiConfigStatus
+    apiKey?: string | null
+    token?: string | null
+    username?: string | null
+    password?: string | null
+    headerName?: string | null
+    rateLimit?: NullableJsonNullValueInput | InputJsonValue
+    timeout?: number | null
+    retryAttempts?: number | null
+    retryDelay?: number | null
+    headers?: NullableJsonNullValueInput | InputJsonValue
+    totalCalls?: number
+    successfulCalls?: number
+    failedCalls?: number
+    lastCallAt?: Date | string | null
+    lastError?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    apiCallLogs?: ApiCallLogCreateNestedManyWithoutConfigInput
+  }
+
+  export type ApiConfigurationUncheckedCreateInput = {
+    id?: string
+    name: string
+    provider: string
+    baseUrl: string
+    authType: $Enums.ApiAuthType
+    status?: $Enums.ApiConfigStatus
+    apiKey?: string | null
+    token?: string | null
+    username?: string | null
+    password?: string | null
+    headerName?: string | null
+    rateLimit?: NullableJsonNullValueInput | InputJsonValue
+    timeout?: number | null
+    retryAttempts?: number | null
+    retryDelay?: number | null
+    headers?: NullableJsonNullValueInput | InputJsonValue
+    totalCalls?: number
+    successfulCalls?: number
+    failedCalls?: number
+    lastCallAt?: Date | string | null
+    lastError?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    apiCallLogs?: ApiCallLogUncheckedCreateNestedManyWithoutConfigInput
+  }
+
+  export type ApiConfigurationUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    baseUrl?: StringFieldUpdateOperationsInput | string
+    authType?: EnumApiAuthTypeFieldUpdateOperationsInput | $Enums.ApiAuthType
+    status?: EnumApiConfigStatusFieldUpdateOperationsInput | $Enums.ApiConfigStatus
+    apiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    headerName?: NullableStringFieldUpdateOperationsInput | string | null
+    rateLimit?: NullableJsonNullValueInput | InputJsonValue
+    timeout?: NullableIntFieldUpdateOperationsInput | number | null
+    retryAttempts?: NullableIntFieldUpdateOperationsInput | number | null
+    retryDelay?: NullableIntFieldUpdateOperationsInput | number | null
+    headers?: NullableJsonNullValueInput | InputJsonValue
+    totalCalls?: IntFieldUpdateOperationsInput | number
+    successfulCalls?: IntFieldUpdateOperationsInput | number
+    failedCalls?: IntFieldUpdateOperationsInput | number
+    lastCallAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastError?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    apiCallLogs?: ApiCallLogUpdateManyWithoutConfigNestedInput
+  }
+
+  export type ApiConfigurationUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    baseUrl?: StringFieldUpdateOperationsInput | string
+    authType?: EnumApiAuthTypeFieldUpdateOperationsInput | $Enums.ApiAuthType
+    status?: EnumApiConfigStatusFieldUpdateOperationsInput | $Enums.ApiConfigStatus
+    apiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    headerName?: NullableStringFieldUpdateOperationsInput | string | null
+    rateLimit?: NullableJsonNullValueInput | InputJsonValue
+    timeout?: NullableIntFieldUpdateOperationsInput | number | null
+    retryAttempts?: NullableIntFieldUpdateOperationsInput | number | null
+    retryDelay?: NullableIntFieldUpdateOperationsInput | number | null
+    headers?: NullableJsonNullValueInput | InputJsonValue
+    totalCalls?: IntFieldUpdateOperationsInput | number
+    successfulCalls?: IntFieldUpdateOperationsInput | number
+    failedCalls?: IntFieldUpdateOperationsInput | number
+    lastCallAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastError?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    apiCallLogs?: ApiCallLogUncheckedUpdateManyWithoutConfigNestedInput
+  }
+
+  export type ApiConfigurationCreateManyInput = {
+    id?: string
+    name: string
+    provider: string
+    baseUrl: string
+    authType: $Enums.ApiAuthType
+    status?: $Enums.ApiConfigStatus
+    apiKey?: string | null
+    token?: string | null
+    username?: string | null
+    password?: string | null
+    headerName?: string | null
+    rateLimit?: NullableJsonNullValueInput | InputJsonValue
+    timeout?: number | null
+    retryAttempts?: number | null
+    retryDelay?: number | null
+    headers?: NullableJsonNullValueInput | InputJsonValue
+    totalCalls?: number
+    successfulCalls?: number
+    failedCalls?: number
+    lastCallAt?: Date | string | null
+    lastError?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ApiConfigurationUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    baseUrl?: StringFieldUpdateOperationsInput | string
+    authType?: EnumApiAuthTypeFieldUpdateOperationsInput | $Enums.ApiAuthType
+    status?: EnumApiConfigStatusFieldUpdateOperationsInput | $Enums.ApiConfigStatus
+    apiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    headerName?: NullableStringFieldUpdateOperationsInput | string | null
+    rateLimit?: NullableJsonNullValueInput | InputJsonValue
+    timeout?: NullableIntFieldUpdateOperationsInput | number | null
+    retryAttempts?: NullableIntFieldUpdateOperationsInput | number | null
+    retryDelay?: NullableIntFieldUpdateOperationsInput | number | null
+    headers?: NullableJsonNullValueInput | InputJsonValue
+    totalCalls?: IntFieldUpdateOperationsInput | number
+    successfulCalls?: IntFieldUpdateOperationsInput | number
+    failedCalls?: IntFieldUpdateOperationsInput | number
+    lastCallAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastError?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApiConfigurationUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    baseUrl?: StringFieldUpdateOperationsInput | string
+    authType?: EnumApiAuthTypeFieldUpdateOperationsInput | $Enums.ApiAuthType
+    status?: EnumApiConfigStatusFieldUpdateOperationsInput | $Enums.ApiConfigStatus
+    apiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    headerName?: NullableStringFieldUpdateOperationsInput | string | null
+    rateLimit?: NullableJsonNullValueInput | InputJsonValue
+    timeout?: NullableIntFieldUpdateOperationsInput | number | null
+    retryAttempts?: NullableIntFieldUpdateOperationsInput | number | null
+    retryDelay?: NullableIntFieldUpdateOperationsInput | number | null
+    headers?: NullableJsonNullValueInput | InputJsonValue
+    totalCalls?: IntFieldUpdateOperationsInput | number
+    successfulCalls?: IntFieldUpdateOperationsInput | number
+    failedCalls?: IntFieldUpdateOperationsInput | number
+    lastCallAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastError?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApiCallLogCreateInput = {
+    id?: string
+    method: string
+    endpoint: string
+    requestHeaders?: NullableJsonNullValueInput | InputJsonValue
+    requestBody?: NullableJsonNullValueInput | InputJsonValue
+    statusCode?: number | null
+    responseHeaders?: NullableJsonNullValueInput | InputJsonValue
+    responseBody?: NullableJsonNullValueInput | InputJsonValue
+    duration?: number | null
+    success: boolean
+    errorMessage?: string | null
+    createdAt?: Date | string
+    config: ApiConfigurationCreateNestedOneWithoutApiCallLogsInput
+  }
+
+  export type ApiCallLogUncheckedCreateInput = {
+    id?: string
+    configId: string
+    method: string
+    endpoint: string
+    requestHeaders?: NullableJsonNullValueInput | InputJsonValue
+    requestBody?: NullableJsonNullValueInput | InputJsonValue
+    statusCode?: number | null
+    responseHeaders?: NullableJsonNullValueInput | InputJsonValue
+    responseBody?: NullableJsonNullValueInput | InputJsonValue
+    duration?: number | null
+    success: boolean
+    errorMessage?: string | null
+    createdAt?: Date | string
+  }
+
+  export type ApiCallLogUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    method?: StringFieldUpdateOperationsInput | string
+    endpoint?: StringFieldUpdateOperationsInput | string
+    requestHeaders?: NullableJsonNullValueInput | InputJsonValue
+    requestBody?: NullableJsonNullValueInput | InputJsonValue
+    statusCode?: NullableIntFieldUpdateOperationsInput | number | null
+    responseHeaders?: NullableJsonNullValueInput | InputJsonValue
+    responseBody?: NullableJsonNullValueInput | InputJsonValue
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    success?: BoolFieldUpdateOperationsInput | boolean
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    config?: ApiConfigurationUpdateOneRequiredWithoutApiCallLogsNestedInput
+  }
+
+  export type ApiCallLogUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    configId?: StringFieldUpdateOperationsInput | string
+    method?: StringFieldUpdateOperationsInput | string
+    endpoint?: StringFieldUpdateOperationsInput | string
+    requestHeaders?: NullableJsonNullValueInput | InputJsonValue
+    requestBody?: NullableJsonNullValueInput | InputJsonValue
+    statusCode?: NullableIntFieldUpdateOperationsInput | number | null
+    responseHeaders?: NullableJsonNullValueInput | InputJsonValue
+    responseBody?: NullableJsonNullValueInput | InputJsonValue
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    success?: BoolFieldUpdateOperationsInput | boolean
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApiCallLogCreateManyInput = {
+    id?: string
+    configId: string
+    method: string
+    endpoint: string
+    requestHeaders?: NullableJsonNullValueInput | InputJsonValue
+    requestBody?: NullableJsonNullValueInput | InputJsonValue
+    statusCode?: number | null
+    responseHeaders?: NullableJsonNullValueInput | InputJsonValue
+    responseBody?: NullableJsonNullValueInput | InputJsonValue
+    duration?: number | null
+    success: boolean
+    errorMessage?: string | null
+    createdAt?: Date | string
+  }
+
+  export type ApiCallLogUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    method?: StringFieldUpdateOperationsInput | string
+    endpoint?: StringFieldUpdateOperationsInput | string
+    requestHeaders?: NullableJsonNullValueInput | InputJsonValue
+    requestBody?: NullableJsonNullValueInput | InputJsonValue
+    statusCode?: NullableIntFieldUpdateOperationsInput | number | null
+    responseHeaders?: NullableJsonNullValueInput | InputJsonValue
+    responseBody?: NullableJsonNullValueInput | InputJsonValue
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    success?: BoolFieldUpdateOperationsInput | boolean
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApiCallLogUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    configId?: StringFieldUpdateOperationsInput | string
+    method?: StringFieldUpdateOperationsInput | string
+    endpoint?: StringFieldUpdateOperationsInput | string
+    requestHeaders?: NullableJsonNullValueInput | InputJsonValue
+    requestBody?: NullableJsonNullValueInput | InputJsonValue
+    statusCode?: NullableIntFieldUpdateOperationsInput | number | null
+    responseHeaders?: NullableJsonNullValueInput | InputJsonValue
+    responseBody?: NullableJsonNullValueInput | InputJsonValue
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    success?: BoolFieldUpdateOperationsInput | boolean
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ContentVersionCreateInput = {
+    id?: string
+    version: number
+    title: string
+    description?: string | null
+    contentText?: string | null
+    summary?: string | null
+    tags?: ContentVersionCreatetagsInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    changeType: string
+    changeNote?: string | null
+    changedBy?: string | null
+    createdAt?: Date | string
+    contentItem: ContentCreateNestedOneWithoutVersionsInput
+  }
+
+  export type ContentVersionUncheckedCreateInput = {
+    id?: string
+    contentId: string
+    version: number
+    title: string
+    description?: string | null
+    contentText?: string | null
+    summary?: string | null
+    tags?: ContentVersionCreatetagsInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    changeType: string
+    changeNote?: string | null
+    changedBy?: string | null
+    createdAt?: Date | string
+  }
+
+  export type ContentVersionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    contentText?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: ContentVersionUpdatetagsInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    changeType?: StringFieldUpdateOperationsInput | string
+    changeNote?: NullableStringFieldUpdateOperationsInput | string | null
+    changedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    contentItem?: ContentUpdateOneRequiredWithoutVersionsNestedInput
+  }
+
+  export type ContentVersionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contentId?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    contentText?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: ContentVersionUpdatetagsInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    changeType?: StringFieldUpdateOperationsInput | string
+    changeNote?: NullableStringFieldUpdateOperationsInput | string | null
+    changedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ContentVersionCreateManyInput = {
+    id?: string
+    contentId: string
+    version: number
+    title: string
+    description?: string | null
+    contentText?: string | null
+    summary?: string | null
+    tags?: ContentVersionCreatetagsInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    changeType: string
+    changeNote?: string | null
+    changedBy?: string | null
+    createdAt?: Date | string
+  }
+
+  export type ContentVersionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    contentText?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: ContentVersionUpdatetagsInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    changeType?: StringFieldUpdateOperationsInput | string
+    changeNote?: NullableStringFieldUpdateOperationsInput | string | null
+    changedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ContentVersionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contentId?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    contentText?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: ContentVersionUpdatetagsInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    changeType?: StringFieldUpdateOperationsInput | string
+    changeNote?: NullableStringFieldUpdateOperationsInput | string | null
+    changedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ContentAuditLogCreateInput = {
+    id?: string
+    contentId: string
+    userId?: string | null
+    action: string
+    tableName: string
+    recordId: string
+    oldValues?: NullableJsonNullValueInput | InputJsonValue
+    newValues?: NullableJsonNullValueInput | InputJsonValue
+    ipAddress?: string | null
+    userAgent?: string | null
+    sessionId?: string | null
+    createdAt?: Date | string
+  }
+
+  export type ContentAuditLogUncheckedCreateInput = {
+    id?: string
+    contentId: string
+    userId?: string | null
+    action: string
+    tableName: string
+    recordId: string
+    oldValues?: NullableJsonNullValueInput | InputJsonValue
+    newValues?: NullableJsonNullValueInput | InputJsonValue
+    ipAddress?: string | null
+    userAgent?: string | null
+    sessionId?: string | null
+    createdAt?: Date | string
+  }
+
+  export type ContentAuditLogUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contentId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    action?: StringFieldUpdateOperationsInput | string
+    tableName?: StringFieldUpdateOperationsInput | string
+    recordId?: StringFieldUpdateOperationsInput | string
+    oldValues?: NullableJsonNullValueInput | InputJsonValue
+    newValues?: NullableJsonNullValueInput | InputJsonValue
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    sessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ContentAuditLogUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contentId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    action?: StringFieldUpdateOperationsInput | string
+    tableName?: StringFieldUpdateOperationsInput | string
+    recordId?: StringFieldUpdateOperationsInput | string
+    oldValues?: NullableJsonNullValueInput | InputJsonValue
+    newValues?: NullableJsonNullValueInput | InputJsonValue
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    sessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ContentAuditLogCreateManyInput = {
+    id?: string
+    contentId: string
+    userId?: string | null
+    action: string
+    tableName: string
+    recordId: string
+    oldValues?: NullableJsonNullValueInput | InputJsonValue
+    newValues?: NullableJsonNullValueInput | InputJsonValue
+    ipAddress?: string | null
+    userAgent?: string | null
+    sessionId?: string | null
+    createdAt?: Date | string
+  }
+
+  export type ContentAuditLogUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contentId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    action?: StringFieldUpdateOperationsInput | string
+    tableName?: StringFieldUpdateOperationsInput | string
+    recordId?: StringFieldUpdateOperationsInput | string
+    oldValues?: NullableJsonNullValueInput | InputJsonValue
+    newValues?: NullableJsonNullValueInput | InputJsonValue
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    sessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ContentAuditLogUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contentId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    action?: StringFieldUpdateOperationsInput | string
+    tableName?: StringFieldUpdateOperationsInput | string
+    recordId?: StringFieldUpdateOperationsInput | string
+    oldValues?: NullableJsonNullValueInput | InputJsonValue
+    newValues?: NullableJsonNullValueInput | InputJsonValue
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    sessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ContentDuplicationCreateInput = {
+    id?: string
+    originalId: string
+    duplicateId: string
+    titleSimilarity: number
+    contentSimilarity: number
+    overallSimilarity: number
+    detectionMethod: string
+    confidence: number
+    status?: string
+    reviewedBy?: string | null
+    reviewedAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type ContentDuplicationUncheckedCreateInput = {
+    id?: string
+    originalId: string
+    duplicateId: string
+    titleSimilarity: number
+    contentSimilarity: number
+    overallSimilarity: number
+    detectionMethod: string
+    confidence: number
+    status?: string
+    reviewedBy?: string | null
+    reviewedAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type ContentDuplicationUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    originalId?: StringFieldUpdateOperationsInput | string
+    duplicateId?: StringFieldUpdateOperationsInput | string
+    titleSimilarity?: FloatFieldUpdateOperationsInput | number
+    contentSimilarity?: FloatFieldUpdateOperationsInput | number
+    overallSimilarity?: FloatFieldUpdateOperationsInput | number
+    detectionMethod?: StringFieldUpdateOperationsInput | string
+    confidence?: FloatFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ContentDuplicationUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    originalId?: StringFieldUpdateOperationsInput | string
+    duplicateId?: StringFieldUpdateOperationsInput | string
+    titleSimilarity?: FloatFieldUpdateOperationsInput | number
+    contentSimilarity?: FloatFieldUpdateOperationsInput | number
+    overallSimilarity?: FloatFieldUpdateOperationsInput | number
+    detectionMethod?: StringFieldUpdateOperationsInput | string
+    confidence?: FloatFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ContentDuplicationCreateManyInput = {
+    id?: string
+    originalId: string
+    duplicateId: string
+    titleSimilarity: number
+    contentSimilarity: number
+    overallSimilarity: number
+    detectionMethod: string
+    confidence: number
+    status?: string
+    reviewedBy?: string | null
+    reviewedAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type ContentDuplicationUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    originalId?: StringFieldUpdateOperationsInput | string
+    duplicateId?: StringFieldUpdateOperationsInput | string
+    titleSimilarity?: FloatFieldUpdateOperationsInput | number
+    contentSimilarity?: FloatFieldUpdateOperationsInput | number
+    overallSimilarity?: FloatFieldUpdateOperationsInput | number
+    detectionMethod?: StringFieldUpdateOperationsInput | string
+    confidence?: FloatFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ContentDuplicationUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    originalId?: StringFieldUpdateOperationsInput | string
+    duplicateId?: StringFieldUpdateOperationsInput | string
+    titleSimilarity?: FloatFieldUpdateOperationsInput | number
+    contentSimilarity?: FloatFieldUpdateOperationsInput | number
+    overallSimilarity?: FloatFieldUpdateOperationsInput | number
+    detectionMethod?: StringFieldUpdateOperationsInput | string
+    confidence?: FloatFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SearchIndexCreateInput = {
+    id?: string
+    contentId: string
+    titleTokens?: SearchIndexCreatetitleTokensInput | string[]
+    contentTokens?: SearchIndexCreatecontentTokensInput | string[]
+    keywords?: SearchIndexCreatekeywordsInput | string[]
+    titleWeight?: number
+    contentWeight?: number
+    keywordWeight?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SearchIndexUncheckedCreateInput = {
+    id?: string
+    contentId: string
+    titleTokens?: SearchIndexCreatetitleTokensInput | string[]
+    contentTokens?: SearchIndexCreatecontentTokensInput | string[]
+    keywords?: SearchIndexCreatekeywordsInput | string[]
+    titleWeight?: number
+    contentWeight?: number
+    keywordWeight?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SearchIndexUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contentId?: StringFieldUpdateOperationsInput | string
+    titleTokens?: SearchIndexUpdatetitleTokensInput | string[]
+    contentTokens?: SearchIndexUpdatecontentTokensInput | string[]
+    keywords?: SearchIndexUpdatekeywordsInput | string[]
+    titleWeight?: FloatFieldUpdateOperationsInput | number
+    contentWeight?: FloatFieldUpdateOperationsInput | number
+    keywordWeight?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SearchIndexUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contentId?: StringFieldUpdateOperationsInput | string
+    titleTokens?: SearchIndexUpdatetitleTokensInput | string[]
+    contentTokens?: SearchIndexUpdatecontentTokensInput | string[]
+    keywords?: SearchIndexUpdatekeywordsInput | string[]
+    titleWeight?: FloatFieldUpdateOperationsInput | number
+    contentWeight?: FloatFieldUpdateOperationsInput | number
+    keywordWeight?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SearchIndexCreateManyInput = {
+    id?: string
+    contentId: string
+    titleTokens?: SearchIndexCreatetitleTokensInput | string[]
+    contentTokens?: SearchIndexCreatecontentTokensInput | string[]
+    keywords?: SearchIndexCreatekeywordsInput | string[]
+    titleWeight?: number
+    contentWeight?: number
+    keywordWeight?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SearchIndexUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contentId?: StringFieldUpdateOperationsInput | string
+    titleTokens?: SearchIndexUpdatetitleTokensInput | string[]
+    contentTokens?: SearchIndexUpdatecontentTokensInput | string[]
+    keywords?: SearchIndexUpdatekeywordsInput | string[]
+    titleWeight?: FloatFieldUpdateOperationsInput | number
+    contentWeight?: FloatFieldUpdateOperationsInput | number
+    keywordWeight?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SearchIndexUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contentId?: StringFieldUpdateOperationsInput | string
+    titleTokens?: SearchIndexUpdatetitleTokensInput | string[]
+    contentTokens?: SearchIndexUpdatecontentTokensInput | string[]
+    keywords?: SearchIndexUpdatekeywordsInput | string[]
+    titleWeight?: FloatFieldUpdateOperationsInput | number
+    contentWeight?: FloatFieldUpdateOperationsInput | number
+    keywordWeight?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17949,6 +28129,13 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
+  export type EnumContentTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.ContentType | EnumContentTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumContentTypeFilter<$PrismaModel> | $Enums.ContentType
+  }
+
   export type StringNullableListFilter<$PrismaModel = never> = {
     equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
     has?: string | StringFieldRefInput<$PrismaModel> | null
@@ -17986,7 +28173,17 @@ export namespace Prisma {
     none?: ContentTagWhereInput
   }
 
+  export type ContentVersionListRelationFilter = {
+    every?: ContentVersionWhereInput
+    some?: ContentVersionWhereInput
+    none?: ContentVersionWhereInput
+  }
+
   export type ContentTagOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ContentVersionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -17995,16 +28192,28 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     content?: SortOrder
+    summary?: SortOrder
     url?: SortOrder
     imageUrl?: SortOrder
+    type?: SortOrder
     category?: SortOrder
     tags?: SortOrder
     status?: SortOrder
     score?: SortOrder
     priority?: SortOrder
+    quality?: SortOrder
+    relevance?: SortOrder
     sourceId?: SortOrder
     sourceUrl?: SortOrder
     publishedAt?: SortOrder
+    author?: SortOrder
+    contentHash?: SortOrder
+    titleHash?: SortOrder
+    duplicateOf?: SortOrder
+    viewCount?: SortOrder
+    shareCount?: SortOrder
+    searchVector?: SortOrder
+    keywords?: SortOrder
     metadata?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -18013,6 +28222,10 @@ export namespace Prisma {
   export type ContentAvgOrderByAggregateInput = {
     score?: SortOrder
     priority?: SortOrder
+    quality?: SortOrder
+    relevance?: SortOrder
+    viewCount?: SortOrder
+    shareCount?: SortOrder
   }
 
   export type ContentMaxOrderByAggregateInput = {
@@ -18020,15 +28233,26 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     content?: SortOrder
+    summary?: SortOrder
     url?: SortOrder
     imageUrl?: SortOrder
+    type?: SortOrder
     category?: SortOrder
     status?: SortOrder
     score?: SortOrder
     priority?: SortOrder
+    quality?: SortOrder
+    relevance?: SortOrder
     sourceId?: SortOrder
     sourceUrl?: SortOrder
     publishedAt?: SortOrder
+    author?: SortOrder
+    contentHash?: SortOrder
+    titleHash?: SortOrder
+    duplicateOf?: SortOrder
+    viewCount?: SortOrder
+    shareCount?: SortOrder
+    searchVector?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -18038,15 +28262,26 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     content?: SortOrder
+    summary?: SortOrder
     url?: SortOrder
     imageUrl?: SortOrder
+    type?: SortOrder
     category?: SortOrder
     status?: SortOrder
     score?: SortOrder
     priority?: SortOrder
+    quality?: SortOrder
+    relevance?: SortOrder
     sourceId?: SortOrder
     sourceUrl?: SortOrder
     publishedAt?: SortOrder
+    author?: SortOrder
+    contentHash?: SortOrder
+    titleHash?: SortOrder
+    duplicateOf?: SortOrder
+    viewCount?: SortOrder
+    shareCount?: SortOrder
+    searchVector?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -18054,6 +28289,20 @@ export namespace Prisma {
   export type ContentSumOrderByAggregateInput = {
     score?: SortOrder
     priority?: SortOrder
+    quality?: SortOrder
+    relevance?: SortOrder
+    viewCount?: SortOrder
+    shareCount?: SortOrder
+  }
+
+  export type EnumContentTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ContentType | EnumContentTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumContentTypeWithAggregatesFilter<$PrismaModel> | $Enums.ContentType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumContentTypeFilter<$PrismaModel>
+    _max?: NestedEnumContentTypeFilter<$PrismaModel>
   }
 
   export type EnumContentStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -18082,35 +28331,130 @@ export namespace Prisma {
     _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
+  export type EnumTagTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.TagType | EnumTagTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.TagType[] | ListEnumTagTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TagType[] | ListEnumTagTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumTagTypeFilter<$PrismaModel> | $Enums.TagType
+  }
+
+  export type TagNullableRelationFilter = {
+    is?: TagWhereInput | null
+    isNot?: TagWhereInput | null
+  }
+
+  export type TagListRelationFilter = {
+    every?: TagWhereInput
+    some?: TagWhereInput
+    none?: TagWhereInput
+  }
+
+  export type TagOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TagCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    type?: SortOrder
+    description?: SortOrder
+    color?: SortOrder
+    parentId?: SortOrder
+    usageCount?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TagAvgOrderByAggregateInput = {
+    usageCount?: SortOrder
+  }
+
+  export type TagMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    type?: SortOrder
+    description?: SortOrder
+    color?: SortOrder
+    parentId?: SortOrder
+    usageCount?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TagMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    type?: SortOrder
+    description?: SortOrder
+    color?: SortOrder
+    parentId?: SortOrder
+    usageCount?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TagSumOrderByAggregateInput = {
+    usageCount?: SortOrder
+  }
+
+  export type EnumTagTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TagType | EnumTagTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.TagType[] | ListEnumTagTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TagType[] | ListEnumTagTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumTagTypeWithAggregatesFilter<$PrismaModel> | $Enums.TagType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTagTypeFilter<$PrismaModel>
+    _max?: NestedEnumTagTypeFilter<$PrismaModel>
+  }
+
   export type ContentRelationFilter = {
     is?: ContentWhereInput
     isNot?: ContentWhereInput
   }
 
-  export type ContentTagContentIdTagCompoundUniqueInput = {
+  export type TagRelationFilter = {
+    is?: TagWhereInput
+    isNot?: TagWhereInput
+  }
+
+  export type ContentTagContentIdTagIdCompoundUniqueInput = {
     contentId: string
-    tag: string
+    tagId: string
   }
 
   export type ContentTagCountOrderByAggregateInput = {
     id?: SortOrder
     contentId?: SortOrder
-    tag?: SortOrder
+    tagId?: SortOrder
+    relevance?: SortOrder
     createdAt?: SortOrder
+  }
+
+  export type ContentTagAvgOrderByAggregateInput = {
+    relevance?: SortOrder
   }
 
   export type ContentTagMaxOrderByAggregateInput = {
     id?: SortOrder
     contentId?: SortOrder
-    tag?: SortOrder
+    tagId?: SortOrder
+    relevance?: SortOrder
     createdAt?: SortOrder
   }
 
   export type ContentTagMinOrderByAggregateInput = {
     id?: SortOrder
     contentId?: SortOrder
-    tag?: SortOrder
+    tagId?: SortOrder
+    relevance?: SortOrder
     createdAt?: SortOrder
+  }
+
+  export type ContentTagSumOrderByAggregateInput = {
+    relevance?: SortOrder
   }
 
   export type EnumReviewActionFilter<$PrismaModel = never> = {
@@ -18326,6 +28670,431 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedJsonFilter<$PrismaModel>
     _max?: NestedJsonFilter<$PrismaModel>
+  }
+
+  export type EnumApiAuthTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.ApiAuthType | EnumApiAuthTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ApiAuthType[] | ListEnumApiAuthTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ApiAuthType[] | ListEnumApiAuthTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumApiAuthTypeFilter<$PrismaModel> | $Enums.ApiAuthType
+  }
+
+  export type EnumApiConfigStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ApiConfigStatus | EnumApiConfigStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ApiConfigStatus[] | ListEnumApiConfigStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ApiConfigStatus[] | ListEnumApiConfigStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumApiConfigStatusFilter<$PrismaModel> | $Enums.ApiConfigStatus
+  }
+
+  export type ApiCallLogListRelationFilter = {
+    every?: ApiCallLogWhereInput
+    some?: ApiCallLogWhereInput
+    none?: ApiCallLogWhereInput
+  }
+
+  export type ApiCallLogOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ApiConfigurationCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    provider?: SortOrder
+    baseUrl?: SortOrder
+    authType?: SortOrder
+    status?: SortOrder
+    apiKey?: SortOrder
+    token?: SortOrder
+    username?: SortOrder
+    password?: SortOrder
+    headerName?: SortOrder
+    rateLimit?: SortOrder
+    timeout?: SortOrder
+    retryAttempts?: SortOrder
+    retryDelay?: SortOrder
+    headers?: SortOrder
+    totalCalls?: SortOrder
+    successfulCalls?: SortOrder
+    failedCalls?: SortOrder
+    lastCallAt?: SortOrder
+    lastError?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ApiConfigurationAvgOrderByAggregateInput = {
+    timeout?: SortOrder
+    retryAttempts?: SortOrder
+    retryDelay?: SortOrder
+    totalCalls?: SortOrder
+    successfulCalls?: SortOrder
+    failedCalls?: SortOrder
+  }
+
+  export type ApiConfigurationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    provider?: SortOrder
+    baseUrl?: SortOrder
+    authType?: SortOrder
+    status?: SortOrder
+    apiKey?: SortOrder
+    token?: SortOrder
+    username?: SortOrder
+    password?: SortOrder
+    headerName?: SortOrder
+    timeout?: SortOrder
+    retryAttempts?: SortOrder
+    retryDelay?: SortOrder
+    totalCalls?: SortOrder
+    successfulCalls?: SortOrder
+    failedCalls?: SortOrder
+    lastCallAt?: SortOrder
+    lastError?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ApiConfigurationMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    provider?: SortOrder
+    baseUrl?: SortOrder
+    authType?: SortOrder
+    status?: SortOrder
+    apiKey?: SortOrder
+    token?: SortOrder
+    username?: SortOrder
+    password?: SortOrder
+    headerName?: SortOrder
+    timeout?: SortOrder
+    retryAttempts?: SortOrder
+    retryDelay?: SortOrder
+    totalCalls?: SortOrder
+    successfulCalls?: SortOrder
+    failedCalls?: SortOrder
+    lastCallAt?: SortOrder
+    lastError?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ApiConfigurationSumOrderByAggregateInput = {
+    timeout?: SortOrder
+    retryAttempts?: SortOrder
+    retryDelay?: SortOrder
+    totalCalls?: SortOrder
+    successfulCalls?: SortOrder
+    failedCalls?: SortOrder
+  }
+
+  export type EnumApiAuthTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ApiAuthType | EnumApiAuthTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ApiAuthType[] | ListEnumApiAuthTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ApiAuthType[] | ListEnumApiAuthTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumApiAuthTypeWithAggregatesFilter<$PrismaModel> | $Enums.ApiAuthType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumApiAuthTypeFilter<$PrismaModel>
+    _max?: NestedEnumApiAuthTypeFilter<$PrismaModel>
+  }
+
+  export type EnumApiConfigStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ApiConfigStatus | EnumApiConfigStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ApiConfigStatus[] | ListEnumApiConfigStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ApiConfigStatus[] | ListEnumApiConfigStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumApiConfigStatusWithAggregatesFilter<$PrismaModel> | $Enums.ApiConfigStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumApiConfigStatusFilter<$PrismaModel>
+    _max?: NestedEnumApiConfigStatusFilter<$PrismaModel>
+  }
+
+  export type ApiConfigurationRelationFilter = {
+    is?: ApiConfigurationWhereInput
+    isNot?: ApiConfigurationWhereInput
+  }
+
+  export type ApiCallLogCountOrderByAggregateInput = {
+    id?: SortOrder
+    configId?: SortOrder
+    method?: SortOrder
+    endpoint?: SortOrder
+    requestHeaders?: SortOrder
+    requestBody?: SortOrder
+    statusCode?: SortOrder
+    responseHeaders?: SortOrder
+    responseBody?: SortOrder
+    duration?: SortOrder
+    success?: SortOrder
+    errorMessage?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ApiCallLogAvgOrderByAggregateInput = {
+    statusCode?: SortOrder
+    duration?: SortOrder
+  }
+
+  export type ApiCallLogMaxOrderByAggregateInput = {
+    id?: SortOrder
+    configId?: SortOrder
+    method?: SortOrder
+    endpoint?: SortOrder
+    statusCode?: SortOrder
+    duration?: SortOrder
+    success?: SortOrder
+    errorMessage?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ApiCallLogMinOrderByAggregateInput = {
+    id?: SortOrder
+    configId?: SortOrder
+    method?: SortOrder
+    endpoint?: SortOrder
+    statusCode?: SortOrder
+    duration?: SortOrder
+    success?: SortOrder
+    errorMessage?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ApiCallLogSumOrderByAggregateInput = {
+    statusCode?: SortOrder
+    duration?: SortOrder
+  }
+
+  export type ContentVersionContentIdVersionCompoundUniqueInput = {
+    contentId: string
+    version: number
+  }
+
+  export type ContentVersionCountOrderByAggregateInput = {
+    id?: SortOrder
+    contentId?: SortOrder
+    version?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    contentText?: SortOrder
+    summary?: SortOrder
+    tags?: SortOrder
+    metadata?: SortOrder
+    changeType?: SortOrder
+    changeNote?: SortOrder
+    changedBy?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ContentVersionAvgOrderByAggregateInput = {
+    version?: SortOrder
+  }
+
+  export type ContentVersionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    contentId?: SortOrder
+    version?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    contentText?: SortOrder
+    summary?: SortOrder
+    changeType?: SortOrder
+    changeNote?: SortOrder
+    changedBy?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ContentVersionMinOrderByAggregateInput = {
+    id?: SortOrder
+    contentId?: SortOrder
+    version?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    contentText?: SortOrder
+    summary?: SortOrder
+    changeType?: SortOrder
+    changeNote?: SortOrder
+    changedBy?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ContentVersionSumOrderByAggregateInput = {
+    version?: SortOrder
+  }
+
+  export type ContentAuditLogCountOrderByAggregateInput = {
+    id?: SortOrder
+    contentId?: SortOrder
+    userId?: SortOrder
+    action?: SortOrder
+    tableName?: SortOrder
+    recordId?: SortOrder
+    oldValues?: SortOrder
+    newValues?: SortOrder
+    ipAddress?: SortOrder
+    userAgent?: SortOrder
+    sessionId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ContentAuditLogMaxOrderByAggregateInput = {
+    id?: SortOrder
+    contentId?: SortOrder
+    userId?: SortOrder
+    action?: SortOrder
+    tableName?: SortOrder
+    recordId?: SortOrder
+    ipAddress?: SortOrder
+    userAgent?: SortOrder
+    sessionId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ContentAuditLogMinOrderByAggregateInput = {
+    id?: SortOrder
+    contentId?: SortOrder
+    userId?: SortOrder
+    action?: SortOrder
+    tableName?: SortOrder
+    recordId?: SortOrder
+    ipAddress?: SortOrder
+    userAgent?: SortOrder
+    sessionId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type ContentDuplicationOriginalIdDuplicateIdCompoundUniqueInput = {
+    originalId: string
+    duplicateId: string
+  }
+
+  export type ContentDuplicationCountOrderByAggregateInput = {
+    id?: SortOrder
+    originalId?: SortOrder
+    duplicateId?: SortOrder
+    titleSimilarity?: SortOrder
+    contentSimilarity?: SortOrder
+    overallSimilarity?: SortOrder
+    detectionMethod?: SortOrder
+    confidence?: SortOrder
+    status?: SortOrder
+    reviewedBy?: SortOrder
+    reviewedAt?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ContentDuplicationAvgOrderByAggregateInput = {
+    titleSimilarity?: SortOrder
+    contentSimilarity?: SortOrder
+    overallSimilarity?: SortOrder
+    confidence?: SortOrder
+  }
+
+  export type ContentDuplicationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    originalId?: SortOrder
+    duplicateId?: SortOrder
+    titleSimilarity?: SortOrder
+    contentSimilarity?: SortOrder
+    overallSimilarity?: SortOrder
+    detectionMethod?: SortOrder
+    confidence?: SortOrder
+    status?: SortOrder
+    reviewedBy?: SortOrder
+    reviewedAt?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ContentDuplicationMinOrderByAggregateInput = {
+    id?: SortOrder
+    originalId?: SortOrder
+    duplicateId?: SortOrder
+    titleSimilarity?: SortOrder
+    contentSimilarity?: SortOrder
+    overallSimilarity?: SortOrder
+    detectionMethod?: SortOrder
+    confidence?: SortOrder
+    status?: SortOrder
+    reviewedBy?: SortOrder
+    reviewedAt?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ContentDuplicationSumOrderByAggregateInput = {
+    titleSimilarity?: SortOrder
+    contentSimilarity?: SortOrder
+    overallSimilarity?: SortOrder
+    confidence?: SortOrder
+  }
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type SearchIndexCountOrderByAggregateInput = {
+    id?: SortOrder
+    contentId?: SortOrder
+    titleTokens?: SortOrder
+    contentTokens?: SortOrder
+    keywords?: SortOrder
+    titleWeight?: SortOrder
+    contentWeight?: SortOrder
+    keywordWeight?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SearchIndexAvgOrderByAggregateInput = {
+    titleWeight?: SortOrder
+    contentWeight?: SortOrder
+    keywordWeight?: SortOrder
+  }
+
+  export type SearchIndexMaxOrderByAggregateInput = {
+    id?: SortOrder
+    contentId?: SortOrder
+    titleWeight?: SortOrder
+    contentWeight?: SortOrder
+    keywordWeight?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SearchIndexMinOrderByAggregateInput = {
+    id?: SortOrder
+    contentId?: SortOrder
+    titleWeight?: SortOrder
+    contentWeight?: SortOrder
+    keywordWeight?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SearchIndexSumOrderByAggregateInput = {
+    titleWeight?: SortOrder
+    contentWeight?: SortOrder
+    keywordWeight?: SortOrder
   }
 
   export type AccountCreateNestedManyWithoutUserInput = {
@@ -18622,6 +29391,10 @@ export namespace Prisma {
     set: string[]
   }
 
+  export type ContentCreatekeywordsInput = {
+    set: string[]
+  }
+
   export type SourceCreateNestedOneWithoutContentInput = {
     create?: XOR<SourceCreateWithoutContentInput, SourceUncheckedCreateWithoutContentInput>
     connectOrCreate?: SourceCreateOrConnectWithoutContentInput
@@ -18642,6 +29415,13 @@ export namespace Prisma {
     connect?: ContentTagWhereUniqueInput | ContentTagWhereUniqueInput[]
   }
 
+  export type ContentVersionCreateNestedManyWithoutContentItemInput = {
+    create?: XOR<ContentVersionCreateWithoutContentItemInput, ContentVersionUncheckedCreateWithoutContentItemInput> | ContentVersionCreateWithoutContentItemInput[] | ContentVersionUncheckedCreateWithoutContentItemInput[]
+    connectOrCreate?: ContentVersionCreateOrConnectWithoutContentItemInput | ContentVersionCreateOrConnectWithoutContentItemInput[]
+    createMany?: ContentVersionCreateManyContentItemInputEnvelope
+    connect?: ContentVersionWhereUniqueInput | ContentVersionWhereUniqueInput[]
+  }
+
   export type ContentReviewUncheckedCreateNestedManyWithoutContentInput = {
     create?: XOR<ContentReviewCreateWithoutContentInput, ContentReviewUncheckedCreateWithoutContentInput> | ContentReviewCreateWithoutContentInput[] | ContentReviewUncheckedCreateWithoutContentInput[]
     connectOrCreate?: ContentReviewCreateOrConnectWithoutContentInput | ContentReviewCreateOrConnectWithoutContentInput[]
@@ -18654,6 +29434,17 @@ export namespace Prisma {
     connectOrCreate?: ContentTagCreateOrConnectWithoutContentInput | ContentTagCreateOrConnectWithoutContentInput[]
     createMany?: ContentTagCreateManyContentInputEnvelope
     connect?: ContentTagWhereUniqueInput | ContentTagWhereUniqueInput[]
+  }
+
+  export type ContentVersionUncheckedCreateNestedManyWithoutContentItemInput = {
+    create?: XOR<ContentVersionCreateWithoutContentItemInput, ContentVersionUncheckedCreateWithoutContentItemInput> | ContentVersionCreateWithoutContentItemInput[] | ContentVersionUncheckedCreateWithoutContentItemInput[]
+    connectOrCreate?: ContentVersionCreateOrConnectWithoutContentItemInput | ContentVersionCreateOrConnectWithoutContentItemInput[]
+    createMany?: ContentVersionCreateManyContentItemInputEnvelope
+    connect?: ContentVersionWhereUniqueInput | ContentVersionWhereUniqueInput[]
+  }
+
+  export type EnumContentTypeFieldUpdateOperationsInput = {
+    set?: $Enums.ContentType
   }
 
   export type ContentUpdatetagsInput = {
@@ -18671,6 +29462,11 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type ContentUpdatekeywordsInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type SourceUpdateOneRequiredWithoutContentNestedInput = {
@@ -18709,6 +29505,20 @@ export namespace Prisma {
     deleteMany?: ContentTagScalarWhereInput | ContentTagScalarWhereInput[]
   }
 
+  export type ContentVersionUpdateManyWithoutContentItemNestedInput = {
+    create?: XOR<ContentVersionCreateWithoutContentItemInput, ContentVersionUncheckedCreateWithoutContentItemInput> | ContentVersionCreateWithoutContentItemInput[] | ContentVersionUncheckedCreateWithoutContentItemInput[]
+    connectOrCreate?: ContentVersionCreateOrConnectWithoutContentItemInput | ContentVersionCreateOrConnectWithoutContentItemInput[]
+    upsert?: ContentVersionUpsertWithWhereUniqueWithoutContentItemInput | ContentVersionUpsertWithWhereUniqueWithoutContentItemInput[]
+    createMany?: ContentVersionCreateManyContentItemInputEnvelope
+    set?: ContentVersionWhereUniqueInput | ContentVersionWhereUniqueInput[]
+    disconnect?: ContentVersionWhereUniqueInput | ContentVersionWhereUniqueInput[]
+    delete?: ContentVersionWhereUniqueInput | ContentVersionWhereUniqueInput[]
+    connect?: ContentVersionWhereUniqueInput | ContentVersionWhereUniqueInput[]
+    update?: ContentVersionUpdateWithWhereUniqueWithoutContentItemInput | ContentVersionUpdateWithWhereUniqueWithoutContentItemInput[]
+    updateMany?: ContentVersionUpdateManyWithWhereWithoutContentItemInput | ContentVersionUpdateManyWithWhereWithoutContentItemInput[]
+    deleteMany?: ContentVersionScalarWhereInput | ContentVersionScalarWhereInput[]
+  }
+
   export type ContentReviewUncheckedUpdateManyWithoutContentNestedInput = {
     create?: XOR<ContentReviewCreateWithoutContentInput, ContentReviewUncheckedCreateWithoutContentInput> | ContentReviewCreateWithoutContentInput[] | ContentReviewUncheckedCreateWithoutContentInput[]
     connectOrCreate?: ContentReviewCreateOrConnectWithoutContentInput | ContentReviewCreateOrConnectWithoutContentInput[]
@@ -18737,10 +29547,134 @@ export namespace Prisma {
     deleteMany?: ContentTagScalarWhereInput | ContentTagScalarWhereInput[]
   }
 
+  export type ContentVersionUncheckedUpdateManyWithoutContentItemNestedInput = {
+    create?: XOR<ContentVersionCreateWithoutContentItemInput, ContentVersionUncheckedCreateWithoutContentItemInput> | ContentVersionCreateWithoutContentItemInput[] | ContentVersionUncheckedCreateWithoutContentItemInput[]
+    connectOrCreate?: ContentVersionCreateOrConnectWithoutContentItemInput | ContentVersionCreateOrConnectWithoutContentItemInput[]
+    upsert?: ContentVersionUpsertWithWhereUniqueWithoutContentItemInput | ContentVersionUpsertWithWhereUniqueWithoutContentItemInput[]
+    createMany?: ContentVersionCreateManyContentItemInputEnvelope
+    set?: ContentVersionWhereUniqueInput | ContentVersionWhereUniqueInput[]
+    disconnect?: ContentVersionWhereUniqueInput | ContentVersionWhereUniqueInput[]
+    delete?: ContentVersionWhereUniqueInput | ContentVersionWhereUniqueInput[]
+    connect?: ContentVersionWhereUniqueInput | ContentVersionWhereUniqueInput[]
+    update?: ContentVersionUpdateWithWhereUniqueWithoutContentItemInput | ContentVersionUpdateWithWhereUniqueWithoutContentItemInput[]
+    updateMany?: ContentVersionUpdateManyWithWhereWithoutContentItemInput | ContentVersionUpdateManyWithWhereWithoutContentItemInput[]
+    deleteMany?: ContentVersionScalarWhereInput | ContentVersionScalarWhereInput[]
+  }
+
+  export type TagCreateNestedOneWithoutChildrenInput = {
+    create?: XOR<TagCreateWithoutChildrenInput, TagUncheckedCreateWithoutChildrenInput>
+    connectOrCreate?: TagCreateOrConnectWithoutChildrenInput
+    connect?: TagWhereUniqueInput
+  }
+
+  export type TagCreateNestedManyWithoutParentInput = {
+    create?: XOR<TagCreateWithoutParentInput, TagUncheckedCreateWithoutParentInput> | TagCreateWithoutParentInput[] | TagUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: TagCreateOrConnectWithoutParentInput | TagCreateOrConnectWithoutParentInput[]
+    createMany?: TagCreateManyParentInputEnvelope
+    connect?: TagWhereUniqueInput | TagWhereUniqueInput[]
+  }
+
+  export type ContentTagCreateNestedManyWithoutTagInput = {
+    create?: XOR<ContentTagCreateWithoutTagInput, ContentTagUncheckedCreateWithoutTagInput> | ContentTagCreateWithoutTagInput[] | ContentTagUncheckedCreateWithoutTagInput[]
+    connectOrCreate?: ContentTagCreateOrConnectWithoutTagInput | ContentTagCreateOrConnectWithoutTagInput[]
+    createMany?: ContentTagCreateManyTagInputEnvelope
+    connect?: ContentTagWhereUniqueInput | ContentTagWhereUniqueInput[]
+  }
+
+  export type TagUncheckedCreateNestedManyWithoutParentInput = {
+    create?: XOR<TagCreateWithoutParentInput, TagUncheckedCreateWithoutParentInput> | TagCreateWithoutParentInput[] | TagUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: TagCreateOrConnectWithoutParentInput | TagCreateOrConnectWithoutParentInput[]
+    createMany?: TagCreateManyParentInputEnvelope
+    connect?: TagWhereUniqueInput | TagWhereUniqueInput[]
+  }
+
+  export type ContentTagUncheckedCreateNestedManyWithoutTagInput = {
+    create?: XOR<ContentTagCreateWithoutTagInput, ContentTagUncheckedCreateWithoutTagInput> | ContentTagCreateWithoutTagInput[] | ContentTagUncheckedCreateWithoutTagInput[]
+    connectOrCreate?: ContentTagCreateOrConnectWithoutTagInput | ContentTagCreateOrConnectWithoutTagInput[]
+    createMany?: ContentTagCreateManyTagInputEnvelope
+    connect?: ContentTagWhereUniqueInput | ContentTagWhereUniqueInput[]
+  }
+
+  export type EnumTagTypeFieldUpdateOperationsInput = {
+    set?: $Enums.TagType
+  }
+
+  export type TagUpdateOneWithoutChildrenNestedInput = {
+    create?: XOR<TagCreateWithoutChildrenInput, TagUncheckedCreateWithoutChildrenInput>
+    connectOrCreate?: TagCreateOrConnectWithoutChildrenInput
+    upsert?: TagUpsertWithoutChildrenInput
+    disconnect?: TagWhereInput | boolean
+    delete?: TagWhereInput | boolean
+    connect?: TagWhereUniqueInput
+    update?: XOR<XOR<TagUpdateToOneWithWhereWithoutChildrenInput, TagUpdateWithoutChildrenInput>, TagUncheckedUpdateWithoutChildrenInput>
+  }
+
+  export type TagUpdateManyWithoutParentNestedInput = {
+    create?: XOR<TagCreateWithoutParentInput, TagUncheckedCreateWithoutParentInput> | TagCreateWithoutParentInput[] | TagUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: TagCreateOrConnectWithoutParentInput | TagCreateOrConnectWithoutParentInput[]
+    upsert?: TagUpsertWithWhereUniqueWithoutParentInput | TagUpsertWithWhereUniqueWithoutParentInput[]
+    createMany?: TagCreateManyParentInputEnvelope
+    set?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    disconnect?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    delete?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    connect?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    update?: TagUpdateWithWhereUniqueWithoutParentInput | TagUpdateWithWhereUniqueWithoutParentInput[]
+    updateMany?: TagUpdateManyWithWhereWithoutParentInput | TagUpdateManyWithWhereWithoutParentInput[]
+    deleteMany?: TagScalarWhereInput | TagScalarWhereInput[]
+  }
+
+  export type ContentTagUpdateManyWithoutTagNestedInput = {
+    create?: XOR<ContentTagCreateWithoutTagInput, ContentTagUncheckedCreateWithoutTagInput> | ContentTagCreateWithoutTagInput[] | ContentTagUncheckedCreateWithoutTagInput[]
+    connectOrCreate?: ContentTagCreateOrConnectWithoutTagInput | ContentTagCreateOrConnectWithoutTagInput[]
+    upsert?: ContentTagUpsertWithWhereUniqueWithoutTagInput | ContentTagUpsertWithWhereUniqueWithoutTagInput[]
+    createMany?: ContentTagCreateManyTagInputEnvelope
+    set?: ContentTagWhereUniqueInput | ContentTagWhereUniqueInput[]
+    disconnect?: ContentTagWhereUniqueInput | ContentTagWhereUniqueInput[]
+    delete?: ContentTagWhereUniqueInput | ContentTagWhereUniqueInput[]
+    connect?: ContentTagWhereUniqueInput | ContentTagWhereUniqueInput[]
+    update?: ContentTagUpdateWithWhereUniqueWithoutTagInput | ContentTagUpdateWithWhereUniqueWithoutTagInput[]
+    updateMany?: ContentTagUpdateManyWithWhereWithoutTagInput | ContentTagUpdateManyWithWhereWithoutTagInput[]
+    deleteMany?: ContentTagScalarWhereInput | ContentTagScalarWhereInput[]
+  }
+
+  export type TagUncheckedUpdateManyWithoutParentNestedInput = {
+    create?: XOR<TagCreateWithoutParentInput, TagUncheckedCreateWithoutParentInput> | TagCreateWithoutParentInput[] | TagUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: TagCreateOrConnectWithoutParentInput | TagCreateOrConnectWithoutParentInput[]
+    upsert?: TagUpsertWithWhereUniqueWithoutParentInput | TagUpsertWithWhereUniqueWithoutParentInput[]
+    createMany?: TagCreateManyParentInputEnvelope
+    set?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    disconnect?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    delete?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    connect?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    update?: TagUpdateWithWhereUniqueWithoutParentInput | TagUpdateWithWhereUniqueWithoutParentInput[]
+    updateMany?: TagUpdateManyWithWhereWithoutParentInput | TagUpdateManyWithWhereWithoutParentInput[]
+    deleteMany?: TagScalarWhereInput | TagScalarWhereInput[]
+  }
+
+  export type ContentTagUncheckedUpdateManyWithoutTagNestedInput = {
+    create?: XOR<ContentTagCreateWithoutTagInput, ContentTagUncheckedCreateWithoutTagInput> | ContentTagCreateWithoutTagInput[] | ContentTagUncheckedCreateWithoutTagInput[]
+    connectOrCreate?: ContentTagCreateOrConnectWithoutTagInput | ContentTagCreateOrConnectWithoutTagInput[]
+    upsert?: ContentTagUpsertWithWhereUniqueWithoutTagInput | ContentTagUpsertWithWhereUniqueWithoutTagInput[]
+    createMany?: ContentTagCreateManyTagInputEnvelope
+    set?: ContentTagWhereUniqueInput | ContentTagWhereUniqueInput[]
+    disconnect?: ContentTagWhereUniqueInput | ContentTagWhereUniqueInput[]
+    delete?: ContentTagWhereUniqueInput | ContentTagWhereUniqueInput[]
+    connect?: ContentTagWhereUniqueInput | ContentTagWhereUniqueInput[]
+    update?: ContentTagUpdateWithWhereUniqueWithoutTagInput | ContentTagUpdateWithWhereUniqueWithoutTagInput[]
+    updateMany?: ContentTagUpdateManyWithWhereWithoutTagInput | ContentTagUpdateManyWithWhereWithoutTagInput[]
+    deleteMany?: ContentTagScalarWhereInput | ContentTagScalarWhereInput[]
+  }
+
   export type ContentCreateNestedOneWithoutContentTagsInput = {
     create?: XOR<ContentCreateWithoutContentTagsInput, ContentUncheckedCreateWithoutContentTagsInput>
     connectOrCreate?: ContentCreateOrConnectWithoutContentTagsInput
     connect?: ContentWhereUniqueInput
+  }
+
+  export type TagCreateNestedOneWithoutContentTagsInput = {
+    create?: XOR<TagCreateWithoutContentTagsInput, TagUncheckedCreateWithoutContentTagsInput>
+    connectOrCreate?: TagCreateOrConnectWithoutContentTagsInput
+    connect?: TagWhereUniqueInput
   }
 
   export type ContentUpdateOneRequiredWithoutContentTagsNestedInput = {
@@ -18749,6 +29683,14 @@ export namespace Prisma {
     upsert?: ContentUpsertWithoutContentTagsInput
     connect?: ContentWhereUniqueInput
     update?: XOR<XOR<ContentUpdateToOneWithWhereWithoutContentTagsInput, ContentUpdateWithoutContentTagsInput>, ContentUncheckedUpdateWithoutContentTagsInput>
+  }
+
+  export type TagUpdateOneRequiredWithoutContentTagsNestedInput = {
+    create?: XOR<TagCreateWithoutContentTagsInput, TagUncheckedCreateWithoutContentTagsInput>
+    connectOrCreate?: TagCreateOrConnectWithoutContentTagsInput
+    upsert?: TagUpsertWithoutContentTagsInput
+    connect?: TagWhereUniqueInput
+    update?: XOR<XOR<TagUpdateToOneWithWhereWithoutContentTagsInput, TagUpdateWithoutContentTagsInput>, TagUncheckedUpdateWithoutContentTagsInput>
   }
 
   export type ContentCreateNestedOneWithoutReviewsInput = {
@@ -18804,6 +29746,128 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutUserActivitiesInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUserActivitiesInput, UserUpdateWithoutUserActivitiesInput>, UserUncheckedUpdateWithoutUserActivitiesInput>
+  }
+
+  export type ApiCallLogCreateNestedManyWithoutConfigInput = {
+    create?: XOR<ApiCallLogCreateWithoutConfigInput, ApiCallLogUncheckedCreateWithoutConfigInput> | ApiCallLogCreateWithoutConfigInput[] | ApiCallLogUncheckedCreateWithoutConfigInput[]
+    connectOrCreate?: ApiCallLogCreateOrConnectWithoutConfigInput | ApiCallLogCreateOrConnectWithoutConfigInput[]
+    createMany?: ApiCallLogCreateManyConfigInputEnvelope
+    connect?: ApiCallLogWhereUniqueInput | ApiCallLogWhereUniqueInput[]
+  }
+
+  export type ApiCallLogUncheckedCreateNestedManyWithoutConfigInput = {
+    create?: XOR<ApiCallLogCreateWithoutConfigInput, ApiCallLogUncheckedCreateWithoutConfigInput> | ApiCallLogCreateWithoutConfigInput[] | ApiCallLogUncheckedCreateWithoutConfigInput[]
+    connectOrCreate?: ApiCallLogCreateOrConnectWithoutConfigInput | ApiCallLogCreateOrConnectWithoutConfigInput[]
+    createMany?: ApiCallLogCreateManyConfigInputEnvelope
+    connect?: ApiCallLogWhereUniqueInput | ApiCallLogWhereUniqueInput[]
+  }
+
+  export type EnumApiAuthTypeFieldUpdateOperationsInput = {
+    set?: $Enums.ApiAuthType
+  }
+
+  export type EnumApiConfigStatusFieldUpdateOperationsInput = {
+    set?: $Enums.ApiConfigStatus
+  }
+
+  export type ApiCallLogUpdateManyWithoutConfigNestedInput = {
+    create?: XOR<ApiCallLogCreateWithoutConfigInput, ApiCallLogUncheckedCreateWithoutConfigInput> | ApiCallLogCreateWithoutConfigInput[] | ApiCallLogUncheckedCreateWithoutConfigInput[]
+    connectOrCreate?: ApiCallLogCreateOrConnectWithoutConfigInput | ApiCallLogCreateOrConnectWithoutConfigInput[]
+    upsert?: ApiCallLogUpsertWithWhereUniqueWithoutConfigInput | ApiCallLogUpsertWithWhereUniqueWithoutConfigInput[]
+    createMany?: ApiCallLogCreateManyConfigInputEnvelope
+    set?: ApiCallLogWhereUniqueInput | ApiCallLogWhereUniqueInput[]
+    disconnect?: ApiCallLogWhereUniqueInput | ApiCallLogWhereUniqueInput[]
+    delete?: ApiCallLogWhereUniqueInput | ApiCallLogWhereUniqueInput[]
+    connect?: ApiCallLogWhereUniqueInput | ApiCallLogWhereUniqueInput[]
+    update?: ApiCallLogUpdateWithWhereUniqueWithoutConfigInput | ApiCallLogUpdateWithWhereUniqueWithoutConfigInput[]
+    updateMany?: ApiCallLogUpdateManyWithWhereWithoutConfigInput | ApiCallLogUpdateManyWithWhereWithoutConfigInput[]
+    deleteMany?: ApiCallLogScalarWhereInput | ApiCallLogScalarWhereInput[]
+  }
+
+  export type ApiCallLogUncheckedUpdateManyWithoutConfigNestedInput = {
+    create?: XOR<ApiCallLogCreateWithoutConfigInput, ApiCallLogUncheckedCreateWithoutConfigInput> | ApiCallLogCreateWithoutConfigInput[] | ApiCallLogUncheckedCreateWithoutConfigInput[]
+    connectOrCreate?: ApiCallLogCreateOrConnectWithoutConfigInput | ApiCallLogCreateOrConnectWithoutConfigInput[]
+    upsert?: ApiCallLogUpsertWithWhereUniqueWithoutConfigInput | ApiCallLogUpsertWithWhereUniqueWithoutConfigInput[]
+    createMany?: ApiCallLogCreateManyConfigInputEnvelope
+    set?: ApiCallLogWhereUniqueInput | ApiCallLogWhereUniqueInput[]
+    disconnect?: ApiCallLogWhereUniqueInput | ApiCallLogWhereUniqueInput[]
+    delete?: ApiCallLogWhereUniqueInput | ApiCallLogWhereUniqueInput[]
+    connect?: ApiCallLogWhereUniqueInput | ApiCallLogWhereUniqueInput[]
+    update?: ApiCallLogUpdateWithWhereUniqueWithoutConfigInput | ApiCallLogUpdateWithWhereUniqueWithoutConfigInput[]
+    updateMany?: ApiCallLogUpdateManyWithWhereWithoutConfigInput | ApiCallLogUpdateManyWithWhereWithoutConfigInput[]
+    deleteMany?: ApiCallLogScalarWhereInput | ApiCallLogScalarWhereInput[]
+  }
+
+  export type ApiConfigurationCreateNestedOneWithoutApiCallLogsInput = {
+    create?: XOR<ApiConfigurationCreateWithoutApiCallLogsInput, ApiConfigurationUncheckedCreateWithoutApiCallLogsInput>
+    connectOrCreate?: ApiConfigurationCreateOrConnectWithoutApiCallLogsInput
+    connect?: ApiConfigurationWhereUniqueInput
+  }
+
+  export type ApiConfigurationUpdateOneRequiredWithoutApiCallLogsNestedInput = {
+    create?: XOR<ApiConfigurationCreateWithoutApiCallLogsInput, ApiConfigurationUncheckedCreateWithoutApiCallLogsInput>
+    connectOrCreate?: ApiConfigurationCreateOrConnectWithoutApiCallLogsInput
+    upsert?: ApiConfigurationUpsertWithoutApiCallLogsInput
+    connect?: ApiConfigurationWhereUniqueInput
+    update?: XOR<XOR<ApiConfigurationUpdateToOneWithWhereWithoutApiCallLogsInput, ApiConfigurationUpdateWithoutApiCallLogsInput>, ApiConfigurationUncheckedUpdateWithoutApiCallLogsInput>
+  }
+
+  export type ContentVersionCreatetagsInput = {
+    set: string[]
+  }
+
+  export type ContentCreateNestedOneWithoutVersionsInput = {
+    create?: XOR<ContentCreateWithoutVersionsInput, ContentUncheckedCreateWithoutVersionsInput>
+    connectOrCreate?: ContentCreateOrConnectWithoutVersionsInput
+    connect?: ContentWhereUniqueInput
+  }
+
+  export type ContentVersionUpdatetagsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type ContentUpdateOneRequiredWithoutVersionsNestedInput = {
+    create?: XOR<ContentCreateWithoutVersionsInput, ContentUncheckedCreateWithoutVersionsInput>
+    connectOrCreate?: ContentCreateOrConnectWithoutVersionsInput
+    upsert?: ContentUpsertWithoutVersionsInput
+    connect?: ContentWhereUniqueInput
+    update?: XOR<XOR<ContentUpdateToOneWithWhereWithoutVersionsInput, ContentUpdateWithoutVersionsInput>, ContentUncheckedUpdateWithoutVersionsInput>
+  }
+
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type SearchIndexCreatetitleTokensInput = {
+    set: string[]
+  }
+
+  export type SearchIndexCreatecontentTokensInput = {
+    set: string[]
+  }
+
+  export type SearchIndexCreatekeywordsInput = {
+    set: string[]
+  }
+
+  export type SearchIndexUpdatetitleTokensInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type SearchIndexUpdatecontentTokensInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type SearchIndexUpdatekeywordsInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -19097,11 +30161,28 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type NestedEnumContentTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.ContentType | EnumContentTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumContentTypeFilter<$PrismaModel> | $Enums.ContentType
+  }
+
   export type NestedEnumContentStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.ContentStatus | EnumContentStatusFieldRefInput<$PrismaModel>
     in?: $Enums.ContentStatus[] | ListEnumContentStatusFieldRefInput<$PrismaModel>
     notIn?: $Enums.ContentStatus[] | ListEnumContentStatusFieldRefInput<$PrismaModel>
     not?: NestedEnumContentStatusFilter<$PrismaModel> | $Enums.ContentStatus
+  }
+
+  export type NestedEnumContentTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ContentType | EnumContentTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumContentTypeWithAggregatesFilter<$PrismaModel> | $Enums.ContentType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumContentTypeFilter<$PrismaModel>
+    _max?: NestedEnumContentTypeFilter<$PrismaModel>
   }
 
   export type NestedEnumContentStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -19128,6 +30209,23 @@ export namespace Prisma {
     _sum?: NestedFloatNullableFilter<$PrismaModel>
     _min?: NestedFloatNullableFilter<$PrismaModel>
     _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
+  export type NestedEnumTagTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.TagType | EnumTagTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.TagType[] | ListEnumTagTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TagType[] | ListEnumTagTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumTagTypeFilter<$PrismaModel> | $Enums.TagType
+  }
+
+  export type NestedEnumTagTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TagType | EnumTagTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.TagType[] | ListEnumTagTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TagType[] | ListEnumTagTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumTagTypeWithAggregatesFilter<$PrismaModel> | $Enums.TagType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTagTypeFilter<$PrismaModel>
+    _max?: NestedEnumTagTypeFilter<$PrismaModel>
   }
 
   export type NestedEnumReviewActionFilter<$PrismaModel = never> = {
@@ -19167,6 +30265,56 @@ export namespace Prisma {
     gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type NestedEnumApiAuthTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.ApiAuthType | EnumApiAuthTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ApiAuthType[] | ListEnumApiAuthTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ApiAuthType[] | ListEnumApiAuthTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumApiAuthTypeFilter<$PrismaModel> | $Enums.ApiAuthType
+  }
+
+  export type NestedEnumApiConfigStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ApiConfigStatus | EnumApiConfigStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ApiConfigStatus[] | ListEnumApiConfigStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ApiConfigStatus[] | ListEnumApiConfigStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumApiConfigStatusFilter<$PrismaModel> | $Enums.ApiConfigStatus
+  }
+
+  export type NestedEnumApiAuthTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ApiAuthType | EnumApiAuthTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ApiAuthType[] | ListEnumApiAuthTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ApiAuthType[] | ListEnumApiAuthTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumApiAuthTypeWithAggregatesFilter<$PrismaModel> | $Enums.ApiAuthType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumApiAuthTypeFilter<$PrismaModel>
+    _max?: NestedEnumApiAuthTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumApiConfigStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ApiConfigStatus | EnumApiConfigStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ApiConfigStatus[] | ListEnumApiConfigStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ApiConfigStatus[] | ListEnumApiConfigStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumApiConfigStatusWithAggregatesFilter<$PrismaModel> | $Enums.ApiConfigStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumApiConfigStatusFilter<$PrismaModel>
+    _max?: NestedEnumApiConfigStatusFilter<$PrismaModel>
+  }
+
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type AccountCreateWithoutUserInput = {
@@ -19633,20 +30781,33 @@ export namespace Prisma {
     title: string
     description?: string | null
     content?: string | null
+    summary?: string | null
     url?: string | null
     imageUrl?: string | null
+    type?: $Enums.ContentType
     category?: string | null
     tags?: ContentCreatetagsInput | string[]
     status?: $Enums.ContentStatus
     score?: number | null
     priority?: number
+    quality?: number | null
+    relevance?: number | null
     sourceUrl?: string | null
     publishedAt?: Date | string | null
+    author?: string | null
+    contentHash?: string | null
+    titleHash?: string | null
+    duplicateOf?: string | null
+    viewCount?: number
+    shareCount?: number
+    searchVector?: string | null
+    keywords?: ContentCreatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     reviews?: ContentReviewCreateNestedManyWithoutContentInput
     contentTags?: ContentTagCreateNestedManyWithoutContentInput
+    versions?: ContentVersionCreateNestedManyWithoutContentItemInput
   }
 
   export type ContentUncheckedCreateWithoutSourceInput = {
@@ -19654,20 +30815,33 @@ export namespace Prisma {
     title: string
     description?: string | null
     content?: string | null
+    summary?: string | null
     url?: string | null
     imageUrl?: string | null
+    type?: $Enums.ContentType
     category?: string | null
     tags?: ContentCreatetagsInput | string[]
     status?: $Enums.ContentStatus
     score?: number | null
     priority?: number
+    quality?: number | null
+    relevance?: number | null
     sourceUrl?: string | null
     publishedAt?: Date | string | null
+    author?: string | null
+    contentHash?: string | null
+    titleHash?: string | null
+    duplicateOf?: string | null
+    viewCount?: number
+    shareCount?: number
+    searchVector?: string | null
+    keywords?: ContentCreatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     reviews?: ContentReviewUncheckedCreateNestedManyWithoutContentInput
     contentTags?: ContentTagUncheckedCreateNestedManyWithoutContentInput
+    versions?: ContentVersionUncheckedCreateNestedManyWithoutContentItemInput
   }
 
   export type ContentCreateOrConnectWithoutSourceInput = {
@@ -19704,16 +30878,28 @@ export namespace Prisma {
     title?: StringFilter<"Content"> | string
     description?: StringNullableFilter<"Content"> | string | null
     content?: StringNullableFilter<"Content"> | string | null
+    summary?: StringNullableFilter<"Content"> | string | null
     url?: StringNullableFilter<"Content"> | string | null
     imageUrl?: StringNullableFilter<"Content"> | string | null
+    type?: EnumContentTypeFilter<"Content"> | $Enums.ContentType
     category?: StringNullableFilter<"Content"> | string | null
     tags?: StringNullableListFilter<"Content">
     status?: EnumContentStatusFilter<"Content"> | $Enums.ContentStatus
     score?: FloatNullableFilter<"Content"> | number | null
     priority?: IntFilter<"Content"> | number
+    quality?: FloatNullableFilter<"Content"> | number | null
+    relevance?: FloatNullableFilter<"Content"> | number | null
     sourceId?: StringFilter<"Content"> | string
     sourceUrl?: StringNullableFilter<"Content"> | string | null
     publishedAt?: DateTimeNullableFilter<"Content"> | Date | string | null
+    author?: StringNullableFilter<"Content"> | string | null
+    contentHash?: StringNullableFilter<"Content"> | string | null
+    titleHash?: StringNullableFilter<"Content"> | string | null
+    duplicateOf?: StringNullableFilter<"Content"> | string | null
+    viewCount?: IntFilter<"Content"> | number
+    shareCount?: IntFilter<"Content"> | number
+    searchVector?: StringNullableFilter<"Content"> | string | null
+    keywords?: StringNullableListFilter<"Content">
     metadata?: JsonNullableFilter<"Content">
     createdAt?: DateTimeFilter<"Content"> | Date | string
     updatedAt?: DateTimeFilter<"Content"> | Date | string
@@ -19782,13 +30968,15 @@ export namespace Prisma {
 
   export type ContentTagCreateWithoutContentInput = {
     id?: string
-    tag: string
+    relevance?: number | null
     createdAt?: Date | string
+    tag: TagCreateNestedOneWithoutContentTagsInput
   }
 
   export type ContentTagUncheckedCreateWithoutContentInput = {
     id?: string
-    tag: string
+    tagId: string
+    relevance?: number | null
     createdAt?: Date | string
   }
 
@@ -19799,6 +30987,46 @@ export namespace Prisma {
 
   export type ContentTagCreateManyContentInputEnvelope = {
     data: ContentTagCreateManyContentInput | ContentTagCreateManyContentInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ContentVersionCreateWithoutContentItemInput = {
+    id?: string
+    version: number
+    title: string
+    description?: string | null
+    contentText?: string | null
+    summary?: string | null
+    tags?: ContentVersionCreatetagsInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    changeType: string
+    changeNote?: string | null
+    changedBy?: string | null
+    createdAt?: Date | string
+  }
+
+  export type ContentVersionUncheckedCreateWithoutContentItemInput = {
+    id?: string
+    version: number
+    title: string
+    description?: string | null
+    contentText?: string | null
+    summary?: string | null
+    tags?: ContentVersionCreatetagsInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    changeType: string
+    changeNote?: string | null
+    changedBy?: string | null
+    createdAt?: Date | string
+  }
+
+  export type ContentVersionCreateOrConnectWithoutContentItemInput = {
+    where: ContentVersionWhereUniqueInput
+    create: XOR<ContentVersionCreateWithoutContentItemInput, ContentVersionUncheckedCreateWithoutContentItemInput>
+  }
+
+  export type ContentVersionCreateManyContentItemInputEnvelope = {
+    data: ContentVersionCreateManyContentItemInput | ContentVersionCreateManyContentItemInput[]
     skipDuplicates?: boolean
   }
 
@@ -19881,8 +31109,226 @@ export namespace Prisma {
     NOT?: ContentTagScalarWhereInput | ContentTagScalarWhereInput[]
     id?: StringFilter<"ContentTag"> | string
     contentId?: StringFilter<"ContentTag"> | string
-    tag?: StringFilter<"ContentTag"> | string
+    tagId?: StringFilter<"ContentTag"> | string
+    relevance?: FloatNullableFilter<"ContentTag"> | number | null
     createdAt?: DateTimeFilter<"ContentTag"> | Date | string
+  }
+
+  export type ContentVersionUpsertWithWhereUniqueWithoutContentItemInput = {
+    where: ContentVersionWhereUniqueInput
+    update: XOR<ContentVersionUpdateWithoutContentItemInput, ContentVersionUncheckedUpdateWithoutContentItemInput>
+    create: XOR<ContentVersionCreateWithoutContentItemInput, ContentVersionUncheckedCreateWithoutContentItemInput>
+  }
+
+  export type ContentVersionUpdateWithWhereUniqueWithoutContentItemInput = {
+    where: ContentVersionWhereUniqueInput
+    data: XOR<ContentVersionUpdateWithoutContentItemInput, ContentVersionUncheckedUpdateWithoutContentItemInput>
+  }
+
+  export type ContentVersionUpdateManyWithWhereWithoutContentItemInput = {
+    where: ContentVersionScalarWhereInput
+    data: XOR<ContentVersionUpdateManyMutationInput, ContentVersionUncheckedUpdateManyWithoutContentItemInput>
+  }
+
+  export type ContentVersionScalarWhereInput = {
+    AND?: ContentVersionScalarWhereInput | ContentVersionScalarWhereInput[]
+    OR?: ContentVersionScalarWhereInput[]
+    NOT?: ContentVersionScalarWhereInput | ContentVersionScalarWhereInput[]
+    id?: StringFilter<"ContentVersion"> | string
+    contentId?: StringFilter<"ContentVersion"> | string
+    version?: IntFilter<"ContentVersion"> | number
+    title?: StringFilter<"ContentVersion"> | string
+    description?: StringNullableFilter<"ContentVersion"> | string | null
+    contentText?: StringNullableFilter<"ContentVersion"> | string | null
+    summary?: StringNullableFilter<"ContentVersion"> | string | null
+    tags?: StringNullableListFilter<"ContentVersion">
+    metadata?: JsonNullableFilter<"ContentVersion">
+    changeType?: StringFilter<"ContentVersion"> | string
+    changeNote?: StringNullableFilter<"ContentVersion"> | string | null
+    changedBy?: StringNullableFilter<"ContentVersion"> | string | null
+    createdAt?: DateTimeFilter<"ContentVersion"> | Date | string
+  }
+
+  export type TagCreateWithoutChildrenInput = {
+    id?: string
+    name: string
+    slug: string
+    type?: $Enums.TagType
+    description?: string | null
+    color?: string | null
+    usageCount?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    parent?: TagCreateNestedOneWithoutChildrenInput
+    contentTags?: ContentTagCreateNestedManyWithoutTagInput
+  }
+
+  export type TagUncheckedCreateWithoutChildrenInput = {
+    id?: string
+    name: string
+    slug: string
+    type?: $Enums.TagType
+    description?: string | null
+    color?: string | null
+    parentId?: string | null
+    usageCount?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    contentTags?: ContentTagUncheckedCreateNestedManyWithoutTagInput
+  }
+
+  export type TagCreateOrConnectWithoutChildrenInput = {
+    where: TagWhereUniqueInput
+    create: XOR<TagCreateWithoutChildrenInput, TagUncheckedCreateWithoutChildrenInput>
+  }
+
+  export type TagCreateWithoutParentInput = {
+    id?: string
+    name: string
+    slug: string
+    type?: $Enums.TagType
+    description?: string | null
+    color?: string | null
+    usageCount?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    children?: TagCreateNestedManyWithoutParentInput
+    contentTags?: ContentTagCreateNestedManyWithoutTagInput
+  }
+
+  export type TagUncheckedCreateWithoutParentInput = {
+    id?: string
+    name: string
+    slug: string
+    type?: $Enums.TagType
+    description?: string | null
+    color?: string | null
+    usageCount?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    children?: TagUncheckedCreateNestedManyWithoutParentInput
+    contentTags?: ContentTagUncheckedCreateNestedManyWithoutTagInput
+  }
+
+  export type TagCreateOrConnectWithoutParentInput = {
+    where: TagWhereUniqueInput
+    create: XOR<TagCreateWithoutParentInput, TagUncheckedCreateWithoutParentInput>
+  }
+
+  export type TagCreateManyParentInputEnvelope = {
+    data: TagCreateManyParentInput | TagCreateManyParentInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ContentTagCreateWithoutTagInput = {
+    id?: string
+    relevance?: number | null
+    createdAt?: Date | string
+    content: ContentCreateNestedOneWithoutContentTagsInput
+  }
+
+  export type ContentTagUncheckedCreateWithoutTagInput = {
+    id?: string
+    contentId: string
+    relevance?: number | null
+    createdAt?: Date | string
+  }
+
+  export type ContentTagCreateOrConnectWithoutTagInput = {
+    where: ContentTagWhereUniqueInput
+    create: XOR<ContentTagCreateWithoutTagInput, ContentTagUncheckedCreateWithoutTagInput>
+  }
+
+  export type ContentTagCreateManyTagInputEnvelope = {
+    data: ContentTagCreateManyTagInput | ContentTagCreateManyTagInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type TagUpsertWithoutChildrenInput = {
+    update: XOR<TagUpdateWithoutChildrenInput, TagUncheckedUpdateWithoutChildrenInput>
+    create: XOR<TagCreateWithoutChildrenInput, TagUncheckedCreateWithoutChildrenInput>
+    where?: TagWhereInput
+  }
+
+  export type TagUpdateToOneWithWhereWithoutChildrenInput = {
+    where?: TagWhereInput
+    data: XOR<TagUpdateWithoutChildrenInput, TagUncheckedUpdateWithoutChildrenInput>
+  }
+
+  export type TagUpdateWithoutChildrenInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    type?: EnumTagTypeFieldUpdateOperationsInput | $Enums.TagType
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    usageCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    parent?: TagUpdateOneWithoutChildrenNestedInput
+    contentTags?: ContentTagUpdateManyWithoutTagNestedInput
+  }
+
+  export type TagUncheckedUpdateWithoutChildrenInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    type?: EnumTagTypeFieldUpdateOperationsInput | $Enums.TagType
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    usageCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    contentTags?: ContentTagUncheckedUpdateManyWithoutTagNestedInput
+  }
+
+  export type TagUpsertWithWhereUniqueWithoutParentInput = {
+    where: TagWhereUniqueInput
+    update: XOR<TagUpdateWithoutParentInput, TagUncheckedUpdateWithoutParentInput>
+    create: XOR<TagCreateWithoutParentInput, TagUncheckedCreateWithoutParentInput>
+  }
+
+  export type TagUpdateWithWhereUniqueWithoutParentInput = {
+    where: TagWhereUniqueInput
+    data: XOR<TagUpdateWithoutParentInput, TagUncheckedUpdateWithoutParentInput>
+  }
+
+  export type TagUpdateManyWithWhereWithoutParentInput = {
+    where: TagScalarWhereInput
+    data: XOR<TagUpdateManyMutationInput, TagUncheckedUpdateManyWithoutParentInput>
+  }
+
+  export type TagScalarWhereInput = {
+    AND?: TagScalarWhereInput | TagScalarWhereInput[]
+    OR?: TagScalarWhereInput[]
+    NOT?: TagScalarWhereInput | TagScalarWhereInput[]
+    id?: StringFilter<"Tag"> | string
+    name?: StringFilter<"Tag"> | string
+    slug?: StringFilter<"Tag"> | string
+    type?: EnumTagTypeFilter<"Tag"> | $Enums.TagType
+    description?: StringNullableFilter<"Tag"> | string | null
+    color?: StringNullableFilter<"Tag"> | string | null
+    parentId?: StringNullableFilter<"Tag"> | string | null
+    usageCount?: IntFilter<"Tag"> | number
+    createdAt?: DateTimeFilter<"Tag"> | Date | string
+    updatedAt?: DateTimeFilter<"Tag"> | Date | string
+  }
+
+  export type ContentTagUpsertWithWhereUniqueWithoutTagInput = {
+    where: ContentTagWhereUniqueInput
+    update: XOR<ContentTagUpdateWithoutTagInput, ContentTagUncheckedUpdateWithoutTagInput>
+    create: XOR<ContentTagCreateWithoutTagInput, ContentTagUncheckedCreateWithoutTagInput>
+  }
+
+  export type ContentTagUpdateWithWhereUniqueWithoutTagInput = {
+    where: ContentTagWhereUniqueInput
+    data: XOR<ContentTagUpdateWithoutTagInput, ContentTagUncheckedUpdateWithoutTagInput>
+  }
+
+  export type ContentTagUpdateManyWithWhereWithoutTagInput = {
+    where: ContentTagScalarWhereInput
+    data: XOR<ContentTagUpdateManyMutationInput, ContentTagUncheckedUpdateManyWithoutTagInput>
   }
 
   export type ContentCreateWithoutContentTagsInput = {
@@ -19890,20 +31336,33 @@ export namespace Prisma {
     title: string
     description?: string | null
     content?: string | null
+    summary?: string | null
     url?: string | null
     imageUrl?: string | null
+    type?: $Enums.ContentType
     category?: string | null
     tags?: ContentCreatetagsInput | string[]
     status?: $Enums.ContentStatus
     score?: number | null
     priority?: number
+    quality?: number | null
+    relevance?: number | null
     sourceUrl?: string | null
     publishedAt?: Date | string | null
+    author?: string | null
+    contentHash?: string | null
+    titleHash?: string | null
+    duplicateOf?: string | null
+    viewCount?: number
+    shareCount?: number
+    searchVector?: string | null
+    keywords?: ContentCreatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     source: SourceCreateNestedOneWithoutContentInput
     reviews?: ContentReviewCreateNestedManyWithoutContentInput
+    versions?: ContentVersionCreateNestedManyWithoutContentItemInput
   }
 
   export type ContentUncheckedCreateWithoutContentTagsInput = {
@@ -19911,25 +31370,71 @@ export namespace Prisma {
     title: string
     description?: string | null
     content?: string | null
+    summary?: string | null
     url?: string | null
     imageUrl?: string | null
+    type?: $Enums.ContentType
     category?: string | null
     tags?: ContentCreatetagsInput | string[]
     status?: $Enums.ContentStatus
     score?: number | null
     priority?: number
+    quality?: number | null
+    relevance?: number | null
     sourceId: string
     sourceUrl?: string | null
     publishedAt?: Date | string | null
+    author?: string | null
+    contentHash?: string | null
+    titleHash?: string | null
+    duplicateOf?: string | null
+    viewCount?: number
+    shareCount?: number
+    searchVector?: string | null
+    keywords?: ContentCreatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     reviews?: ContentReviewUncheckedCreateNestedManyWithoutContentInput
+    versions?: ContentVersionUncheckedCreateNestedManyWithoutContentItemInput
   }
 
   export type ContentCreateOrConnectWithoutContentTagsInput = {
     where: ContentWhereUniqueInput
     create: XOR<ContentCreateWithoutContentTagsInput, ContentUncheckedCreateWithoutContentTagsInput>
+  }
+
+  export type TagCreateWithoutContentTagsInput = {
+    id?: string
+    name: string
+    slug: string
+    type?: $Enums.TagType
+    description?: string | null
+    color?: string | null
+    usageCount?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    parent?: TagCreateNestedOneWithoutChildrenInput
+    children?: TagCreateNestedManyWithoutParentInput
+  }
+
+  export type TagUncheckedCreateWithoutContentTagsInput = {
+    id?: string
+    name: string
+    slug: string
+    type?: $Enums.TagType
+    description?: string | null
+    color?: string | null
+    parentId?: string | null
+    usageCount?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    children?: TagUncheckedCreateNestedManyWithoutParentInput
+  }
+
+  export type TagCreateOrConnectWithoutContentTagsInput = {
+    where: TagWhereUniqueInput
+    create: XOR<TagCreateWithoutContentTagsInput, TagUncheckedCreateWithoutContentTagsInput>
   }
 
   export type ContentUpsertWithoutContentTagsInput = {
@@ -19948,20 +31453,33 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
     category?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ContentUpdatetagsInput | string[]
     status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     priority?: IntFieldUpdateOperationsInput | number
+    quality?: NullableFloatFieldUpdateOperationsInput | number | null
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    author?: NullableStringFieldUpdateOperationsInput | string | null
+    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
+    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
+    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
+    viewCount?: IntFieldUpdateOperationsInput | number
+    shareCount?: IntFieldUpdateOperationsInput | number
+    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: ContentUpdatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     source?: SourceUpdateOneRequiredWithoutContentNestedInput
     reviews?: ContentReviewUpdateManyWithoutContentNestedInput
+    versions?: ContentVersionUpdateManyWithoutContentItemNestedInput
   }
 
   export type ContentUncheckedUpdateWithoutContentTagsInput = {
@@ -19969,20 +31487,72 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
     category?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ContentUpdatetagsInput | string[]
     status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     priority?: IntFieldUpdateOperationsInput | number
+    quality?: NullableFloatFieldUpdateOperationsInput | number | null
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     sourceId?: StringFieldUpdateOperationsInput | string
     sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    author?: NullableStringFieldUpdateOperationsInput | string | null
+    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
+    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
+    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
+    viewCount?: IntFieldUpdateOperationsInput | number
+    shareCount?: IntFieldUpdateOperationsInput | number
+    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: ContentUpdatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     reviews?: ContentReviewUncheckedUpdateManyWithoutContentNestedInput
+    versions?: ContentVersionUncheckedUpdateManyWithoutContentItemNestedInput
+  }
+
+  export type TagUpsertWithoutContentTagsInput = {
+    update: XOR<TagUpdateWithoutContentTagsInput, TagUncheckedUpdateWithoutContentTagsInput>
+    create: XOR<TagCreateWithoutContentTagsInput, TagUncheckedCreateWithoutContentTagsInput>
+    where?: TagWhereInput
+  }
+
+  export type TagUpdateToOneWithWhereWithoutContentTagsInput = {
+    where?: TagWhereInput
+    data: XOR<TagUpdateWithoutContentTagsInput, TagUncheckedUpdateWithoutContentTagsInput>
+  }
+
+  export type TagUpdateWithoutContentTagsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    type?: EnumTagTypeFieldUpdateOperationsInput | $Enums.TagType
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    usageCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    parent?: TagUpdateOneWithoutChildrenNestedInput
+    children?: TagUpdateManyWithoutParentNestedInput
+  }
+
+  export type TagUncheckedUpdateWithoutContentTagsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    type?: EnumTagTypeFieldUpdateOperationsInput | $Enums.TagType
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    usageCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    children?: TagUncheckedUpdateManyWithoutParentNestedInput
   }
 
   export type ContentCreateWithoutReviewsInput = {
@@ -19990,20 +31560,33 @@ export namespace Prisma {
     title: string
     description?: string | null
     content?: string | null
+    summary?: string | null
     url?: string | null
     imageUrl?: string | null
+    type?: $Enums.ContentType
     category?: string | null
     tags?: ContentCreatetagsInput | string[]
     status?: $Enums.ContentStatus
     score?: number | null
     priority?: number
+    quality?: number | null
+    relevance?: number | null
     sourceUrl?: string | null
     publishedAt?: Date | string | null
+    author?: string | null
+    contentHash?: string | null
+    titleHash?: string | null
+    duplicateOf?: string | null
+    viewCount?: number
+    shareCount?: number
+    searchVector?: string | null
+    keywords?: ContentCreatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     source: SourceCreateNestedOneWithoutContentInput
     contentTags?: ContentTagCreateNestedManyWithoutContentInput
+    versions?: ContentVersionCreateNestedManyWithoutContentItemInput
   }
 
   export type ContentUncheckedCreateWithoutReviewsInput = {
@@ -20011,20 +31594,33 @@ export namespace Prisma {
     title: string
     description?: string | null
     content?: string | null
+    summary?: string | null
     url?: string | null
     imageUrl?: string | null
+    type?: $Enums.ContentType
     category?: string | null
     tags?: ContentCreatetagsInput | string[]
     status?: $Enums.ContentStatus
     score?: number | null
     priority?: number
+    quality?: number | null
+    relevance?: number | null
     sourceId: string
     sourceUrl?: string | null
     publishedAt?: Date | string | null
+    author?: string | null
+    contentHash?: string | null
+    titleHash?: string | null
+    duplicateOf?: string | null
+    viewCount?: number
+    shareCount?: number
+    searchVector?: string | null
+    keywords?: ContentCreatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     contentTags?: ContentTagUncheckedCreateNestedManyWithoutContentInput
+    versions?: ContentVersionUncheckedCreateNestedManyWithoutContentItemInput
   }
 
   export type ContentCreateOrConnectWithoutReviewsInput = {
@@ -20099,20 +31695,33 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
     category?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ContentUpdatetagsInput | string[]
     status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     priority?: IntFieldUpdateOperationsInput | number
+    quality?: NullableFloatFieldUpdateOperationsInput | number | null
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    author?: NullableStringFieldUpdateOperationsInput | string | null
+    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
+    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
+    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
+    viewCount?: IntFieldUpdateOperationsInput | number
+    shareCount?: IntFieldUpdateOperationsInput | number
+    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: ContentUpdatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     source?: SourceUpdateOneRequiredWithoutContentNestedInput
     contentTags?: ContentTagUpdateManyWithoutContentNestedInput
+    versions?: ContentVersionUpdateManyWithoutContentItemNestedInput
   }
 
   export type ContentUncheckedUpdateWithoutReviewsInput = {
@@ -20120,20 +31729,33 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
     category?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ContentUpdatetagsInput | string[]
     status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     priority?: IntFieldUpdateOperationsInput | number
+    quality?: NullableFloatFieldUpdateOperationsInput | number | null
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     sourceId?: StringFieldUpdateOperationsInput | string
     sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    author?: NullableStringFieldUpdateOperationsInput | string | null
+    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
+    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
+    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
+    viewCount?: IntFieldUpdateOperationsInput | number
+    shareCount?: IntFieldUpdateOperationsInput | number
+    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: ContentUpdatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     contentTags?: ContentTagUncheckedUpdateManyWithoutContentNestedInput
+    versions?: ContentVersionUncheckedUpdateManyWithoutContentItemNestedInput
   }
 
   export type UserUpsertWithoutContentReviewsInput = {
@@ -20299,6 +31921,353 @@ export namespace Prisma {
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     contentReviews?: ContentReviewUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type ApiCallLogCreateWithoutConfigInput = {
+    id?: string
+    method: string
+    endpoint: string
+    requestHeaders?: NullableJsonNullValueInput | InputJsonValue
+    requestBody?: NullableJsonNullValueInput | InputJsonValue
+    statusCode?: number | null
+    responseHeaders?: NullableJsonNullValueInput | InputJsonValue
+    responseBody?: NullableJsonNullValueInput | InputJsonValue
+    duration?: number | null
+    success: boolean
+    errorMessage?: string | null
+    createdAt?: Date | string
+  }
+
+  export type ApiCallLogUncheckedCreateWithoutConfigInput = {
+    id?: string
+    method: string
+    endpoint: string
+    requestHeaders?: NullableJsonNullValueInput | InputJsonValue
+    requestBody?: NullableJsonNullValueInput | InputJsonValue
+    statusCode?: number | null
+    responseHeaders?: NullableJsonNullValueInput | InputJsonValue
+    responseBody?: NullableJsonNullValueInput | InputJsonValue
+    duration?: number | null
+    success: boolean
+    errorMessage?: string | null
+    createdAt?: Date | string
+  }
+
+  export type ApiCallLogCreateOrConnectWithoutConfigInput = {
+    where: ApiCallLogWhereUniqueInput
+    create: XOR<ApiCallLogCreateWithoutConfigInput, ApiCallLogUncheckedCreateWithoutConfigInput>
+  }
+
+  export type ApiCallLogCreateManyConfigInputEnvelope = {
+    data: ApiCallLogCreateManyConfigInput | ApiCallLogCreateManyConfigInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ApiCallLogUpsertWithWhereUniqueWithoutConfigInput = {
+    where: ApiCallLogWhereUniqueInput
+    update: XOR<ApiCallLogUpdateWithoutConfigInput, ApiCallLogUncheckedUpdateWithoutConfigInput>
+    create: XOR<ApiCallLogCreateWithoutConfigInput, ApiCallLogUncheckedCreateWithoutConfigInput>
+  }
+
+  export type ApiCallLogUpdateWithWhereUniqueWithoutConfigInput = {
+    where: ApiCallLogWhereUniqueInput
+    data: XOR<ApiCallLogUpdateWithoutConfigInput, ApiCallLogUncheckedUpdateWithoutConfigInput>
+  }
+
+  export type ApiCallLogUpdateManyWithWhereWithoutConfigInput = {
+    where: ApiCallLogScalarWhereInput
+    data: XOR<ApiCallLogUpdateManyMutationInput, ApiCallLogUncheckedUpdateManyWithoutConfigInput>
+  }
+
+  export type ApiCallLogScalarWhereInput = {
+    AND?: ApiCallLogScalarWhereInput | ApiCallLogScalarWhereInput[]
+    OR?: ApiCallLogScalarWhereInput[]
+    NOT?: ApiCallLogScalarWhereInput | ApiCallLogScalarWhereInput[]
+    id?: StringFilter<"ApiCallLog"> | string
+    configId?: StringFilter<"ApiCallLog"> | string
+    method?: StringFilter<"ApiCallLog"> | string
+    endpoint?: StringFilter<"ApiCallLog"> | string
+    requestHeaders?: JsonNullableFilter<"ApiCallLog">
+    requestBody?: JsonNullableFilter<"ApiCallLog">
+    statusCode?: IntNullableFilter<"ApiCallLog"> | number | null
+    responseHeaders?: JsonNullableFilter<"ApiCallLog">
+    responseBody?: JsonNullableFilter<"ApiCallLog">
+    duration?: IntNullableFilter<"ApiCallLog"> | number | null
+    success?: BoolFilter<"ApiCallLog"> | boolean
+    errorMessage?: StringNullableFilter<"ApiCallLog"> | string | null
+    createdAt?: DateTimeFilter<"ApiCallLog"> | Date | string
+  }
+
+  export type ApiConfigurationCreateWithoutApiCallLogsInput = {
+    id?: string
+    name: string
+    provider: string
+    baseUrl: string
+    authType: $Enums.ApiAuthType
+    status?: $Enums.ApiConfigStatus
+    apiKey?: string | null
+    token?: string | null
+    username?: string | null
+    password?: string | null
+    headerName?: string | null
+    rateLimit?: NullableJsonNullValueInput | InputJsonValue
+    timeout?: number | null
+    retryAttempts?: number | null
+    retryDelay?: number | null
+    headers?: NullableJsonNullValueInput | InputJsonValue
+    totalCalls?: number
+    successfulCalls?: number
+    failedCalls?: number
+    lastCallAt?: Date | string | null
+    lastError?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ApiConfigurationUncheckedCreateWithoutApiCallLogsInput = {
+    id?: string
+    name: string
+    provider: string
+    baseUrl: string
+    authType: $Enums.ApiAuthType
+    status?: $Enums.ApiConfigStatus
+    apiKey?: string | null
+    token?: string | null
+    username?: string | null
+    password?: string | null
+    headerName?: string | null
+    rateLimit?: NullableJsonNullValueInput | InputJsonValue
+    timeout?: number | null
+    retryAttempts?: number | null
+    retryDelay?: number | null
+    headers?: NullableJsonNullValueInput | InputJsonValue
+    totalCalls?: number
+    successfulCalls?: number
+    failedCalls?: number
+    lastCallAt?: Date | string | null
+    lastError?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ApiConfigurationCreateOrConnectWithoutApiCallLogsInput = {
+    where: ApiConfigurationWhereUniqueInput
+    create: XOR<ApiConfigurationCreateWithoutApiCallLogsInput, ApiConfigurationUncheckedCreateWithoutApiCallLogsInput>
+  }
+
+  export type ApiConfigurationUpsertWithoutApiCallLogsInput = {
+    update: XOR<ApiConfigurationUpdateWithoutApiCallLogsInput, ApiConfigurationUncheckedUpdateWithoutApiCallLogsInput>
+    create: XOR<ApiConfigurationCreateWithoutApiCallLogsInput, ApiConfigurationUncheckedCreateWithoutApiCallLogsInput>
+    where?: ApiConfigurationWhereInput
+  }
+
+  export type ApiConfigurationUpdateToOneWithWhereWithoutApiCallLogsInput = {
+    where?: ApiConfigurationWhereInput
+    data: XOR<ApiConfigurationUpdateWithoutApiCallLogsInput, ApiConfigurationUncheckedUpdateWithoutApiCallLogsInput>
+  }
+
+  export type ApiConfigurationUpdateWithoutApiCallLogsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    baseUrl?: StringFieldUpdateOperationsInput | string
+    authType?: EnumApiAuthTypeFieldUpdateOperationsInput | $Enums.ApiAuthType
+    status?: EnumApiConfigStatusFieldUpdateOperationsInput | $Enums.ApiConfigStatus
+    apiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    headerName?: NullableStringFieldUpdateOperationsInput | string | null
+    rateLimit?: NullableJsonNullValueInput | InputJsonValue
+    timeout?: NullableIntFieldUpdateOperationsInput | number | null
+    retryAttempts?: NullableIntFieldUpdateOperationsInput | number | null
+    retryDelay?: NullableIntFieldUpdateOperationsInput | number | null
+    headers?: NullableJsonNullValueInput | InputJsonValue
+    totalCalls?: IntFieldUpdateOperationsInput | number
+    successfulCalls?: IntFieldUpdateOperationsInput | number
+    failedCalls?: IntFieldUpdateOperationsInput | number
+    lastCallAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastError?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApiConfigurationUncheckedUpdateWithoutApiCallLogsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    baseUrl?: StringFieldUpdateOperationsInput | string
+    authType?: EnumApiAuthTypeFieldUpdateOperationsInput | $Enums.ApiAuthType
+    status?: EnumApiConfigStatusFieldUpdateOperationsInput | $Enums.ApiConfigStatus
+    apiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    headerName?: NullableStringFieldUpdateOperationsInput | string | null
+    rateLimit?: NullableJsonNullValueInput | InputJsonValue
+    timeout?: NullableIntFieldUpdateOperationsInput | number | null
+    retryAttempts?: NullableIntFieldUpdateOperationsInput | number | null
+    retryDelay?: NullableIntFieldUpdateOperationsInput | number | null
+    headers?: NullableJsonNullValueInput | InputJsonValue
+    totalCalls?: IntFieldUpdateOperationsInput | number
+    successfulCalls?: IntFieldUpdateOperationsInput | number
+    failedCalls?: IntFieldUpdateOperationsInput | number
+    lastCallAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastError?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ContentCreateWithoutVersionsInput = {
+    id?: string
+    title: string
+    description?: string | null
+    content?: string | null
+    summary?: string | null
+    url?: string | null
+    imageUrl?: string | null
+    type?: $Enums.ContentType
+    category?: string | null
+    tags?: ContentCreatetagsInput | string[]
+    status?: $Enums.ContentStatus
+    score?: number | null
+    priority?: number
+    quality?: number | null
+    relevance?: number | null
+    sourceUrl?: string | null
+    publishedAt?: Date | string | null
+    author?: string | null
+    contentHash?: string | null
+    titleHash?: string | null
+    duplicateOf?: string | null
+    viewCount?: number
+    shareCount?: number
+    searchVector?: string | null
+    keywords?: ContentCreatekeywordsInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    source: SourceCreateNestedOneWithoutContentInput
+    reviews?: ContentReviewCreateNestedManyWithoutContentInput
+    contentTags?: ContentTagCreateNestedManyWithoutContentInput
+  }
+
+  export type ContentUncheckedCreateWithoutVersionsInput = {
+    id?: string
+    title: string
+    description?: string | null
+    content?: string | null
+    summary?: string | null
+    url?: string | null
+    imageUrl?: string | null
+    type?: $Enums.ContentType
+    category?: string | null
+    tags?: ContentCreatetagsInput | string[]
+    status?: $Enums.ContentStatus
+    score?: number | null
+    priority?: number
+    quality?: number | null
+    relevance?: number | null
+    sourceId: string
+    sourceUrl?: string | null
+    publishedAt?: Date | string | null
+    author?: string | null
+    contentHash?: string | null
+    titleHash?: string | null
+    duplicateOf?: string | null
+    viewCount?: number
+    shareCount?: number
+    searchVector?: string | null
+    keywords?: ContentCreatekeywordsInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    reviews?: ContentReviewUncheckedCreateNestedManyWithoutContentInput
+    contentTags?: ContentTagUncheckedCreateNestedManyWithoutContentInput
+  }
+
+  export type ContentCreateOrConnectWithoutVersionsInput = {
+    where: ContentWhereUniqueInput
+    create: XOR<ContentCreateWithoutVersionsInput, ContentUncheckedCreateWithoutVersionsInput>
+  }
+
+  export type ContentUpsertWithoutVersionsInput = {
+    update: XOR<ContentUpdateWithoutVersionsInput, ContentUncheckedUpdateWithoutVersionsInput>
+    create: XOR<ContentCreateWithoutVersionsInput, ContentUncheckedCreateWithoutVersionsInput>
+    where?: ContentWhereInput
+  }
+
+  export type ContentUpdateToOneWithWhereWithoutVersionsInput = {
+    where?: ContentWhereInput
+    data: XOR<ContentUpdateWithoutVersionsInput, ContentUncheckedUpdateWithoutVersionsInput>
+  }
+
+  export type ContentUpdateWithoutVersionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: ContentUpdatetagsInput | string[]
+    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    score?: NullableFloatFieldUpdateOperationsInput | number | null
+    priority?: IntFieldUpdateOperationsInput | number
+    quality?: NullableFloatFieldUpdateOperationsInput | number | null
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
+    sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    author?: NullableStringFieldUpdateOperationsInput | string | null
+    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
+    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
+    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
+    viewCount?: IntFieldUpdateOperationsInput | number
+    shareCount?: IntFieldUpdateOperationsInput | number
+    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: ContentUpdatekeywordsInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    source?: SourceUpdateOneRequiredWithoutContentNestedInput
+    reviews?: ContentReviewUpdateManyWithoutContentNestedInput
+    contentTags?: ContentTagUpdateManyWithoutContentNestedInput
+  }
+
+  export type ContentUncheckedUpdateWithoutVersionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: ContentUpdatetagsInput | string[]
+    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    score?: NullableFloatFieldUpdateOperationsInput | number | null
+    priority?: IntFieldUpdateOperationsInput | number
+    quality?: NullableFloatFieldUpdateOperationsInput | number | null
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
+    sourceId?: StringFieldUpdateOperationsInput | string
+    sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    author?: NullableStringFieldUpdateOperationsInput | string | null
+    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
+    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
+    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
+    viewCount?: IntFieldUpdateOperationsInput | number
+    shareCount?: IntFieldUpdateOperationsInput | number
+    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: ContentUpdatekeywordsInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    reviews?: ContentReviewUncheckedUpdateManyWithoutContentNestedInput
+    contentTags?: ContentTagUncheckedUpdateManyWithoutContentNestedInput
   }
 
   export type AccountCreateManyUserInput = {
@@ -20470,15 +32439,27 @@ export namespace Prisma {
     title: string
     description?: string | null
     content?: string | null
+    summary?: string | null
     url?: string | null
     imageUrl?: string | null
+    type?: $Enums.ContentType
     category?: string | null
     tags?: ContentCreatetagsInput | string[]
     status?: $Enums.ContentStatus
     score?: number | null
     priority?: number
+    quality?: number | null
+    relevance?: number | null
     sourceUrl?: string | null
     publishedAt?: Date | string | null
+    author?: string | null
+    contentHash?: string | null
+    titleHash?: string | null
+    duplicateOf?: string | null
+    viewCount?: number
+    shareCount?: number
+    searchVector?: string | null
+    keywords?: ContentCreatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -20489,20 +32470,33 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
     category?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ContentUpdatetagsInput | string[]
     status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     priority?: IntFieldUpdateOperationsInput | number
+    quality?: NullableFloatFieldUpdateOperationsInput | number | null
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    author?: NullableStringFieldUpdateOperationsInput | string | null
+    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
+    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
+    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
+    viewCount?: IntFieldUpdateOperationsInput | number
+    shareCount?: IntFieldUpdateOperationsInput | number
+    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: ContentUpdatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     reviews?: ContentReviewUpdateManyWithoutContentNestedInput
     contentTags?: ContentTagUpdateManyWithoutContentNestedInput
+    versions?: ContentVersionUpdateManyWithoutContentItemNestedInput
   }
 
   export type ContentUncheckedUpdateWithoutSourceInput = {
@@ -20510,20 +32504,33 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
     category?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ContentUpdatetagsInput | string[]
     status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     priority?: IntFieldUpdateOperationsInput | number
+    quality?: NullableFloatFieldUpdateOperationsInput | number | null
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    author?: NullableStringFieldUpdateOperationsInput | string | null
+    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
+    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
+    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
+    viewCount?: IntFieldUpdateOperationsInput | number
+    shareCount?: IntFieldUpdateOperationsInput | number
+    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: ContentUpdatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     reviews?: ContentReviewUncheckedUpdateManyWithoutContentNestedInput
     contentTags?: ContentTagUncheckedUpdateManyWithoutContentNestedInput
+    versions?: ContentVersionUncheckedUpdateManyWithoutContentItemNestedInput
   }
 
   export type ContentUncheckedUpdateManyWithoutSourceInput = {
@@ -20531,15 +32538,27 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
     category?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ContentUpdatetagsInput | string[]
     status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     priority?: IntFieldUpdateOperationsInput | number
+    quality?: NullableFloatFieldUpdateOperationsInput | number | null
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    author?: NullableStringFieldUpdateOperationsInput | string | null
+    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
+    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
+    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
+    viewCount?: IntFieldUpdateOperationsInput | number
+    shareCount?: IntFieldUpdateOperationsInput | number
+    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: ContentUpdatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -20555,7 +32574,23 @@ export namespace Prisma {
 
   export type ContentTagCreateManyContentInput = {
     id?: string
-    tag: string
+    tagId: string
+    relevance?: number | null
+    createdAt?: Date | string
+  }
+
+  export type ContentVersionCreateManyContentItemInput = {
+    id?: string
+    version: number
+    title: string
+    description?: string | null
+    contentText?: string | null
+    summary?: string | null
+    tags?: ContentVersionCreatetagsInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    changeType: string
+    changeNote?: string | null
+    changedBy?: string | null
     createdAt?: Date | string
   }
 
@@ -20585,19 +32620,207 @@ export namespace Prisma {
 
   export type ContentTagUpdateWithoutContentInput = {
     id?: StringFieldUpdateOperationsInput | string
-    tag?: StringFieldUpdateOperationsInput | string
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tag?: TagUpdateOneRequiredWithoutContentTagsNestedInput
   }
 
   export type ContentTagUncheckedUpdateWithoutContentInput = {
     id?: StringFieldUpdateOperationsInput | string
-    tag?: StringFieldUpdateOperationsInput | string
+    tagId?: StringFieldUpdateOperationsInput | string
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ContentTagUncheckedUpdateManyWithoutContentInput = {
     id?: StringFieldUpdateOperationsInput | string
-    tag?: StringFieldUpdateOperationsInput | string
+    tagId?: StringFieldUpdateOperationsInput | string
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ContentVersionUpdateWithoutContentItemInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    contentText?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: ContentVersionUpdatetagsInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    changeType?: StringFieldUpdateOperationsInput | string
+    changeNote?: NullableStringFieldUpdateOperationsInput | string | null
+    changedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ContentVersionUncheckedUpdateWithoutContentItemInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    contentText?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: ContentVersionUpdatetagsInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    changeType?: StringFieldUpdateOperationsInput | string
+    changeNote?: NullableStringFieldUpdateOperationsInput | string | null
+    changedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ContentVersionUncheckedUpdateManyWithoutContentItemInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    contentText?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: ContentVersionUpdatetagsInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    changeType?: StringFieldUpdateOperationsInput | string
+    changeNote?: NullableStringFieldUpdateOperationsInput | string | null
+    changedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TagCreateManyParentInput = {
+    id?: string
+    name: string
+    slug: string
+    type?: $Enums.TagType
+    description?: string | null
+    color?: string | null
+    usageCount?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ContentTagCreateManyTagInput = {
+    id?: string
+    contentId: string
+    relevance?: number | null
+    createdAt?: Date | string
+  }
+
+  export type TagUpdateWithoutParentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    type?: EnumTagTypeFieldUpdateOperationsInput | $Enums.TagType
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    usageCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    children?: TagUpdateManyWithoutParentNestedInput
+    contentTags?: ContentTagUpdateManyWithoutTagNestedInput
+  }
+
+  export type TagUncheckedUpdateWithoutParentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    type?: EnumTagTypeFieldUpdateOperationsInput | $Enums.TagType
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    usageCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    children?: TagUncheckedUpdateManyWithoutParentNestedInput
+    contentTags?: ContentTagUncheckedUpdateManyWithoutTagNestedInput
+  }
+
+  export type TagUncheckedUpdateManyWithoutParentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    type?: EnumTagTypeFieldUpdateOperationsInput | $Enums.TagType
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    usageCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ContentTagUpdateWithoutTagInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    content?: ContentUpdateOneRequiredWithoutContentTagsNestedInput
+  }
+
+  export type ContentTagUncheckedUpdateWithoutTagInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contentId?: StringFieldUpdateOperationsInput | string
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ContentTagUncheckedUpdateManyWithoutTagInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contentId?: StringFieldUpdateOperationsInput | string
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApiCallLogCreateManyConfigInput = {
+    id?: string
+    method: string
+    endpoint: string
+    requestHeaders?: NullableJsonNullValueInput | InputJsonValue
+    requestBody?: NullableJsonNullValueInput | InputJsonValue
+    statusCode?: number | null
+    responseHeaders?: NullableJsonNullValueInput | InputJsonValue
+    responseBody?: NullableJsonNullValueInput | InputJsonValue
+    duration?: number | null
+    success: boolean
+    errorMessage?: string | null
+    createdAt?: Date | string
+  }
+
+  export type ApiCallLogUpdateWithoutConfigInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    method?: StringFieldUpdateOperationsInput | string
+    endpoint?: StringFieldUpdateOperationsInput | string
+    requestHeaders?: NullableJsonNullValueInput | InputJsonValue
+    requestBody?: NullableJsonNullValueInput | InputJsonValue
+    statusCode?: NullableIntFieldUpdateOperationsInput | number | null
+    responseHeaders?: NullableJsonNullValueInput | InputJsonValue
+    responseBody?: NullableJsonNullValueInput | InputJsonValue
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    success?: BoolFieldUpdateOperationsInput | boolean
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApiCallLogUncheckedUpdateWithoutConfigInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    method?: StringFieldUpdateOperationsInput | string
+    endpoint?: StringFieldUpdateOperationsInput | string
+    requestHeaders?: NullableJsonNullValueInput | InputJsonValue
+    requestBody?: NullableJsonNullValueInput | InputJsonValue
+    statusCode?: NullableIntFieldUpdateOperationsInput | number | null
+    responseHeaders?: NullableJsonNullValueInput | InputJsonValue
+    responseBody?: NullableJsonNullValueInput | InputJsonValue
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    success?: BoolFieldUpdateOperationsInput | boolean
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApiCallLogUncheckedUpdateManyWithoutConfigInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    method?: StringFieldUpdateOperationsInput | string
+    endpoint?: StringFieldUpdateOperationsInput | string
+    requestHeaders?: NullableJsonNullValueInput | InputJsonValue
+    requestBody?: NullableJsonNullValueInput | InputJsonValue
+    statusCode?: NullableIntFieldUpdateOperationsInput | number | null
+    responseHeaders?: NullableJsonNullValueInput | InputJsonValue
+    responseBody?: NullableJsonNullValueInput | InputJsonValue
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    success?: BoolFieldUpdateOperationsInput | boolean
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -20618,6 +32841,14 @@ export namespace Prisma {
      * @deprecated Use ContentCountOutputTypeDefaultArgs instead
      */
     export type ContentCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ContentCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use TagCountOutputTypeDefaultArgs instead
+     */
+    export type TagCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = TagCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ApiConfigurationCountOutputTypeDefaultArgs instead
+     */
+    export type ApiConfigurationCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ApiConfigurationCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use UserDefaultArgs instead
      */
@@ -20647,6 +32878,10 @@ export namespace Prisma {
      */
     export type ContentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ContentDefaultArgs<ExtArgs>
     /**
+     * @deprecated Use TagDefaultArgs instead
+     */
+    export type TagArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = TagDefaultArgs<ExtArgs>
+    /**
      * @deprecated Use ContentTagDefaultArgs instead
      */
     export type ContentTagArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ContentTagDefaultArgs<ExtArgs>
@@ -20670,6 +32905,30 @@ export namespace Prisma {
      * @deprecated Use SystemConfigDefaultArgs instead
      */
     export type SystemConfigArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = SystemConfigDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ApiConfigurationDefaultArgs instead
+     */
+    export type ApiConfigurationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ApiConfigurationDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ApiCallLogDefaultArgs instead
+     */
+    export type ApiCallLogArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ApiCallLogDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ContentVersionDefaultArgs instead
+     */
+    export type ContentVersionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ContentVersionDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ContentAuditLogDefaultArgs instead
+     */
+    export type ContentAuditLogArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ContentAuditLogDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ContentDuplicationDefaultArgs instead
+     */
+    export type ContentDuplicationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ContentDuplicationDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use SearchIndexDefaultArgs instead
+     */
+    export type SearchIndexArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = SearchIndexDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

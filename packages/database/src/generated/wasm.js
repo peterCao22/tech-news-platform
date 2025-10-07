@@ -204,17 +204,42 @@ exports.Prisma.ContentScalarFieldEnum = {
   title: 'title',
   description: 'description',
   content: 'content',
+  summary: 'summary',
   url: 'url',
   imageUrl: 'imageUrl',
+  type: 'type',
   category: 'category',
   tags: 'tags',
   status: 'status',
   score: 'score',
   priority: 'priority',
+  quality: 'quality',
+  relevance: 'relevance',
   sourceId: 'sourceId',
   sourceUrl: 'sourceUrl',
   publishedAt: 'publishedAt',
+  author: 'author',
+  contentHash: 'contentHash',
+  titleHash: 'titleHash',
+  duplicateOf: 'duplicateOf',
+  viewCount: 'viewCount',
+  shareCount: 'shareCount',
+  searchVector: 'searchVector',
+  keywords: 'keywords',
   metadata: 'metadata',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.TagScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  type: 'type',
+  description: 'description',
+  color: 'color',
+  parentId: 'parentId',
+  usageCount: 'usageCount',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -222,7 +247,8 @@ exports.Prisma.ContentScalarFieldEnum = {
 exports.Prisma.ContentTagScalarFieldEnum = {
   id: 'id',
   contentId: 'contentId',
-  tag: 'tag',
+  tagId: 'tagId',
+  relevance: 'relevance',
   createdAt: 'createdAt'
 };
 
@@ -273,6 +299,107 @@ exports.Prisma.SystemConfigScalarFieldEnum = {
   id: 'id',
   key: 'key',
   value: 'value',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ApiConfigurationScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  provider: 'provider',
+  baseUrl: 'baseUrl',
+  authType: 'authType',
+  status: 'status',
+  apiKey: 'apiKey',
+  token: 'token',
+  username: 'username',
+  password: 'password',
+  headerName: 'headerName',
+  rateLimit: 'rateLimit',
+  timeout: 'timeout',
+  retryAttempts: 'retryAttempts',
+  retryDelay: 'retryDelay',
+  headers: 'headers',
+  totalCalls: 'totalCalls',
+  successfulCalls: 'successfulCalls',
+  failedCalls: 'failedCalls',
+  lastCallAt: 'lastCallAt',
+  lastError: 'lastError',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ApiCallLogScalarFieldEnum = {
+  id: 'id',
+  configId: 'configId',
+  method: 'method',
+  endpoint: 'endpoint',
+  requestHeaders: 'requestHeaders',
+  requestBody: 'requestBody',
+  statusCode: 'statusCode',
+  responseHeaders: 'responseHeaders',
+  responseBody: 'responseBody',
+  duration: 'duration',
+  success: 'success',
+  errorMessage: 'errorMessage',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ContentVersionScalarFieldEnum = {
+  id: 'id',
+  contentId: 'contentId',
+  version: 'version',
+  title: 'title',
+  description: 'description',
+  contentText: 'contentText',
+  summary: 'summary',
+  tags: 'tags',
+  metadata: 'metadata',
+  changeType: 'changeType',
+  changeNote: 'changeNote',
+  changedBy: 'changedBy',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ContentAuditLogScalarFieldEnum = {
+  id: 'id',
+  contentId: 'contentId',
+  userId: 'userId',
+  action: 'action',
+  tableName: 'tableName',
+  recordId: 'recordId',
+  oldValues: 'oldValues',
+  newValues: 'newValues',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent',
+  sessionId: 'sessionId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ContentDuplicationScalarFieldEnum = {
+  id: 'id',
+  originalId: 'originalId',
+  duplicateId: 'duplicateId',
+  titleSimilarity: 'titleSimilarity',
+  contentSimilarity: 'contentSimilarity',
+  overallSimilarity: 'overallSimilarity',
+  detectionMethod: 'detectionMethod',
+  confidence: 'confidence',
+  status: 'status',
+  reviewedBy: 'reviewedBy',
+  reviewedAt: 'reviewedAt',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.SearchIndexScalarFieldEnum = {
+  id: 'id',
+  contentId: 'contentId',
+  titleTokens: 'titleTokens',
+  contentTokens: 'contentTokens',
+  keywords: 'keywords',
+  titleWeight: 'titleWeight',
+  contentWeight: 'contentWeight',
+  keywordWeight: 'keywordWeight',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -334,13 +461,34 @@ exports.SourceStatus = exports.$Enums.SourceStatus = {
   RATE_LIMITED: 'RATE_LIMITED'
 };
 
+exports.ContentType = exports.$Enums.ContentType = {
+  NEWS: 'NEWS',
+  ARTICLE: 'ARTICLE',
+  BLOG_POST: 'BLOG_POST',
+  PRESS_RELEASE: 'PRESS_RELEASE',
+  RESEARCH: 'RESEARCH',
+  ANNOUNCEMENT: 'ANNOUNCEMENT',
+  OTHER: 'OTHER'
+};
+
 exports.ContentStatus = exports.$Enums.ContentStatus = {
   RAW: 'RAW',
   PROCESSING: 'PROCESSING',
   PROCESSED: 'PROCESSED',
   REVIEWED: 'REVIEWED',
   PUBLISHED: 'PUBLISHED',
-  REJECTED: 'REJECTED'
+  REJECTED: 'REJECTED',
+  ARCHIVED: 'ARCHIVED',
+  DUPLICATE: 'DUPLICATE'
+};
+
+exports.TagType = exports.$Enums.TagType = {
+  CATEGORY: 'CATEGORY',
+  TECHNOLOGY: 'TECHNOLOGY',
+  COMPANY: 'COMPANY',
+  STOCK: 'STOCK',
+  TOPIC: 'TOPIC',
+  CUSTOM: 'CUSTOM'
 };
 
 exports.ReviewAction = exports.$Enums.ReviewAction = {
@@ -352,6 +500,21 @@ exports.ReviewAction = exports.$Enums.ReviewAction = {
   PRIORITY_LOWER: 'PRIORITY_LOWER'
 };
 
+exports.ApiAuthType = exports.$Enums.ApiAuthType = {
+  API_KEY: 'API_KEY',
+  BEARER_TOKEN: 'BEARER_TOKEN',
+  OAUTH: 'OAUTH',
+  BASIC_AUTH: 'BASIC_AUTH',
+  NONE: 'NONE'
+};
+
+exports.ApiConfigStatus = exports.$Enums.ApiConfigStatus = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE',
+  ERROR: 'ERROR',
+  RATE_LIMITED: 'RATE_LIMITED'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Account: 'Account',
@@ -360,12 +523,19 @@ exports.Prisma.ModelName = {
   PasswordResetToken: 'PasswordResetToken',
   Source: 'Source',
   Content: 'Content',
+  Tag: 'Tag',
   ContentTag: 'ContentTag',
   ContentReview: 'ContentReview',
   DailyDigest: 'DailyDigest',
   UserActivity: 'UserActivity',
   AITask: 'AITask',
-  SystemConfig: 'SystemConfig'
+  SystemConfig: 'SystemConfig',
+  ApiConfiguration: 'ApiConfiguration',
+  ApiCallLog: 'ApiCallLog',
+  ContentVersion: 'ContentVersion',
+  ContentAuditLog: 'ContentAuditLog',
+  ContentDuplication: 'ContentDuplication',
+  SearchIndex: 'SearchIndex'
 };
 
 /**
