@@ -16,6 +16,8 @@ export interface Content {
   sourceId: string;
   sourceUrl?: string;
   publishedAt?: string;
+  viewCount?: number;
+  shareCount?: number;
   metadata?: any;
   createdAt: string;
   updatedAt: string;
@@ -33,6 +35,11 @@ export interface ContentFilter {
   search?: string;
   startDate?: string;
   endDate?: string;
+  dateFrom?: string;
+  dateTo?: string;
+  sortBy?: 'publishedAt' | 'createdAt' | 'title' | 'score';
+  sortOrder?: 'asc' | 'desc';
+  excludeId?: string;
   page?: number;
   limit?: number;
 }
@@ -126,5 +133,25 @@ export const contentApi = {
   // 获取内容统计
   async getContentStats() {
     return await ApiService.get<ContentStats>('/api/content/stats');
+  },
+
+  // 增加浏览次数
+  async incrementViewCount(id: string) {
+    return await ApiService.post<{ message: string }>(`/api/content/${id}/view`, {});
+  },
+
+  // 增加分享次数
+  async incrementShareCount(id: string) {
+    return await ApiService.post<{ message: string }>(`/api/content/${id}/share`, {});
+  },
+
+  // 获取热门内容
+  async getTrendingContent(limit: number = 10) {
+    return await ApiService.get<Content[]>(`/api/content/trending?limit=${limit}`);
+  },
+
+  // 获取相关内容
+  async getRelatedContent(id: string, limit: number = 4) {
+    return await ApiService.get<Content[]>(`/api/content/${id}/related?limit=${limit}`);
   },
 };

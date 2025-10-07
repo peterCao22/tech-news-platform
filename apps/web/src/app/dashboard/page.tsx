@@ -21,7 +21,8 @@ import {
   Filter,
   Search,
   Menu,
-  X
+  X,
+  Key
 } from 'lucide-react';
 
 import { useAuthStore } from '@/stores/auth.store';
@@ -171,6 +172,16 @@ export default function DashboardPage() {
                   内容管理
                 </Link>
                 
+                {user?.role === 'ADMIN' && (
+                  <Link
+                    href="/api-configs"
+                    className="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                  >
+                    <Key className="text-gray-400 group-hover:text-gray-500 mr-3 flex-shrink-0 h-5 w-5" />
+                    API配置管理
+                  </Link>
+                )}
+                
                 <Link
                   href="/profile"
                   className="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
@@ -267,22 +278,43 @@ export default function DashboardPage() {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle>推荐阅读</CardTitle>
+                    <CardTitle>今日热门</CardTitle>
                     <CardDescription>
-                      基于您的兴趣为您推荐的文章
+                      最受关注的科技新闻
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
-                      {[1, 2, 3].map((item) => (
-                        <div key={item} className="flex space-x-4">
-                          <div className="w-16 h-16 bg-gray-200 rounded-lg flex-shrink-0"></div>
+                      {[
+                        {
+                          title: "OpenAI发布GPT-5，性能提升显著",
+                          source: "TechCrunch",
+                          time: "2小时前",
+                          category: "AI技术"
+                        },
+                        {
+                          title: "苹果公司发布全新MacBook Pro系列",
+                          source: "Apple Insider",
+                          time: "4小时前",
+                          category: "硬件"
+                        },
+                        {
+                          title: "特斯拉自动驾驶技术获得重大突破",
+                          source: "Electrek",
+                          time: "6小时前",
+                          category: "自动驾驶"
+                        }
+                      ].map((item, index) => (
+                        <div key={index} className="flex space-x-4 hover:bg-gray-50 p-2 rounded-lg cursor-pointer transition-colors">
+                          <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex-shrink-0 flex items-center justify-center">
+                            <TrendingUp className="h-6 w-6 text-white" />
+                          </div>
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-gray-900 line-clamp-2">
-                              人工智能在医疗领域的最新突破和应用前景
+                            <p className="text-sm font-medium text-gray-900 line-clamp-2 mb-1">
+                              {item.title}
                             </p>
-                            <p className="text-xs text-gray-500 mt-1">
-                              2小时前 · AI科技
+                            <p className="text-xs text-gray-500">
+                              {item.time} · {item.source} · {item.category}
                             </p>
                           </div>
                         </div>
