@@ -44,7 +44,8 @@ export class SourceController {
       if (!source) {
         return res.status(404).json({
           success: false,
-          error: { code: 'SOURCE_NOT_FOUND', message: 'Source not found' }
+          code: 'SOURCE_NOT_FOUND',
+          message: 'Source not found'
         });
       }
       
@@ -130,7 +131,8 @@ export class SourceController {
       if (!existingSource) {
         return res.status(404).json({
           success: false,
-          error: { code: 'SOURCE_NOT_FOUND', message: 'Source not found' }
+          code: 'SOURCE_NOT_FOUND',
+          message: 'Source not found'
         });
       }
 
@@ -176,7 +178,8 @@ export class SourceController {
       if (!existingSource) {
         return res.status(404).json({
           success: false,
-          error: { code: 'SOURCE_NOT_FOUND', message: 'Source not found' }
+          code: 'SOURCE_NOT_FOUND',
+          message: 'Source not found'
         });
       }
 
@@ -205,17 +208,16 @@ export class SourceController {
       if (!source) {
         return res.status(404).json({
           success: false,
-          error: { code: 'SOURCE_NOT_FOUND', message: 'Source not found' }
+          code: 'SOURCE_NOT_FOUND',
+          message: 'Source not found'
         });
       }
 
       if (source.type !== SourceType.RSS) {
         return res.status(400).json({
           success: false,
-          error: { 
-            code: 'INVALID_SOURCE_TYPE', 
-            message: 'Only RSS sources can be fetched manually' 
-          }
+          code: 'INVALID_SOURCE_TYPE',
+          message: 'Only RSS sources can be fetched manually'
         });
       }
 
@@ -317,7 +319,8 @@ export class SourceController {
       if (!source) {
         return res.status(404).json({
           success: false,
-          error: { code: 'SOURCE_NOT_FOUND', message: 'Source not found' }
+          code: 'SOURCE_NOT_FOUND',
+          message: 'Source not found'
         });
       }
 

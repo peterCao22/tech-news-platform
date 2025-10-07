@@ -2,7 +2,7 @@
 // 处理用户资料管理和用户相关业务逻辑
 
 import { Request, Response } from 'express';
-import { UserRepository } from '@tech-news-platform/database';
+import { UserRepository, User } from '@tech-news-platform/database';
 import { logger } from '../utils/logger';
 
 export class UserController {
@@ -11,7 +11,7 @@ export class UserController {
     try {
       const userId = req.user!.id;
 
-      const user = await UserRepository.findById(userId);
+      const user = await UserRepository.findById(userId) as User | null;
       if (!user) {
         res.status(404).json({
           success: false,
@@ -232,7 +232,7 @@ export class UserController {
     try {
       const { userId } = req.params;
 
-      const user = await UserRepository.findById(userId);
+      const user = await UserRepository.findById(userId) as User | null;
       if (!user) {
         res.status(404).json({
           success: false,
@@ -259,7 +259,7 @@ export class UserController {
             language: user.language,
             createdAt: user.createdAt,
             lastLoginAt: user.lastLoginAt,
-            accounts: user.accounts,
+            // accounts: user.accounts, // 暂时注释掉，用户模型中没有accounts字段
           },
         },
       });

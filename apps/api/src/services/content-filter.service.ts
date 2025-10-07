@@ -128,8 +128,8 @@ export class ContentFilterService {
         }
       ],
       
-      minIncludeScore: 0.1, // 至少10%匹配度才包含（更宽松）
-      maxExcludeScore: 0.3  // 超过30%排除匹配度就过滤掉（更宽松）
+      minIncludeScore: 0.1, // 至少10分（1个关键词匹配）才包含
+      maxExcludeScore: 0.3  // 超过30分排除匹配度就过滤掉
     };
   }
 
@@ -193,21 +193,22 @@ export class ContentFilterService {
    * 计算匹配分数
    */
   private calculateScore(text: string, rules: FilterRule[]): number {
-    let totalScore = 0;
     let matchCount = 0;
+    const matchedKeywords = new Set<string>();
 
     for (const rule of rules) {
       for (const keyword of rule.keywords) {
         if (text.includes(keyword.toLowerCase())) {
-          totalScore += rule.weight;
+          matchedKeywords.add(keyword);
           matchCount++;
         }
       }
     }
 
-    // 返回匹配关键词的比例
-    const totalKeywords = rules.reduce((sum, rule) => sum + rule.keywords.length, 0);
-    return totalKeywords > 0 ? matchCount / totalKeywords : 0;
+    // 新的计算方式：基于匹配强度而不是比例
+    // 每匹配一个关键词得10分，最高100分
+    const rawScore = Math.min(matchCount * 10, 100);
+    return rawScore / 100; // 转换为0-1的分数
   }
 
   /**

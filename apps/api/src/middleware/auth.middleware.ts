@@ -3,7 +3,7 @@
 
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import { UserRepository } from '@tech-news-platform/database';
+import { UserRepository, User } from '@tech-news-platform/database';
 import { logger } from '../utils/logger';
 
 // 扩展Request类型以包含用户信息
@@ -63,7 +63,7 @@ export const authenticateToken = async (
     const decoded = jwt.verify(token, jwtSecret) as JWTPayload;
 
     // 从数据库获取最新用户信息
-    const user = await UserRepository.findById(decoded.userId);
+    const user = await UserRepository.findById(decoded.userId) as User | null;
     if (!user) {
       res.status(401).json({
         success: false,
@@ -142,7 +142,7 @@ export const optionalAuth = async (
     }
 
     const decoded = jwt.verify(token, jwtSecret) as JWTPayload;
-    const user = await UserRepository.findById(decoded.userId);
+    const user = await UserRepository.findById(decoded.userId) as User | null;
 
     if (user && user.status === 'ACTIVE') {
       req.user = {
@@ -292,7 +292,8 @@ export class AuthMiddleware {
       if (userLevel < requiredLevel) {
         return res.status(403).json({
           success: false,
-          error: { code: 'INSUFFICIENT_PERMISSIONS', message: 'Insufficient permissions' }
+          code: 'INSUFFICIENT_PERMISSIONS',
+          message: 'Insufficient permissions'
         });
       }
 
@@ -300,3 +301,10 @@ export class AuthMiddleware {
     };
   };
 }
+
+// 导出便捷函数
+export const authenticate = authenticateToken;
+export const authorize = (roles: string[]) => {
+  const authMiddleware = new AuthMiddleware();
+  return authMiddleware.authorize(roles);
+};

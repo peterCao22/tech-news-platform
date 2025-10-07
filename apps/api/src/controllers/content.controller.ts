@@ -69,7 +69,8 @@ export class ContentController {
       if (!content) {
         return res.status(404).json({
           success: false,
-          error: { code: 'CONTENT_NOT_FOUND', message: 'Content not found' }
+          code: 'CONTENT_NOT_FOUND',
+          message: 'Content not found'
         });
       }
       
@@ -102,7 +103,8 @@ export class ContentController {
       if (!existingContent) {
         return res.status(404).json({
           success: false,
-          error: { code: 'CONTENT_NOT_FOUND', message: 'Content not found' }
+          code: 'CONTENT_NOT_FOUND',
+          message: 'Content not found'
         });
       }
 
@@ -139,7 +141,8 @@ export class ContentController {
       if (!existingContent) {
         return res.status(404).json({
           success: false,
-          error: { code: 'CONTENT_NOT_FOUND', message: 'Content not found' }
+          code: 'CONTENT_NOT_FOUND',
+          message: 'Content not found'
         });
       }
 

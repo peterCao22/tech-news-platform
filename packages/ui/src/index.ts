@@ -10,6 +10,7 @@ export {
   CardContent 
 } from "./components/card";
 export { Checkbox, type CheckboxProps } from "./components/checkbox";
+export { Select, type SelectProps } from "./components/select";
 
 // Utilities
 export { cn } from "./lib/utils";

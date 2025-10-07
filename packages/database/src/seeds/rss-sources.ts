@@ -164,19 +164,6 @@ export const defaultRSSSources = [
       updateFrequency: 'daily'
     }
   },
-  {
-    name: 'CSDN',
-    type: SourceType.RSS,
-    url: 'https://blog.csdn.net/rss/home',
-    status: SourceStatus.ACTIVE,
-    config: {
-      description: '中国专业IT社区',
-      category: 'programming',
-      language: 'zh',
-      updateFrequency: 'hourly'
-    }
-  },
-
   // AI和机器学习专门源
   {
     name: 'AI News - MIT Technology Review',

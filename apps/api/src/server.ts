@@ -21,7 +21,9 @@ import userRoutes from './routes/user.routes';
 import healthRoutes from './routes/health.routes';
 import { sourceRoutes } from './routes/source.routes';
 import { contentRoutes } from './routes/content.routes';
+import contentItemRoutes from './routes/content-item.routes';
 import { contentFilterRoutes } from './routes/content-filter.routes';
+import apiConfigRoutes from './routes/api-configuration.routes';
 
 // 加载环境变量
 dotenv.config({ path: '../../.env' });
@@ -77,7 +79,9 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/sources', sourceRoutes);
 app.use('/api/content', contentRoutes);
+app.use('/api/content-items', contentItemRoutes);
 app.use('/api/content-filter', contentFilterRoutes);
+app.use('/api/api-configs', apiConfigRoutes);
 
 // 404 处理
 app.use(notFoundHandler);

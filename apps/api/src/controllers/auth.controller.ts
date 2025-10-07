@@ -2,10 +2,11 @@
 // 处理所有认证相关的业务逻辑
 
 import { Request, Response } from 'express';
-import { 
-  UserRepository, 
+import {
+  UserRepository,
   PasswordResetRepository,
-  CreateUserInput 
+  CreateUserInput,
+  User
 } from '@tech-news-platform/database';
 import { 
   generateToken, 
@@ -22,7 +23,7 @@ export class AuthController {
       const { email, password, name, firstName, lastName } = req.body;
 
       // 检查邮箱是否已存在
-      const existingUser = await UserRepository.findByEmail(email);
+      const existingUser = await UserRepository.findByEmail(email) as User | null;
       if (existingUser) {
         res.status(409).json({
           success: false,
@@ -187,7 +188,7 @@ export class AuthController {
         return;
       }
 
-      const user = await UserRepository.findById(decoded.userId);
+      const user = await UserRepository.findById(decoded.userId) as User | null;
       if (!user || user.status !== 'ACTIVE') {
         res.status(401).json({
           success: false,
@@ -248,7 +249,7 @@ export class AuthController {
     try {
       const { email } = req.body;
 
-      const user = await UserRepository.findByEmail(email);
+      const user = await UserRepository.findByEmail(email) as User | null;
       if (!user) {
         res.status(404).json({
           success: false,
@@ -289,7 +290,7 @@ export class AuthController {
     try {
       const { email } = req.body;
 
-      const user = await UserRepository.findByEmail(email);
+      const user = await UserRepository.findByEmail(email) as User | null;
       if (!user) {
         // 为了安全，不透露用户是否存在
         res.json({
@@ -373,7 +374,7 @@ export class AuthController {
       const userId = req.user!.id;
 
       // 验证当前密码
-      const user = await UserRepository.findById(userId);
+      const user = await UserRepository.findById(userId) as User | null;
       if (!user) {
         res.status(404).json({
           success: false,
@@ -419,7 +420,7 @@ export class AuthController {
     try {
       const userId = req.user!.id;
 
-      const user = await UserRepository.findById(userId);
+      const user = await UserRepository.findById(userId) as User | null;
       if (!user) {
         res.status(404).json({
           success: false,
@@ -466,7 +467,7 @@ export class AuthController {
     try {
       const { email } = req.body;
 
-      const existingUser = await UserRepository.findByEmail(email);
+      const existingUser = await UserRepository.findByEmail(email) as User | null;
 
       res.json({
         success: true,

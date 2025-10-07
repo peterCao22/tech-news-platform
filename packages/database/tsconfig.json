@@ -1,10 +1,24 @@
 {
-  "extends": "@tech-news-platform/config/tsconfig/base.json",
   "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": false,
+    "esModuleInterop": true,
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "incremental": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
     "outDir": "dist",
     "rootDir": "src",
-    "composite": true,
-    "noEmit": false
+    "composite": true
   },
   "include": [
     "src/**/*"

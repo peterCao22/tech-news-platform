@@ -23,6 +23,9 @@ const createPrismaClient = () => {
 // 在开发环境中复用客户端实例，避免热重载时创建过多连接
 export const db = globalThis.__prisma ?? createPrismaClient();
 
+// 导出prisma客户端实例（别名）
+export const prisma = db;
+
 if (process.env.NODE_ENV !== 'production') {
   globalThis.__prisma = db;
 }
@@ -63,7 +66,10 @@ export type {
   DailyDigest,
   UserActivity,
   AITask,
-  SystemConfig
+  SystemConfig,
+  ApiConfiguration,
+  ApiCallLog,
+  Prisma
 } from './generated';
 
 // 导出枚举（作为值）
@@ -73,5 +79,7 @@ export {
   SourceType,
   SourceStatus,
   ContentStatus,
-  ReviewAction
+  ReviewAction,
+  ApiConfigStatus,
+  ApiAuthType
 } from './generated';

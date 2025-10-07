@@ -68,7 +68,7 @@ export class RSSService {
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error);
       logger.error(`解析RSS源失败: ${url}`, { error: errorMessage });
-      throw new Error(`Failed to parse RSS feed: ${errorMessage}`);
+      throw new Error(`RSS解析失败: ${errorMessage}`);
     }
   }
 
@@ -167,18 +167,24 @@ export class RSSService {
       const existingUrls = new Set(recentContent.map(c => c.url).filter(Boolean));
       const existingTitles = new Set(recentContent.map(c => c.title.toLowerCase()));
 
+      logger.info(`去重检查 [${source.name}]: 48小时内已有${recentContent.length}条内容, URL集合${existingUrls.size}个, 标题集合${existingTitles.size}个`);
+
       // 第一步：去重过滤
+      let urlDuplicates = 0;
+      let titleDuplicates = 0;
       const deduplicatedItems = feed.items.filter(item => {
         if (item.link && existingUrls.has(item.link)) {
+          urlDuplicates++;
           return false;
         }
         if (item.title && existingTitles.has(item.title.toLowerCase())) {
+          titleDuplicates++;
           return false;
         }
         return true;
       });
 
-      logger.info(`去重后的内容数量: ${deduplicatedItems.length}`);
+      logger.info(`去重结果 [${source.name}]: URL重复${urlDuplicates}条, 标题重复${titleDuplicates}条, 去重后${deduplicatedItems.length}条`);
 
       // 第二步：内容质量过滤
       const contentFilterResults = contentFilterService.filterContentBatch(
@@ -191,12 +197,7 @@ export class RSSService {
 
       // 获取过滤统计
       const filterStats = contentFilterService.getFilterStats(contentFilterResults);
-      logger.info(`内容过滤统计`, {
-        source: source.name,
-        total: filterStats.total,
-        filtered: filterStats.filtered,
-        kept: filterStats.kept,
-        filterRate: `${filterStats.filterRate.toFixed(1)}%`,
+      logger.info(`内容过滤统计 [${source.name}]: 总数${filterStats.total}, 过滤${filterStats.filtered}, 保留${filterStats.kept}, 过滤率${filterStats.filterRate.toFixed(1)}%`, {
         reasons: filterStats.reasons
       });
 
@@ -204,12 +205,10 @@ export class RSSService {
       const newItems = deduplicatedItems.filter((_, index) => {
         const filterResult = contentFilterResults[index];
         if (filterResult.shouldFilter) {
-          logger.debug(`过滤内容: ${deduplicatedItems[index].title}`, {
-            reason: filterResult.reason,
-            includeScore: `${(filterResult.includeScore * 100).toFixed(1)}%`,
-            excludeScore: `${(filterResult.excludeScore * 100).toFixed(1)}%`
-          });
+          logger.info(`❌ 过滤: ${deduplicatedItems[index].title} | 包含:${(filterResult.includeScore * 100).toFixed(1)}% 排除:${(filterResult.excludeScore * 100).toFixed(1)}% | ${filterResult.reason}`);
           return false;
+        } else {
+          logger.info(`✅ 保留: ${deduplicatedItems[index].title} | 包含:${(filterResult.includeScore * 100).toFixed(1)}% 排除:${(filterResult.excludeScore * 100).toFixed(1)}% | ${filterResult.reason}`);
         }
         return true;
       });
@@ -279,8 +278,10 @@ export class RSSService {
    */
   async fetchAllActiveSources(): Promise<{
     totalSources: number;
+    successfulSources: number;
     successCount: number;
     totalNewItems: number;
+    results: Array<{ sourceId: string; success: boolean; newItemsCount: number; error?: string }>;
     errors: Array<{ sourceId: string; error: string }>;
   }> {
     logger.info('开始批量处理所有活跃RSS源');
@@ -290,8 +291,10 @@ export class RSSService {
 
     const results = {
       totalSources: activeSources.length,
+      successfulSources: 0,
       successCount: 0,
       totalNewItems: 0,
+      results: [] as Array<{ sourceId: string; success: boolean; newItemsCount: number; error?: string }>,
       errors: [] as Array<{ sourceId: string; error: string }>,
     };
 
@@ -318,17 +321,36 @@ export class RSSService {
           
           if (success) {
             results.successCount++;
+            results.successfulSources++;
             results.totalNewItems += newItemsCount;
+            results.results.push({
+              sourceId: source.id,
+              success: true,
+              newItemsCount,
+            });
           } else {
+            results.results.push({
+              sourceId: source.id,
+              success: false,
+              newItemsCount: 0,
+              error: error || 'Unknown error',
+            });
             results.errors.push({
               sourceId: source.id,
               error: error || 'Unknown error',
             });
           }
         } else {
+          const errorMsg = result.reason?.message || 'Promise rejected';
+          results.results.push({
+            sourceId: source.id,
+            success: false,
+            newItemsCount: 0,
+            error: errorMsg,
+          });
           results.errors.push({
             sourceId: source.id,
-            error: result.reason?.message || 'Promise rejected',
+            error: errorMsg,
           });
         }
       });
@@ -354,20 +376,36 @@ export class RSSService {
    */
   async validateRSSUrl(url: string): Promise<{
     valid: boolean;
+    feedInfo?: {
+      title?: string;
+      itemCount: number;
+    };
     title?: string;
     description?: string;
     itemCount?: number;
     error?: string;
+    warning?: string;
   }> {
     try {
       const feed = await this.parseFeed(url);
       
-      return {
+      const result = {
         valid: true,
         title: feed.title,
         description: feed.description,
         itemCount: feed.items.length,
+        feedInfo: {
+          title: feed.title,
+          itemCount: feed.items.length,
+        },
       };
+
+      // 如果RSS源没有内容项目，添加警告
+      if (feed.items.length === 0) {
+        (result as any).warning = 'RSS源当前没有内容项目';
+      }
+
+      return result;
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error);
       return {
