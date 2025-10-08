@@ -28,6 +28,7 @@ import alphaVantageRoutes from './routes/alpha-vantage.routes';
 import finnhubRoutes from './routes/finnhub.routes';
 import polygonRoutes from './routes/polygon.routes';
 import aiRoutes from './routes/ai.routes';
+import geminiNewsRoutes from './routes/gemini-news.routes';
 
 // 加载环境变量
 dotenv.config({ path: '../../.env' });
@@ -94,6 +95,7 @@ app.use('/api/alpha-vantage', alphaVantageRoutes);
 app.use('/api/finnhub', finnhubRoutes);
 app.use('/api/polygon', polygonRoutes);
 app.use('/api/ai', aiRoutes);
+app.use('/api/gemini-news', geminiNewsRoutes);
 
 // 404 处理
 app.use(notFoundHandler);

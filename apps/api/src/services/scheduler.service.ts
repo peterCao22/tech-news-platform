@@ -4,6 +4,7 @@ import { rssService } from './rss.service';
 import { alphaVantageService } from './alpha-vantage.service';
 import { finnhubService } from './finnhub.service';
 import { polygonService } from './polygon.service';
+import { geminiNewsService } from './gemini-news.service';
 
 export class SchedulerService {
   private tasks: Map<string, cron.ScheduledTask> = new Map();
@@ -25,6 +26,9 @@ export class SchedulerService {
 
     // Polygon 数据获取任务 - 每45分钟执行一次
     this.schedulePolygonFetch();
+
+    // Gemini 新闻获取任务 - 每6小时执行一次
+    this.scheduleGeminiNewsFetch();
 
     // 清理任务 - 每天凌晨2点执行
     this.scheduleCleanup();
@@ -421,6 +425,111 @@ export class SchedulerService {
    */
   public static validateCronExpression(expression: string): boolean {
     return cron.validate(expression);
+  }
+
+  /**
+   * 调度Gemini新闻获取任务
+   */
+  private scheduleGeminiNewsFetch(): void {
+    const taskName = 'gemini-news-fetch';
+    const cronExpression = process.env.NODE_ENV === 'development'
+      ? '0 */6 * * * *'  // 开发环境每6小时
+      : '0 8,14,20 * * *'; // 生产环境每天8点、14点、20点
+
+    const task = cron.schedule(cronExpression, async () => {
+      logger.info('开始执行Gemini新闻获取任务');
+      try {
+        const startTime = Date.now();
+        
+        // 并行获取所有类型的新闻
+        const [techResult, aiResult, stockResult] = await Promise.all([
+          geminiNewsService.fetchDailyNews('tech_news'),
+          geminiNewsService.fetchDailyNews('ai_news'),
+          geminiNewsService.fetchDailyNews('stock_news')
+        ]);
+        
+        const duration = Date.now() - startTime;
+        const totalFetched = techResult.totalFetched + aiResult.totalFetched + stockResult.totalFetched;
+        const totalSaved = techResult.totalSaved + aiResult.totalSaved + stockResult.totalSaved;
+        const totalErrors = techResult.errors.length + aiResult.errors.length + stockResult.errors.length;
+        
+        logger.info('Gemini新闻获取任务完成', {
+          duration: `${duration}ms`,
+          totalFetched,
+          totalSaved,
+          totalErrors,
+          techNews: {
+            fetched: techResult.totalFetched,
+            saved: techResult.totalSaved,
+            errors: techResult.errors.length
+          },
+          aiNews: {
+            fetched: aiResult.totalFetched,
+            saved: aiResult.totalSaved,
+            errors: aiResult.errors.length
+          },
+          stockNews: {
+            fetched: stockResult.totalFetched,
+            saved: stockResult.totalSaved,
+            errors: stockResult.errors.length
+          }
+        });
+
+        // 记录错误
+        const allErrors = [...techResult.errors, ...aiResult.errors, ...stockResult.errors];
+        if (allErrors.length > 0) {
+          logger.warn('Gemini新闻获取任务中发现错误', {
+            errorCount: allErrors.length,
+            errors: allErrors.slice(0, 5) // 只记录前5个错误
+          });
+        }
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        logger.error('Gemini新闻获取任务执行失败', { error: errorMessage });
+      }
+    }, {
+      timezone: 'Asia/Shanghai',
+    });
+
+    this.tasks.set(taskName, task);
+    task.start();
+    logger.info(`Gemini新闻获取任务已启动，执行频率: ${cronExpression}`);
+  }
+
+  /**
+   * 手动触发Gemini新闻获取
+   */
+  public async triggerGeminiNewsFetch(queryType?: 'tech_news' | 'ai_news' | 'stock_news'): Promise<any> {
+    logger.info('手动触发Gemini新闻获取任务', { queryType });
+    try {
+      if (queryType) {
+        const result = await geminiNewsService.fetchDailyNews(queryType);
+        logger.info('手动Gemini新闻获取任务完成', { queryType, result });
+        return result;
+      } else {
+        // 获取所有类型的新闻
+        const [techResult, aiResult, stockResult] = await Promise.all([
+          geminiNewsService.fetchDailyNews('tech_news'),
+          geminiNewsService.fetchDailyNews('ai_news'),
+          geminiNewsService.fetchDailyNews('stock_news')
+        ]);
+        
+        const result = {
+          techNews: techResult,
+          aiNews: aiResult,
+          stockNews: stockResult,
+          totalFetched: techResult.totalFetched + aiResult.totalFetched + stockResult.totalFetched,
+          totalSaved: techResult.totalSaved + aiResult.totalSaved + stockResult.totalSaved
+        };
+        
+        logger.info('手动Gemini新闻获取任务完成', result);
+        return result;
+      }
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      logger.error('手动Gemini新闻获取任务失败', { error: errorMessage });
+      throw error;
+    }
   }
 }
 
