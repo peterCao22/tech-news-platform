@@ -380,6 +380,83 @@ model SearchIndex {
   @@map("search_indexes")
 }
 
+// Story 2.1: AI Tools Integration Framework
+
+model AiServiceConfig {
+  id            String            @id @default(cuid())
+  provider      AiProvider
+  name          String            @db.VarChar(255)
+  apiKey        String            @map("api_key")
+  model         String            @db.VarChar(100)
+  maxTokens     Int               @default(1000) @map("max_tokens")
+  temperature   Decimal           @default(0.7) @map("temperature") @db.Decimal(3, 2)
+  isActive      Boolean           @default(true) @map("is_active")
+  createdAt     DateTime          @default(now()) @map("created_at")
+  updatedAt     DateTime          @updatedAt @map("updated_at")
+  usageLogs     AiUsageLog[]
+  serviceStatus AiServiceStatus[]
+
+  @@map("ai_service_configs")
+}
+
+model AiUsageLog {
+  id             String          @id @default(cuid())
+  configId       String          @map("config_id")
+  provider       AiProvider
+  operation      String          @db.VarChar(100)
+  inputTokens    Int             @map("input_tokens")
+  outputTokens   Int             @map("output_tokens")
+  totalTokens    Int             @map("total_tokens")
+  costUsd        Decimal         @map("cost_usd") @db.Decimal(10, 6)
+  responseTimeMs Int             @map("response_time_ms")
+  success        Boolean
+  errorMessage   String?         @map("error_message")
+  createdAt      DateTime        @default(now()) @map("created_at")
+  config         AiServiceConfig @relation(fields: [configId], references: [id], onDelete: Cascade)
+
+  @@index([provider])
+  @@index([operation])
+  @@index([success])
+  @@index([createdAt])
+  @@map("ai_usage_logs")
+}
+
+model AiServiceStatus {
+  id             String          @id @default(cuid())
+  configId       String          @map("config_id")
+  provider       AiProvider
+  isHealthy      Boolean         @map("is_healthy")
+  lastCheckAt    DateTime        @map("last_check_at")
+  errorMessage   String?         @map("error_message")
+  responseTimeMs Int?            @map("response_time_ms")
+  createdAt      DateTime        @default(now()) @map("created_at")
+  config         AiServiceConfig @relation(fields: [configId], references: [id], onDelete: Cascade)
+
+  @@index([provider])
+  @@index([isHealthy])
+  @@index([lastCheckAt])
+  @@map("ai_service_status")
+}
+
+model GeminiNewsQuery {
+  id           String   @id @default(cuid())
+  queryType    String   @map("query_type") @db.VarChar(50)
+  prompt       String
+  response     String?
+  totalFetched Int      @default(0) @map("total_fetched")
+  totalSaved   Int      @default(0) @map("total_saved")
+  success      Boolean
+  errorMessage String?  @map("error_message")
+  tokensUsed   Int?     @map("tokens_used")
+  costUsd      Decimal? @map("cost_usd") @db.Decimal(10, 6)
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@index([queryType])
+  @@index([success])
+  @@index([createdAt])
+  @@map("gemini_news_queries")
+}
+
 enum UserRole {
   USER
   EDITOR
@@ -460,4 +537,11 @@ enum ApiAuthType {
   OAUTH
   BASIC_AUTH
   NONE
+}
+
+enum AiProvider {
+  GEMINI
+  CLAUDE
+  OPENAI
+  PERPLEXITY
 }

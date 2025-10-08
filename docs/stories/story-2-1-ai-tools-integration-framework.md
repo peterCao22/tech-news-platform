@@ -143,14 +143,16 @@ class AIServiceManager {
 
 ## 数据库设计
 
-### AI服务配置表
+✅ **已完成** - 所有表已在数据库中创建并验证
+
+### AI服务配置表 (ai_service_configs)
 
 ```sql
 CREATE TABLE ai_service_configs (
   id VARCHAR(255) PRIMARY KEY,
-  provider VARCHAR(50) NOT NULL, -- 'gemini' | 'claude'
+  provider VARCHAR(50) NOT NULL, -- 'GEMINI' | 'CLAUDE' | 'OPENAI' | 'PERPLEXITY'
   name VARCHAR(255) NOT NULL,
-  api_key_encrypted TEXT NOT NULL,
+  api_key TEXT NOT NULL, -- 加密存储
   model VARCHAR(100) NOT NULL,
   max_tokens INTEGER DEFAULT 1000,
   temperature DECIMAL(3,2) DEFAULT 0.7,
@@ -160,11 +162,12 @@ CREATE TABLE ai_service_configs (
 );
 ```
 
-### AI调用记录表
+### AI调用记录表 (ai_usage_logs)
 
 ```sql
 CREATE TABLE ai_usage_logs (
   id VARCHAR(255) PRIMARY KEY,
+  config_id VARCHAR(255) NOT NULL REFERENCES ai_service_configs(id),
   provider VARCHAR(50) NOT NULL,
   operation VARCHAR(100) NOT NULL, -- 'generate_text', 'summarize', 'analyze'
   input_tokens INTEGER NOT NULL,
@@ -178,16 +181,35 @@ CREATE TABLE ai_usage_logs (
 );
 ```
 
-### AI服务状态表
+### AI服务状态表 (ai_service_status)
 
 ```sql
 CREATE TABLE ai_service_status (
   id VARCHAR(255) PRIMARY KEY,
+  config_id VARCHAR(255) NOT NULL REFERENCES ai_service_configs(id),
   provider VARCHAR(50) NOT NULL,
   is_healthy BOOLEAN NOT NULL,
   last_check_at TIMESTAMP NOT NULL,
   error_message TEXT,
   response_time_ms INTEGER,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+### Gemini新闻查询表 (gemini_news_queries)
+
+```sql
+CREATE TABLE gemini_news_queries (
+  id VARCHAR(255) PRIMARY KEY,
+  query_type VARCHAR(50) NOT NULL, -- 'tech_news' | 'ai_news' | 'stock_news'
+  prompt TEXT NOT NULL,
+  response TEXT,
+  total_fetched INTEGER DEFAULT 0,
+  total_saved INTEGER DEFAULT 0,
+  success BOOLEAN NOT NULL,
+  error_message TEXT,
+  tokens_used INTEGER,
+  cost_usd DECIMAL(10,6),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 ```

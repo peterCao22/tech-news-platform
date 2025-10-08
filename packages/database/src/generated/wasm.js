@@ -404,6 +404,59 @@ exports.Prisma.SearchIndexScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.AiServiceConfigScalarFieldEnum = {
+  id: 'id',
+  provider: 'provider',
+  name: 'name',
+  apiKey: 'apiKey',
+  model: 'model',
+  maxTokens: 'maxTokens',
+  temperature: 'temperature',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.AiUsageLogScalarFieldEnum = {
+  id: 'id',
+  configId: 'configId',
+  provider: 'provider',
+  operation: 'operation',
+  inputTokens: 'inputTokens',
+  outputTokens: 'outputTokens',
+  totalTokens: 'totalTokens',
+  costUsd: 'costUsd',
+  responseTimeMs: 'responseTimeMs',
+  success: 'success',
+  errorMessage: 'errorMessage',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.AiServiceStatusScalarFieldEnum = {
+  id: 'id',
+  configId: 'configId',
+  provider: 'provider',
+  isHealthy: 'isHealthy',
+  lastCheckAt: 'lastCheckAt',
+  errorMessage: 'errorMessage',
+  responseTimeMs: 'responseTimeMs',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.GeminiNewsQueryScalarFieldEnum = {
+  id: 'id',
+  queryType: 'queryType',
+  prompt: 'prompt',
+  response: 'response',
+  totalFetched: 'totalFetched',
+  totalSaved: 'totalSaved',
+  success: 'success',
+  errorMessage: 'errorMessage',
+  tokensUsed: 'tokensUsed',
+  costUsd: 'costUsd',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -515,6 +568,13 @@ exports.ApiConfigStatus = exports.$Enums.ApiConfigStatus = {
   RATE_LIMITED: 'RATE_LIMITED'
 };
 
+exports.AiProvider = exports.$Enums.AiProvider = {
+  GEMINI: 'GEMINI',
+  CLAUDE: 'CLAUDE',
+  OPENAI: 'OPENAI',
+  PERPLEXITY: 'PERPLEXITY'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Account: 'Account',
@@ -535,7 +595,11 @@ exports.Prisma.ModelName = {
   ContentVersion: 'ContentVersion',
   ContentAuditLog: 'ContentAuditLog',
   ContentDuplication: 'ContentDuplication',
-  SearchIndex: 'SearchIndex'
+  SearchIndex: 'SearchIndex',
+  AiServiceConfig: 'AiServiceConfig',
+  AiUsageLog: 'AiUsageLog',
+  AiServiceStatus: 'AiServiceStatus',
+  GeminiNewsQuery: 'GeminiNewsQuery'
 };
 
 /**
