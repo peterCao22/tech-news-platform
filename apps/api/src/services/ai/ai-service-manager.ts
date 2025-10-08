@@ -45,15 +45,26 @@ export class AIServiceManager {
         model: process.env.GEMINI_MODEL || 'gemini-1.5-pro',
         maxTokens: parseInt(process.env.GEMINI_MAX_TOKENS || '1000'),
         temperature: parseFloat(process.env.GEMINI_TEMPERATURE || '0.7'),
-        timeout: parseInt(process.env.GEMINI_TIMEOUT || '30000')
+        timeout: parseInt(process.env.GEMINI_TIMEOUT || '30000'),
+        // Vertex AI 配置
+        projectId: process.env.GOOGLE_PROJECT_ID,
+        location: process.env.GOOGLE_LOCATION || 'us-central1'
       };
 
-      if (geminiConfig.apiKey) {
+      // 检查是否配置了 API Key 或 Vertex AI
+      const hasApiKey = geminiConfig.apiKey && geminiConfig.apiKey.length > 0;
+      const hasVertexConfig = geminiConfig.projectId && geminiConfig.projectId.length > 0;
+
+      if (hasApiKey || hasVertexConfig) {
         const geminiProvider = new GeminiProvider(geminiConfig);
         this.providers.set('gemini', geminiProvider);
-        logger.info('Gemini提供商已初始化');
+        logger.info('Gemini提供商已初始化', {
+          mode: hasVertexConfig ? 'Vertex AI' : 'API Key',
+          projectId: geminiConfig.projectId || 'N/A',
+          location: geminiConfig.location || 'N/A'
+        });
       } else {
-        logger.warn('Gemini API密钥未配置');
+        logger.warn('Gemini API密钥或Vertex AI配置未设置');
       }
 
       // 初始化Claude提供商
@@ -246,7 +257,7 @@ export class AIServiceManager {
 
           // 如果有限流延迟，等待指定时间
           if (error.retryAfter) {
-            await new Promise(resolve => setTimeout(resolve, error.retryAfter * 1000));
+            await new Promise(resolve => setTimeout(resolve, (error.retryAfter || 0) * 1000));
           }
 
           // 切换到备用提供商

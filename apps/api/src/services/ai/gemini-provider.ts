@@ -32,13 +32,27 @@ interface GeminiResponse {
  * Gemini AI服务提供商
  */
 export class GeminiProvider extends BaseAIProvider {
-  private config: GeminiConfig;
   private baseURL: string;
+  private useVertex: boolean;
+  private projectId?: string;
+  private location?: string;
 
   constructor(config: GeminiConfig) {
     super(config, 'gemini');
-    this.config = config;
-    this.baseURL = config.baseURL || 'https://generativelanguage.googleapis.com/v1beta';
+    
+    // 检查是否使用 Vertex AI
+    this.useVertex = config.projectId ? true : false;
+    this.projectId = config.projectId;
+    this.location = config.location || 'us-central1';
+    
+    // 根据使用方式设置不同的 baseURL
+    if (this.useVertex) {
+      this.baseURL = `https://${this.location}-aiplatform.googleapis.com/v1/projects/${this.projectId}/locations/${this.location}`;
+      logger.info('Gemini Provider 使用 Vertex AI 模式');
+    } else {
+      this.baseURL = config.baseURL || 'https://generativelanguage.googleapis.com/v1beta';
+      logger.info('Gemini Provider 使用 API Key 模式');
+    }
   }
 
   /**
@@ -78,7 +92,11 @@ export class GeminiProvider extends BaseAIProvider {
         }],
         generationConfig: {
           maxOutputTokens: maxTokens,
-          temperature: temperature
+          temperature: temperature,
+          // 对于 gemini-2.5 系列，禁用思考功能以直接生成内容
+          ...(model.includes('2.5') ? { 
+            responseModalities: ['TEXT']
+          } : {})
         }
       };
 
@@ -89,9 +107,26 @@ export class GeminiProvider extends BaseAIProvider {
         throw new AIError('No response from Gemini', this.name, 'generateText');
       }
 
-      const text = response.candidates[0].content.parts[0].text;
+      const candidate = response.candidates[0];
+      
+      // 兼容不同版本的响应格式
+      let text = '';
+      if (candidate.content?.parts && candidate.content.parts.length > 0) {
+        // 旧格式：content.parts[0].text
+        text = candidate.content.parts[0].text;
+      } else if (candidate.content?.text) {
+        // 新格式：content.text
+        text = candidate.content.text;
+      } else if (candidate.text) {
+        // 备选格式：直接在 candidate 中
+        text = candidate.text;
+      } else {
+        logger.warn('Gemini响应格式未知', { candidate });
+        throw new AIError('无法从Gemini响应中提取文本', this.name, 'generateText');
+      }
+
       const inputTokens = response.usageMetadata?.promptTokenCount || 0;
-      const outputTokens = response.usageMetadata?.candidatesTokenCount || 0;
+      const outputTokens = response.usageMetadata?.candidatesTokenCount || response.usageMetadata?.thoughtsTokenCount || 0;
 
       await this.recordUsage('generate_text', inputTokens, outputTokens, responseTime, true);
       return text;
@@ -174,7 +209,7 @@ ${content}
       }
       
       // 如果JSON解析失败，返回默认分析结果
-      logger.warn('Gemini分析结果解析失败，使用默认分析', { error, response: response });
+      logger.warn('Gemini分析结果解析失败，使用默认分析', { error });
       return {
         summary: await this.generateSummary(content, options),
         keyPoints: [],
@@ -246,8 +281,8 @@ ${content}
    * 发送API请求
    */
   private async makeRequest(endpoint: string, method: string, body?: any): Promise<any> {
-    const url = `${this.baseURL}${endpoint}?key=${this.config.apiKey}`;
-    
+    // 构建 URL（根据是否使用 Vertex AI 采用不同的方式）
+    let url: string;
     const requestOptions: RequestInit = {
       method,
       headers: {
@@ -255,9 +290,27 @@ ${content}
       },
     };
 
+    if (this.useVertex) {
+      // Vertex AI 模式：暂时不支持，需要 OAuth token
+      logger.error('Vertex AI 模式暂不支持，请使用 GEMINI_API_KEY 配置');
+      throw new AIError(
+        'Vertex AI authentication not implemented. Please use GEMINI_API_KEY instead.',
+        this.name,
+        'api_request'
+      );
+    } else {
+      // API Key 模式
+      if (!this.config.apiKey) {
+        throw new AIError('Gemini API key not configured', this.name, 'api_request');
+      }
+      url = `${this.baseURL}${endpoint}?key=${this.config.apiKey}`;
+    }
+
     if (body && method !== 'GET') {
       requestOptions.body = JSON.stringify(body);
     }
+
+    logger.debug('Gemini API 请求', { url: url.replace(/key=[^&]+/, 'key=***'), method, endpoint });
 
     const response = await fetch(url, requestOptions);
     

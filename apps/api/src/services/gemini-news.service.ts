@@ -1,5 +1,5 @@
 import { aiServiceManager } from './ai/ai-service-manager';
-import { ContentItemService } from '@tech-news-platform/database';
+import { ContentItemRepository, db } from '@tech-news-platform/database';
 import { logger } from '../utils/logger';
 
 /**
@@ -118,11 +118,11 @@ const GEMINI_QUERY_PROMPTS = {
  * Gemini新闻获取服务
  */
 export class GeminiNewsService {
-  private contentItemService: ContentItemService;
+  private contentItemRepository: ContentItemRepository;
   private queryHistory: Map<string, QueryRecord> = new Map();
 
   constructor() {
-    this.contentItemService = new ContentItemService();
+    this.contentItemRepository = new ContentItemRepository(db);
   }
 
   /**
@@ -268,7 +268,7 @@ export class GeminiNewsService {
       if (Array.isArray(data)) {
         return data.map(item => this.normalizeNewsItem(item, queryType));
       } else if (data.news && Array.isArray(data.news)) {
-        return data.news.map(item => this.normalizeNewsItem(item, queryType));
+        return data.news.map((item: any) => this.normalizeNewsItem(item, queryType));
       } else {
         logger.warn('Gemini响应格式不符合预期', { response });
         return [];
@@ -342,16 +342,12 @@ export class GeminiNewsService {
     for (const newsItem of newsItems) {
       try {
         // 检查是否已存在相同标题的新闻
-        const existingContent = await this.contentItemService.findMany({
-          where: {
-            title: newsItem.title,
-            createdAt: {
-              gte: new Date(Date.now() - 24 * 60 * 60 * 1000) // 24小时内
-            }
-          }
+        const existingContent = await this.contentItemRepository.findMany({
+          search: newsItem.title,
+          dateFrom: new Date(Date.now() - 24 * 60 * 60 * 1000) // 24小时内
         });
 
-        if (existingContent.length > 0) {
+        if (existingContent.content.length > 0) {
           logger.debug('跳过重复新闻', { title: newsItem.title });
           continue;
         }
@@ -379,7 +375,7 @@ export class GeminiNewsService {
           }
         };
 
-        await this.contentItemService.create(contentData);
+        await this.contentItemRepository.create(contentData);
         savedCount++;
         
         logger.debug('保存Gemini新闻成功', { title: newsItem.title });

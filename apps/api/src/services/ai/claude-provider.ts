@@ -26,12 +26,10 @@ interface ClaudeResponse {
  * Claude AI服务提供商
  */
 export class ClaudeProvider extends BaseAIProvider {
-  private config: ClaudeConfig;
   private baseURL: string;
 
   constructor(config: ClaudeConfig) {
     super(config, 'claude');
-    this.config = config;
     this.baseURL = config.baseURL || 'https://api.anthropic.com/v1';
   }
 
@@ -171,7 +169,7 @@ ${content}
       }
       
       // 如果JSON解析失败，返回默认分析结果
-      logger.warn('Claude分析结果解析失败，使用默认分析', { error, response: response });
+      logger.warn('Claude分析结果解析失败，使用默认分析', { error });
       return {
         summary: await this.generateSummary(content, options),
         keyPoints: [],
@@ -243,6 +241,10 @@ ${content}
    * 发送API请求
    */
   private async makeRequest(endpoint: string, method: string, body?: any): Promise<any> {
+    if (!this.config.apiKey) {
+      throw new AIError('Claude API key not configured', this.name, 'api_request');
+    }
+
     const url = `${this.baseURL}${endpoint}`;
     
     const requestOptions: RequestInit = {
@@ -250,13 +252,15 @@ ${content}
       headers: {
         'Content-Type': 'application/json',
         'x-api-key': this.config.apiKey,
-        'anthropic-version': this.config.version || '2023-06-01'
+        'anthropic-version': '2023-06-01'
       },
     };
 
     if (body && method !== 'GET') {
       requestOptions.body = JSON.stringify(body);
     }
+
+    logger.debug('Claude API 请求', { url, method, endpoint });
 
     const response = await fetch(url, requestOptions);
     

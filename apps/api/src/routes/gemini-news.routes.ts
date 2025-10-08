@@ -1,14 +1,15 @@
 import { Router, Request, Response } from 'express';
 import { geminiNewsService, NewsQueryType } from '../services/gemini-news.service';
 import { logger } from '../utils/logger';
-import { authMiddleware } from '../middleware/auth.middleware';
+import { AuthMiddleware } from '../middleware/auth.middleware';
 import { validationMiddleware } from '../middleware/validation.middleware';
 import { body, param, query } from 'express-validator';
 
 const router: Router = Router();
 
 // 应用认证中间件到所有Gemini新闻路由
-router.use(authMiddleware);
+const authMiddleware = new AuthMiddleware();
+router.use(authMiddleware.authenticate);
 
 /**
  * 获取Gemini新闻
