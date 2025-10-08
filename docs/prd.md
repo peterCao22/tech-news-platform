@@ -258,7 +258,7 @@ so that **我能够快速了解最新的科技动态**。
 
 **Epic目标：** 集成Google Gemini和Anthropic Claude AI工具，实现自动化内容获取、智能去重和内容筛选功能。建立内容评分和排序机制，为生成每日TOP10精选内容提供核心算法支持。
 
-### Story 2.1: AI工具API集成基础框架
+### Story 2.1: AI工具API集成基础框架 ✅ **已完成**
 
 As a **系统**,  
 I want **建立统一的AI工具API集成框架**,  
