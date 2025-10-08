@@ -272,7 +272,7 @@ so that **能够安全高效地调用Gemini和Claude AI服务进行内容处理*
 5. 建立AI调用的日志记录和性能监控
 6. 提供AI服务健康检查和状态监控面板
 
-### Story 2.2: Gemini AI每日新闻获取
+### Story 2.2: Gemini AI每日新闻获取 ✅ **已完成**
 
 As a **系统**,  
 I want **通过Google Gemini AI自动获取每日科技和股票相关新闻摘要**,  
