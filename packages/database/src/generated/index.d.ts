@@ -158,19 +158,6 @@ export const SourceStatus: {
 export type SourceStatus = (typeof SourceStatus)[keyof typeof SourceStatus]
 
 
-export const ContentType: {
-  NEWS: 'NEWS',
-  ARTICLE: 'ARTICLE',
-  BLOG_POST: 'BLOG_POST',
-  PRESS_RELEASE: 'PRESS_RELEASE',
-  RESEARCH: 'RESEARCH',
-  ANNOUNCEMENT: 'ANNOUNCEMENT',
-  OTHER: 'OTHER'
-};
-
-export type ContentType = (typeof ContentType)[keyof typeof ContentType]
-
-
 export const ContentStatus: {
   RAW: 'RAW',
   PROCESSING: 'PROCESSING',
@@ -183,6 +170,19 @@ export const ContentStatus: {
 };
 
 export type ContentStatus = (typeof ContentStatus)[keyof typeof ContentStatus]
+
+
+export const ContentType: {
+  NEWS: 'NEWS',
+  ARTICLE: 'ARTICLE',
+  BLOG_POST: 'BLOG_POST',
+  PRESS_RELEASE: 'PRESS_RELEASE',
+  RESEARCH: 'RESEARCH',
+  ANNOUNCEMENT: 'ANNOUNCEMENT',
+  OTHER: 'OTHER'
+};
+
+export type ContentType = (typeof ContentType)[keyof typeof ContentType]
 
 
 export const TagType: {
@@ -247,13 +247,13 @@ export type SourceStatus = $Enums.SourceStatus
 
 export const SourceStatus: typeof $Enums.SourceStatus
 
-export type ContentType = $Enums.ContentType
-
-export const ContentType: typeof $Enums.ContentType
-
 export type ContentStatus = $Enums.ContentStatus
 
 export const ContentStatus: typeof $Enums.ContentStatus
+
+export type ContentType = $Enums.ContentType
+
+export const ContentType: typeof $Enums.ContentType
 
 export type TagType = $Enums.TagType
 
@@ -2635,15 +2635,15 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     accounts: number
-    sessions: number
     contentReviews: number
+    sessions: number
     userActivities: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     accounts?: boolean | UserCountOutputTypeCountAccountsArgs
-    sessions?: boolean | UserCountOutputTypeCountSessionsArgs
     contentReviews?: boolean | UserCountOutputTypeCountContentReviewsArgs
+    sessions?: boolean | UserCountOutputTypeCountSessionsArgs
     userActivities?: boolean | UserCountOutputTypeCountUserActivitiesArgs
   }
 
@@ -2668,15 +2668,15 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: SessionWhereInput
+  export type UserCountOutputTypeCountContentReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ContentReviewWhereInput
   }
 
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountContentReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ContentReviewWhereInput
+  export type UserCountOutputTypeCountSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SessionWhereInput
   }
 
   /**
@@ -2772,13 +2772,13 @@ export namespace Prisma {
    */
 
   export type TagCountOutputType = {
-    children: number
     contentTags: number
+    children: number
   }
 
   export type TagCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    children?: boolean | TagCountOutputTypeCountChildrenArgs
     contentTags?: boolean | TagCountOutputTypeCountContentTagsArgs
+    children?: boolean | TagCountOutputTypeCountChildrenArgs
   }
 
   // Custom InputTypes
@@ -2795,15 +2795,15 @@ export namespace Prisma {
   /**
    * TagCountOutputType without action
    */
-  export type TagCountOutputTypeCountChildrenArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: TagWhereInput
+  export type TagCountOutputTypeCountContentTagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ContentTagWhereInput
   }
 
   /**
    * TagCountOutputType without action
    */
-  export type TagCountOutputTypeCountContentTagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ContentTagWhereInput
+  export type TagCountOutputTypeCountChildrenArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TagWhereInput
   }
 
 
@@ -3099,8 +3099,8 @@ export namespace Prisma {
     updatedAt?: boolean
     lastLoginAt?: boolean
     accounts?: boolean | User$accountsArgs<ExtArgs>
-    sessions?: boolean | User$sessionsArgs<ExtArgs>
     contentReviews?: boolean | User$contentReviewsArgs<ExtArgs>
+    sessions?: boolean | User$sessionsArgs<ExtArgs>
     userActivities?: boolean | User$userActivitiesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
@@ -3147,8 +3147,8 @@ export namespace Prisma {
 
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     accounts?: boolean | User$accountsArgs<ExtArgs>
-    sessions?: boolean | User$sessionsArgs<ExtArgs>
     contentReviews?: boolean | User$contentReviewsArgs<ExtArgs>
+    sessions?: boolean | User$sessionsArgs<ExtArgs>
     userActivities?: boolean | User$userActivitiesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -3158,8 +3158,8 @@ export namespace Prisma {
     name: "User"
     objects: {
       accounts: Prisma.$AccountPayload<ExtArgs>[]
-      sessions: Prisma.$SessionPayload<ExtArgs>[]
       contentReviews: Prisma.$ContentReviewPayload<ExtArgs>[]
+      sessions: Prisma.$SessionPayload<ExtArgs>[]
       userActivities: Prisma.$UserActivityPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -3545,8 +3545,8 @@ export namespace Prisma {
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     accounts<T extends User$accountsArgs<ExtArgs> = {}>(args?: Subset<T, User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany"> | Null>
-    sessions<T extends User$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany"> | Null>
     contentReviews<T extends User$contentReviewsArgs<ExtArgs> = {}>(args?: Subset<T, User$contentReviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContentReviewPayload<ExtArgs>, T, "findMany"> | Null>
+    sessions<T extends User$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany"> | Null>
     userActivities<T extends User$userActivitiesArgs<ExtArgs> = {}>(args?: Subset<T, User$userActivitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserActivityPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -3928,26 +3928,6 @@ export namespace Prisma {
   }
 
   /**
-   * User.sessions
-   */
-  export type User$sessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Session
-     */
-    select?: SessionSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SessionInclude<ExtArgs> | null
-    where?: SessionWhereInput
-    orderBy?: SessionOrderByWithRelationInput | SessionOrderByWithRelationInput[]
-    cursor?: SessionWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: SessionScalarFieldEnum | SessionScalarFieldEnum[]
-  }
-
-  /**
    * User.contentReviews
    */
   export type User$contentReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3965,6 +3945,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ContentReviewScalarFieldEnum | ContentReviewScalarFieldEnum[]
+  }
+
+  /**
+   * User.sessions
+   */
+  export type User$sessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Session
+     */
+    select?: SessionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SessionInclude<ExtArgs> | null
+    where?: SessionWhereInput
+    orderBy?: SessionOrderByWithRelationInput | SessionOrderByWithRelationInput[]
+    cursor?: SessionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SessionScalarFieldEnum | SessionScalarFieldEnum[]
   }
 
   /**
@@ -8861,8 +8861,8 @@ export namespace Prisma {
     priority: number | null
     quality: number | null
     relevance: number | null
-    viewCount: number | null
     shareCount: number | null
+    viewCount: number | null
   }
 
   export type ContentSumAggregateOutputType = {
@@ -8870,8 +8870,8 @@ export namespace Prisma {
     priority: number | null
     quality: number | null
     relevance: number | null
-    viewCount: number | null
     shareCount: number | null
+    viewCount: number | null
   }
 
   export type ContentMinAggregateOutputType = {
@@ -8879,28 +8879,28 @@ export namespace Prisma {
     title: string | null
     description: string | null
     content: string | null
-    summary: string | null
     url: string | null
     imageUrl: string | null
-    type: $Enums.ContentType | null
     category: string | null
     status: $Enums.ContentStatus | null
     score: number | null
     priority: number | null
-    quality: number | null
-    relevance: number | null
     sourceId: string | null
     sourceUrl: string | null
     publishedAt: Date | null
-    author: string | null
-    contentHash: string | null
-    titleHash: string | null
-    duplicateOf: string | null
-    viewCount: number | null
-    shareCount: number | null
-    searchVector: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    author: string | null
+    contentHash: string | null
+    duplicateOf: string | null
+    quality: number | null
+    relevance: number | null
+    searchVector: string | null
+    shareCount: number | null
+    summary: string | null
+    titleHash: string | null
+    type: $Enums.ContentType | null
+    viewCount: number | null
   }
 
   export type ContentMaxAggregateOutputType = {
@@ -8908,28 +8908,28 @@ export namespace Prisma {
     title: string | null
     description: string | null
     content: string | null
-    summary: string | null
     url: string | null
     imageUrl: string | null
-    type: $Enums.ContentType | null
     category: string | null
     status: $Enums.ContentStatus | null
     score: number | null
     priority: number | null
-    quality: number | null
-    relevance: number | null
     sourceId: string | null
     sourceUrl: string | null
     publishedAt: Date | null
-    author: string | null
-    contentHash: string | null
-    titleHash: string | null
-    duplicateOf: string | null
-    viewCount: number | null
-    shareCount: number | null
-    searchVector: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    author: string | null
+    contentHash: string | null
+    duplicateOf: string | null
+    quality: number | null
+    relevance: number | null
+    searchVector: string | null
+    shareCount: number | null
+    summary: string | null
+    titleHash: string | null
+    type: $Enums.ContentType | null
+    viewCount: number | null
   }
 
   export type ContentCountAggregateOutputType = {
@@ -8937,31 +8937,31 @@ export namespace Prisma {
     title: number
     description: number
     content: number
-    summary: number
     url: number
     imageUrl: number
-    type: number
     category: number
     tags: number
     status: number
     score: number
     priority: number
-    quality: number
-    relevance: number
     sourceId: number
     sourceUrl: number
     publishedAt: number
-    author: number
-    contentHash: number
-    titleHash: number
-    duplicateOf: number
-    viewCount: number
-    shareCount: number
-    searchVector: number
-    keywords: number
     metadata: number
     createdAt: number
     updatedAt: number
+    author: number
+    contentHash: number
+    duplicateOf: number
+    keywords: number
+    quality: number
+    relevance: number
+    searchVector: number
+    shareCount: number
+    summary: number
+    titleHash: number
+    type: number
+    viewCount: number
     _all: number
   }
 
@@ -8971,8 +8971,8 @@ export namespace Prisma {
     priority?: true
     quality?: true
     relevance?: true
-    viewCount?: true
     shareCount?: true
+    viewCount?: true
   }
 
   export type ContentSumAggregateInputType = {
@@ -8980,8 +8980,8 @@ export namespace Prisma {
     priority?: true
     quality?: true
     relevance?: true
-    viewCount?: true
     shareCount?: true
+    viewCount?: true
   }
 
   export type ContentMinAggregateInputType = {
@@ -8989,28 +8989,28 @@ export namespace Prisma {
     title?: true
     description?: true
     content?: true
-    summary?: true
     url?: true
     imageUrl?: true
-    type?: true
     category?: true
     status?: true
     score?: true
     priority?: true
-    quality?: true
-    relevance?: true
     sourceId?: true
     sourceUrl?: true
     publishedAt?: true
-    author?: true
-    contentHash?: true
-    titleHash?: true
-    duplicateOf?: true
-    viewCount?: true
-    shareCount?: true
-    searchVector?: true
     createdAt?: true
     updatedAt?: true
+    author?: true
+    contentHash?: true
+    duplicateOf?: true
+    quality?: true
+    relevance?: true
+    searchVector?: true
+    shareCount?: true
+    summary?: true
+    titleHash?: true
+    type?: true
+    viewCount?: true
   }
 
   export type ContentMaxAggregateInputType = {
@@ -9018,28 +9018,28 @@ export namespace Prisma {
     title?: true
     description?: true
     content?: true
-    summary?: true
     url?: true
     imageUrl?: true
-    type?: true
     category?: true
     status?: true
     score?: true
     priority?: true
-    quality?: true
-    relevance?: true
     sourceId?: true
     sourceUrl?: true
     publishedAt?: true
-    author?: true
-    contentHash?: true
-    titleHash?: true
-    duplicateOf?: true
-    viewCount?: true
-    shareCount?: true
-    searchVector?: true
     createdAt?: true
     updatedAt?: true
+    author?: true
+    contentHash?: true
+    duplicateOf?: true
+    quality?: true
+    relevance?: true
+    searchVector?: true
+    shareCount?: true
+    summary?: true
+    titleHash?: true
+    type?: true
+    viewCount?: true
   }
 
   export type ContentCountAggregateInputType = {
@@ -9047,31 +9047,31 @@ export namespace Prisma {
     title?: true
     description?: true
     content?: true
-    summary?: true
     url?: true
     imageUrl?: true
-    type?: true
     category?: true
     tags?: true
     status?: true
     score?: true
     priority?: true
-    quality?: true
-    relevance?: true
     sourceId?: true
     sourceUrl?: true
     publishedAt?: true
-    author?: true
-    contentHash?: true
-    titleHash?: true
-    duplicateOf?: true
-    viewCount?: true
-    shareCount?: true
-    searchVector?: true
-    keywords?: true
     metadata?: true
     createdAt?: true
     updatedAt?: true
+    author?: true
+    contentHash?: true
+    duplicateOf?: true
+    keywords?: true
+    quality?: true
+    relevance?: true
+    searchVector?: true
+    shareCount?: true
+    summary?: true
+    titleHash?: true
+    type?: true
+    viewCount?: true
     _all?: true
   }
 
@@ -9166,31 +9166,31 @@ export namespace Prisma {
     title: string
     description: string | null
     content: string | null
-    summary: string | null
     url: string | null
     imageUrl: string | null
-    type: $Enums.ContentType
     category: string | null
     tags: string[]
     status: $Enums.ContentStatus
     score: number | null
     priority: number
-    quality: number | null
-    relevance: number | null
     sourceId: string
     sourceUrl: string | null
     publishedAt: Date | null
-    author: string | null
-    contentHash: string | null
-    titleHash: string | null
-    duplicateOf: string | null
-    viewCount: number
-    shareCount: number
-    searchVector: string | null
-    keywords: string[]
     metadata: JsonValue | null
     createdAt: Date
     updatedAt: Date
+    author: string | null
+    contentHash: string | null
+    duplicateOf: string | null
+    keywords: string[]
+    quality: number | null
+    relevance: number | null
+    searchVector: string | null
+    shareCount: number
+    summary: string | null
+    titleHash: string | null
+    type: $Enums.ContentType
+    viewCount: number
     _count: ContentCountAggregateOutputType | null
     _avg: ContentAvgAggregateOutputType | null
     _sum: ContentSumAggregateOutputType | null
@@ -9217,31 +9217,31 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     content?: boolean
-    summary?: boolean
     url?: boolean
     imageUrl?: boolean
-    type?: boolean
     category?: boolean
     tags?: boolean
     status?: boolean
     score?: boolean
     priority?: boolean
-    quality?: boolean
-    relevance?: boolean
     sourceId?: boolean
     sourceUrl?: boolean
     publishedAt?: boolean
-    author?: boolean
-    contentHash?: boolean
-    titleHash?: boolean
-    duplicateOf?: boolean
-    viewCount?: boolean
-    shareCount?: boolean
-    searchVector?: boolean
-    keywords?: boolean
     metadata?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    author?: boolean
+    contentHash?: boolean
+    duplicateOf?: boolean
+    keywords?: boolean
+    quality?: boolean
+    relevance?: boolean
+    searchVector?: boolean
+    shareCount?: boolean
+    summary?: boolean
+    titleHash?: boolean
+    type?: boolean
+    viewCount?: boolean
     source?: boolean | SourceDefaultArgs<ExtArgs>
     reviews?: boolean | Content$reviewsArgs<ExtArgs>
     contentTags?: boolean | Content$contentTagsArgs<ExtArgs>
@@ -9254,31 +9254,31 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     content?: boolean
-    summary?: boolean
     url?: boolean
     imageUrl?: boolean
-    type?: boolean
     category?: boolean
     tags?: boolean
     status?: boolean
     score?: boolean
     priority?: boolean
-    quality?: boolean
-    relevance?: boolean
     sourceId?: boolean
     sourceUrl?: boolean
     publishedAt?: boolean
-    author?: boolean
-    contentHash?: boolean
-    titleHash?: boolean
-    duplicateOf?: boolean
-    viewCount?: boolean
-    shareCount?: boolean
-    searchVector?: boolean
-    keywords?: boolean
     metadata?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    author?: boolean
+    contentHash?: boolean
+    duplicateOf?: boolean
+    keywords?: boolean
+    quality?: boolean
+    relevance?: boolean
+    searchVector?: boolean
+    shareCount?: boolean
+    summary?: boolean
+    titleHash?: boolean
+    type?: boolean
+    viewCount?: boolean
     source?: boolean | SourceDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["content"]>
 
@@ -9287,31 +9287,31 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     content?: boolean
-    summary?: boolean
     url?: boolean
     imageUrl?: boolean
-    type?: boolean
     category?: boolean
     tags?: boolean
     status?: boolean
     score?: boolean
     priority?: boolean
-    quality?: boolean
-    relevance?: boolean
     sourceId?: boolean
     sourceUrl?: boolean
     publishedAt?: boolean
-    author?: boolean
-    contentHash?: boolean
-    titleHash?: boolean
-    duplicateOf?: boolean
-    viewCount?: boolean
-    shareCount?: boolean
-    searchVector?: boolean
-    keywords?: boolean
     metadata?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    author?: boolean
+    contentHash?: boolean
+    duplicateOf?: boolean
+    keywords?: boolean
+    quality?: boolean
+    relevance?: boolean
+    searchVector?: boolean
+    shareCount?: boolean
+    summary?: boolean
+    titleHash?: boolean
+    type?: boolean
+    viewCount?: boolean
   }
 
   export type ContentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -9338,31 +9338,31 @@ export namespace Prisma {
       title: string
       description: string | null
       content: string | null
-      summary: string | null
       url: string | null
       imageUrl: string | null
-      type: $Enums.ContentType
       category: string | null
       tags: string[]
       status: $Enums.ContentStatus
       score: number | null
       priority: number
-      quality: number | null
-      relevance: number | null
       sourceId: string
       sourceUrl: string | null
       publishedAt: Date | null
-      author: string | null
-      contentHash: string | null
-      titleHash: string | null
-      duplicateOf: string | null
-      viewCount: number
-      shareCount: number
-      searchVector: string | null
-      keywords: string[]
       metadata: Prisma.JsonValue | null
       createdAt: Date
       updatedAt: Date
+      author: string | null
+      contentHash: string | null
+      duplicateOf: string | null
+      keywords: string[]
+      quality: number | null
+      relevance: number | null
+      searchVector: string | null
+      shareCount: number
+      summary: string | null
+      titleHash: string | null
+      type: $Enums.ContentType
+      viewCount: number
     }, ExtArgs["result"]["content"]>
     composites: {}
   }
@@ -9764,31 +9764,31 @@ export namespace Prisma {
     readonly title: FieldRef<"Content", 'String'>
     readonly description: FieldRef<"Content", 'String'>
     readonly content: FieldRef<"Content", 'String'>
-    readonly summary: FieldRef<"Content", 'String'>
     readonly url: FieldRef<"Content", 'String'>
     readonly imageUrl: FieldRef<"Content", 'String'>
-    readonly type: FieldRef<"Content", 'ContentType'>
     readonly category: FieldRef<"Content", 'String'>
     readonly tags: FieldRef<"Content", 'String[]'>
     readonly status: FieldRef<"Content", 'ContentStatus'>
     readonly score: FieldRef<"Content", 'Float'>
     readonly priority: FieldRef<"Content", 'Int'>
-    readonly quality: FieldRef<"Content", 'Float'>
-    readonly relevance: FieldRef<"Content", 'Float'>
     readonly sourceId: FieldRef<"Content", 'String'>
     readonly sourceUrl: FieldRef<"Content", 'String'>
     readonly publishedAt: FieldRef<"Content", 'DateTime'>
-    readonly author: FieldRef<"Content", 'String'>
-    readonly contentHash: FieldRef<"Content", 'String'>
-    readonly titleHash: FieldRef<"Content", 'String'>
-    readonly duplicateOf: FieldRef<"Content", 'String'>
-    readonly viewCount: FieldRef<"Content", 'Int'>
-    readonly shareCount: FieldRef<"Content", 'Int'>
-    readonly searchVector: FieldRef<"Content", 'String'>
-    readonly keywords: FieldRef<"Content", 'String[]'>
     readonly metadata: FieldRef<"Content", 'Json'>
     readonly createdAt: FieldRef<"Content", 'DateTime'>
     readonly updatedAt: FieldRef<"Content", 'DateTime'>
+    readonly author: FieldRef<"Content", 'String'>
+    readonly contentHash: FieldRef<"Content", 'String'>
+    readonly duplicateOf: FieldRef<"Content", 'String'>
+    readonly keywords: FieldRef<"Content", 'String[]'>
+    readonly quality: FieldRef<"Content", 'Float'>
+    readonly relevance: FieldRef<"Content", 'Float'>
+    readonly searchVector: FieldRef<"Content", 'String'>
+    readonly shareCount: FieldRef<"Content", 'Int'>
+    readonly summary: FieldRef<"Content", 'String'>
+    readonly titleHash: FieldRef<"Content", 'String'>
+    readonly type: FieldRef<"Content", 'ContentType'>
+    readonly viewCount: FieldRef<"Content", 'Int'>
   }
     
 
@@ -10419,9 +10419,9 @@ export namespace Prisma {
     usageCount?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    contentTags?: boolean | Tag$contentTagsArgs<ExtArgs>
     parent?: boolean | Tag$parentArgs<ExtArgs>
     children?: boolean | Tag$childrenArgs<ExtArgs>
-    contentTags?: boolean | Tag$contentTagsArgs<ExtArgs>
     _count?: boolean | TagCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tag"]>
 
@@ -10453,9 +10453,9 @@ export namespace Prisma {
   }
 
   export type TagInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    contentTags?: boolean | Tag$contentTagsArgs<ExtArgs>
     parent?: boolean | Tag$parentArgs<ExtArgs>
     children?: boolean | Tag$childrenArgs<ExtArgs>
-    contentTags?: boolean | Tag$contentTagsArgs<ExtArgs>
     _count?: boolean | TagCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type TagIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -10465,9 +10465,9 @@ export namespace Prisma {
   export type $TagPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Tag"
     objects: {
+      contentTags: Prisma.$ContentTagPayload<ExtArgs>[]
       parent: Prisma.$TagPayload<ExtArgs> | null
       children: Prisma.$TagPayload<ExtArgs>[]
-      contentTags: Prisma.$ContentTagPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -10844,9 +10844,9 @@ export namespace Prisma {
    */
   export interface Prisma__TagClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    contentTags<T extends Tag$contentTagsArgs<ExtArgs> = {}>(args?: Subset<T, Tag$contentTagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContentTagPayload<ExtArgs>, T, "findMany"> | Null>
     parent<T extends Tag$parentArgs<ExtArgs> = {}>(args?: Subset<T, Tag$parentArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     children<T extends Tag$childrenArgs<ExtArgs> = {}>(args?: Subset<T, Tag$childrenArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findMany"> | Null>
-    contentTags<T extends Tag$contentTagsArgs<ExtArgs> = {}>(args?: Subset<T, Tag$contentTagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContentTagPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -11204,6 +11204,26 @@ export namespace Prisma {
   }
 
   /**
+   * Tag.contentTags
+   */
+  export type Tag$contentTagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentTag
+     */
+    select?: ContentTagSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContentTagInclude<ExtArgs> | null
+    where?: ContentTagWhereInput
+    orderBy?: ContentTagOrderByWithRelationInput | ContentTagOrderByWithRelationInput[]
+    cursor?: ContentTagWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ContentTagScalarFieldEnum | ContentTagScalarFieldEnum[]
+  }
+
+  /**
    * Tag.parent
    */
   export type Tag$parentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -11236,26 +11256,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: TagScalarFieldEnum | TagScalarFieldEnum[]
-  }
-
-  /**
-   * Tag.contentTags
-   */
-  export type Tag$contentTagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ContentTag
-     */
-    select?: ContentTagSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ContentTagInclude<ExtArgs> | null
-    where?: ContentTagWhereInput
-    orderBy?: ContentTagOrderByWithRelationInput | ContentTagOrderByWithRelationInput[]
-    cursor?: ContentTagWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ContentTagScalarFieldEnum | ContentTagScalarFieldEnum[]
   }
 
   /**
@@ -11296,25 +11296,25 @@ export namespace Prisma {
   export type ContentTagMinAggregateOutputType = {
     id: string | null
     contentId: string | null
-    tagId: string | null
-    relevance: number | null
     createdAt: Date | null
+    relevance: number | null
+    tagId: string | null
   }
 
   export type ContentTagMaxAggregateOutputType = {
     id: string | null
     contentId: string | null
-    tagId: string | null
-    relevance: number | null
     createdAt: Date | null
+    relevance: number | null
+    tagId: string | null
   }
 
   export type ContentTagCountAggregateOutputType = {
     id: number
     contentId: number
-    tagId: number
-    relevance: number
     createdAt: number
+    relevance: number
+    tagId: number
     _all: number
   }
 
@@ -11330,25 +11330,25 @@ export namespace Prisma {
   export type ContentTagMinAggregateInputType = {
     id?: true
     contentId?: true
-    tagId?: true
-    relevance?: true
     createdAt?: true
+    relevance?: true
+    tagId?: true
   }
 
   export type ContentTagMaxAggregateInputType = {
     id?: true
     contentId?: true
-    tagId?: true
-    relevance?: true
     createdAt?: true
+    relevance?: true
+    tagId?: true
   }
 
   export type ContentTagCountAggregateInputType = {
     id?: true
     contentId?: true
-    tagId?: true
-    relevance?: true
     createdAt?: true
+    relevance?: true
+    tagId?: true
     _all?: true
   }
 
@@ -11441,9 +11441,9 @@ export namespace Prisma {
   export type ContentTagGroupByOutputType = {
     id: string
     contentId: string
-    tagId: string
-    relevance: number | null
     createdAt: Date
+    relevance: number | null
+    tagId: string
     _count: ContentTagCountAggregateOutputType | null
     _avg: ContentTagAvgAggregateOutputType | null
     _sum: ContentTagSumAggregateOutputType | null
@@ -11468,9 +11468,9 @@ export namespace Prisma {
   export type ContentTagSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     contentId?: boolean
-    tagId?: boolean
-    relevance?: boolean
     createdAt?: boolean
+    relevance?: boolean
+    tagId?: boolean
     content?: boolean | ContentDefaultArgs<ExtArgs>
     tag?: boolean | TagDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["contentTag"]>
@@ -11478,9 +11478,9 @@ export namespace Prisma {
   export type ContentTagSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     contentId?: boolean
-    tagId?: boolean
-    relevance?: boolean
     createdAt?: boolean
+    relevance?: boolean
+    tagId?: boolean
     content?: boolean | ContentDefaultArgs<ExtArgs>
     tag?: boolean | TagDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["contentTag"]>
@@ -11488,9 +11488,9 @@ export namespace Prisma {
   export type ContentTagSelectScalar = {
     id?: boolean
     contentId?: boolean
-    tagId?: boolean
-    relevance?: boolean
     createdAt?: boolean
+    relevance?: boolean
+    tagId?: boolean
   }
 
   export type ContentTagInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -11511,9 +11511,9 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       contentId: string
-      tagId: string
-      relevance: number | null
       createdAt: Date
+      relevance: number | null
+      tagId: string
     }, ExtArgs["result"]["contentTag"]>
     composites: {}
   }
@@ -11911,9 +11911,9 @@ export namespace Prisma {
   interface ContentTagFieldRefs {
     readonly id: FieldRef<"ContentTag", 'String'>
     readonly contentId: FieldRef<"ContentTag", 'String'>
-    readonly tagId: FieldRef<"ContentTag", 'String'>
-    readonly relevance: FieldRef<"ContentTag", 'Float'>
     readonly createdAt: FieldRef<"ContentTag", 'DateTime'>
+    readonly relevance: FieldRef<"ContentTag", 'Float'>
+    readonly tagId: FieldRef<"ContentTag", 'String'>
   }
     
 
@@ -23258,31 +23258,31 @@ export namespace Prisma {
     title: 'title',
     description: 'description',
     content: 'content',
-    summary: 'summary',
     url: 'url',
     imageUrl: 'imageUrl',
-    type: 'type',
     category: 'category',
     tags: 'tags',
     status: 'status',
     score: 'score',
     priority: 'priority',
-    quality: 'quality',
-    relevance: 'relevance',
     sourceId: 'sourceId',
     sourceUrl: 'sourceUrl',
     publishedAt: 'publishedAt',
-    author: 'author',
-    contentHash: 'contentHash',
-    titleHash: 'titleHash',
-    duplicateOf: 'duplicateOf',
-    viewCount: 'viewCount',
-    shareCount: 'shareCount',
-    searchVector: 'searchVector',
-    keywords: 'keywords',
     metadata: 'metadata',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    author: 'author',
+    contentHash: 'contentHash',
+    duplicateOf: 'duplicateOf',
+    keywords: 'keywords',
+    quality: 'quality',
+    relevance: 'relevance',
+    searchVector: 'searchVector',
+    shareCount: 'shareCount',
+    summary: 'summary',
+    titleHash: 'titleHash',
+    type: 'type',
+    viewCount: 'viewCount'
   };
 
   export type ContentScalarFieldEnum = (typeof ContentScalarFieldEnum)[keyof typeof ContentScalarFieldEnum]
@@ -23307,9 +23307,9 @@ export namespace Prisma {
   export const ContentTagScalarFieldEnum: {
     id: 'id',
     contentId: 'contentId',
-    tagId: 'tagId',
+    createdAt: 'createdAt',
     relevance: 'relevance',
-    createdAt: 'createdAt'
+    tagId: 'tagId'
   };
 
   export type ContentTagScalarFieldEnum = (typeof ContentTagScalarFieldEnum)[keyof typeof ContentTagScalarFieldEnum]
@@ -23666,20 +23666,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'ContentType'
-   */
-  export type EnumContentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContentType'>
-    
-
-
-  /**
-   * Reference to a field of type 'ContentType[]'
-   */
-  export type ListEnumContentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContentType[]'>
-    
-
-
-  /**
    * Reference to a field of type 'ContentStatus'
    */
   export type EnumContentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContentStatus'>
@@ -23704,6 +23690,20 @@ export namespace Prisma {
    * Reference to a field of type 'Float[]'
    */
   export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'ContentType'
+   */
+  export type EnumContentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContentType'>
+    
+
+
+  /**
+   * Reference to a field of type 'ContentType[]'
+   */
+  export type ListEnumContentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContentType[]'>
     
 
 
@@ -23788,8 +23788,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"User"> | Date | string
     lastLoginAt?: DateTimeNullableFilter<"User"> | Date | string | null
     accounts?: AccountListRelationFilter
-    sessions?: SessionListRelationFilter
     contentReviews?: ContentReviewListRelationFilter
+    sessions?: SessionListRelationFilter
     userActivities?: UserActivityListRelationFilter
   }
 
@@ -23812,8 +23812,8 @@ export namespace Prisma {
     updatedAt?: SortOrder
     lastLoginAt?: SortOrderInput | SortOrder
     accounts?: AccountOrderByRelationAggregateInput
-    sessions?: SessionOrderByRelationAggregateInput
     contentReviews?: ContentReviewOrderByRelationAggregateInput
+    sessions?: SessionOrderByRelationAggregateInput
     userActivities?: UserActivityOrderByRelationAggregateInput
   }
 
@@ -23839,8 +23839,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"User"> | Date | string
     lastLoginAt?: DateTimeNullableFilter<"User"> | Date | string | null
     accounts?: AccountListRelationFilter
-    sessions?: SessionListRelationFilter
     contentReviews?: ContentReviewListRelationFilter
+    sessions?: SessionListRelationFilter
     userActivities?: UserActivityListRelationFilter
   }, "id" | "email">
 
@@ -24258,31 +24258,31 @@ export namespace Prisma {
     title?: StringFilter<"Content"> | string
     description?: StringNullableFilter<"Content"> | string | null
     content?: StringNullableFilter<"Content"> | string | null
-    summary?: StringNullableFilter<"Content"> | string | null
     url?: StringNullableFilter<"Content"> | string | null
     imageUrl?: StringNullableFilter<"Content"> | string | null
-    type?: EnumContentTypeFilter<"Content"> | $Enums.ContentType
     category?: StringNullableFilter<"Content"> | string | null
     tags?: StringNullableListFilter<"Content">
     status?: EnumContentStatusFilter<"Content"> | $Enums.ContentStatus
     score?: FloatNullableFilter<"Content"> | number | null
     priority?: IntFilter<"Content"> | number
-    quality?: FloatNullableFilter<"Content"> | number | null
-    relevance?: FloatNullableFilter<"Content"> | number | null
     sourceId?: StringFilter<"Content"> | string
     sourceUrl?: StringNullableFilter<"Content"> | string | null
     publishedAt?: DateTimeNullableFilter<"Content"> | Date | string | null
-    author?: StringNullableFilter<"Content"> | string | null
-    contentHash?: StringNullableFilter<"Content"> | string | null
-    titleHash?: StringNullableFilter<"Content"> | string | null
-    duplicateOf?: StringNullableFilter<"Content"> | string | null
-    viewCount?: IntFilter<"Content"> | number
-    shareCount?: IntFilter<"Content"> | number
-    searchVector?: StringNullableFilter<"Content"> | string | null
-    keywords?: StringNullableListFilter<"Content">
     metadata?: JsonNullableFilter<"Content">
     createdAt?: DateTimeFilter<"Content"> | Date | string
     updatedAt?: DateTimeFilter<"Content"> | Date | string
+    author?: StringNullableFilter<"Content"> | string | null
+    contentHash?: StringNullableFilter<"Content"> | string | null
+    duplicateOf?: StringNullableFilter<"Content"> | string | null
+    keywords?: StringNullableListFilter<"Content">
+    quality?: FloatNullableFilter<"Content"> | number | null
+    relevance?: FloatNullableFilter<"Content"> | number | null
+    searchVector?: StringNullableFilter<"Content"> | string | null
+    shareCount?: IntFilter<"Content"> | number
+    summary?: StringNullableFilter<"Content"> | string | null
+    titleHash?: StringNullableFilter<"Content"> | string | null
+    type?: EnumContentTypeFilter<"Content"> | $Enums.ContentType
+    viewCount?: IntFilter<"Content"> | number
     source?: XOR<SourceRelationFilter, SourceWhereInput>
     reviews?: ContentReviewListRelationFilter
     contentTags?: ContentTagListRelationFilter
@@ -24294,31 +24294,31 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrderInput | SortOrder
     content?: SortOrderInput | SortOrder
-    summary?: SortOrderInput | SortOrder
     url?: SortOrderInput | SortOrder
     imageUrl?: SortOrderInput | SortOrder
-    type?: SortOrder
     category?: SortOrderInput | SortOrder
     tags?: SortOrder
     status?: SortOrder
     score?: SortOrderInput | SortOrder
     priority?: SortOrder
-    quality?: SortOrderInput | SortOrder
-    relevance?: SortOrderInput | SortOrder
     sourceId?: SortOrder
     sourceUrl?: SortOrderInput | SortOrder
     publishedAt?: SortOrderInput | SortOrder
-    author?: SortOrderInput | SortOrder
-    contentHash?: SortOrderInput | SortOrder
-    titleHash?: SortOrderInput | SortOrder
-    duplicateOf?: SortOrderInput | SortOrder
-    viewCount?: SortOrder
-    shareCount?: SortOrder
-    searchVector?: SortOrderInput | SortOrder
-    keywords?: SortOrder
     metadata?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    author?: SortOrderInput | SortOrder
+    contentHash?: SortOrderInput | SortOrder
+    duplicateOf?: SortOrderInput | SortOrder
+    keywords?: SortOrder
+    quality?: SortOrderInput | SortOrder
+    relevance?: SortOrderInput | SortOrder
+    searchVector?: SortOrderInput | SortOrder
+    shareCount?: SortOrder
+    summary?: SortOrderInput | SortOrder
+    titleHash?: SortOrderInput | SortOrder
+    type?: SortOrder
+    viewCount?: SortOrder
     source?: SourceOrderByWithRelationInput
     reviews?: ContentReviewOrderByRelationAggregateInput
     contentTags?: ContentTagOrderByRelationAggregateInput
@@ -24333,31 +24333,31 @@ export namespace Prisma {
     title?: StringFilter<"Content"> | string
     description?: StringNullableFilter<"Content"> | string | null
     content?: StringNullableFilter<"Content"> | string | null
-    summary?: StringNullableFilter<"Content"> | string | null
     url?: StringNullableFilter<"Content"> | string | null
     imageUrl?: StringNullableFilter<"Content"> | string | null
-    type?: EnumContentTypeFilter<"Content"> | $Enums.ContentType
     category?: StringNullableFilter<"Content"> | string | null
     tags?: StringNullableListFilter<"Content">
     status?: EnumContentStatusFilter<"Content"> | $Enums.ContentStatus
     score?: FloatNullableFilter<"Content"> | number | null
     priority?: IntFilter<"Content"> | number
-    quality?: FloatNullableFilter<"Content"> | number | null
-    relevance?: FloatNullableFilter<"Content"> | number | null
     sourceId?: StringFilter<"Content"> | string
     sourceUrl?: StringNullableFilter<"Content"> | string | null
     publishedAt?: DateTimeNullableFilter<"Content"> | Date | string | null
-    author?: StringNullableFilter<"Content"> | string | null
-    contentHash?: StringNullableFilter<"Content"> | string | null
-    titleHash?: StringNullableFilter<"Content"> | string | null
-    duplicateOf?: StringNullableFilter<"Content"> | string | null
-    viewCount?: IntFilter<"Content"> | number
-    shareCount?: IntFilter<"Content"> | number
-    searchVector?: StringNullableFilter<"Content"> | string | null
-    keywords?: StringNullableListFilter<"Content">
     metadata?: JsonNullableFilter<"Content">
     createdAt?: DateTimeFilter<"Content"> | Date | string
     updatedAt?: DateTimeFilter<"Content"> | Date | string
+    author?: StringNullableFilter<"Content"> | string | null
+    contentHash?: StringNullableFilter<"Content"> | string | null
+    duplicateOf?: StringNullableFilter<"Content"> | string | null
+    keywords?: StringNullableListFilter<"Content">
+    quality?: FloatNullableFilter<"Content"> | number | null
+    relevance?: FloatNullableFilter<"Content"> | number | null
+    searchVector?: StringNullableFilter<"Content"> | string | null
+    shareCount?: IntFilter<"Content"> | number
+    summary?: StringNullableFilter<"Content"> | string | null
+    titleHash?: StringNullableFilter<"Content"> | string | null
+    type?: EnumContentTypeFilter<"Content"> | $Enums.ContentType
+    viewCount?: IntFilter<"Content"> | number
     source?: XOR<SourceRelationFilter, SourceWhereInput>
     reviews?: ContentReviewListRelationFilter
     contentTags?: ContentTagListRelationFilter
@@ -24369,31 +24369,31 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrderInput | SortOrder
     content?: SortOrderInput | SortOrder
-    summary?: SortOrderInput | SortOrder
     url?: SortOrderInput | SortOrder
     imageUrl?: SortOrderInput | SortOrder
-    type?: SortOrder
     category?: SortOrderInput | SortOrder
     tags?: SortOrder
     status?: SortOrder
     score?: SortOrderInput | SortOrder
     priority?: SortOrder
-    quality?: SortOrderInput | SortOrder
-    relevance?: SortOrderInput | SortOrder
     sourceId?: SortOrder
     sourceUrl?: SortOrderInput | SortOrder
     publishedAt?: SortOrderInput | SortOrder
-    author?: SortOrderInput | SortOrder
-    contentHash?: SortOrderInput | SortOrder
-    titleHash?: SortOrderInput | SortOrder
-    duplicateOf?: SortOrderInput | SortOrder
-    viewCount?: SortOrder
-    shareCount?: SortOrder
-    searchVector?: SortOrderInput | SortOrder
-    keywords?: SortOrder
     metadata?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    author?: SortOrderInput | SortOrder
+    contentHash?: SortOrderInput | SortOrder
+    duplicateOf?: SortOrderInput | SortOrder
+    keywords?: SortOrder
+    quality?: SortOrderInput | SortOrder
+    relevance?: SortOrderInput | SortOrder
+    searchVector?: SortOrderInput | SortOrder
+    shareCount?: SortOrder
+    summary?: SortOrderInput | SortOrder
+    titleHash?: SortOrderInput | SortOrder
+    type?: SortOrder
+    viewCount?: SortOrder
     _count?: ContentCountOrderByAggregateInput
     _avg?: ContentAvgOrderByAggregateInput
     _max?: ContentMaxOrderByAggregateInput
@@ -24409,31 +24409,31 @@ export namespace Prisma {
     title?: StringWithAggregatesFilter<"Content"> | string
     description?: StringNullableWithAggregatesFilter<"Content"> | string | null
     content?: StringNullableWithAggregatesFilter<"Content"> | string | null
-    summary?: StringNullableWithAggregatesFilter<"Content"> | string | null
     url?: StringNullableWithAggregatesFilter<"Content"> | string | null
     imageUrl?: StringNullableWithAggregatesFilter<"Content"> | string | null
-    type?: EnumContentTypeWithAggregatesFilter<"Content"> | $Enums.ContentType
     category?: StringNullableWithAggregatesFilter<"Content"> | string | null
     tags?: StringNullableListFilter<"Content">
     status?: EnumContentStatusWithAggregatesFilter<"Content"> | $Enums.ContentStatus
     score?: FloatNullableWithAggregatesFilter<"Content"> | number | null
     priority?: IntWithAggregatesFilter<"Content"> | number
-    quality?: FloatNullableWithAggregatesFilter<"Content"> | number | null
-    relevance?: FloatNullableWithAggregatesFilter<"Content"> | number | null
     sourceId?: StringWithAggregatesFilter<"Content"> | string
     sourceUrl?: StringNullableWithAggregatesFilter<"Content"> | string | null
     publishedAt?: DateTimeNullableWithAggregatesFilter<"Content"> | Date | string | null
-    author?: StringNullableWithAggregatesFilter<"Content"> | string | null
-    contentHash?: StringNullableWithAggregatesFilter<"Content"> | string | null
-    titleHash?: StringNullableWithAggregatesFilter<"Content"> | string | null
-    duplicateOf?: StringNullableWithAggregatesFilter<"Content"> | string | null
-    viewCount?: IntWithAggregatesFilter<"Content"> | number
-    shareCount?: IntWithAggregatesFilter<"Content"> | number
-    searchVector?: StringNullableWithAggregatesFilter<"Content"> | string | null
-    keywords?: StringNullableListFilter<"Content">
     metadata?: JsonNullableWithAggregatesFilter<"Content">
     createdAt?: DateTimeWithAggregatesFilter<"Content"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Content"> | Date | string
+    author?: StringNullableWithAggregatesFilter<"Content"> | string | null
+    contentHash?: StringNullableWithAggregatesFilter<"Content"> | string | null
+    duplicateOf?: StringNullableWithAggregatesFilter<"Content"> | string | null
+    keywords?: StringNullableListFilter<"Content">
+    quality?: FloatNullableWithAggregatesFilter<"Content"> | number | null
+    relevance?: FloatNullableWithAggregatesFilter<"Content"> | number | null
+    searchVector?: StringNullableWithAggregatesFilter<"Content"> | string | null
+    shareCount?: IntWithAggregatesFilter<"Content"> | number
+    summary?: StringNullableWithAggregatesFilter<"Content"> | string | null
+    titleHash?: StringNullableWithAggregatesFilter<"Content"> | string | null
+    type?: EnumContentTypeWithAggregatesFilter<"Content"> | $Enums.ContentType
+    viewCount?: IntWithAggregatesFilter<"Content"> | number
   }
 
   export type TagWhereInput = {
@@ -24450,9 +24450,9 @@ export namespace Prisma {
     usageCount?: IntFilter<"Tag"> | number
     createdAt?: DateTimeFilter<"Tag"> | Date | string
     updatedAt?: DateTimeFilter<"Tag"> | Date | string
+    contentTags?: ContentTagListRelationFilter
     parent?: XOR<TagNullableRelationFilter, TagWhereInput> | null
     children?: TagListRelationFilter
-    contentTags?: ContentTagListRelationFilter
   }
 
   export type TagOrderByWithRelationInput = {
@@ -24466,9 +24466,9 @@ export namespace Prisma {
     usageCount?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    contentTags?: ContentTagOrderByRelationAggregateInput
     parent?: TagOrderByWithRelationInput
     children?: TagOrderByRelationAggregateInput
-    contentTags?: ContentTagOrderByRelationAggregateInput
   }
 
   export type TagWhereUniqueInput = Prisma.AtLeast<{
@@ -24485,9 +24485,9 @@ export namespace Prisma {
     usageCount?: IntFilter<"Tag"> | number
     createdAt?: DateTimeFilter<"Tag"> | Date | string
     updatedAt?: DateTimeFilter<"Tag"> | Date | string
+    contentTags?: ContentTagListRelationFilter
     parent?: XOR<TagNullableRelationFilter, TagWhereInput> | null
     children?: TagListRelationFilter
-    contentTags?: ContentTagListRelationFilter
   }, "id" | "name" | "slug">
 
   export type TagOrderByWithAggregationInput = {
@@ -24530,9 +24530,9 @@ export namespace Prisma {
     NOT?: ContentTagWhereInput | ContentTagWhereInput[]
     id?: StringFilter<"ContentTag"> | string
     contentId?: StringFilter<"ContentTag"> | string
-    tagId?: StringFilter<"ContentTag"> | string
-    relevance?: FloatNullableFilter<"ContentTag"> | number | null
     createdAt?: DateTimeFilter<"ContentTag"> | Date | string
+    relevance?: FloatNullableFilter<"ContentTag"> | number | null
+    tagId?: StringFilter<"ContentTag"> | string
     content?: XOR<ContentRelationFilter, ContentWhereInput>
     tag?: XOR<TagRelationFilter, TagWhereInput>
   }
@@ -24540,9 +24540,9 @@ export namespace Prisma {
   export type ContentTagOrderByWithRelationInput = {
     id?: SortOrder
     contentId?: SortOrder
-    tagId?: SortOrder
-    relevance?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    relevance?: SortOrderInput | SortOrder
+    tagId?: SortOrder
     content?: ContentOrderByWithRelationInput
     tag?: TagOrderByWithRelationInput
   }
@@ -24554,9 +24554,9 @@ export namespace Prisma {
     OR?: ContentTagWhereInput[]
     NOT?: ContentTagWhereInput | ContentTagWhereInput[]
     contentId?: StringFilter<"ContentTag"> | string
-    tagId?: StringFilter<"ContentTag"> | string
-    relevance?: FloatNullableFilter<"ContentTag"> | number | null
     createdAt?: DateTimeFilter<"ContentTag"> | Date | string
+    relevance?: FloatNullableFilter<"ContentTag"> | number | null
+    tagId?: StringFilter<"ContentTag"> | string
     content?: XOR<ContentRelationFilter, ContentWhereInput>
     tag?: XOR<TagRelationFilter, TagWhereInput>
   }, "id" | "contentId_tagId">
@@ -24564,9 +24564,9 @@ export namespace Prisma {
   export type ContentTagOrderByWithAggregationInput = {
     id?: SortOrder
     contentId?: SortOrder
-    tagId?: SortOrder
-    relevance?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    relevance?: SortOrderInput | SortOrder
+    tagId?: SortOrder
     _count?: ContentTagCountOrderByAggregateInput
     _avg?: ContentTagAvgOrderByAggregateInput
     _max?: ContentTagMaxOrderByAggregateInput
@@ -24580,9 +24580,9 @@ export namespace Prisma {
     NOT?: ContentTagScalarWhereWithAggregatesInput | ContentTagScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"ContentTag"> | string
     contentId?: StringWithAggregatesFilter<"ContentTag"> | string
-    tagId?: StringWithAggregatesFilter<"ContentTag"> | string
-    relevance?: FloatNullableWithAggregatesFilter<"ContentTag"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"ContentTag"> | Date | string
+    relevance?: FloatNullableWithAggregatesFilter<"ContentTag"> | number | null
+    tagId?: StringWithAggregatesFilter<"ContentTag"> | string
   }
 
   export type ContentReviewWhereInput = {
@@ -25528,8 +25528,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     lastLoginAt?: Date | string | null
     accounts?: AccountCreateNestedManyWithoutUserInput
-    sessions?: SessionCreateNestedManyWithoutUserInput
     contentReviews?: ContentReviewCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
     userActivities?: UserActivityCreateNestedManyWithoutUserInput
   }
 
@@ -25552,8 +25552,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     lastLoginAt?: Date | string | null
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     contentReviews?: ContentReviewUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     userActivities?: UserActivityUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -25576,8 +25576,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     accounts?: AccountUpdateManyWithoutUserNestedInput
-    sessions?: SessionUpdateManyWithoutUserNestedInput
     contentReviews?: ContentReviewUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
     userActivities?: UserActivityUpdateManyWithoutUserNestedInput
   }
 
@@ -25600,8 +25600,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     contentReviews?: ContentReviewUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     userActivities?: UserActivityUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -26071,30 +26071,30 @@ export namespace Prisma {
     title: string
     description?: string | null
     content?: string | null
-    summary?: string | null
     url?: string | null
     imageUrl?: string | null
-    type?: $Enums.ContentType
     category?: string | null
     tags?: ContentCreatetagsInput | string[]
     status?: $Enums.ContentStatus
     score?: number | null
     priority?: number
-    quality?: number | null
-    relevance?: number | null
     sourceUrl?: string | null
     publishedAt?: Date | string | null
-    author?: string | null
-    contentHash?: string | null
-    titleHash?: string | null
-    duplicateOf?: string | null
-    viewCount?: number
-    shareCount?: number
-    searchVector?: string | null
-    keywords?: ContentCreatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    author?: string | null
+    contentHash?: string | null
+    duplicateOf?: string | null
+    keywords?: ContentCreatekeywordsInput | string[]
+    quality?: number | null
+    relevance?: number | null
+    searchVector?: string | null
+    shareCount?: number
+    summary?: string | null
+    titleHash?: string | null
+    type?: $Enums.ContentType
+    viewCount?: number
     source: SourceCreateNestedOneWithoutContentInput
     reviews?: ContentReviewCreateNestedManyWithoutContentInput
     contentTags?: ContentTagCreateNestedManyWithoutContentInput
@@ -26106,31 +26106,31 @@ export namespace Prisma {
     title: string
     description?: string | null
     content?: string | null
-    summary?: string | null
     url?: string | null
     imageUrl?: string | null
-    type?: $Enums.ContentType
     category?: string | null
     tags?: ContentCreatetagsInput | string[]
     status?: $Enums.ContentStatus
     score?: number | null
     priority?: number
-    quality?: number | null
-    relevance?: number | null
     sourceId: string
     sourceUrl?: string | null
     publishedAt?: Date | string | null
-    author?: string | null
-    contentHash?: string | null
-    titleHash?: string | null
-    duplicateOf?: string | null
-    viewCount?: number
-    shareCount?: number
-    searchVector?: string | null
-    keywords?: ContentCreatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    author?: string | null
+    contentHash?: string | null
+    duplicateOf?: string | null
+    keywords?: ContentCreatekeywordsInput | string[]
+    quality?: number | null
+    relevance?: number | null
+    searchVector?: string | null
+    shareCount?: number
+    summary?: string | null
+    titleHash?: string | null
+    type?: $Enums.ContentType
+    viewCount?: number
     reviews?: ContentReviewUncheckedCreateNestedManyWithoutContentInput
     contentTags?: ContentTagUncheckedCreateNestedManyWithoutContentInput
     versions?: ContentVersionUncheckedCreateNestedManyWithoutContentItemInput
@@ -26141,30 +26141,30 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
-    summary?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
     category?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ContentUpdatetagsInput | string[]
     status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     priority?: IntFieldUpdateOperationsInput | number
-    quality?: NullableFloatFieldUpdateOperationsInput | number | null
-    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    author?: NullableStringFieldUpdateOperationsInput | string | null
-    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
-    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
-    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
-    viewCount?: IntFieldUpdateOperationsInput | number
-    shareCount?: IntFieldUpdateOperationsInput | number
-    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
-    keywords?: ContentUpdatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    author?: NullableStringFieldUpdateOperationsInput | string | null
+    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
+    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: ContentUpdatekeywordsInput | string[]
+    quality?: NullableFloatFieldUpdateOperationsInput | number | null
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
+    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
+    shareCount?: IntFieldUpdateOperationsInput | number
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    viewCount?: IntFieldUpdateOperationsInput | number
     source?: SourceUpdateOneRequiredWithoutContentNestedInput
     reviews?: ContentReviewUpdateManyWithoutContentNestedInput
     contentTags?: ContentTagUpdateManyWithoutContentNestedInput
@@ -26176,31 +26176,31 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
-    summary?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
     category?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ContentUpdatetagsInput | string[]
     status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     priority?: IntFieldUpdateOperationsInput | number
-    quality?: NullableFloatFieldUpdateOperationsInput | number | null
-    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     sourceId?: StringFieldUpdateOperationsInput | string
     sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    author?: NullableStringFieldUpdateOperationsInput | string | null
-    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
-    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
-    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
-    viewCount?: IntFieldUpdateOperationsInput | number
-    shareCount?: IntFieldUpdateOperationsInput | number
-    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
-    keywords?: ContentUpdatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    author?: NullableStringFieldUpdateOperationsInput | string | null
+    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
+    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: ContentUpdatekeywordsInput | string[]
+    quality?: NullableFloatFieldUpdateOperationsInput | number | null
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
+    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
+    shareCount?: IntFieldUpdateOperationsInput | number
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    viewCount?: IntFieldUpdateOperationsInput | number
     reviews?: ContentReviewUncheckedUpdateManyWithoutContentNestedInput
     contentTags?: ContentTagUncheckedUpdateManyWithoutContentNestedInput
     versions?: ContentVersionUncheckedUpdateManyWithoutContentItemNestedInput
@@ -26211,31 +26211,31 @@ export namespace Prisma {
     title: string
     description?: string | null
     content?: string | null
-    summary?: string | null
     url?: string | null
     imageUrl?: string | null
-    type?: $Enums.ContentType
     category?: string | null
     tags?: ContentCreatetagsInput | string[]
     status?: $Enums.ContentStatus
     score?: number | null
     priority?: number
-    quality?: number | null
-    relevance?: number | null
     sourceId: string
     sourceUrl?: string | null
     publishedAt?: Date | string | null
-    author?: string | null
-    contentHash?: string | null
-    titleHash?: string | null
-    duplicateOf?: string | null
-    viewCount?: number
-    shareCount?: number
-    searchVector?: string | null
-    keywords?: ContentCreatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    author?: string | null
+    contentHash?: string | null
+    duplicateOf?: string | null
+    keywords?: ContentCreatekeywordsInput | string[]
+    quality?: number | null
+    relevance?: number | null
+    searchVector?: string | null
+    shareCount?: number
+    summary?: string | null
+    titleHash?: string | null
+    type?: $Enums.ContentType
+    viewCount?: number
   }
 
   export type ContentUpdateManyMutationInput = {
@@ -26243,30 +26243,30 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
-    summary?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
     category?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ContentUpdatetagsInput | string[]
     status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     priority?: IntFieldUpdateOperationsInput | number
-    quality?: NullableFloatFieldUpdateOperationsInput | number | null
-    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    author?: NullableStringFieldUpdateOperationsInput | string | null
-    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
-    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
-    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
-    viewCount?: IntFieldUpdateOperationsInput | number
-    shareCount?: IntFieldUpdateOperationsInput | number
-    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
-    keywords?: ContentUpdatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    author?: NullableStringFieldUpdateOperationsInput | string | null
+    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
+    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: ContentUpdatekeywordsInput | string[]
+    quality?: NullableFloatFieldUpdateOperationsInput | number | null
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
+    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
+    shareCount?: IntFieldUpdateOperationsInput | number
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    viewCount?: IntFieldUpdateOperationsInput | number
   }
 
   export type ContentUncheckedUpdateManyInput = {
@@ -26274,31 +26274,31 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
-    summary?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
     category?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ContentUpdatetagsInput | string[]
     status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     priority?: IntFieldUpdateOperationsInput | number
-    quality?: NullableFloatFieldUpdateOperationsInput | number | null
-    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     sourceId?: StringFieldUpdateOperationsInput | string
     sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    author?: NullableStringFieldUpdateOperationsInput | string | null
-    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
-    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
-    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
-    viewCount?: IntFieldUpdateOperationsInput | number
-    shareCount?: IntFieldUpdateOperationsInput | number
-    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
-    keywords?: ContentUpdatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    author?: NullableStringFieldUpdateOperationsInput | string | null
+    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
+    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: ContentUpdatekeywordsInput | string[]
+    quality?: NullableFloatFieldUpdateOperationsInput | number | null
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
+    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
+    shareCount?: IntFieldUpdateOperationsInput | number
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    viewCount?: IntFieldUpdateOperationsInput | number
   }
 
   export type TagCreateInput = {
@@ -26311,9 +26311,9 @@ export namespace Prisma {
     usageCount?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    contentTags?: ContentTagCreateNestedManyWithoutTagInput
     parent?: TagCreateNestedOneWithoutChildrenInput
     children?: TagCreateNestedManyWithoutParentInput
-    contentTags?: ContentTagCreateNestedManyWithoutTagInput
   }
 
   export type TagUncheckedCreateInput = {
@@ -26327,8 +26327,8 @@ export namespace Prisma {
     usageCount?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    children?: TagUncheckedCreateNestedManyWithoutParentInput
     contentTags?: ContentTagUncheckedCreateNestedManyWithoutTagInput
+    children?: TagUncheckedCreateNestedManyWithoutParentInput
   }
 
   export type TagUpdateInput = {
@@ -26341,9 +26341,9 @@ export namespace Prisma {
     usageCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    contentTags?: ContentTagUpdateManyWithoutTagNestedInput
     parent?: TagUpdateOneWithoutChildrenNestedInput
     children?: TagUpdateManyWithoutParentNestedInput
-    contentTags?: ContentTagUpdateManyWithoutTagNestedInput
   }
 
   export type TagUncheckedUpdateInput = {
@@ -26357,8 +26357,8 @@ export namespace Prisma {
     usageCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    children?: TagUncheckedUpdateManyWithoutParentNestedInput
     contentTags?: ContentTagUncheckedUpdateManyWithoutTagNestedInput
+    children?: TagUncheckedUpdateManyWithoutParentNestedInput
   }
 
   export type TagCreateManyInput = {
@@ -26401,8 +26401,8 @@ export namespace Prisma {
 
   export type ContentTagCreateInput = {
     id?: string
-    relevance?: number | null
     createdAt?: Date | string
+    relevance?: number | null
     content: ContentCreateNestedOneWithoutContentTagsInput
     tag: TagCreateNestedOneWithoutContentTagsInput
   }
@@ -26410,15 +26410,15 @@ export namespace Prisma {
   export type ContentTagUncheckedCreateInput = {
     id?: string
     contentId: string
-    tagId: string
-    relevance?: number | null
     createdAt?: Date | string
+    relevance?: number | null
+    tagId: string
   }
 
   export type ContentTagUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     content?: ContentUpdateOneRequiredWithoutContentTagsNestedInput
     tag?: TagUpdateOneRequiredWithoutContentTagsNestedInput
   }
@@ -26426,31 +26426,31 @@ export namespace Prisma {
   export type ContentTagUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     contentId?: StringFieldUpdateOperationsInput | string
-    tagId?: StringFieldUpdateOperationsInput | string
-    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
+    tagId?: StringFieldUpdateOperationsInput | string
   }
 
   export type ContentTagCreateManyInput = {
     id?: string
     contentId: string
-    tagId: string
-    relevance?: number | null
     createdAt?: Date | string
+    relevance?: number | null
+    tagId: string
   }
 
   export type ContentTagUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
   }
 
   export type ContentTagUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     contentId?: StringFieldUpdateOperationsInput | string
-    tagId?: StringFieldUpdateOperationsInput | string
-    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
+    tagId?: StringFieldUpdateOperationsInput | string
   }
 
   export type ContentReviewCreateInput = {
@@ -27610,16 +27610,16 @@ export namespace Prisma {
     none?: AccountWhereInput
   }
 
-  export type SessionListRelationFilter = {
-    every?: SessionWhereInput
-    some?: SessionWhereInput
-    none?: SessionWhereInput
-  }
-
   export type ContentReviewListRelationFilter = {
     every?: ContentReviewWhereInput
     some?: ContentReviewWhereInput
     none?: ContentReviewWhereInput
+  }
+
+  export type SessionListRelationFilter = {
+    every?: SessionWhereInput
+    some?: SessionWhereInput
+    none?: SessionWhereInput
   }
 
   export type UserActivityListRelationFilter = {
@@ -27637,11 +27637,11 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type SessionOrderByRelationAggregateInput = {
+  export type ContentReviewOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type ContentReviewOrderByRelationAggregateInput = {
+  export type SessionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -28129,13 +28129,6 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
-  export type EnumContentTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.ContentType | EnumContentTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumContentTypeFilter<$PrismaModel> | $Enums.ContentType
-  }
-
   export type StringNullableListFilter<$PrismaModel = never> = {
     equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
     has?: string | StringFieldRefInput<$PrismaModel> | null
@@ -28160,6 +28153,13 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type EnumContentTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.ContentType | EnumContentTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumContentTypeFilter<$PrismaModel> | $Enums.ContentType
   }
 
   export type SourceRelationFilter = {
@@ -28192,31 +28192,31 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     content?: SortOrder
-    summary?: SortOrder
     url?: SortOrder
     imageUrl?: SortOrder
-    type?: SortOrder
     category?: SortOrder
     tags?: SortOrder
     status?: SortOrder
     score?: SortOrder
     priority?: SortOrder
-    quality?: SortOrder
-    relevance?: SortOrder
     sourceId?: SortOrder
     sourceUrl?: SortOrder
     publishedAt?: SortOrder
-    author?: SortOrder
-    contentHash?: SortOrder
-    titleHash?: SortOrder
-    duplicateOf?: SortOrder
-    viewCount?: SortOrder
-    shareCount?: SortOrder
-    searchVector?: SortOrder
-    keywords?: SortOrder
     metadata?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    author?: SortOrder
+    contentHash?: SortOrder
+    duplicateOf?: SortOrder
+    keywords?: SortOrder
+    quality?: SortOrder
+    relevance?: SortOrder
+    searchVector?: SortOrder
+    shareCount?: SortOrder
+    summary?: SortOrder
+    titleHash?: SortOrder
+    type?: SortOrder
+    viewCount?: SortOrder
   }
 
   export type ContentAvgOrderByAggregateInput = {
@@ -28224,8 +28224,8 @@ export namespace Prisma {
     priority?: SortOrder
     quality?: SortOrder
     relevance?: SortOrder
-    viewCount?: SortOrder
     shareCount?: SortOrder
+    viewCount?: SortOrder
   }
 
   export type ContentMaxOrderByAggregateInput = {
@@ -28233,28 +28233,28 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     content?: SortOrder
-    summary?: SortOrder
     url?: SortOrder
     imageUrl?: SortOrder
-    type?: SortOrder
     category?: SortOrder
     status?: SortOrder
     score?: SortOrder
     priority?: SortOrder
-    quality?: SortOrder
-    relevance?: SortOrder
     sourceId?: SortOrder
     sourceUrl?: SortOrder
     publishedAt?: SortOrder
-    author?: SortOrder
-    contentHash?: SortOrder
-    titleHash?: SortOrder
-    duplicateOf?: SortOrder
-    viewCount?: SortOrder
-    shareCount?: SortOrder
-    searchVector?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    author?: SortOrder
+    contentHash?: SortOrder
+    duplicateOf?: SortOrder
+    quality?: SortOrder
+    relevance?: SortOrder
+    searchVector?: SortOrder
+    shareCount?: SortOrder
+    summary?: SortOrder
+    titleHash?: SortOrder
+    type?: SortOrder
+    viewCount?: SortOrder
   }
 
   export type ContentMinOrderByAggregateInput = {
@@ -28262,28 +28262,28 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     content?: SortOrder
-    summary?: SortOrder
     url?: SortOrder
     imageUrl?: SortOrder
-    type?: SortOrder
     category?: SortOrder
     status?: SortOrder
     score?: SortOrder
     priority?: SortOrder
-    quality?: SortOrder
-    relevance?: SortOrder
     sourceId?: SortOrder
     sourceUrl?: SortOrder
     publishedAt?: SortOrder
-    author?: SortOrder
-    contentHash?: SortOrder
-    titleHash?: SortOrder
-    duplicateOf?: SortOrder
-    viewCount?: SortOrder
-    shareCount?: SortOrder
-    searchVector?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    author?: SortOrder
+    contentHash?: SortOrder
+    duplicateOf?: SortOrder
+    quality?: SortOrder
+    relevance?: SortOrder
+    searchVector?: SortOrder
+    shareCount?: SortOrder
+    summary?: SortOrder
+    titleHash?: SortOrder
+    type?: SortOrder
+    viewCount?: SortOrder
   }
 
   export type ContentSumOrderByAggregateInput = {
@@ -28291,18 +28291,8 @@ export namespace Prisma {
     priority?: SortOrder
     quality?: SortOrder
     relevance?: SortOrder
-    viewCount?: SortOrder
     shareCount?: SortOrder
-  }
-
-  export type EnumContentTypeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ContentType | EnumContentTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumContentTypeWithAggregatesFilter<$PrismaModel> | $Enums.ContentType
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumContentTypeFilter<$PrismaModel>
-    _max?: NestedEnumContentTypeFilter<$PrismaModel>
+    viewCount?: SortOrder
   }
 
   export type EnumContentStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -28329,6 +28319,16 @@ export namespace Prisma {
     _sum?: NestedFloatNullableFilter<$PrismaModel>
     _min?: NestedFloatNullableFilter<$PrismaModel>
     _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
+  export type EnumContentTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ContentType | EnumContentTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumContentTypeWithAggregatesFilter<$PrismaModel> | $Enums.ContentType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumContentTypeFilter<$PrismaModel>
+    _max?: NestedEnumContentTypeFilter<$PrismaModel>
   }
 
   export type EnumTagTypeFilter<$PrismaModel = never> = {
@@ -28428,9 +28428,9 @@ export namespace Prisma {
   export type ContentTagCountOrderByAggregateInput = {
     id?: SortOrder
     contentId?: SortOrder
-    tagId?: SortOrder
-    relevance?: SortOrder
     createdAt?: SortOrder
+    relevance?: SortOrder
+    tagId?: SortOrder
   }
 
   export type ContentTagAvgOrderByAggregateInput = {
@@ -28440,17 +28440,17 @@ export namespace Prisma {
   export type ContentTagMaxOrderByAggregateInput = {
     id?: SortOrder
     contentId?: SortOrder
-    tagId?: SortOrder
-    relevance?: SortOrder
     createdAt?: SortOrder
+    relevance?: SortOrder
+    tagId?: SortOrder
   }
 
   export type ContentTagMinOrderByAggregateInput = {
     id?: SortOrder
     contentId?: SortOrder
-    tagId?: SortOrder
-    relevance?: SortOrder
     createdAt?: SortOrder
+    relevance?: SortOrder
+    tagId?: SortOrder
   }
 
   export type ContentTagSumOrderByAggregateInput = {
@@ -29104,18 +29104,18 @@ export namespace Prisma {
     connect?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
   }
 
-  export type SessionCreateNestedManyWithoutUserInput = {
-    create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
-    createMany?: SessionCreateManyUserInputEnvelope
-    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-  }
-
   export type ContentReviewCreateNestedManyWithoutUserInput = {
     create?: XOR<ContentReviewCreateWithoutUserInput, ContentReviewUncheckedCreateWithoutUserInput> | ContentReviewCreateWithoutUserInput[] | ContentReviewUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ContentReviewCreateOrConnectWithoutUserInput | ContentReviewCreateOrConnectWithoutUserInput[]
     createMany?: ContentReviewCreateManyUserInputEnvelope
     connect?: ContentReviewWhereUniqueInput | ContentReviewWhereUniqueInput[]
+  }
+
+  export type SessionCreateNestedManyWithoutUserInput = {
+    create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
+    createMany?: SessionCreateManyUserInputEnvelope
+    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
   }
 
   export type UserActivityCreateNestedManyWithoutUserInput = {
@@ -29132,18 +29132,18 @@ export namespace Prisma {
     connect?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
   }
 
-  export type SessionUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
-    createMany?: SessionCreateManyUserInputEnvelope
-    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-  }
-
   export type ContentReviewUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<ContentReviewCreateWithoutUserInput, ContentReviewUncheckedCreateWithoutUserInput> | ContentReviewCreateWithoutUserInput[] | ContentReviewUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ContentReviewCreateOrConnectWithoutUserInput | ContentReviewCreateOrConnectWithoutUserInput[]
     createMany?: ContentReviewCreateManyUserInputEnvelope
     connect?: ContentReviewWhereUniqueInput | ContentReviewWhereUniqueInput[]
+  }
+
+  export type SessionUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
+    createMany?: SessionCreateManyUserInputEnvelope
+    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
   }
 
   export type UserActivityUncheckedCreateNestedManyWithoutUserInput = {
@@ -29191,20 +29191,6 @@ export namespace Prisma {
     deleteMany?: AccountScalarWhereInput | AccountScalarWhereInput[]
   }
 
-  export type SessionUpdateManyWithoutUserNestedInput = {
-    create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
-    upsert?: SessionUpsertWithWhereUniqueWithoutUserInput | SessionUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: SessionCreateManyUserInputEnvelope
-    set?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-    disconnect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-    delete?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-    update?: SessionUpdateWithWhereUniqueWithoutUserInput | SessionUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: SessionUpdateManyWithWhereWithoutUserInput | SessionUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
-  }
-
   export type ContentReviewUpdateManyWithoutUserNestedInput = {
     create?: XOR<ContentReviewCreateWithoutUserInput, ContentReviewUncheckedCreateWithoutUserInput> | ContentReviewCreateWithoutUserInput[] | ContentReviewUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ContentReviewCreateOrConnectWithoutUserInput | ContentReviewCreateOrConnectWithoutUserInput[]
@@ -29217,6 +29203,20 @@ export namespace Prisma {
     update?: ContentReviewUpdateWithWhereUniqueWithoutUserInput | ContentReviewUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: ContentReviewUpdateManyWithWhereWithoutUserInput | ContentReviewUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: ContentReviewScalarWhereInput | ContentReviewScalarWhereInput[]
+  }
+
+  export type SessionUpdateManyWithoutUserNestedInput = {
+    create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
+    upsert?: SessionUpsertWithWhereUniqueWithoutUserInput | SessionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: SessionCreateManyUserInputEnvelope
+    set?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    disconnect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    delete?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    update?: SessionUpdateWithWhereUniqueWithoutUserInput | SessionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: SessionUpdateManyWithWhereWithoutUserInput | SessionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
   }
 
   export type UserActivityUpdateManyWithoutUserNestedInput = {
@@ -29247,20 +29247,6 @@ export namespace Prisma {
     deleteMany?: AccountScalarWhereInput | AccountScalarWhereInput[]
   }
 
-  export type SessionUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
-    upsert?: SessionUpsertWithWhereUniqueWithoutUserInput | SessionUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: SessionCreateManyUserInputEnvelope
-    set?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-    disconnect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-    delete?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-    update?: SessionUpdateWithWhereUniqueWithoutUserInput | SessionUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: SessionUpdateManyWithWhereWithoutUserInput | SessionUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
-  }
-
   export type ContentReviewUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<ContentReviewCreateWithoutUserInput, ContentReviewUncheckedCreateWithoutUserInput> | ContentReviewCreateWithoutUserInput[] | ContentReviewUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ContentReviewCreateOrConnectWithoutUserInput | ContentReviewCreateOrConnectWithoutUserInput[]
@@ -29273,6 +29259,20 @@ export namespace Prisma {
     update?: ContentReviewUpdateWithWhereUniqueWithoutUserInput | ContentReviewUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: ContentReviewUpdateManyWithWhereWithoutUserInput | ContentReviewUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: ContentReviewScalarWhereInput | ContentReviewScalarWhereInput[]
+  }
+
+  export type SessionUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
+    upsert?: SessionUpsertWithWhereUniqueWithoutUserInput | SessionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: SessionCreateManyUserInputEnvelope
+    set?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    disconnect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    delete?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    update?: SessionUpdateWithWhereUniqueWithoutUserInput | SessionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: SessionUpdateManyWithWhereWithoutUserInput | SessionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
   }
 
   export type UserActivityUncheckedUpdateManyWithoutUserNestedInput = {
@@ -29443,10 +29443,6 @@ export namespace Prisma {
     connect?: ContentVersionWhereUniqueInput | ContentVersionWhereUniqueInput[]
   }
 
-  export type EnumContentTypeFieldUpdateOperationsInput = {
-    set?: $Enums.ContentType
-  }
-
   export type ContentUpdatetagsInput = {
     set?: string[]
     push?: string | string[]
@@ -29467,6 +29463,10 @@ export namespace Prisma {
   export type ContentUpdatekeywordsInput = {
     set?: string[]
     push?: string | string[]
+  }
+
+  export type EnumContentTypeFieldUpdateOperationsInput = {
+    set?: $Enums.ContentType
   }
 
   export type SourceUpdateOneRequiredWithoutContentNestedInput = {
@@ -29561,6 +29561,13 @@ export namespace Prisma {
     deleteMany?: ContentVersionScalarWhereInput | ContentVersionScalarWhereInput[]
   }
 
+  export type ContentTagCreateNestedManyWithoutTagInput = {
+    create?: XOR<ContentTagCreateWithoutTagInput, ContentTagUncheckedCreateWithoutTagInput> | ContentTagCreateWithoutTagInput[] | ContentTagUncheckedCreateWithoutTagInput[]
+    connectOrCreate?: ContentTagCreateOrConnectWithoutTagInput | ContentTagCreateOrConnectWithoutTagInput[]
+    createMany?: ContentTagCreateManyTagInputEnvelope
+    connect?: ContentTagWhereUniqueInput | ContentTagWhereUniqueInput[]
+  }
+
   export type TagCreateNestedOneWithoutChildrenInput = {
     create?: XOR<TagCreateWithoutChildrenInput, TagUncheckedCreateWithoutChildrenInput>
     connectOrCreate?: TagCreateOrConnectWithoutChildrenInput
@@ -29574,7 +29581,7 @@ export namespace Prisma {
     connect?: TagWhereUniqueInput | TagWhereUniqueInput[]
   }
 
-  export type ContentTagCreateNestedManyWithoutTagInput = {
+  export type ContentTagUncheckedCreateNestedManyWithoutTagInput = {
     create?: XOR<ContentTagCreateWithoutTagInput, ContentTagUncheckedCreateWithoutTagInput> | ContentTagCreateWithoutTagInput[] | ContentTagUncheckedCreateWithoutTagInput[]
     connectOrCreate?: ContentTagCreateOrConnectWithoutTagInput | ContentTagCreateOrConnectWithoutTagInput[]
     createMany?: ContentTagCreateManyTagInputEnvelope
@@ -29588,15 +29595,22 @@ export namespace Prisma {
     connect?: TagWhereUniqueInput | TagWhereUniqueInput[]
   }
 
-  export type ContentTagUncheckedCreateNestedManyWithoutTagInput = {
-    create?: XOR<ContentTagCreateWithoutTagInput, ContentTagUncheckedCreateWithoutTagInput> | ContentTagCreateWithoutTagInput[] | ContentTagUncheckedCreateWithoutTagInput[]
-    connectOrCreate?: ContentTagCreateOrConnectWithoutTagInput | ContentTagCreateOrConnectWithoutTagInput[]
-    createMany?: ContentTagCreateManyTagInputEnvelope
-    connect?: ContentTagWhereUniqueInput | ContentTagWhereUniqueInput[]
-  }
-
   export type EnumTagTypeFieldUpdateOperationsInput = {
     set?: $Enums.TagType
+  }
+
+  export type ContentTagUpdateManyWithoutTagNestedInput = {
+    create?: XOR<ContentTagCreateWithoutTagInput, ContentTagUncheckedCreateWithoutTagInput> | ContentTagCreateWithoutTagInput[] | ContentTagUncheckedCreateWithoutTagInput[]
+    connectOrCreate?: ContentTagCreateOrConnectWithoutTagInput | ContentTagCreateOrConnectWithoutTagInput[]
+    upsert?: ContentTagUpsertWithWhereUniqueWithoutTagInput | ContentTagUpsertWithWhereUniqueWithoutTagInput[]
+    createMany?: ContentTagCreateManyTagInputEnvelope
+    set?: ContentTagWhereUniqueInput | ContentTagWhereUniqueInput[]
+    disconnect?: ContentTagWhereUniqueInput | ContentTagWhereUniqueInput[]
+    delete?: ContentTagWhereUniqueInput | ContentTagWhereUniqueInput[]
+    connect?: ContentTagWhereUniqueInput | ContentTagWhereUniqueInput[]
+    update?: ContentTagUpdateWithWhereUniqueWithoutTagInput | ContentTagUpdateWithWhereUniqueWithoutTagInput[]
+    updateMany?: ContentTagUpdateManyWithWhereWithoutTagInput | ContentTagUpdateManyWithWhereWithoutTagInput[]
+    deleteMany?: ContentTagScalarWhereInput | ContentTagScalarWhereInput[]
   }
 
   export type TagUpdateOneWithoutChildrenNestedInput = {
@@ -29623,7 +29637,7 @@ export namespace Prisma {
     deleteMany?: TagScalarWhereInput | TagScalarWhereInput[]
   }
 
-  export type ContentTagUpdateManyWithoutTagNestedInput = {
+  export type ContentTagUncheckedUpdateManyWithoutTagNestedInput = {
     create?: XOR<ContentTagCreateWithoutTagInput, ContentTagUncheckedCreateWithoutTagInput> | ContentTagCreateWithoutTagInput[] | ContentTagUncheckedCreateWithoutTagInput[]
     connectOrCreate?: ContentTagCreateOrConnectWithoutTagInput | ContentTagCreateOrConnectWithoutTagInput[]
     upsert?: ContentTagUpsertWithWhereUniqueWithoutTagInput | ContentTagUpsertWithWhereUniqueWithoutTagInput[]
@@ -29649,20 +29663,6 @@ export namespace Prisma {
     update?: TagUpdateWithWhereUniqueWithoutParentInput | TagUpdateWithWhereUniqueWithoutParentInput[]
     updateMany?: TagUpdateManyWithWhereWithoutParentInput | TagUpdateManyWithWhereWithoutParentInput[]
     deleteMany?: TagScalarWhereInput | TagScalarWhereInput[]
-  }
-
-  export type ContentTagUncheckedUpdateManyWithoutTagNestedInput = {
-    create?: XOR<ContentTagCreateWithoutTagInput, ContentTagUncheckedCreateWithoutTagInput> | ContentTagCreateWithoutTagInput[] | ContentTagUncheckedCreateWithoutTagInput[]
-    connectOrCreate?: ContentTagCreateOrConnectWithoutTagInput | ContentTagCreateOrConnectWithoutTagInput[]
-    upsert?: ContentTagUpsertWithWhereUniqueWithoutTagInput | ContentTagUpsertWithWhereUniqueWithoutTagInput[]
-    createMany?: ContentTagCreateManyTagInputEnvelope
-    set?: ContentTagWhereUniqueInput | ContentTagWhereUniqueInput[]
-    disconnect?: ContentTagWhereUniqueInput | ContentTagWhereUniqueInput[]
-    delete?: ContentTagWhereUniqueInput | ContentTagWhereUniqueInput[]
-    connect?: ContentTagWhereUniqueInput | ContentTagWhereUniqueInput[]
-    update?: ContentTagUpdateWithWhereUniqueWithoutTagInput | ContentTagUpdateWithWhereUniqueWithoutTagInput[]
-    updateMany?: ContentTagUpdateManyWithWhereWithoutTagInput | ContentTagUpdateManyWithWhereWithoutTagInput[]
-    deleteMany?: ContentTagScalarWhereInput | ContentTagScalarWhereInput[]
   }
 
   export type ContentCreateNestedOneWithoutContentTagsInput = {
@@ -30161,13 +30161,6 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
-  export type NestedEnumContentTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.ContentType | EnumContentTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumContentTypeFilter<$PrismaModel> | $Enums.ContentType
-  }
-
   export type NestedEnumContentStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.ContentStatus | EnumContentStatusFieldRefInput<$PrismaModel>
     in?: $Enums.ContentStatus[] | ListEnumContentStatusFieldRefInput<$PrismaModel>
@@ -30175,14 +30168,11 @@ export namespace Prisma {
     not?: NestedEnumContentStatusFilter<$PrismaModel> | $Enums.ContentStatus
   }
 
-  export type NestedEnumContentTypeWithAggregatesFilter<$PrismaModel = never> = {
+  export type NestedEnumContentTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.ContentType | EnumContentTypeFieldRefInput<$PrismaModel>
     in?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel>
     notIn?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumContentTypeWithAggregatesFilter<$PrismaModel> | $Enums.ContentType
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumContentTypeFilter<$PrismaModel>
-    _max?: NestedEnumContentTypeFilter<$PrismaModel>
+    not?: NestedEnumContentTypeFilter<$PrismaModel> | $Enums.ContentType
   }
 
   export type NestedEnumContentStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -30209,6 +30199,16 @@ export namespace Prisma {
     _sum?: NestedFloatNullableFilter<$PrismaModel>
     _min?: NestedFloatNullableFilter<$PrismaModel>
     _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
+  export type NestedEnumContentTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ContentType | EnumContentTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ContentType[] | ListEnumContentTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumContentTypeWithAggregatesFilter<$PrismaModel> | $Enums.ContentType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumContentTypeFilter<$PrismaModel>
+    _max?: NestedEnumContentTypeFilter<$PrismaModel>
   }
 
   export type NestedEnumTagTypeFilter<$PrismaModel = never> = {
@@ -30359,32 +30359,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type SessionCreateWithoutUserInput = {
-    id?: string
-    sessionToken: string
-    expires: Date | string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type SessionUncheckedCreateWithoutUserInput = {
-    id?: string
-    sessionToken: string
-    expires: Date | string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type SessionCreateOrConnectWithoutUserInput = {
-    where: SessionWhereUniqueInput
-    create: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput>
-  }
-
-  export type SessionCreateManyUserInputEnvelope = {
-    data: SessionCreateManyUserInput | SessionCreateManyUserInput[]
-    skipDuplicates?: boolean
-  }
-
   export type ContentReviewCreateWithoutUserInput = {
     id?: string
     action: $Enums.ReviewAction
@@ -30408,6 +30382,32 @@ export namespace Prisma {
 
   export type ContentReviewCreateManyUserInputEnvelope = {
     data: ContentReviewCreateManyUserInput | ContentReviewCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SessionCreateWithoutUserInput = {
+    id?: string
+    sessionToken: string
+    expires: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SessionUncheckedCreateWithoutUserInput = {
+    id?: string
+    sessionToken: string
+    expires: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SessionCreateOrConnectWithoutUserInput = {
+    where: SessionWhereUniqueInput
+    create: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput>
+  }
+
+  export type SessionCreateManyUserInputEnvelope = {
+    data: SessionCreateManyUserInput | SessionCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -30475,34 +30475,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Account"> | Date | string
   }
 
-  export type SessionUpsertWithWhereUniqueWithoutUserInput = {
-    where: SessionWhereUniqueInput
-    update: XOR<SessionUpdateWithoutUserInput, SessionUncheckedUpdateWithoutUserInput>
-    create: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput>
-  }
-
-  export type SessionUpdateWithWhereUniqueWithoutUserInput = {
-    where: SessionWhereUniqueInput
-    data: XOR<SessionUpdateWithoutUserInput, SessionUncheckedUpdateWithoutUserInput>
-  }
-
-  export type SessionUpdateManyWithWhereWithoutUserInput = {
-    where: SessionScalarWhereInput
-    data: XOR<SessionUpdateManyMutationInput, SessionUncheckedUpdateManyWithoutUserInput>
-  }
-
-  export type SessionScalarWhereInput = {
-    AND?: SessionScalarWhereInput | SessionScalarWhereInput[]
-    OR?: SessionScalarWhereInput[]
-    NOT?: SessionScalarWhereInput | SessionScalarWhereInput[]
-    id?: StringFilter<"Session"> | string
-    sessionToken?: StringFilter<"Session"> | string
-    userId?: StringFilter<"Session"> | string
-    expires?: DateTimeFilter<"Session"> | Date | string
-    createdAt?: DateTimeFilter<"Session"> | Date | string
-    updatedAt?: DateTimeFilter<"Session"> | Date | string
-  }
-
   export type ContentReviewUpsertWithWhereUniqueWithoutUserInput = {
     where: ContentReviewWhereUniqueInput
     update: XOR<ContentReviewUpdateWithoutUserInput, ContentReviewUncheckedUpdateWithoutUserInput>
@@ -30529,6 +30501,34 @@ export namespace Prisma {
     action?: EnumReviewActionFilter<"ContentReview"> | $Enums.ReviewAction
     comment?: StringNullableFilter<"ContentReview"> | string | null
     createdAt?: DateTimeFilter<"ContentReview"> | Date | string
+  }
+
+  export type SessionUpsertWithWhereUniqueWithoutUserInput = {
+    where: SessionWhereUniqueInput
+    update: XOR<SessionUpdateWithoutUserInput, SessionUncheckedUpdateWithoutUserInput>
+    create: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput>
+  }
+
+  export type SessionUpdateWithWhereUniqueWithoutUserInput = {
+    where: SessionWhereUniqueInput
+    data: XOR<SessionUpdateWithoutUserInput, SessionUncheckedUpdateWithoutUserInput>
+  }
+
+  export type SessionUpdateManyWithWhereWithoutUserInput = {
+    where: SessionScalarWhereInput
+    data: XOR<SessionUpdateManyMutationInput, SessionUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type SessionScalarWhereInput = {
+    AND?: SessionScalarWhereInput | SessionScalarWhereInput[]
+    OR?: SessionScalarWhereInput[]
+    NOT?: SessionScalarWhereInput | SessionScalarWhereInput[]
+    id?: StringFilter<"Session"> | string
+    sessionToken?: StringFilter<"Session"> | string
+    userId?: StringFilter<"Session"> | string
+    expires?: DateTimeFilter<"Session"> | Date | string
+    createdAt?: DateTimeFilter<"Session"> | Date | string
+    updatedAt?: DateTimeFilter<"Session"> | Date | string
   }
 
   export type UserActivityUpsertWithWhereUniqueWithoutUserInput = {
@@ -30578,8 +30578,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     lastLoginAt?: Date | string | null
-    sessions?: SessionCreateNestedManyWithoutUserInput
     contentReviews?: ContentReviewCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
     userActivities?: UserActivityCreateNestedManyWithoutUserInput
   }
 
@@ -30601,8 +30601,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     lastLoginAt?: Date | string | null
-    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     contentReviews?: ContentReviewUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     userActivities?: UserActivityUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -30640,8 +30640,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    sessions?: SessionUpdateManyWithoutUserNestedInput
     contentReviews?: ContentReviewUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
     userActivities?: UserActivityUpdateManyWithoutUserNestedInput
   }
 
@@ -30663,8 +30663,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     contentReviews?: ContentReviewUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     userActivities?: UserActivityUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -30781,30 +30781,30 @@ export namespace Prisma {
     title: string
     description?: string | null
     content?: string | null
-    summary?: string | null
     url?: string | null
     imageUrl?: string | null
-    type?: $Enums.ContentType
     category?: string | null
     tags?: ContentCreatetagsInput | string[]
     status?: $Enums.ContentStatus
     score?: number | null
     priority?: number
-    quality?: number | null
-    relevance?: number | null
     sourceUrl?: string | null
     publishedAt?: Date | string | null
-    author?: string | null
-    contentHash?: string | null
-    titleHash?: string | null
-    duplicateOf?: string | null
-    viewCount?: number
-    shareCount?: number
-    searchVector?: string | null
-    keywords?: ContentCreatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    author?: string | null
+    contentHash?: string | null
+    duplicateOf?: string | null
+    keywords?: ContentCreatekeywordsInput | string[]
+    quality?: number | null
+    relevance?: number | null
+    searchVector?: string | null
+    shareCount?: number
+    summary?: string | null
+    titleHash?: string | null
+    type?: $Enums.ContentType
+    viewCount?: number
     reviews?: ContentReviewCreateNestedManyWithoutContentInput
     contentTags?: ContentTagCreateNestedManyWithoutContentInput
     versions?: ContentVersionCreateNestedManyWithoutContentItemInput
@@ -30815,30 +30815,30 @@ export namespace Prisma {
     title: string
     description?: string | null
     content?: string | null
-    summary?: string | null
     url?: string | null
     imageUrl?: string | null
-    type?: $Enums.ContentType
     category?: string | null
     tags?: ContentCreatetagsInput | string[]
     status?: $Enums.ContentStatus
     score?: number | null
     priority?: number
-    quality?: number | null
-    relevance?: number | null
     sourceUrl?: string | null
     publishedAt?: Date | string | null
-    author?: string | null
-    contentHash?: string | null
-    titleHash?: string | null
-    duplicateOf?: string | null
-    viewCount?: number
-    shareCount?: number
-    searchVector?: string | null
-    keywords?: ContentCreatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    author?: string | null
+    contentHash?: string | null
+    duplicateOf?: string | null
+    keywords?: ContentCreatekeywordsInput | string[]
+    quality?: number | null
+    relevance?: number | null
+    searchVector?: string | null
+    shareCount?: number
+    summary?: string | null
+    titleHash?: string | null
+    type?: $Enums.ContentType
+    viewCount?: number
     reviews?: ContentReviewUncheckedCreateNestedManyWithoutContentInput
     contentTags?: ContentTagUncheckedCreateNestedManyWithoutContentInput
     versions?: ContentVersionUncheckedCreateNestedManyWithoutContentItemInput
@@ -30878,31 +30878,31 @@ export namespace Prisma {
     title?: StringFilter<"Content"> | string
     description?: StringNullableFilter<"Content"> | string | null
     content?: StringNullableFilter<"Content"> | string | null
-    summary?: StringNullableFilter<"Content"> | string | null
     url?: StringNullableFilter<"Content"> | string | null
     imageUrl?: StringNullableFilter<"Content"> | string | null
-    type?: EnumContentTypeFilter<"Content"> | $Enums.ContentType
     category?: StringNullableFilter<"Content"> | string | null
     tags?: StringNullableListFilter<"Content">
     status?: EnumContentStatusFilter<"Content"> | $Enums.ContentStatus
     score?: FloatNullableFilter<"Content"> | number | null
     priority?: IntFilter<"Content"> | number
-    quality?: FloatNullableFilter<"Content"> | number | null
-    relevance?: FloatNullableFilter<"Content"> | number | null
     sourceId?: StringFilter<"Content"> | string
     sourceUrl?: StringNullableFilter<"Content"> | string | null
     publishedAt?: DateTimeNullableFilter<"Content"> | Date | string | null
-    author?: StringNullableFilter<"Content"> | string | null
-    contentHash?: StringNullableFilter<"Content"> | string | null
-    titleHash?: StringNullableFilter<"Content"> | string | null
-    duplicateOf?: StringNullableFilter<"Content"> | string | null
-    viewCount?: IntFilter<"Content"> | number
-    shareCount?: IntFilter<"Content"> | number
-    searchVector?: StringNullableFilter<"Content"> | string | null
-    keywords?: StringNullableListFilter<"Content">
     metadata?: JsonNullableFilter<"Content">
     createdAt?: DateTimeFilter<"Content"> | Date | string
     updatedAt?: DateTimeFilter<"Content"> | Date | string
+    author?: StringNullableFilter<"Content"> | string | null
+    contentHash?: StringNullableFilter<"Content"> | string | null
+    duplicateOf?: StringNullableFilter<"Content"> | string | null
+    keywords?: StringNullableListFilter<"Content">
+    quality?: FloatNullableFilter<"Content"> | number | null
+    relevance?: FloatNullableFilter<"Content"> | number | null
+    searchVector?: StringNullableFilter<"Content"> | string | null
+    shareCount?: IntFilter<"Content"> | number
+    summary?: StringNullableFilter<"Content"> | string | null
+    titleHash?: StringNullableFilter<"Content"> | string | null
+    type?: EnumContentTypeFilter<"Content"> | $Enums.ContentType
+    viewCount?: IntFilter<"Content"> | number
   }
 
   export type SourceCreateWithoutContentInput = {
@@ -30968,16 +30968,16 @@ export namespace Prisma {
 
   export type ContentTagCreateWithoutContentInput = {
     id?: string
-    relevance?: number | null
     createdAt?: Date | string
+    relevance?: number | null
     tag: TagCreateNestedOneWithoutContentTagsInput
   }
 
   export type ContentTagUncheckedCreateWithoutContentInput = {
     id?: string
-    tagId: string
-    relevance?: number | null
     createdAt?: Date | string
+    relevance?: number | null
+    tagId: string
   }
 
   export type ContentTagCreateOrConnectWithoutContentInput = {
@@ -31109,9 +31109,9 @@ export namespace Prisma {
     NOT?: ContentTagScalarWhereInput | ContentTagScalarWhereInput[]
     id?: StringFilter<"ContentTag"> | string
     contentId?: StringFilter<"ContentTag"> | string
-    tagId?: StringFilter<"ContentTag"> | string
-    relevance?: FloatNullableFilter<"ContentTag"> | number | null
     createdAt?: DateTimeFilter<"ContentTag"> | Date | string
+    relevance?: FloatNullableFilter<"ContentTag"> | number | null
+    tagId?: StringFilter<"ContentTag"> | string
   }
 
   export type ContentVersionUpsertWithWhereUniqueWithoutContentItemInput = {
@@ -31149,6 +31149,30 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"ContentVersion"> | Date | string
   }
 
+  export type ContentTagCreateWithoutTagInput = {
+    id?: string
+    createdAt?: Date | string
+    relevance?: number | null
+    content: ContentCreateNestedOneWithoutContentTagsInput
+  }
+
+  export type ContentTagUncheckedCreateWithoutTagInput = {
+    id?: string
+    contentId: string
+    createdAt?: Date | string
+    relevance?: number | null
+  }
+
+  export type ContentTagCreateOrConnectWithoutTagInput = {
+    where: ContentTagWhereUniqueInput
+    create: XOR<ContentTagCreateWithoutTagInput, ContentTagUncheckedCreateWithoutTagInput>
+  }
+
+  export type ContentTagCreateManyTagInputEnvelope = {
+    data: ContentTagCreateManyTagInput | ContentTagCreateManyTagInput[]
+    skipDuplicates?: boolean
+  }
+
   export type TagCreateWithoutChildrenInput = {
     id?: string
     name: string
@@ -31159,8 +31183,8 @@ export namespace Prisma {
     usageCount?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    parent?: TagCreateNestedOneWithoutChildrenInput
     contentTags?: ContentTagCreateNestedManyWithoutTagInput
+    parent?: TagCreateNestedOneWithoutChildrenInput
   }
 
   export type TagUncheckedCreateWithoutChildrenInput = {
@@ -31192,8 +31216,8 @@ export namespace Prisma {
     usageCount?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    children?: TagCreateNestedManyWithoutParentInput
     contentTags?: ContentTagCreateNestedManyWithoutTagInput
+    children?: TagCreateNestedManyWithoutParentInput
   }
 
   export type TagUncheckedCreateWithoutParentInput = {
@@ -31206,8 +31230,8 @@ export namespace Prisma {
     usageCount?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    children?: TagUncheckedCreateNestedManyWithoutParentInput
     contentTags?: ContentTagUncheckedCreateNestedManyWithoutTagInput
+    children?: TagUncheckedCreateNestedManyWithoutParentInput
   }
 
   export type TagCreateOrConnectWithoutParentInput = {
@@ -31220,28 +31244,20 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type ContentTagCreateWithoutTagInput = {
-    id?: string
-    relevance?: number | null
-    createdAt?: Date | string
-    content: ContentCreateNestedOneWithoutContentTagsInput
-  }
-
-  export type ContentTagUncheckedCreateWithoutTagInput = {
-    id?: string
-    contentId: string
-    relevance?: number | null
-    createdAt?: Date | string
-  }
-
-  export type ContentTagCreateOrConnectWithoutTagInput = {
+  export type ContentTagUpsertWithWhereUniqueWithoutTagInput = {
     where: ContentTagWhereUniqueInput
+    update: XOR<ContentTagUpdateWithoutTagInput, ContentTagUncheckedUpdateWithoutTagInput>
     create: XOR<ContentTagCreateWithoutTagInput, ContentTagUncheckedCreateWithoutTagInput>
   }
 
-  export type ContentTagCreateManyTagInputEnvelope = {
-    data: ContentTagCreateManyTagInput | ContentTagCreateManyTagInput[]
-    skipDuplicates?: boolean
+  export type ContentTagUpdateWithWhereUniqueWithoutTagInput = {
+    where: ContentTagWhereUniqueInput
+    data: XOR<ContentTagUpdateWithoutTagInput, ContentTagUncheckedUpdateWithoutTagInput>
+  }
+
+  export type ContentTagUpdateManyWithWhereWithoutTagInput = {
+    where: ContentTagScalarWhereInput
+    data: XOR<ContentTagUpdateManyMutationInput, ContentTagUncheckedUpdateManyWithoutTagInput>
   }
 
   export type TagUpsertWithoutChildrenInput = {
@@ -31265,8 +31281,8 @@ export namespace Prisma {
     usageCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    parent?: TagUpdateOneWithoutChildrenNestedInput
     contentTags?: ContentTagUpdateManyWithoutTagNestedInput
+    parent?: TagUpdateOneWithoutChildrenNestedInput
   }
 
   export type TagUncheckedUpdateWithoutChildrenInput = {
@@ -31315,51 +31331,35 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Tag"> | Date | string
   }
 
-  export type ContentTagUpsertWithWhereUniqueWithoutTagInput = {
-    where: ContentTagWhereUniqueInput
-    update: XOR<ContentTagUpdateWithoutTagInput, ContentTagUncheckedUpdateWithoutTagInput>
-    create: XOR<ContentTagCreateWithoutTagInput, ContentTagUncheckedCreateWithoutTagInput>
-  }
-
-  export type ContentTagUpdateWithWhereUniqueWithoutTagInput = {
-    where: ContentTagWhereUniqueInput
-    data: XOR<ContentTagUpdateWithoutTagInput, ContentTagUncheckedUpdateWithoutTagInput>
-  }
-
-  export type ContentTagUpdateManyWithWhereWithoutTagInput = {
-    where: ContentTagScalarWhereInput
-    data: XOR<ContentTagUpdateManyMutationInput, ContentTagUncheckedUpdateManyWithoutTagInput>
-  }
-
   export type ContentCreateWithoutContentTagsInput = {
     id?: string
     title: string
     description?: string | null
     content?: string | null
-    summary?: string | null
     url?: string | null
     imageUrl?: string | null
-    type?: $Enums.ContentType
     category?: string | null
     tags?: ContentCreatetagsInput | string[]
     status?: $Enums.ContentStatus
     score?: number | null
     priority?: number
-    quality?: number | null
-    relevance?: number | null
     sourceUrl?: string | null
     publishedAt?: Date | string | null
-    author?: string | null
-    contentHash?: string | null
-    titleHash?: string | null
-    duplicateOf?: string | null
-    viewCount?: number
-    shareCount?: number
-    searchVector?: string | null
-    keywords?: ContentCreatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    author?: string | null
+    contentHash?: string | null
+    duplicateOf?: string | null
+    keywords?: ContentCreatekeywordsInput | string[]
+    quality?: number | null
+    relevance?: number | null
+    searchVector?: string | null
+    shareCount?: number
+    summary?: string | null
+    titleHash?: string | null
+    type?: $Enums.ContentType
+    viewCount?: number
     source: SourceCreateNestedOneWithoutContentInput
     reviews?: ContentReviewCreateNestedManyWithoutContentInput
     versions?: ContentVersionCreateNestedManyWithoutContentItemInput
@@ -31370,31 +31370,31 @@ export namespace Prisma {
     title: string
     description?: string | null
     content?: string | null
-    summary?: string | null
     url?: string | null
     imageUrl?: string | null
-    type?: $Enums.ContentType
     category?: string | null
     tags?: ContentCreatetagsInput | string[]
     status?: $Enums.ContentStatus
     score?: number | null
     priority?: number
-    quality?: number | null
-    relevance?: number | null
     sourceId: string
     sourceUrl?: string | null
     publishedAt?: Date | string | null
-    author?: string | null
-    contentHash?: string | null
-    titleHash?: string | null
-    duplicateOf?: string | null
-    viewCount?: number
-    shareCount?: number
-    searchVector?: string | null
-    keywords?: ContentCreatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    author?: string | null
+    contentHash?: string | null
+    duplicateOf?: string | null
+    keywords?: ContentCreatekeywordsInput | string[]
+    quality?: number | null
+    relevance?: number | null
+    searchVector?: string | null
+    shareCount?: number
+    summary?: string | null
+    titleHash?: string | null
+    type?: $Enums.ContentType
+    viewCount?: number
     reviews?: ContentReviewUncheckedCreateNestedManyWithoutContentInput
     versions?: ContentVersionUncheckedCreateNestedManyWithoutContentItemInput
   }
@@ -31453,30 +31453,30 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
-    summary?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
     category?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ContentUpdatetagsInput | string[]
     status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     priority?: IntFieldUpdateOperationsInput | number
-    quality?: NullableFloatFieldUpdateOperationsInput | number | null
-    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    author?: NullableStringFieldUpdateOperationsInput | string | null
-    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
-    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
-    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
-    viewCount?: IntFieldUpdateOperationsInput | number
-    shareCount?: IntFieldUpdateOperationsInput | number
-    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
-    keywords?: ContentUpdatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    author?: NullableStringFieldUpdateOperationsInput | string | null
+    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
+    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: ContentUpdatekeywordsInput | string[]
+    quality?: NullableFloatFieldUpdateOperationsInput | number | null
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
+    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
+    shareCount?: IntFieldUpdateOperationsInput | number
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    viewCount?: IntFieldUpdateOperationsInput | number
     source?: SourceUpdateOneRequiredWithoutContentNestedInput
     reviews?: ContentReviewUpdateManyWithoutContentNestedInput
     versions?: ContentVersionUpdateManyWithoutContentItemNestedInput
@@ -31487,31 +31487,31 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
-    summary?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
     category?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ContentUpdatetagsInput | string[]
     status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     priority?: IntFieldUpdateOperationsInput | number
-    quality?: NullableFloatFieldUpdateOperationsInput | number | null
-    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     sourceId?: StringFieldUpdateOperationsInput | string
     sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    author?: NullableStringFieldUpdateOperationsInput | string | null
-    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
-    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
-    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
-    viewCount?: IntFieldUpdateOperationsInput | number
-    shareCount?: IntFieldUpdateOperationsInput | number
-    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
-    keywords?: ContentUpdatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    author?: NullableStringFieldUpdateOperationsInput | string | null
+    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
+    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: ContentUpdatekeywordsInput | string[]
+    quality?: NullableFloatFieldUpdateOperationsInput | number | null
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
+    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
+    shareCount?: IntFieldUpdateOperationsInput | number
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    viewCount?: IntFieldUpdateOperationsInput | number
     reviews?: ContentReviewUncheckedUpdateManyWithoutContentNestedInput
     versions?: ContentVersionUncheckedUpdateManyWithoutContentItemNestedInput
   }
@@ -31560,30 +31560,30 @@ export namespace Prisma {
     title: string
     description?: string | null
     content?: string | null
-    summary?: string | null
     url?: string | null
     imageUrl?: string | null
-    type?: $Enums.ContentType
     category?: string | null
     tags?: ContentCreatetagsInput | string[]
     status?: $Enums.ContentStatus
     score?: number | null
     priority?: number
-    quality?: number | null
-    relevance?: number | null
     sourceUrl?: string | null
     publishedAt?: Date | string | null
-    author?: string | null
-    contentHash?: string | null
-    titleHash?: string | null
-    duplicateOf?: string | null
-    viewCount?: number
-    shareCount?: number
-    searchVector?: string | null
-    keywords?: ContentCreatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    author?: string | null
+    contentHash?: string | null
+    duplicateOf?: string | null
+    keywords?: ContentCreatekeywordsInput | string[]
+    quality?: number | null
+    relevance?: number | null
+    searchVector?: string | null
+    shareCount?: number
+    summary?: string | null
+    titleHash?: string | null
+    type?: $Enums.ContentType
+    viewCount?: number
     source: SourceCreateNestedOneWithoutContentInput
     contentTags?: ContentTagCreateNestedManyWithoutContentInput
     versions?: ContentVersionCreateNestedManyWithoutContentItemInput
@@ -31594,31 +31594,31 @@ export namespace Prisma {
     title: string
     description?: string | null
     content?: string | null
-    summary?: string | null
     url?: string | null
     imageUrl?: string | null
-    type?: $Enums.ContentType
     category?: string | null
     tags?: ContentCreatetagsInput | string[]
     status?: $Enums.ContentStatus
     score?: number | null
     priority?: number
-    quality?: number | null
-    relevance?: number | null
     sourceId: string
     sourceUrl?: string | null
     publishedAt?: Date | string | null
-    author?: string | null
-    contentHash?: string | null
-    titleHash?: string | null
-    duplicateOf?: string | null
-    viewCount?: number
-    shareCount?: number
-    searchVector?: string | null
-    keywords?: ContentCreatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    author?: string | null
+    contentHash?: string | null
+    duplicateOf?: string | null
+    keywords?: ContentCreatekeywordsInput | string[]
+    quality?: number | null
+    relevance?: number | null
+    searchVector?: string | null
+    shareCount?: number
+    summary?: string | null
+    titleHash?: string | null
+    type?: $Enums.ContentType
+    viewCount?: number
     contentTags?: ContentTagUncheckedCreateNestedManyWithoutContentInput
     versions?: ContentVersionUncheckedCreateNestedManyWithoutContentItemInput
   }
@@ -31695,30 +31695,30 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
-    summary?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
     category?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ContentUpdatetagsInput | string[]
     status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     priority?: IntFieldUpdateOperationsInput | number
-    quality?: NullableFloatFieldUpdateOperationsInput | number | null
-    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    author?: NullableStringFieldUpdateOperationsInput | string | null
-    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
-    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
-    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
-    viewCount?: IntFieldUpdateOperationsInput | number
-    shareCount?: IntFieldUpdateOperationsInput | number
-    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
-    keywords?: ContentUpdatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    author?: NullableStringFieldUpdateOperationsInput | string | null
+    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
+    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: ContentUpdatekeywordsInput | string[]
+    quality?: NullableFloatFieldUpdateOperationsInput | number | null
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
+    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
+    shareCount?: IntFieldUpdateOperationsInput | number
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    viewCount?: IntFieldUpdateOperationsInput | number
     source?: SourceUpdateOneRequiredWithoutContentNestedInput
     contentTags?: ContentTagUpdateManyWithoutContentNestedInput
     versions?: ContentVersionUpdateManyWithoutContentItemNestedInput
@@ -31729,31 +31729,31 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
-    summary?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
     category?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ContentUpdatetagsInput | string[]
     status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     priority?: IntFieldUpdateOperationsInput | number
-    quality?: NullableFloatFieldUpdateOperationsInput | number | null
-    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     sourceId?: StringFieldUpdateOperationsInput | string
     sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    author?: NullableStringFieldUpdateOperationsInput | string | null
-    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
-    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
-    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
-    viewCount?: IntFieldUpdateOperationsInput | number
-    shareCount?: IntFieldUpdateOperationsInput | number
-    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
-    keywords?: ContentUpdatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    author?: NullableStringFieldUpdateOperationsInput | string | null
+    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
+    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: ContentUpdatekeywordsInput | string[]
+    quality?: NullableFloatFieldUpdateOperationsInput | number | null
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
+    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
+    shareCount?: IntFieldUpdateOperationsInput | number
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    viewCount?: IntFieldUpdateOperationsInput | number
     contentTags?: ContentTagUncheckedUpdateManyWithoutContentNestedInput
     versions?: ContentVersionUncheckedUpdateManyWithoutContentItemNestedInput
   }
@@ -31834,8 +31834,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     lastLoginAt?: Date | string | null
     accounts?: AccountCreateNestedManyWithoutUserInput
-    sessions?: SessionCreateNestedManyWithoutUserInput
     contentReviews?: ContentReviewCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUserActivitiesInput = {
@@ -31857,8 +31857,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     lastLoginAt?: Date | string | null
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     contentReviews?: ContentReviewUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUserActivitiesInput = {
@@ -31896,8 +31896,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     accounts?: AccountUpdateManyWithoutUserNestedInput
-    sessions?: SessionUpdateManyWithoutUserNestedInput
     contentReviews?: ContentReviewUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUserActivitiesInput = {
@@ -31919,8 +31919,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     contentReviews?: ContentReviewUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ApiCallLogCreateWithoutConfigInput = {
@@ -32123,30 +32123,30 @@ export namespace Prisma {
     title: string
     description?: string | null
     content?: string | null
-    summary?: string | null
     url?: string | null
     imageUrl?: string | null
-    type?: $Enums.ContentType
     category?: string | null
     tags?: ContentCreatetagsInput | string[]
     status?: $Enums.ContentStatus
     score?: number | null
     priority?: number
-    quality?: number | null
-    relevance?: number | null
     sourceUrl?: string | null
     publishedAt?: Date | string | null
-    author?: string | null
-    contentHash?: string | null
-    titleHash?: string | null
-    duplicateOf?: string | null
-    viewCount?: number
-    shareCount?: number
-    searchVector?: string | null
-    keywords?: ContentCreatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    author?: string | null
+    contentHash?: string | null
+    duplicateOf?: string | null
+    keywords?: ContentCreatekeywordsInput | string[]
+    quality?: number | null
+    relevance?: number | null
+    searchVector?: string | null
+    shareCount?: number
+    summary?: string | null
+    titleHash?: string | null
+    type?: $Enums.ContentType
+    viewCount?: number
     source: SourceCreateNestedOneWithoutContentInput
     reviews?: ContentReviewCreateNestedManyWithoutContentInput
     contentTags?: ContentTagCreateNestedManyWithoutContentInput
@@ -32157,31 +32157,31 @@ export namespace Prisma {
     title: string
     description?: string | null
     content?: string | null
-    summary?: string | null
     url?: string | null
     imageUrl?: string | null
-    type?: $Enums.ContentType
     category?: string | null
     tags?: ContentCreatetagsInput | string[]
     status?: $Enums.ContentStatus
     score?: number | null
     priority?: number
-    quality?: number | null
-    relevance?: number | null
     sourceId: string
     sourceUrl?: string | null
     publishedAt?: Date | string | null
-    author?: string | null
-    contentHash?: string | null
-    titleHash?: string | null
-    duplicateOf?: string | null
-    viewCount?: number
-    shareCount?: number
-    searchVector?: string | null
-    keywords?: ContentCreatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    author?: string | null
+    contentHash?: string | null
+    duplicateOf?: string | null
+    keywords?: ContentCreatekeywordsInput | string[]
+    quality?: number | null
+    relevance?: number | null
+    searchVector?: string | null
+    shareCount?: number
+    summary?: string | null
+    titleHash?: string | null
+    type?: $Enums.ContentType
+    viewCount?: number
     reviews?: ContentReviewUncheckedCreateNestedManyWithoutContentInput
     contentTags?: ContentTagUncheckedCreateNestedManyWithoutContentInput
   }
@@ -32207,30 +32207,30 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
-    summary?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
     category?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ContentUpdatetagsInput | string[]
     status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     priority?: IntFieldUpdateOperationsInput | number
-    quality?: NullableFloatFieldUpdateOperationsInput | number | null
-    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    author?: NullableStringFieldUpdateOperationsInput | string | null
-    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
-    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
-    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
-    viewCount?: IntFieldUpdateOperationsInput | number
-    shareCount?: IntFieldUpdateOperationsInput | number
-    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
-    keywords?: ContentUpdatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    author?: NullableStringFieldUpdateOperationsInput | string | null
+    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
+    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: ContentUpdatekeywordsInput | string[]
+    quality?: NullableFloatFieldUpdateOperationsInput | number | null
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
+    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
+    shareCount?: IntFieldUpdateOperationsInput | number
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    viewCount?: IntFieldUpdateOperationsInput | number
     source?: SourceUpdateOneRequiredWithoutContentNestedInput
     reviews?: ContentReviewUpdateManyWithoutContentNestedInput
     contentTags?: ContentTagUpdateManyWithoutContentNestedInput
@@ -32241,31 +32241,31 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
-    summary?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
     category?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ContentUpdatetagsInput | string[]
     status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     priority?: IntFieldUpdateOperationsInput | number
-    quality?: NullableFloatFieldUpdateOperationsInput | number | null
-    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     sourceId?: StringFieldUpdateOperationsInput | string
     sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    author?: NullableStringFieldUpdateOperationsInput | string | null
-    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
-    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
-    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
-    viewCount?: IntFieldUpdateOperationsInput | number
-    shareCount?: IntFieldUpdateOperationsInput | number
-    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
-    keywords?: ContentUpdatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    author?: NullableStringFieldUpdateOperationsInput | string | null
+    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
+    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: ContentUpdatekeywordsInput | string[]
+    quality?: NullableFloatFieldUpdateOperationsInput | number | null
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
+    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
+    shareCount?: IntFieldUpdateOperationsInput | number
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    viewCount?: IntFieldUpdateOperationsInput | number
     reviews?: ContentReviewUncheckedUpdateManyWithoutContentNestedInput
     contentTags?: ContentTagUncheckedUpdateManyWithoutContentNestedInput
   }
@@ -32286,20 +32286,20 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type SessionCreateManyUserInput = {
-    id?: string
-    sessionToken: string
-    expires: Date | string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
   export type ContentReviewCreateManyUserInput = {
     id?: string
     contentId: string
     action: $Enums.ReviewAction
     comment?: string | null
     createdAt?: Date | string
+  }
+
+  export type SessionCreateManyUserInput = {
+    id?: string
+    sessionToken: string
+    expires: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type UserActivityCreateManyUserInput = {
@@ -32359,30 +32359,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type SessionUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    sessionToken?: StringFieldUpdateOperationsInput | string
-    expires?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type SessionUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    sessionToken?: StringFieldUpdateOperationsInput | string
-    expires?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type SessionUncheckedUpdateManyWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    sessionToken?: StringFieldUpdateOperationsInput | string
-    expires?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
   export type ContentReviewUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     action?: EnumReviewActionFieldUpdateOperationsInput | $Enums.ReviewAction
@@ -32405,6 +32381,30 @@ export namespace Prisma {
     action?: EnumReviewActionFieldUpdateOperationsInput | $Enums.ReviewAction
     comment?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SessionUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sessionToken?: StringFieldUpdateOperationsInput | string
+    expires?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SessionUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sessionToken?: StringFieldUpdateOperationsInput | string
+    expires?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SessionUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sessionToken?: StringFieldUpdateOperationsInput | string
+    expires?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserActivityUpdateWithoutUserInput = {
@@ -32439,30 +32439,30 @@ export namespace Prisma {
     title: string
     description?: string | null
     content?: string | null
-    summary?: string | null
     url?: string | null
     imageUrl?: string | null
-    type?: $Enums.ContentType
     category?: string | null
     tags?: ContentCreatetagsInput | string[]
     status?: $Enums.ContentStatus
     score?: number | null
     priority?: number
-    quality?: number | null
-    relevance?: number | null
     sourceUrl?: string | null
     publishedAt?: Date | string | null
-    author?: string | null
-    contentHash?: string | null
-    titleHash?: string | null
-    duplicateOf?: string | null
-    viewCount?: number
-    shareCount?: number
-    searchVector?: string | null
-    keywords?: ContentCreatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    author?: string | null
+    contentHash?: string | null
+    duplicateOf?: string | null
+    keywords?: ContentCreatekeywordsInput | string[]
+    quality?: number | null
+    relevance?: number | null
+    searchVector?: string | null
+    shareCount?: number
+    summary?: string | null
+    titleHash?: string | null
+    type?: $Enums.ContentType
+    viewCount?: number
   }
 
   export type ContentUpdateWithoutSourceInput = {
@@ -32470,30 +32470,30 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
-    summary?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
     category?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ContentUpdatetagsInput | string[]
     status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     priority?: IntFieldUpdateOperationsInput | number
-    quality?: NullableFloatFieldUpdateOperationsInput | number | null
-    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    author?: NullableStringFieldUpdateOperationsInput | string | null
-    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
-    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
-    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
-    viewCount?: IntFieldUpdateOperationsInput | number
-    shareCount?: IntFieldUpdateOperationsInput | number
-    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
-    keywords?: ContentUpdatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    author?: NullableStringFieldUpdateOperationsInput | string | null
+    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
+    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: ContentUpdatekeywordsInput | string[]
+    quality?: NullableFloatFieldUpdateOperationsInput | number | null
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
+    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
+    shareCount?: IntFieldUpdateOperationsInput | number
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    viewCount?: IntFieldUpdateOperationsInput | number
     reviews?: ContentReviewUpdateManyWithoutContentNestedInput
     contentTags?: ContentTagUpdateManyWithoutContentNestedInput
     versions?: ContentVersionUpdateManyWithoutContentItemNestedInput
@@ -32504,30 +32504,30 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
-    summary?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
     category?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ContentUpdatetagsInput | string[]
     status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     priority?: IntFieldUpdateOperationsInput | number
-    quality?: NullableFloatFieldUpdateOperationsInput | number | null
-    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    author?: NullableStringFieldUpdateOperationsInput | string | null
-    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
-    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
-    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
-    viewCount?: IntFieldUpdateOperationsInput | number
-    shareCount?: IntFieldUpdateOperationsInput | number
-    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
-    keywords?: ContentUpdatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    author?: NullableStringFieldUpdateOperationsInput | string | null
+    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
+    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: ContentUpdatekeywordsInput | string[]
+    quality?: NullableFloatFieldUpdateOperationsInput | number | null
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
+    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
+    shareCount?: IntFieldUpdateOperationsInput | number
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    viewCount?: IntFieldUpdateOperationsInput | number
     reviews?: ContentReviewUncheckedUpdateManyWithoutContentNestedInput
     contentTags?: ContentTagUncheckedUpdateManyWithoutContentNestedInput
     versions?: ContentVersionUncheckedUpdateManyWithoutContentItemNestedInput
@@ -32538,30 +32538,30 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
-    summary?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
     category?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ContentUpdatetagsInput | string[]
     status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     priority?: IntFieldUpdateOperationsInput | number
-    quality?: NullableFloatFieldUpdateOperationsInput | number | null
-    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    author?: NullableStringFieldUpdateOperationsInput | string | null
-    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
-    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
-    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
-    viewCount?: IntFieldUpdateOperationsInput | number
-    shareCount?: IntFieldUpdateOperationsInput | number
-    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
-    keywords?: ContentUpdatekeywordsInput | string[]
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    author?: NullableStringFieldUpdateOperationsInput | string | null
+    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
+    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: ContentUpdatekeywordsInput | string[]
+    quality?: NullableFloatFieldUpdateOperationsInput | number | null
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
+    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
+    shareCount?: IntFieldUpdateOperationsInput | number
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    viewCount?: IntFieldUpdateOperationsInput | number
   }
 
   export type ContentReviewCreateManyContentInput = {
@@ -32574,9 +32574,9 @@ export namespace Prisma {
 
   export type ContentTagCreateManyContentInput = {
     id?: string
-    tagId: string
-    relevance?: number | null
     createdAt?: Date | string
+    relevance?: number | null
+    tagId: string
   }
 
   export type ContentVersionCreateManyContentItemInput = {
@@ -32620,23 +32620,23 @@ export namespace Prisma {
 
   export type ContentTagUpdateWithoutContentInput = {
     id?: StringFieldUpdateOperationsInput | string
-    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     tag?: TagUpdateOneRequiredWithoutContentTagsNestedInput
   }
 
   export type ContentTagUncheckedUpdateWithoutContentInput = {
     id?: StringFieldUpdateOperationsInput | string
-    tagId?: StringFieldUpdateOperationsInput | string
-    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
+    tagId?: StringFieldUpdateOperationsInput | string
   }
 
   export type ContentTagUncheckedUpdateManyWithoutContentInput = {
     id?: StringFieldUpdateOperationsInput | string
-    tagId?: StringFieldUpdateOperationsInput | string
-    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
+    tagId?: StringFieldUpdateOperationsInput | string
   }
 
   export type ContentVersionUpdateWithoutContentItemInput = {
@@ -32684,6 +32684,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ContentTagCreateManyTagInput = {
+    id?: string
+    contentId: string
+    createdAt?: Date | string
+    relevance?: number | null
+  }
+
   export type TagCreateManyParentInput = {
     id?: string
     name: string
@@ -32696,11 +32703,25 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type ContentTagCreateManyTagInput = {
-    id?: string
-    contentId: string
-    relevance?: number | null
-    createdAt?: Date | string
+  export type ContentTagUpdateWithoutTagInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
+    content?: ContentUpdateOneRequiredWithoutContentTagsNestedInput
+  }
+
+  export type ContentTagUncheckedUpdateWithoutTagInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contentId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
+  }
+
+  export type ContentTagUncheckedUpdateManyWithoutTagInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contentId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
   }
 
   export type TagUpdateWithoutParentInput = {
@@ -32713,8 +32734,8 @@ export namespace Prisma {
     usageCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    children?: TagUpdateManyWithoutParentNestedInput
     contentTags?: ContentTagUpdateManyWithoutTagNestedInput
+    children?: TagUpdateManyWithoutParentNestedInput
   }
 
   export type TagUncheckedUpdateWithoutParentInput = {
@@ -32727,8 +32748,8 @@ export namespace Prisma {
     usageCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    children?: TagUncheckedUpdateManyWithoutParentNestedInput
     contentTags?: ContentTagUncheckedUpdateManyWithoutTagNestedInput
+    children?: TagUncheckedUpdateManyWithoutParentNestedInput
   }
 
   export type TagUncheckedUpdateManyWithoutParentInput = {
@@ -32741,27 +32762,6 @@ export namespace Prisma {
     usageCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ContentTagUpdateWithoutTagInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    content?: ContentUpdateOneRequiredWithoutContentTagsNestedInput
-  }
-
-  export type ContentTagUncheckedUpdateWithoutTagInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    contentId?: StringFieldUpdateOperationsInput | string
-    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ContentTagUncheckedUpdateManyWithoutTagInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    contentId?: StringFieldUpdateOperationsInput | string
-    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ApiCallLogCreateManyConfigInput = {

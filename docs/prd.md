@@ -256,40 +256,40 @@ so that **我能够快速了解最新的科技动态**。
 
 ## Epic 2: AI工具集成与智能筛选
 
-**Epic目标：** 集成多种AI工具（Perplexity AI、ChatGPT、Claude等），实现自动化内容获取、智能去重和内容筛选功能。建立内容评分和排序机制，为生成每日TOP10精选内容提供核心算法支持。
+**Epic目标：** 集成Google Gemini和Anthropic Claude AI工具，实现自动化内容获取、智能去重和内容筛选功能。建立内容评分和排序机制，为生成每日TOP10精选内容提供核心算法支持。
 
 ### Story 2.1: AI工具API集成基础框架
 
 As a **系统**,  
 I want **建立统一的AI工具API集成框架**,  
-so that **能够安全高效地调用多种AI服务进行内容处理**。
+so that **能够安全高效地调用Gemini和Claude AI服务进行内容处理**。
 
 #### Acceptance Criteria
-1. 创建AI服务抽象层，支持OpenAI、Anthropic、Perplexity等多种API
+1. 创建AI服务抽象层，支持Google Gemini和Anthropic Claude API
 2. 实现API密钥管理和轮换机制，确保服务连续性
 3. 建立AI调用的成本监控和预算控制系统
 4. 实现智能重试和故障切换机制（API限流时自动切换服务商）
 5. 建立AI调用的日志记录和性能监控
 6. 提供AI服务健康检查和状态监控面板
 
-### Story 2.2: Perplexity AI每日新闻获取
+### Story 2.2: Gemini AI每日新闻获取
 
 As a **系统**,  
-I want **通过Perplexity AI自动获取每日科技和股票相关新闻摘要**,  
+I want **通过Google Gemini AI自动获取每日科技和股票相关新闻摘要**,  
 so that **能够补充RSS源可能遗漏的重要信息**。
 
 #### Acceptance Criteria
-1. 实现Perplexity AI的定时查询功能（每日2-3次）
+1. 实现Gemini AI的定时查询功能（每日2-3次）
 2. 配置优化的查询提示词："Today's top global AI + stock market related news"
-3. 解析Perplexity返回的结构化新闻摘要
+3. 解析Gemini返回的结构化新闻摘要
 4. 实现查询结果的标准化处理，转换为统一的内容格式
 5. 建立查询历史记录，避免重复查询相同内容
-6. 提供手动触发Perplexity查询的管理界面
+6. 提供手动触发Gemini查询的管理界面
 
-### Story 2.3: ChatGPT/Claude内容分析与摘要
+### Story 2.3: Claude AI内容分析与摘要
 
 As a **系统**,  
-I want **使用ChatGPT或Claude分析和总结长篇新闻内容**,  
+I want **使用Anthropic Claude AI分析和总结长篇新闻内容**,  
 so that **用户能够快速了解新闻要点而无需阅读全文**。
 
 #### Acceptance Criteria

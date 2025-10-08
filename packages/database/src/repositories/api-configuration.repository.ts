@@ -87,10 +87,17 @@ function encrypt(text: string): string {
   if (!text) return text;
   
   try {
-    const cipher = crypto.createCipher('aes-256-cbc', ENCRYPTION_KEY);
+    // 使用更现代的加密方法
+    const algorithm = 'aes-256-cbc';
+    const key = crypto.scryptSync(ENCRYPTION_KEY, 'salt', 32);
+    const iv = crypto.randomBytes(16);
+    
+    const cipher = crypto.createCipheriv(algorithm, key, iv);
     let encrypted = cipher.update(text, 'utf8', 'hex');
     encrypted += cipher.final('hex');
-    return encrypted;
+    
+    // 将 IV 和加密数据组合
+    return iv.toString('hex') + ':' + encrypted;
   } catch (error) {
     console.error('加密失败', error);
     return text; // 如果加密失败，返回原文（不推荐在生产环境）
@@ -104,10 +111,24 @@ function decrypt(encryptedText: string): string {
   if (!encryptedText) return encryptedText;
   
   try {
-    const decipher = crypto.createDecipher('aes-256-cbc', ENCRYPTION_KEY);
-    let decrypted = decipher.update(encryptedText, 'hex', 'utf8');
-    decrypted += decipher.final('utf8');
-    return decrypted;
+    // 检查是否是新的加密格式（包含 IV）
+    if (encryptedText.includes(':')) {
+      const [ivHex, encrypted] = encryptedText.split(':');
+      const algorithm = 'aes-256-cbc';
+      const key = crypto.scryptSync(ENCRYPTION_KEY, 'salt', 32);
+      const iv = Buffer.from(ivHex, 'hex');
+      
+      const decipher = crypto.createDecipheriv(algorithm, key, iv);
+      let decrypted = decipher.update(encrypted, 'hex', 'utf8');
+      decrypted += decipher.final('utf8');
+      return decrypted;
+    } else {
+      // 兼容旧的加密格式
+      const decipher = crypto.createDecipher('aes-256-cbc', ENCRYPTION_KEY);
+      let decrypted = decipher.update(encryptedText, 'hex', 'utf8');
+      decrypted += decipher.final('utf8');
+      return decrypted;
+    }
   } catch (error) {
     console.error('解密失败', error);
     return encryptedText; // 如果解密失败，返回原文

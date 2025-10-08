@@ -204,31 +204,31 @@ exports.Prisma.ContentScalarFieldEnum = {
   title: 'title',
   description: 'description',
   content: 'content',
-  summary: 'summary',
   url: 'url',
   imageUrl: 'imageUrl',
-  type: 'type',
   category: 'category',
   tags: 'tags',
   status: 'status',
   score: 'score',
   priority: 'priority',
-  quality: 'quality',
-  relevance: 'relevance',
   sourceId: 'sourceId',
   sourceUrl: 'sourceUrl',
   publishedAt: 'publishedAt',
-  author: 'author',
-  contentHash: 'contentHash',
-  titleHash: 'titleHash',
-  duplicateOf: 'duplicateOf',
-  viewCount: 'viewCount',
-  shareCount: 'shareCount',
-  searchVector: 'searchVector',
-  keywords: 'keywords',
   metadata: 'metadata',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  author: 'author',
+  contentHash: 'contentHash',
+  duplicateOf: 'duplicateOf',
+  keywords: 'keywords',
+  quality: 'quality',
+  relevance: 'relevance',
+  searchVector: 'searchVector',
+  shareCount: 'shareCount',
+  summary: 'summary',
+  titleHash: 'titleHash',
+  type: 'type',
+  viewCount: 'viewCount'
 };
 
 exports.Prisma.TagScalarFieldEnum = {
@@ -247,9 +247,9 @@ exports.Prisma.TagScalarFieldEnum = {
 exports.Prisma.ContentTagScalarFieldEnum = {
   id: 'id',
   contentId: 'contentId',
-  tagId: 'tagId',
+  createdAt: 'createdAt',
   relevance: 'relevance',
-  createdAt: 'createdAt'
+  tagId: 'tagId'
 };
 
 exports.Prisma.ContentReviewScalarFieldEnum = {
@@ -461,16 +461,6 @@ exports.SourceStatus = exports.$Enums.SourceStatus = {
   RATE_LIMITED: 'RATE_LIMITED'
 };
 
-exports.ContentType = exports.$Enums.ContentType = {
-  NEWS: 'NEWS',
-  ARTICLE: 'ARTICLE',
-  BLOG_POST: 'BLOG_POST',
-  PRESS_RELEASE: 'PRESS_RELEASE',
-  RESEARCH: 'RESEARCH',
-  ANNOUNCEMENT: 'ANNOUNCEMENT',
-  OTHER: 'OTHER'
-};
-
 exports.ContentStatus = exports.$Enums.ContentStatus = {
   RAW: 'RAW',
   PROCESSING: 'PROCESSING',
@@ -480,6 +470,16 @@ exports.ContentStatus = exports.$Enums.ContentStatus = {
   REJECTED: 'REJECTED',
   ARCHIVED: 'ARCHIVED',
   DUPLICATE: 'DUPLICATE'
+};
+
+exports.ContentType = exports.$Enums.ContentType = {
+  NEWS: 'NEWS',
+  ARTICLE: 'ARTICLE',
+  BLOG_POST: 'BLOG_POST',
+  PRESS_RELEASE: 'PRESS_RELEASE',
+  RESEARCH: 'RESEARCH',
+  ANNOUNCEMENT: 'ANNOUNCEMENT',
+  OTHER: 'OTHER'
 };
 
 exports.TagType = exports.$Enums.TagType = {
