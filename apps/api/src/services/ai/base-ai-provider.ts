@@ -2,6 +2,8 @@
  * AI服务基础接口和类型定义
  */
 
+import { logger } from '../../utils/logger';
+
 export interface AIOptions {
   maxTokens?: number;
   temperature?: number;
@@ -99,8 +101,40 @@ export abstract class BaseAIProvider {
     success: boolean,
     errorMessage?: string
   ): Promise<void> {
-    // 这里将在具体实现中记录到数据库
-    console.log(`AI Usage - Provider: ${this.name}, Operation: ${operation}, Tokens: ${inputTokens + outputTokens}, ResponseTime: ${responseTime}ms, Success: ${success}`);
+    try {
+      // 导入数据库客户端（在方法内部导入避免循环依赖）
+      const { db } = await import('@tech-news-platform/database');
+      
+      // 计算成本（简化的计算，实际应根据不同模型定价）
+      const costPerToken = this.name === 'gemini' ? 0.000001 : 0.000003; // Gemini便宜，Claude贵
+      const costUsd = (inputTokens + outputTokens) * costPerToken;
+      
+      // 写入数据库
+      await db.aiUsageLog.create({
+        data: {
+          configId: `env-${this.name}`, // 使用环境变量配置的标识
+          provider: this.name.toUpperCase() as any,
+          operation,
+          inputTokens,
+          outputTokens,
+          totalTokens: inputTokens + outputTokens,
+          costUsd,
+          responseTimeMs: responseTime,
+          success,
+          errorMessage
+        }
+      });
+      
+      logger.info(`AI使用记录已保存`, { 
+        provider: this.name, 
+        operation, 
+        totalTokens: inputTokens + outputTokens,
+        costUsd: costUsd.toFixed(6)
+      });
+    } catch (error) {
+      // 记录失败不应该影响主流程
+      logger.error(`保存AI使用记录失败`, { error, provider: this.name, operation });
+    }
   }
 }
 

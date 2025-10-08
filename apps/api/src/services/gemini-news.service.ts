@@ -158,7 +158,7 @@ export class GeminiNewsService {
       
       const duration = Date.now() - startTime;
       
-      // 记录查询历史
+      // 记录查询历史（异步，不阻塞主流程）
       this.recordQuery({
         id: `${queryType}_${queryTime.getTime()}`,
         queryType,
@@ -166,7 +166,7 @@ export class GeminiNewsService {
         resultCount: newsItems.length,
         success: true,
         duration
-      });
+      }).catch(err => logger.error('记录查询历史失败', { err }));
 
       logger.info(`Gemini ${queryType} 新闻获取完成`, {
         totalFetched: newsItems.length,
@@ -187,7 +187,7 @@ export class GeminiNewsService {
       const duration = Date.now() - startTime;
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       
-      // 记录失败的查询
+      // 记录失败的查询（异步，不阻塞主流程）
       this.recordQuery({
         id: `${queryType}_${queryTime.getTime()}`,
         queryType,
@@ -196,7 +196,7 @@ export class GeminiNewsService {
         success: false,
         errorMessage,
         duration
-      });
+      }).catch(err => logger.error('记录查询历史失败', { err }));
 
       logger.error(`Gemini ${queryType} 新闻获取失败`, { error: errorMessage, duration: `${duration}ms` });
 
@@ -422,15 +422,41 @@ export class GeminiNewsService {
   }
 
   /**
-   * 记录查询
+   * 记录查询到数据库
    */
-  private recordQuery(record: QueryRecord): void {
+  private async recordQuery(record: QueryRecord): Promise<void> {
+    // 内存中保存
     this.queryHistory.set(record.id, record);
     
     // 保持历史记录在合理范围内
     if (this.queryHistory.size > 100) {
       const oldestKey = Array.from(this.queryHistory.keys())[0];
       this.queryHistory.delete(oldestKey);
+    }
+    
+    // 写入数据库
+    try {
+      await db.geminiNewsQuery.create({
+        data: {
+          queryType: record.queryType,
+          prompt: GEMINI_QUERY_PROMPTS[record.queryType].substring(0, 500), // 截取前500字符
+          response: null, // 可以存储AI响应，但可能很大
+          totalFetched: record.resultCount,
+          totalSaved: record.resultCount, // 假设全部保存成功，实际可能需要传入
+          success: record.success,
+          errorMessage: record.errorMessage,
+          tokensUsed: null, // 如果有token信息可以传入
+          costUsd: null // 如果有成本信息可以传入
+        }
+      });
+      
+      logger.debug('查询历史已保存到数据库', { 
+        queryType: record.queryType, 
+        success: record.success,
+        resultCount: record.resultCount
+      });
+    } catch (error) {
+      logger.error('保存查询历史到数据库失败', { error, record });
     }
   }
 
