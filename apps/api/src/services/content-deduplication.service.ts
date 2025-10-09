@@ -84,7 +84,7 @@ export class ContentDeduplicationService {
         where: {
           id: { not: contentId },
           createdAt: { gte: timeWindow },
-          status: { not: 'DELETED' as any }
+          status: { notIn: ['ARCHIVED', 'REJECTED'] }
         },
         include: { source: true },
         take: 100 // 限制检查数量
