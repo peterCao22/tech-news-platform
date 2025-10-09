@@ -87,11 +87,11 @@ async function getTestContentId() {
   try {
     const response = await apiRequest('/api/content?limit=1');
 
-    if (response.ok && response.data.data?.content?.length > 0) {
-      testContentId = response.data.data.content[0].id;
+    if (response.ok && response.data.data?.length > 0) {
+      testContentId = response.data.data[0].id;
       console.log('✅ 获取测试内容成功');
       console.log(`   Content ID: ${testContentId}`);
-      console.log(`   标题: ${response.data.data.content[0].title}`);
+      console.log(`   标题: ${response.data.data[0].title}`);
       return true;
     } else {
       console.log('❌ 没有可用的测试内容');
@@ -207,12 +207,12 @@ async function testBatchAnalyze() {
     // 获取3条未分析的内容
     const contentsResponse = await apiRequest('/api/content?limit=3');
     
-    if (!contentsResponse.ok || !contentsResponse.data.data?.content?.length) {
+    if (!contentsResponse.ok || !contentsResponse.data.data?.length) {
       console.log('⚠️  跳过批量分析测试（没有足够的内容）');
       return true;
     }
 
-    const contentIds = contentsResponse.data.data.content.map(c => c.id).slice(0, 3);
+    const contentIds = contentsResponse.data.data.map(c => c.id).slice(0, 3);
     console.log(`   准备分析 ${contentIds.length} 条内容`);
     console.log('   ⏳ 请稍候，批量分析需要较长时间...');
 
