@@ -290,22 +290,34 @@ overallSimilarity = (
 #### ✅ 测试准备
 - [x] 创建集成测试脚本 `test-story-2-4-deduplication.js`
 - [x] 5个测试场景（登录、获取内容、检测、相似度、报告）
-- [ ] **待执行**: 运行测试（需要API服务）
+- [x] 创建向量化测试脚本 `test-embedding-service.js`
+- [x] **已完成**: 所有测试通过（5/5 + 6/6 = 100%）
 
 ### 最新提交
 - **Commit**: `5fde624` - "feat: Story 2.4 - Content Deduplication and Similarity Detection"
 - **Commit**: `4bc5978` - "docs: Add Story 2.4 development documentation"
 - **Commit**: `10317ca` - "fix: Content status filter in deduplication service"
 - **Commit**: `7d14784` - "fix: Remove all DELETED status references"
-- **Commit**: `596badc` - "feat: Implement true vector-based similarity using Gemini Embeddings" ⭐
+- **Commit**: `596badc` - "feat: Implement true vector-based similarity using Gemini Embeddings"
+- **Commit**: `f5478d6` - "docs: Update Story 2.4 with vector implementation details"
+- **Commit**: `983c539` - "fix: Correct Gemini Embedding API request format"
+- **Commit**: `74f9c78` - ⭐ "refactor: Use official @google/genai SDK for embeddings" ⭐
 - **提交时间**: 2025-10-09
+- **当前状态**: ✅ **开发完成，测试通过**
 - **文件变更**:
-  - 新增: `apps/api/src/services/embedding.service.ts` (213行) ⭐
-  - 修改: `apps/api/src/services/content-deduplication.service.ts` (使用向量化)
+  - 新增: `apps/api/src/services/embedding.service.ts` (199行，使用官方SDK) ⭐
+  - 修改: `apps/api/src/services/content-deduplication.service.ts` (570行，三层降级)
   - 新增: `apps/api/src/routes/deduplication.routes.ts` (365行)
   - 修改: `apps/api/src/server.ts` (+2行，注册路由)
-  - 新增: `apps/api/test-story-2-4-deduplication.js` (237行)
+  - 新增: `apps/api/test-story-2-4-deduplication.js` (236行)
+  - 新增: `apps/api/test-embedding-service.js` (194行)
+  - 新增: `@google/genai@1.23.0` 依赖
   - 修改: `docs/stories/story-2-4-content-deduplication.md`
+
+### 测试结果
+- ✅ **集成测试**: 5/5 通过 (100%)
+- ✅ **向量化测试**: 6/6 通过 (100%)
+- ✅ **总体通过率**: 11/11 (100%)
 
 ## 🔗 相关资源
 
