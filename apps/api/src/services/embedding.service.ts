@@ -61,21 +61,34 @@ export class EmbeddingService {
       const taskType = config?.taskType || 'SEMANTIC_SIMILARITY';
       const outputDimensionality = config?.outputDimensionality;
 
-      const url = `${this.baseUrl}/models/${model}:embedContent`;
+      // 批量使用 batchEmbedContents，单个使用 embedContent
+      const endpoint = texts.length === 1 ? 'embedContent' : 'batchEmbedContents';
+      const url = `${this.baseUrl}/models/${model}:${endpoint}`;
 
-      // 构建请求体
-      const requestBody: any = {
-        contents: texts.map(text => ({
-          parts: [{ text: text.substring(0, 10000) }] // 限制长度
-        })),
-        embedding_config: {
-          task_type: taskType
+      // 构建请求体 - 单个文本用不同格式
+      const requestBody: any = texts.length === 1 ? {
+        model: `models/${model}`,
+        content: {
+          parts: [{ text: texts[0].substring(0, 10000) }]
         }
+      } : {
+        requests: texts.map(text => ({
+          model: `models/${model}`,
+          content: {
+            parts: [{ text: text.substring(0, 10000) }]
+          }
+        }))
       };
 
       // 如果指定了输出维度
       if (outputDimensionality) {
-        requestBody.embedding_config.output_dimensionality = outputDimensionality;
+        if (texts.length === 1) {
+          requestBody.output_dimensionality = outputDimensionality;
+        } else {
+          requestBody.requests.forEach((req: any) => {
+            req.output_dimensionality = outputDimensionality;
+          });
+        }
       }
 
       const response = await fetch(url, {
@@ -91,23 +104,37 @@ export class EmbeddingService {
         const error = await response.text();
         logger.error('Embedding API 请求失败', { 
           status: response.status, 
-          error 
+          error,
+          url,
+          requestBody 
         });
-        throw new Error(`Embedding API 失败: ${response.status}`);
+        throw new Error(`Embedding API 失败: ${response.status} - ${error}`);
       }
 
-      const data: EmbeddingResponse = await response.json();
+      const data = await response.json() as any;
       
-      if (!data.embeddings || data.embeddings.length === 0) {
-        throw new Error('Embedding API 返回空结果');
+      // 单个和批量返回格式不同
+      let embeddings: number[][];
+      if (texts.length === 1) {
+        // 单个返回: { embedding: { values: [...] } }
+        if (!data.embedding || !data.embedding.values) {
+          throw new Error('Embedding API 返回空结果');
+        }
+        embeddings = [data.embedding.values];
+      } else {
+        // 批量返回: { embeddings: [{ values: [...] }, ...] }
+        if (!data.embeddings || data.embeddings.length === 0) {
+          throw new Error('Embedding API 返回空结果');
+        }
+        embeddings = data.embeddings.map((e: any) => e.values);
       }
 
       logger.debug('Embedding 生成成功', { 
-        count: data.embeddings.length,
-        dimension: data.embeddings[0].values.length
+        count: embeddings.length,
+        dimension: embeddings[0].length
       });
 
-      return data.embeddings.map(e => e.values);
+      return embeddings;
     } catch (error) {
       logger.error('生成 embedding 失败', { error, textsCount: texts.length });
       throw error;

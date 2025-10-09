@@ -210,20 +210,28 @@ function levenshteinSimilarity(str1: string, str2: string): number {
 
 ### 内容语义相似度
 
-使用 **AI Embeddings + Cosine Similarity**：
+使用 **Google Gemini Embeddings + Cosine Similarity**：
 
 ```typescript
+// 使用 Gemini Embedding API (gemini-embedding-001)
 async function semanticSimilarity(text1: string, text2: string): Promise<number> {
-  // 1. 生成向量
-  const embedding1 = await aiService.generateEmbedding(text1);
-  const embedding2 = await aiService.generateEmbedding(text2);
+  // 1. 生成向量（使用 Gemini Embedding API）
+  const embeddings = await embeddingService.generateEmbeddings([text1, text2], {
+    taskType: 'SEMANTIC_SIMILARITY',
+    outputDimensionality: 768  // 可选，使用 MRL 降低维度
+  });
   
   // 2. 计算余弦相似度
-  const similarity = cosineSimilarity(embedding1, embedding2);
+  const similarity = embeddingService.cosineSimilarity(embeddings[0], embeddings[1]);
   
-  return similarity * 100; // 转换为百分比
+  return similarity; // 0-100 的百分比
 }
 ```
+
+**降级策略**：
+1. **主要方案**: Gemini Embedding API + Cosine Similarity
+2. **降级方案1**: AI 直接评分（当向量化失败时）
+3. **降级方案2**: 简单文本相似度（当 AI 不可用时）
 
 ### 综合相似度评分
 
@@ -286,9 +294,14 @@ overallSimilarity = (
 
 ### 最新提交
 - **Commit**: `5fde624` - "feat: Story 2.4 - Content Deduplication and Similarity Detection"
+- **Commit**: `4bc5978` - "docs: Add Story 2.4 development documentation"
+- **Commit**: `10317ca` - "fix: Content status filter in deduplication service"
+- **Commit**: `7d14784` - "fix: Remove all DELETED status references"
+- **Commit**: `596badc` - "feat: Implement true vector-based similarity using Gemini Embeddings" ⭐
 - **提交时间**: 2025-10-09
 - **文件变更**:
-  - 新增: `apps/api/src/services/content-deduplication.service.ts` (533行)
+  - 新增: `apps/api/src/services/embedding.service.ts` (213行) ⭐
+  - 修改: `apps/api/src/services/content-deduplication.service.ts` (使用向量化)
   - 新增: `apps/api/src/routes/deduplication.routes.ts` (365行)
   - 修改: `apps/api/src/server.ts` (+2行，注册路由)
   - 新增: `apps/api/test-story-2-4-deduplication.js` (237行)
