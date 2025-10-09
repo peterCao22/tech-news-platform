@@ -6,6 +6,7 @@
 import { db } from '@tech-news-platform/database';
 import { logger } from '../utils/logger';
 import { aiServiceManager } from './ai/ai-service-manager';
+import { embeddingService } from './embedding.service';
 
 /**
  * 相似度结果接口
@@ -235,19 +236,53 @@ export class ContentDeduplicationService {
   }
 
   /**
-   * 计算内容语义相似度（使用AI）
+   * 计算内容语义相似度（使用向量化）
    */
   private async calculateContentSimilarity(
     content1: string,
     content2: string
   ): Promise<number> {
     try {
-      // 截取前1000字符进行比较（避免token过多）
-      const text1 = content1.substring(0, 1000);
-      const text2 = content2.substring(0, 1000);
+      // 截取前10000字符进行向量化
+      const text1 = content1.substring(0, 10000);
+      const text2 = content2.substring(0, 10000);
 
-      // 使用AI生成相似度分析
-      const prompt = `请分析以下两篇新闻内容的语义相似度，返回0-100的相似度分数。
+      logger.debug('开始生成文本向量', {
+        text1Length: text1.length,
+        text2Length: text2.length
+      });
+
+      // 使用 Gemini Embedding API 生成向量并计算余弦相似度
+      const similarity = await embeddingService.calculateTextSimilarity(text1, text2);
+
+      logger.debug('向量相似度计算完成', { similarity });
+
+      return similarity;
+    } catch (error) {
+      logger.error('向量相似度计算失败，降级到AI直接评分', { error });
+      
+      // 降级方案1: 使用AI直接评分
+      try {
+        return await this.calculateContentSimilarityByAI(content1, content2);
+      } catch (aiError) {
+        logger.error('AI评分也失败，降级到简单文本比较', { aiError });
+        // 降级方案2: 使用简单文本比较
+        return this.simpleSimilarity(content1, content2);
+      }
+    }
+  }
+
+  /**
+   * 使用AI直接评分（降级方案）
+   */
+  private async calculateContentSimilarityByAI(
+    content1: string,
+    content2: string
+  ): Promise<number> {
+    const text1 = content1.substring(0, 1000);
+    const text2 = content2.substring(0, 1000);
+
+    const prompt = `请分析以下两篇新闻内容的语义相似度，返回0-100的相似度分数。
 
 内容1：
 ${text1}
@@ -263,26 +298,19 @@ ${text2}
 
 返回格式：只返回一个数字，如：85`;
 
-      const response = await aiServiceManager.generateText(prompt, {
-        maxTokens: 10,
-        temperature: 0.1
-      });
+    const response = await aiServiceManager.generateText(prompt, {
+      maxTokens: 10,
+      temperature: 0.1
+    });
 
-      // 提取数字
-      const match = response.match(/\d+/);
-      if (match) {
-        const score = parseInt(match[0], 10);
-        return Math.max(0, Math.min(100, score));
-      }
-
-      // 如果无法解析，返回默认值
-      logger.warn('无法解析AI相似度响应', { response });
-      return 50;
-    } catch (error) {
-      logger.error('内容相似度计算失败', { error });
-      // 降级：使用简单文本比较
-      return this.simpleSimilarity(content1, content2);
+    const match = response.match(/\d+/);
+    if (match) {
+      const score = parseInt(match[0], 10);
+      return Math.max(0, Math.min(100, score));
     }
+
+    logger.warn('无法解析AI相似度响应', { response });
+    return 50;
   }
 
   /**
