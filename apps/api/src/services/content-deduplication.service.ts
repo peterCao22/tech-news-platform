@@ -476,7 +476,7 @@ ${text2}
   async getDeduplicationReport(): Promise<DeduplicationReport> {
     try {
       const [totalContent, duplications] = await Promise.all([
-        db.content.count({ where: { status: { not: 'DELETED' as any } } }),
+        db.content.count({ where: { status: { notIn: ['ARCHIVED', 'REJECTED'] } } }),
         db.contentDuplication.findMany()
       ]);
 
