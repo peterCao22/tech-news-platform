@@ -18,6 +18,7 @@
     "test:integration": "jest --testPathPattern=__tests__/integration"
   },
   "dependencies": {
+    "@google/genai": "^1.23.0",
     "@tech-news-platform/database": "workspace:*",
     "@tech-news-platform/shared": "workspace:*",
     "axios": "^1.6.2",

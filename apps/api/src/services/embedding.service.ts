@@ -1,31 +1,30 @@
 /**
  * Embedding Service - 文本向量化服务
- * 使用 Google Gemini Embedding API
+ * 使用 Google Gemini Embedding API (官方 SDK)
  */
 
+import { GoogleGenAI } from '@google/genai';
 import { logger } from '../utils/logger';
 
 interface EmbeddingConfig {
-  model: string;
   taskType?: 'SEMANTIC_SIMILARITY' | 'CLASSIFICATION' | 'CLUSTERING';
   outputDimensionality?: number;
 }
 
-interface EmbeddingResponse {
-  embeddings: Array<{
-    values: number[];
-  }>;
-}
-
 export class EmbeddingService {
-  private apiKey: string;
-  private baseUrl: string = 'https://generativelanguage.googleapis.com/v1beta';
+  private client: GoogleGenAI;
   private defaultModel: string = 'gemini-embedding-001';
+  private apiKey: string;
 
   constructor() {
     this.apiKey = process.env.GEMINI_API_KEY || '';
+    
     if (!this.apiKey) {
       logger.warn('GEMINI_API_KEY 未配置，embedding服务将不可用');
+      // 创建一个空客户端以避免 null 检查
+      this.client = new GoogleGenAI({ apiKey: '' });
+    } else {
+      this.client = new GoogleGenAI({ apiKey: this.apiKey });
     }
   }
 
@@ -36,7 +35,6 @@ export class EmbeddingService {
     text: string,
     config?: Partial<EmbeddingConfig>
   ): Promise<number[]> {
-    const model = config?.model || this.defaultModel;
     const embeddings = await this.generateEmbeddings([text], config);
     return embeddings[0];
   }
@@ -57,86 +55,49 @@ export class EmbeddingService {
     }
 
     try {
-      const model = config?.model || this.defaultModel;
       const taskType = config?.taskType || 'SEMANTIC_SIMILARITY';
       const outputDimensionality = config?.outputDimensionality;
 
-      // 批量使用 batchEmbedContents，单个使用 embedContent
-      const endpoint = texts.length === 1 ? 'embedContent' : 'batchEmbedContents';
-      const url = `${this.baseUrl}/models/${model}:${endpoint}`;
-
-      // 构建请求体 - 单个文本用不同格式
-      const requestBody: any = texts.length === 1 ? {
-        model: `models/${model}`,
-        content: {
-          parts: [{ text: texts[0].substring(0, 10000) }]
-        }
-      } : {
-        requests: texts.map(text => ({
-          model: `models/${model}`,
-          content: {
-            parts: [{ text: text.substring(0, 10000) }]
-          }
-        }))
-      };
-
-      // 如果指定了输出维度
-      if (outputDimensionality) {
-        if (texts.length === 1) {
-          requestBody.output_dimensionality = outputDimensionality;
-        } else {
-          requestBody.requests.forEach((req: any) => {
-            req.output_dimensionality = outputDimensionality;
-          });
-        }
-      }
-
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-goog-api-key': this.apiKey
-        },
-        body: JSON.stringify(requestBody)
+      logger.debug('开始生成向量', {
+        count: texts.length,
+        taskType,
+        outputDimensionality
       });
 
-      if (!response.ok) {
-        const error = await response.text();
-        logger.error('Embedding API 请求失败', { 
-          status: response.status, 
-          error,
-          url,
-          requestBody 
-        });
-        throw new Error(`Embedding API 失败: ${response.status} - ${error}`);
+      // 截取文本长度（Gemini 限制）
+      const truncatedTexts = texts.map(text => text.substring(0, 10000));
+
+      // 使用官方 SDK 生成 embeddings
+      const requestConfig: any = {
+        model: this.defaultModel,
+        contents: truncatedTexts,
+        taskType
+      };
+
+      if (outputDimensionality) {
+        requestConfig.outputDimensionality = outputDimensionality;
       }
 
-      const data = await response.json() as any;
-      
-      // 单个和批量返回格式不同
-      let embeddings: number[][];
-      if (texts.length === 1) {
-        // 单个返回: { embedding: { values: [...] } }
-        if (!data.embedding || !data.embedding.values) {
-          throw new Error('Embedding API 返回空结果');
-        }
-        embeddings = [data.embedding.values];
-      } else {
-        // 批量返回: { embeddings: [{ values: [...] }, ...] }
-        if (!data.embeddings || data.embeddings.length === 0) {
-          throw new Error('Embedding API 返回空结果');
-        }
-        embeddings = data.embeddings.map((e: any) => e.values);
+      const response = await this.client.models.embedContent(requestConfig);
+
+      if (!response.embeddings || response.embeddings.length === 0) {
+        throw new Error('Embedding API 返回空结果');
       }
 
-      logger.debug('Embedding 生成成功', { 
+      // 提取向量值
+      const embeddings = response.embeddings.map((e: any) => e.values);
+
+      logger.debug('向量生成成功', {
         count: embeddings.length,
         dimension: embeddings[0].length
       });
 
       return embeddings;
-    } catch (error) {
-      logger.error('生成 embedding 失败', { error, textsCount: texts.length });
+    } catch (error: any) {
+      logger.error('生成 embedding 失败', {
+        error: error.message,
+        textsCount: texts.length
+      });
       throw error;
     }
   }
@@ -169,7 +130,8 @@ export class EmbeddingService {
 
     const similarity = dotProduct / (Math.sqrt(magnitudeA) * Math.sqrt(magnitudeB));
     
-    // 返回 0-100 的百分比
+    // Cosine similarity 范围是 -1 到 1
+    // 转换为 0-100 的百分比: (similarity + 1) / 2 * 100
     return (similarity + 1) / 2 * 100;
   }
 
@@ -177,7 +139,10 @@ export class EmbeddingService {
    * 批量计算相似度矩阵
    */
   async calculateSimilarityMatrix(texts: string[]): Promise<number[][]> {
-    const embeddings = await this.generateEmbeddings(texts);
+    const embeddings = await this.generateEmbeddings(texts, {
+      taskType: 'SEMANTIC_SIMILARITY'
+    });
+    
     const n = embeddings.length;
     const matrix: number[][] = Array(n).fill(0).map(() => Array(n).fill(0));
 
@@ -201,7 +166,9 @@ export class EmbeddingService {
    */
   async calculateTextSimilarity(text1: string, text2: string): Promise<number> {
     try {
-      const embeddings = await this.generateEmbeddings([text1, text2]);
+      const embeddings = await this.generateEmbeddings([text1, text2], {
+        taskType: 'SEMANTIC_SIMILARITY'
+      });
       return this.cosineSimilarity(embeddings[0], embeddings[1]);
     } catch (error) {
       logger.error('计算文本相似度失败', { error });
@@ -229,4 +196,3 @@ export class EmbeddingService {
 
 // 导出单例
 export const embeddingService = new EmbeddingService();
-
