@@ -29,6 +29,7 @@ import finnhubRoutes from './routes/finnhub.routes';
 import polygonRoutes from './routes/polygon.routes';
 import aiRoutes from './routes/ai.routes';
 import geminiNewsRoutes from './routes/gemini-news.routes';
+import claudeAnalysisRoutes from './routes/claude-analysis.routes';
 
 // 加载环境变量
 dotenv.config({ path: '../../.env' });
@@ -96,6 +97,7 @@ app.use('/api/finnhub', finnhubRoutes);
 app.use('/api/polygon', polygonRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/gemini-news', geminiNewsRoutes);
+app.use('/api/claude-analysis', claudeAnalysisRoutes);
 
 // 404 处理
 app.use(notFoundHandler);
