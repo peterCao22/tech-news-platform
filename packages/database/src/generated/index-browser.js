@@ -457,6 +457,52 @@ exports.Prisma.GeminiNewsQueryScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.ContentScoreScalarFieldEnum = {
+  id: 'id',
+  contentId: 'contentId',
+  totalScore: 'totalScore',
+  timelinessScore: 'timelinessScore',
+  authorityScore: 'authorityScore',
+  qualityScore: 'qualityScore',
+  relevanceScore: 'relevanceScore',
+  aiImportanceScore: 'aiImportanceScore',
+  engagementScore: 'engagementScore',
+  weightConfigId: 'weightConfigId',
+  explanation: 'explanation',
+  calculatedAt: 'calculatedAt'
+};
+
+exports.Prisma.ScoringWeightScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  timeliness: 'timeliness',
+  authority: 'authority',
+  quality: 'quality',
+  relevance: 'relevance',
+  aiImportance: 'aiImportance',
+  engagement: 'engagement',
+  isActive: 'isActive',
+  isDefault: 'isDefault',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ABTestConfigScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  weightConfigAId: 'weightConfigAId',
+  weightConfigBId: 'weightConfigBId',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  status: 'status',
+  winnerConfigId: 'winnerConfigId',
+  metricsA: 'metricsA',
+  metricsB: 'metricsB',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -599,7 +645,10 @@ exports.Prisma.ModelName = {
   AiServiceConfig: 'AiServiceConfig',
   AiUsageLog: 'AiUsageLog',
   AiServiceStatus: 'AiServiceStatus',
-  GeminiNewsQuery: 'GeminiNewsQuery'
+  GeminiNewsQuery: 'GeminiNewsQuery',
+  ContentScore: 'ContentScore',
+  ScoringWeight: 'ScoringWeight',
+  ABTestConfig: 'ABTestConfig'
 };
 
 /**

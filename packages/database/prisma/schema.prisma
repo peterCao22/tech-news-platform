@@ -140,6 +140,7 @@ model Content {
   reviews      ContentReview[]
   contentTags  ContentTag[]
   versions     ContentVersion[]
+  contentScore ContentScore?
 
   @@index([status])
   @@index([publishedAt])
@@ -544,4 +545,63 @@ enum AiProvider {
   CLAUDE
   OPENAI
   PERPLEXITY
+}
+
+// Story 2.5: 内容评分与排序算法
+
+model ContentScore {
+  id                String   @id @default(cuid())
+  contentId         String   @unique @map("content_id")
+  totalScore        Float    @map("total_score")
+  timelinessScore   Float    @map("timeliness_score")
+  authorityScore    Float    @map("authority_score")
+  qualityScore      Float    @map("quality_score")
+  relevanceScore    Float    @map("relevance_score")
+  aiImportanceScore Float    @map("ai_importance_score")
+  engagementScore   Float    @map("engagement_score")
+  weightConfigId    String?  @map("weight_config_id")
+  explanation       String?
+  calculatedAt      DateTime @default(now()) @map("calculated_at")
+  content           Content  @relation(fields: [contentId], references: [id], onDelete: Cascade)
+
+  @@index([contentId])
+  @@index([totalScore])
+  @@index([calculatedAt])
+  @@map("content_scores")
+}
+
+model ScoringWeight {
+  id           String   @id @default(cuid())
+  name         String   @db.VarChar(100)
+  description  String?
+  timeliness   Float    @default(0.20)
+  authority    Float    @default(0.25)
+  quality      Float    @default(0.20)
+  relevance    Float    @default(0.15)
+  aiImportance Float    @default(0.15) @map("ai_importance")
+  engagement   Float    @default(0.05)
+  isActive     Boolean  @default(false) @map("is_active")
+  isDefault    Boolean  @default(false) @map("is_default")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("scoring_weights")
+}
+
+model ABTestConfig {
+  id              String    @id @default(cuid())
+  name            String    @db.VarChar(100)
+  description     String?
+  weightConfigAId String    @map("weight_config_a_id")
+  weightConfigBId String    @map("weight_config_b_id")
+  startDate       DateTime  @map("start_date")
+  endDate         DateTime? @map("end_date")
+  status          String    @default("ACTIVE") // ACTIVE, COMPLETED, CANCELLED
+  winnerConfigId  String?   @map("winner_config_id")
+  metricsA        Json?     @map("metrics_a")
+  metricsB        Json?     @map("metrics_b")
+  createdAt       DateTime  @default(now()) @map("created_at")
+
+  @@index([status])
+  @@map("ab_test_configs")
 }

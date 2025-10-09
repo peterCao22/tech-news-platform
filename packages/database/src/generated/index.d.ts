@@ -133,6 +133,21 @@ export type AiServiceStatus = $Result.DefaultSelection<Prisma.$AiServiceStatusPa
  * 
  */
 export type GeminiNewsQuery = $Result.DefaultSelection<Prisma.$GeminiNewsQueryPayload>
+/**
+ * Model ContentScore
+ * 
+ */
+export type ContentScore = $Result.DefaultSelection<Prisma.$ContentScorePayload>
+/**
+ * Model ScoringWeight
+ * 
+ */
+export type ScoringWeight = $Result.DefaultSelection<Prisma.$ScoringWeightPayload>
+/**
+ * Model ABTestConfig
+ * 
+ */
+export type ABTestConfig = $Result.DefaultSelection<Prisma.$ABTestConfigPayload>
 
 /**
  * Enums
@@ -667,6 +682,36 @@ export class PrismaClient<
     * ```
     */
   get geminiNewsQuery(): Prisma.GeminiNewsQueryDelegate<ExtArgs>;
+
+  /**
+   * `prisma.contentScore`: Exposes CRUD operations for the **ContentScore** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ContentScores
+    * const contentScores = await prisma.contentScore.findMany()
+    * ```
+    */
+  get contentScore(): Prisma.ContentScoreDelegate<ExtArgs>;
+
+  /**
+   * `prisma.scoringWeight`: Exposes CRUD operations for the **ScoringWeight** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ScoringWeights
+    * const scoringWeights = await prisma.scoringWeight.findMany()
+    * ```
+    */
+  get scoringWeight(): Prisma.ScoringWeightDelegate<ExtArgs>;
+
+  /**
+   * `prisma.aBTestConfig`: Exposes CRUD operations for the **ABTestConfig** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ABTestConfigs
+    * const aBTestConfigs = await prisma.aBTestConfig.findMany()
+    * ```
+    */
+  get aBTestConfig(): Prisma.ABTestConfigDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -1131,7 +1176,10 @@ export namespace Prisma {
     AiServiceConfig: 'AiServiceConfig',
     AiUsageLog: 'AiUsageLog',
     AiServiceStatus: 'AiServiceStatus',
-    GeminiNewsQuery: 'GeminiNewsQuery'
+    GeminiNewsQuery: 'GeminiNewsQuery',
+    ContentScore: 'ContentScore',
+    ScoringWeight: 'ScoringWeight',
+    ABTestConfig: 'ABTestConfig'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1147,7 +1195,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "user" | "account" | "session" | "verificationToken" | "passwordResetToken" | "source" | "content" | "tag" | "contentTag" | "contentReview" | "dailyDigest" | "userActivity" | "aITask" | "systemConfig" | "apiConfiguration" | "apiCallLog" | "contentVersion" | "contentAuditLog" | "contentDuplication" | "searchIndex" | "aiServiceConfig" | "aiUsageLog" | "aiServiceStatus" | "geminiNewsQuery"
+      modelProps: "user" | "account" | "session" | "verificationToken" | "passwordResetToken" | "source" | "content" | "tag" | "contentTag" | "contentReview" | "dailyDigest" | "userActivity" | "aITask" | "systemConfig" | "apiConfiguration" | "apiCallLog" | "contentVersion" | "contentAuditLog" | "contentDuplication" | "searchIndex" | "aiServiceConfig" | "aiUsageLog" | "aiServiceStatus" | "geminiNewsQuery" | "contentScore" | "scoringWeight" | "aBTestConfig"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2828,6 +2876,216 @@ export namespace Prisma {
           count: {
             args: Prisma.GeminiNewsQueryCountArgs<ExtArgs>
             result: $Utils.Optional<GeminiNewsQueryCountAggregateOutputType> | number
+          }
+        }
+      }
+      ContentScore: {
+        payload: Prisma.$ContentScorePayload<ExtArgs>
+        fields: Prisma.ContentScoreFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ContentScoreFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentScorePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ContentScoreFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentScorePayload>
+          }
+          findFirst: {
+            args: Prisma.ContentScoreFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentScorePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ContentScoreFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentScorePayload>
+          }
+          findMany: {
+            args: Prisma.ContentScoreFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentScorePayload>[]
+          }
+          create: {
+            args: Prisma.ContentScoreCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentScorePayload>
+          }
+          createMany: {
+            args: Prisma.ContentScoreCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ContentScoreCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentScorePayload>[]
+          }
+          delete: {
+            args: Prisma.ContentScoreDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentScorePayload>
+          }
+          update: {
+            args: Prisma.ContentScoreUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentScorePayload>
+          }
+          deleteMany: {
+            args: Prisma.ContentScoreDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ContentScoreUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ContentScoreUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContentScorePayload>
+          }
+          aggregate: {
+            args: Prisma.ContentScoreAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateContentScore>
+          }
+          groupBy: {
+            args: Prisma.ContentScoreGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ContentScoreGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ContentScoreCountArgs<ExtArgs>
+            result: $Utils.Optional<ContentScoreCountAggregateOutputType> | number
+          }
+        }
+      }
+      ScoringWeight: {
+        payload: Prisma.$ScoringWeightPayload<ExtArgs>
+        fields: Prisma.ScoringWeightFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ScoringWeightFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScoringWeightPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ScoringWeightFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScoringWeightPayload>
+          }
+          findFirst: {
+            args: Prisma.ScoringWeightFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScoringWeightPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ScoringWeightFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScoringWeightPayload>
+          }
+          findMany: {
+            args: Prisma.ScoringWeightFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScoringWeightPayload>[]
+          }
+          create: {
+            args: Prisma.ScoringWeightCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScoringWeightPayload>
+          }
+          createMany: {
+            args: Prisma.ScoringWeightCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ScoringWeightCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScoringWeightPayload>[]
+          }
+          delete: {
+            args: Prisma.ScoringWeightDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScoringWeightPayload>
+          }
+          update: {
+            args: Prisma.ScoringWeightUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScoringWeightPayload>
+          }
+          deleteMany: {
+            args: Prisma.ScoringWeightDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ScoringWeightUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ScoringWeightUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScoringWeightPayload>
+          }
+          aggregate: {
+            args: Prisma.ScoringWeightAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateScoringWeight>
+          }
+          groupBy: {
+            args: Prisma.ScoringWeightGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ScoringWeightGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ScoringWeightCountArgs<ExtArgs>
+            result: $Utils.Optional<ScoringWeightCountAggregateOutputType> | number
+          }
+        }
+      }
+      ABTestConfig: {
+        payload: Prisma.$ABTestConfigPayload<ExtArgs>
+        fields: Prisma.ABTestConfigFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ABTestConfigFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ABTestConfigPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ABTestConfigFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ABTestConfigPayload>
+          }
+          findFirst: {
+            args: Prisma.ABTestConfigFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ABTestConfigPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ABTestConfigFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ABTestConfigPayload>
+          }
+          findMany: {
+            args: Prisma.ABTestConfigFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ABTestConfigPayload>[]
+          }
+          create: {
+            args: Prisma.ABTestConfigCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ABTestConfigPayload>
+          }
+          createMany: {
+            args: Prisma.ABTestConfigCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ABTestConfigCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ABTestConfigPayload>[]
+          }
+          delete: {
+            args: Prisma.ABTestConfigDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ABTestConfigPayload>
+          }
+          update: {
+            args: Prisma.ABTestConfigUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ABTestConfigPayload>
+          }
+          deleteMany: {
+            args: Prisma.ABTestConfigDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ABTestConfigUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ABTestConfigUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ABTestConfigPayload>
+          }
+          aggregate: {
+            args: Prisma.ABTestConfigAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateABTestConfig>
+          }
+          groupBy: {
+            args: Prisma.ABTestConfigGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ABTestConfigGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ABTestConfigCountArgs<ExtArgs>
+            result: $Utils.Optional<ABTestConfigCountAggregateOutputType> | number
           }
         }
       }
@@ -9644,6 +9902,7 @@ export namespace Prisma {
     reviews?: boolean | Content$reviewsArgs<ExtArgs>
     contentTags?: boolean | Content$contentTagsArgs<ExtArgs>
     versions?: boolean | Content$versionsArgs<ExtArgs>
+    contentScore?: boolean | Content$contentScoreArgs<ExtArgs>
     _count?: boolean | ContentCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["content"]>
 
@@ -9717,6 +9976,7 @@ export namespace Prisma {
     reviews?: boolean | Content$reviewsArgs<ExtArgs>
     contentTags?: boolean | Content$contentTagsArgs<ExtArgs>
     versions?: boolean | Content$versionsArgs<ExtArgs>
+    contentScore?: boolean | Content$contentScoreArgs<ExtArgs>
     _count?: boolean | ContentCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ContentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -9730,6 +9990,7 @@ export namespace Prisma {
       reviews: Prisma.$ContentReviewPayload<ExtArgs>[]
       contentTags: Prisma.$ContentTagPayload<ExtArgs>[]
       versions: Prisma.$ContentVersionPayload<ExtArgs>[]
+      contentScore: Prisma.$ContentScorePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -10129,6 +10390,7 @@ export namespace Prisma {
     reviews<T extends Content$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, Content$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContentReviewPayload<ExtArgs>, T, "findMany"> | Null>
     contentTags<T extends Content$contentTagsArgs<ExtArgs> = {}>(args?: Subset<T, Content$contentTagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContentTagPayload<ExtArgs>, T, "findMany"> | Null>
     versions<T extends Content$versionsArgs<ExtArgs> = {}>(args?: Subset<T, Content$versionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContentVersionPayload<ExtArgs>, T, "findMany"> | Null>
+    contentScore<T extends Content$contentScoreArgs<ExtArgs> = {}>(args?: Subset<T, Content$contentScoreArgs<ExtArgs>>): Prisma__ContentScoreClient<$Result.GetResult<Prisma.$ContentScorePayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10562,6 +10824,21 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ContentVersionScalarFieldEnum | ContentVersionScalarFieldEnum[]
+  }
+
+  /**
+   * Content.contentScore
+   */
+  export type Content$contentScoreArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentScore
+     */
+    select?: ContentScoreSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContentScoreInclude<ExtArgs> | null
+    where?: ContentScoreWhereInput
   }
 
   /**
@@ -27679,6 +27956,3063 @@ export namespace Prisma {
 
 
   /**
+   * Model ContentScore
+   */
+
+  export type AggregateContentScore = {
+    _count: ContentScoreCountAggregateOutputType | null
+    _avg: ContentScoreAvgAggregateOutputType | null
+    _sum: ContentScoreSumAggregateOutputType | null
+    _min: ContentScoreMinAggregateOutputType | null
+    _max: ContentScoreMaxAggregateOutputType | null
+  }
+
+  export type ContentScoreAvgAggregateOutputType = {
+    totalScore: number | null
+    timelinessScore: number | null
+    authorityScore: number | null
+    qualityScore: number | null
+    relevanceScore: number | null
+    aiImportanceScore: number | null
+    engagementScore: number | null
+  }
+
+  export type ContentScoreSumAggregateOutputType = {
+    totalScore: number | null
+    timelinessScore: number | null
+    authorityScore: number | null
+    qualityScore: number | null
+    relevanceScore: number | null
+    aiImportanceScore: number | null
+    engagementScore: number | null
+  }
+
+  export type ContentScoreMinAggregateOutputType = {
+    id: string | null
+    contentId: string | null
+    totalScore: number | null
+    timelinessScore: number | null
+    authorityScore: number | null
+    qualityScore: number | null
+    relevanceScore: number | null
+    aiImportanceScore: number | null
+    engagementScore: number | null
+    weightConfigId: string | null
+    explanation: string | null
+    calculatedAt: Date | null
+  }
+
+  export type ContentScoreMaxAggregateOutputType = {
+    id: string | null
+    contentId: string | null
+    totalScore: number | null
+    timelinessScore: number | null
+    authorityScore: number | null
+    qualityScore: number | null
+    relevanceScore: number | null
+    aiImportanceScore: number | null
+    engagementScore: number | null
+    weightConfigId: string | null
+    explanation: string | null
+    calculatedAt: Date | null
+  }
+
+  export type ContentScoreCountAggregateOutputType = {
+    id: number
+    contentId: number
+    totalScore: number
+    timelinessScore: number
+    authorityScore: number
+    qualityScore: number
+    relevanceScore: number
+    aiImportanceScore: number
+    engagementScore: number
+    weightConfigId: number
+    explanation: number
+    calculatedAt: number
+    _all: number
+  }
+
+
+  export type ContentScoreAvgAggregateInputType = {
+    totalScore?: true
+    timelinessScore?: true
+    authorityScore?: true
+    qualityScore?: true
+    relevanceScore?: true
+    aiImportanceScore?: true
+    engagementScore?: true
+  }
+
+  export type ContentScoreSumAggregateInputType = {
+    totalScore?: true
+    timelinessScore?: true
+    authorityScore?: true
+    qualityScore?: true
+    relevanceScore?: true
+    aiImportanceScore?: true
+    engagementScore?: true
+  }
+
+  export type ContentScoreMinAggregateInputType = {
+    id?: true
+    contentId?: true
+    totalScore?: true
+    timelinessScore?: true
+    authorityScore?: true
+    qualityScore?: true
+    relevanceScore?: true
+    aiImportanceScore?: true
+    engagementScore?: true
+    weightConfigId?: true
+    explanation?: true
+    calculatedAt?: true
+  }
+
+  export type ContentScoreMaxAggregateInputType = {
+    id?: true
+    contentId?: true
+    totalScore?: true
+    timelinessScore?: true
+    authorityScore?: true
+    qualityScore?: true
+    relevanceScore?: true
+    aiImportanceScore?: true
+    engagementScore?: true
+    weightConfigId?: true
+    explanation?: true
+    calculatedAt?: true
+  }
+
+  export type ContentScoreCountAggregateInputType = {
+    id?: true
+    contentId?: true
+    totalScore?: true
+    timelinessScore?: true
+    authorityScore?: true
+    qualityScore?: true
+    relevanceScore?: true
+    aiImportanceScore?: true
+    engagementScore?: true
+    weightConfigId?: true
+    explanation?: true
+    calculatedAt?: true
+    _all?: true
+  }
+
+  export type ContentScoreAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ContentScore to aggregate.
+     */
+    where?: ContentScoreWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ContentScores to fetch.
+     */
+    orderBy?: ContentScoreOrderByWithRelationInput | ContentScoreOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ContentScoreWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ContentScores from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ContentScores.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ContentScores
+    **/
+    _count?: true | ContentScoreCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ContentScoreAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ContentScoreSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ContentScoreMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ContentScoreMaxAggregateInputType
+  }
+
+  export type GetContentScoreAggregateType<T extends ContentScoreAggregateArgs> = {
+        [P in keyof T & keyof AggregateContentScore]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateContentScore[P]>
+      : GetScalarType<T[P], AggregateContentScore[P]>
+  }
+
+
+
+
+  export type ContentScoreGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ContentScoreWhereInput
+    orderBy?: ContentScoreOrderByWithAggregationInput | ContentScoreOrderByWithAggregationInput[]
+    by: ContentScoreScalarFieldEnum[] | ContentScoreScalarFieldEnum
+    having?: ContentScoreScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ContentScoreCountAggregateInputType | true
+    _avg?: ContentScoreAvgAggregateInputType
+    _sum?: ContentScoreSumAggregateInputType
+    _min?: ContentScoreMinAggregateInputType
+    _max?: ContentScoreMaxAggregateInputType
+  }
+
+  export type ContentScoreGroupByOutputType = {
+    id: string
+    contentId: string
+    totalScore: number
+    timelinessScore: number
+    authorityScore: number
+    qualityScore: number
+    relevanceScore: number
+    aiImportanceScore: number
+    engagementScore: number
+    weightConfigId: string | null
+    explanation: string | null
+    calculatedAt: Date
+    _count: ContentScoreCountAggregateOutputType | null
+    _avg: ContentScoreAvgAggregateOutputType | null
+    _sum: ContentScoreSumAggregateOutputType | null
+    _min: ContentScoreMinAggregateOutputType | null
+    _max: ContentScoreMaxAggregateOutputType | null
+  }
+
+  type GetContentScoreGroupByPayload<T extends ContentScoreGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ContentScoreGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ContentScoreGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ContentScoreGroupByOutputType[P]>
+            : GetScalarType<T[P], ContentScoreGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ContentScoreSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    contentId?: boolean
+    totalScore?: boolean
+    timelinessScore?: boolean
+    authorityScore?: boolean
+    qualityScore?: boolean
+    relevanceScore?: boolean
+    aiImportanceScore?: boolean
+    engagementScore?: boolean
+    weightConfigId?: boolean
+    explanation?: boolean
+    calculatedAt?: boolean
+    content?: boolean | ContentDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["contentScore"]>
+
+  export type ContentScoreSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    contentId?: boolean
+    totalScore?: boolean
+    timelinessScore?: boolean
+    authorityScore?: boolean
+    qualityScore?: boolean
+    relevanceScore?: boolean
+    aiImportanceScore?: boolean
+    engagementScore?: boolean
+    weightConfigId?: boolean
+    explanation?: boolean
+    calculatedAt?: boolean
+    content?: boolean | ContentDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["contentScore"]>
+
+  export type ContentScoreSelectScalar = {
+    id?: boolean
+    contentId?: boolean
+    totalScore?: boolean
+    timelinessScore?: boolean
+    authorityScore?: boolean
+    qualityScore?: boolean
+    relevanceScore?: boolean
+    aiImportanceScore?: boolean
+    engagementScore?: boolean
+    weightConfigId?: boolean
+    explanation?: boolean
+    calculatedAt?: boolean
+  }
+
+  export type ContentScoreInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    content?: boolean | ContentDefaultArgs<ExtArgs>
+  }
+  export type ContentScoreIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    content?: boolean | ContentDefaultArgs<ExtArgs>
+  }
+
+  export type $ContentScorePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ContentScore"
+    objects: {
+      content: Prisma.$ContentPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      contentId: string
+      totalScore: number
+      timelinessScore: number
+      authorityScore: number
+      qualityScore: number
+      relevanceScore: number
+      aiImportanceScore: number
+      engagementScore: number
+      weightConfigId: string | null
+      explanation: string | null
+      calculatedAt: Date
+    }, ExtArgs["result"]["contentScore"]>
+    composites: {}
+  }
+
+  type ContentScoreGetPayload<S extends boolean | null | undefined | ContentScoreDefaultArgs> = $Result.GetResult<Prisma.$ContentScorePayload, S>
+
+  type ContentScoreCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<ContentScoreFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: ContentScoreCountAggregateInputType | true
+    }
+
+  export interface ContentScoreDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ContentScore'], meta: { name: 'ContentScore' } }
+    /**
+     * Find zero or one ContentScore that matches the filter.
+     * @param {ContentScoreFindUniqueArgs} args - Arguments to find a ContentScore
+     * @example
+     * // Get one ContentScore
+     * const contentScore = await prisma.contentScore.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ContentScoreFindUniqueArgs>(args: SelectSubset<T, ContentScoreFindUniqueArgs<ExtArgs>>): Prisma__ContentScoreClient<$Result.GetResult<Prisma.$ContentScorePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one ContentScore that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {ContentScoreFindUniqueOrThrowArgs} args - Arguments to find a ContentScore
+     * @example
+     * // Get one ContentScore
+     * const contentScore = await prisma.contentScore.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ContentScoreFindUniqueOrThrowArgs>(args: SelectSubset<T, ContentScoreFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ContentScoreClient<$Result.GetResult<Prisma.$ContentScorePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first ContentScore that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContentScoreFindFirstArgs} args - Arguments to find a ContentScore
+     * @example
+     * // Get one ContentScore
+     * const contentScore = await prisma.contentScore.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ContentScoreFindFirstArgs>(args?: SelectSubset<T, ContentScoreFindFirstArgs<ExtArgs>>): Prisma__ContentScoreClient<$Result.GetResult<Prisma.$ContentScorePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first ContentScore that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContentScoreFindFirstOrThrowArgs} args - Arguments to find a ContentScore
+     * @example
+     * // Get one ContentScore
+     * const contentScore = await prisma.contentScore.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ContentScoreFindFirstOrThrowArgs>(args?: SelectSubset<T, ContentScoreFindFirstOrThrowArgs<ExtArgs>>): Prisma__ContentScoreClient<$Result.GetResult<Prisma.$ContentScorePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more ContentScores that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContentScoreFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ContentScores
+     * const contentScores = await prisma.contentScore.findMany()
+     * 
+     * // Get first 10 ContentScores
+     * const contentScores = await prisma.contentScore.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const contentScoreWithIdOnly = await prisma.contentScore.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ContentScoreFindManyArgs>(args?: SelectSubset<T, ContentScoreFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContentScorePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a ContentScore.
+     * @param {ContentScoreCreateArgs} args - Arguments to create a ContentScore.
+     * @example
+     * // Create one ContentScore
+     * const ContentScore = await prisma.contentScore.create({
+     *   data: {
+     *     // ... data to create a ContentScore
+     *   }
+     * })
+     * 
+     */
+    create<T extends ContentScoreCreateArgs>(args: SelectSubset<T, ContentScoreCreateArgs<ExtArgs>>): Prisma__ContentScoreClient<$Result.GetResult<Prisma.$ContentScorePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many ContentScores.
+     * @param {ContentScoreCreateManyArgs} args - Arguments to create many ContentScores.
+     * @example
+     * // Create many ContentScores
+     * const contentScore = await prisma.contentScore.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ContentScoreCreateManyArgs>(args?: SelectSubset<T, ContentScoreCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ContentScores and returns the data saved in the database.
+     * @param {ContentScoreCreateManyAndReturnArgs} args - Arguments to create many ContentScores.
+     * @example
+     * // Create many ContentScores
+     * const contentScore = await prisma.contentScore.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ContentScores and only return the `id`
+     * const contentScoreWithIdOnly = await prisma.contentScore.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ContentScoreCreateManyAndReturnArgs>(args?: SelectSubset<T, ContentScoreCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContentScorePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a ContentScore.
+     * @param {ContentScoreDeleteArgs} args - Arguments to delete one ContentScore.
+     * @example
+     * // Delete one ContentScore
+     * const ContentScore = await prisma.contentScore.delete({
+     *   where: {
+     *     // ... filter to delete one ContentScore
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ContentScoreDeleteArgs>(args: SelectSubset<T, ContentScoreDeleteArgs<ExtArgs>>): Prisma__ContentScoreClient<$Result.GetResult<Prisma.$ContentScorePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one ContentScore.
+     * @param {ContentScoreUpdateArgs} args - Arguments to update one ContentScore.
+     * @example
+     * // Update one ContentScore
+     * const contentScore = await prisma.contentScore.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ContentScoreUpdateArgs>(args: SelectSubset<T, ContentScoreUpdateArgs<ExtArgs>>): Prisma__ContentScoreClient<$Result.GetResult<Prisma.$ContentScorePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more ContentScores.
+     * @param {ContentScoreDeleteManyArgs} args - Arguments to filter ContentScores to delete.
+     * @example
+     * // Delete a few ContentScores
+     * const { count } = await prisma.contentScore.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ContentScoreDeleteManyArgs>(args?: SelectSubset<T, ContentScoreDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ContentScores.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContentScoreUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ContentScores
+     * const contentScore = await prisma.contentScore.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ContentScoreUpdateManyArgs>(args: SelectSubset<T, ContentScoreUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ContentScore.
+     * @param {ContentScoreUpsertArgs} args - Arguments to update or create a ContentScore.
+     * @example
+     * // Update or create a ContentScore
+     * const contentScore = await prisma.contentScore.upsert({
+     *   create: {
+     *     // ... data to create a ContentScore
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ContentScore we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ContentScoreUpsertArgs>(args: SelectSubset<T, ContentScoreUpsertArgs<ExtArgs>>): Prisma__ContentScoreClient<$Result.GetResult<Prisma.$ContentScorePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of ContentScores.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContentScoreCountArgs} args - Arguments to filter ContentScores to count.
+     * @example
+     * // Count the number of ContentScores
+     * const count = await prisma.contentScore.count({
+     *   where: {
+     *     // ... the filter for the ContentScores we want to count
+     *   }
+     * })
+    **/
+    count<T extends ContentScoreCountArgs>(
+      args?: Subset<T, ContentScoreCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ContentScoreCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ContentScore.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContentScoreAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ContentScoreAggregateArgs>(args: Subset<T, ContentScoreAggregateArgs>): Prisma.PrismaPromise<GetContentScoreAggregateType<T>>
+
+    /**
+     * Group by ContentScore.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContentScoreGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ContentScoreGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ContentScoreGroupByArgs['orderBy'] }
+        : { orderBy?: ContentScoreGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ContentScoreGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetContentScoreGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ContentScore model
+   */
+  readonly fields: ContentScoreFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ContentScore.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ContentScoreClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    content<T extends ContentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ContentDefaultArgs<ExtArgs>>): Prisma__ContentClient<$Result.GetResult<Prisma.$ContentPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ContentScore model
+   */ 
+  interface ContentScoreFieldRefs {
+    readonly id: FieldRef<"ContentScore", 'String'>
+    readonly contentId: FieldRef<"ContentScore", 'String'>
+    readonly totalScore: FieldRef<"ContentScore", 'Float'>
+    readonly timelinessScore: FieldRef<"ContentScore", 'Float'>
+    readonly authorityScore: FieldRef<"ContentScore", 'Float'>
+    readonly qualityScore: FieldRef<"ContentScore", 'Float'>
+    readonly relevanceScore: FieldRef<"ContentScore", 'Float'>
+    readonly aiImportanceScore: FieldRef<"ContentScore", 'Float'>
+    readonly engagementScore: FieldRef<"ContentScore", 'Float'>
+    readonly weightConfigId: FieldRef<"ContentScore", 'String'>
+    readonly explanation: FieldRef<"ContentScore", 'String'>
+    readonly calculatedAt: FieldRef<"ContentScore", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ContentScore findUnique
+   */
+  export type ContentScoreFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentScore
+     */
+    select?: ContentScoreSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContentScoreInclude<ExtArgs> | null
+    /**
+     * Filter, which ContentScore to fetch.
+     */
+    where: ContentScoreWhereUniqueInput
+  }
+
+  /**
+   * ContentScore findUniqueOrThrow
+   */
+  export type ContentScoreFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentScore
+     */
+    select?: ContentScoreSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContentScoreInclude<ExtArgs> | null
+    /**
+     * Filter, which ContentScore to fetch.
+     */
+    where: ContentScoreWhereUniqueInput
+  }
+
+  /**
+   * ContentScore findFirst
+   */
+  export type ContentScoreFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentScore
+     */
+    select?: ContentScoreSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContentScoreInclude<ExtArgs> | null
+    /**
+     * Filter, which ContentScore to fetch.
+     */
+    where?: ContentScoreWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ContentScores to fetch.
+     */
+    orderBy?: ContentScoreOrderByWithRelationInput | ContentScoreOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ContentScores.
+     */
+    cursor?: ContentScoreWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ContentScores from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ContentScores.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ContentScores.
+     */
+    distinct?: ContentScoreScalarFieldEnum | ContentScoreScalarFieldEnum[]
+  }
+
+  /**
+   * ContentScore findFirstOrThrow
+   */
+  export type ContentScoreFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentScore
+     */
+    select?: ContentScoreSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContentScoreInclude<ExtArgs> | null
+    /**
+     * Filter, which ContentScore to fetch.
+     */
+    where?: ContentScoreWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ContentScores to fetch.
+     */
+    orderBy?: ContentScoreOrderByWithRelationInput | ContentScoreOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ContentScores.
+     */
+    cursor?: ContentScoreWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ContentScores from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ContentScores.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ContentScores.
+     */
+    distinct?: ContentScoreScalarFieldEnum | ContentScoreScalarFieldEnum[]
+  }
+
+  /**
+   * ContentScore findMany
+   */
+  export type ContentScoreFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentScore
+     */
+    select?: ContentScoreSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContentScoreInclude<ExtArgs> | null
+    /**
+     * Filter, which ContentScores to fetch.
+     */
+    where?: ContentScoreWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ContentScores to fetch.
+     */
+    orderBy?: ContentScoreOrderByWithRelationInput | ContentScoreOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ContentScores.
+     */
+    cursor?: ContentScoreWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ContentScores from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ContentScores.
+     */
+    skip?: number
+    distinct?: ContentScoreScalarFieldEnum | ContentScoreScalarFieldEnum[]
+  }
+
+  /**
+   * ContentScore create
+   */
+  export type ContentScoreCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentScore
+     */
+    select?: ContentScoreSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContentScoreInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ContentScore.
+     */
+    data: XOR<ContentScoreCreateInput, ContentScoreUncheckedCreateInput>
+  }
+
+  /**
+   * ContentScore createMany
+   */
+  export type ContentScoreCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ContentScores.
+     */
+    data: ContentScoreCreateManyInput | ContentScoreCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ContentScore createManyAndReturn
+   */
+  export type ContentScoreCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentScore
+     */
+    select?: ContentScoreSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many ContentScores.
+     */
+    data: ContentScoreCreateManyInput | ContentScoreCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContentScoreIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ContentScore update
+   */
+  export type ContentScoreUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentScore
+     */
+    select?: ContentScoreSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContentScoreInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ContentScore.
+     */
+    data: XOR<ContentScoreUpdateInput, ContentScoreUncheckedUpdateInput>
+    /**
+     * Choose, which ContentScore to update.
+     */
+    where: ContentScoreWhereUniqueInput
+  }
+
+  /**
+   * ContentScore updateMany
+   */
+  export type ContentScoreUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ContentScores.
+     */
+    data: XOR<ContentScoreUpdateManyMutationInput, ContentScoreUncheckedUpdateManyInput>
+    /**
+     * Filter which ContentScores to update
+     */
+    where?: ContentScoreWhereInput
+  }
+
+  /**
+   * ContentScore upsert
+   */
+  export type ContentScoreUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentScore
+     */
+    select?: ContentScoreSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContentScoreInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ContentScore to update in case it exists.
+     */
+    where: ContentScoreWhereUniqueInput
+    /**
+     * In case the ContentScore found by the `where` argument doesn't exist, create a new ContentScore with this data.
+     */
+    create: XOR<ContentScoreCreateInput, ContentScoreUncheckedCreateInput>
+    /**
+     * In case the ContentScore was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ContentScoreUpdateInput, ContentScoreUncheckedUpdateInput>
+  }
+
+  /**
+   * ContentScore delete
+   */
+  export type ContentScoreDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentScore
+     */
+    select?: ContentScoreSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContentScoreInclude<ExtArgs> | null
+    /**
+     * Filter which ContentScore to delete.
+     */
+    where: ContentScoreWhereUniqueInput
+  }
+
+  /**
+   * ContentScore deleteMany
+   */
+  export type ContentScoreDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ContentScores to delete
+     */
+    where?: ContentScoreWhereInput
+  }
+
+  /**
+   * ContentScore without action
+   */
+  export type ContentScoreDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContentScore
+     */
+    select?: ContentScoreSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContentScoreInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ScoringWeight
+   */
+
+  export type AggregateScoringWeight = {
+    _count: ScoringWeightCountAggregateOutputType | null
+    _avg: ScoringWeightAvgAggregateOutputType | null
+    _sum: ScoringWeightSumAggregateOutputType | null
+    _min: ScoringWeightMinAggregateOutputType | null
+    _max: ScoringWeightMaxAggregateOutputType | null
+  }
+
+  export type ScoringWeightAvgAggregateOutputType = {
+    timeliness: number | null
+    authority: number | null
+    quality: number | null
+    relevance: number | null
+    aiImportance: number | null
+    engagement: number | null
+  }
+
+  export type ScoringWeightSumAggregateOutputType = {
+    timeliness: number | null
+    authority: number | null
+    quality: number | null
+    relevance: number | null
+    aiImportance: number | null
+    engagement: number | null
+  }
+
+  export type ScoringWeightMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    description: string | null
+    timeliness: number | null
+    authority: number | null
+    quality: number | null
+    relevance: number | null
+    aiImportance: number | null
+    engagement: number | null
+    isActive: boolean | null
+    isDefault: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ScoringWeightMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    description: string | null
+    timeliness: number | null
+    authority: number | null
+    quality: number | null
+    relevance: number | null
+    aiImportance: number | null
+    engagement: number | null
+    isActive: boolean | null
+    isDefault: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ScoringWeightCountAggregateOutputType = {
+    id: number
+    name: number
+    description: number
+    timeliness: number
+    authority: number
+    quality: number
+    relevance: number
+    aiImportance: number
+    engagement: number
+    isActive: number
+    isDefault: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ScoringWeightAvgAggregateInputType = {
+    timeliness?: true
+    authority?: true
+    quality?: true
+    relevance?: true
+    aiImportance?: true
+    engagement?: true
+  }
+
+  export type ScoringWeightSumAggregateInputType = {
+    timeliness?: true
+    authority?: true
+    quality?: true
+    relevance?: true
+    aiImportance?: true
+    engagement?: true
+  }
+
+  export type ScoringWeightMinAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    timeliness?: true
+    authority?: true
+    quality?: true
+    relevance?: true
+    aiImportance?: true
+    engagement?: true
+    isActive?: true
+    isDefault?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ScoringWeightMaxAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    timeliness?: true
+    authority?: true
+    quality?: true
+    relevance?: true
+    aiImportance?: true
+    engagement?: true
+    isActive?: true
+    isDefault?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ScoringWeightCountAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    timeliness?: true
+    authority?: true
+    quality?: true
+    relevance?: true
+    aiImportance?: true
+    engagement?: true
+    isActive?: true
+    isDefault?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ScoringWeightAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ScoringWeight to aggregate.
+     */
+    where?: ScoringWeightWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ScoringWeights to fetch.
+     */
+    orderBy?: ScoringWeightOrderByWithRelationInput | ScoringWeightOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ScoringWeightWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ScoringWeights from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ScoringWeights.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ScoringWeights
+    **/
+    _count?: true | ScoringWeightCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ScoringWeightAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ScoringWeightSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ScoringWeightMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ScoringWeightMaxAggregateInputType
+  }
+
+  export type GetScoringWeightAggregateType<T extends ScoringWeightAggregateArgs> = {
+        [P in keyof T & keyof AggregateScoringWeight]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateScoringWeight[P]>
+      : GetScalarType<T[P], AggregateScoringWeight[P]>
+  }
+
+
+
+
+  export type ScoringWeightGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ScoringWeightWhereInput
+    orderBy?: ScoringWeightOrderByWithAggregationInput | ScoringWeightOrderByWithAggregationInput[]
+    by: ScoringWeightScalarFieldEnum[] | ScoringWeightScalarFieldEnum
+    having?: ScoringWeightScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ScoringWeightCountAggregateInputType | true
+    _avg?: ScoringWeightAvgAggregateInputType
+    _sum?: ScoringWeightSumAggregateInputType
+    _min?: ScoringWeightMinAggregateInputType
+    _max?: ScoringWeightMaxAggregateInputType
+  }
+
+  export type ScoringWeightGroupByOutputType = {
+    id: string
+    name: string
+    description: string | null
+    timeliness: number
+    authority: number
+    quality: number
+    relevance: number
+    aiImportance: number
+    engagement: number
+    isActive: boolean
+    isDefault: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: ScoringWeightCountAggregateOutputType | null
+    _avg: ScoringWeightAvgAggregateOutputType | null
+    _sum: ScoringWeightSumAggregateOutputType | null
+    _min: ScoringWeightMinAggregateOutputType | null
+    _max: ScoringWeightMaxAggregateOutputType | null
+  }
+
+  type GetScoringWeightGroupByPayload<T extends ScoringWeightGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ScoringWeightGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ScoringWeightGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ScoringWeightGroupByOutputType[P]>
+            : GetScalarType<T[P], ScoringWeightGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ScoringWeightSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    timeliness?: boolean
+    authority?: boolean
+    quality?: boolean
+    relevance?: boolean
+    aiImportance?: boolean
+    engagement?: boolean
+    isActive?: boolean
+    isDefault?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["scoringWeight"]>
+
+  export type ScoringWeightSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    timeliness?: boolean
+    authority?: boolean
+    quality?: boolean
+    relevance?: boolean
+    aiImportance?: boolean
+    engagement?: boolean
+    isActive?: boolean
+    isDefault?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["scoringWeight"]>
+
+  export type ScoringWeightSelectScalar = {
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    timeliness?: boolean
+    authority?: boolean
+    quality?: boolean
+    relevance?: boolean
+    aiImportance?: boolean
+    engagement?: boolean
+    isActive?: boolean
+    isDefault?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type $ScoringWeightPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ScoringWeight"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      description: string | null
+      timeliness: number
+      authority: number
+      quality: number
+      relevance: number
+      aiImportance: number
+      engagement: number
+      isActive: boolean
+      isDefault: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["scoringWeight"]>
+    composites: {}
+  }
+
+  type ScoringWeightGetPayload<S extends boolean | null | undefined | ScoringWeightDefaultArgs> = $Result.GetResult<Prisma.$ScoringWeightPayload, S>
+
+  type ScoringWeightCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<ScoringWeightFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: ScoringWeightCountAggregateInputType | true
+    }
+
+  export interface ScoringWeightDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ScoringWeight'], meta: { name: 'ScoringWeight' } }
+    /**
+     * Find zero or one ScoringWeight that matches the filter.
+     * @param {ScoringWeightFindUniqueArgs} args - Arguments to find a ScoringWeight
+     * @example
+     * // Get one ScoringWeight
+     * const scoringWeight = await prisma.scoringWeight.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ScoringWeightFindUniqueArgs>(args: SelectSubset<T, ScoringWeightFindUniqueArgs<ExtArgs>>): Prisma__ScoringWeightClient<$Result.GetResult<Prisma.$ScoringWeightPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one ScoringWeight that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {ScoringWeightFindUniqueOrThrowArgs} args - Arguments to find a ScoringWeight
+     * @example
+     * // Get one ScoringWeight
+     * const scoringWeight = await prisma.scoringWeight.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ScoringWeightFindUniqueOrThrowArgs>(args: SelectSubset<T, ScoringWeightFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ScoringWeightClient<$Result.GetResult<Prisma.$ScoringWeightPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first ScoringWeight that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScoringWeightFindFirstArgs} args - Arguments to find a ScoringWeight
+     * @example
+     * // Get one ScoringWeight
+     * const scoringWeight = await prisma.scoringWeight.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ScoringWeightFindFirstArgs>(args?: SelectSubset<T, ScoringWeightFindFirstArgs<ExtArgs>>): Prisma__ScoringWeightClient<$Result.GetResult<Prisma.$ScoringWeightPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first ScoringWeight that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScoringWeightFindFirstOrThrowArgs} args - Arguments to find a ScoringWeight
+     * @example
+     * // Get one ScoringWeight
+     * const scoringWeight = await prisma.scoringWeight.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ScoringWeightFindFirstOrThrowArgs>(args?: SelectSubset<T, ScoringWeightFindFirstOrThrowArgs<ExtArgs>>): Prisma__ScoringWeightClient<$Result.GetResult<Prisma.$ScoringWeightPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more ScoringWeights that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScoringWeightFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ScoringWeights
+     * const scoringWeights = await prisma.scoringWeight.findMany()
+     * 
+     * // Get first 10 ScoringWeights
+     * const scoringWeights = await prisma.scoringWeight.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const scoringWeightWithIdOnly = await prisma.scoringWeight.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ScoringWeightFindManyArgs>(args?: SelectSubset<T, ScoringWeightFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ScoringWeightPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a ScoringWeight.
+     * @param {ScoringWeightCreateArgs} args - Arguments to create a ScoringWeight.
+     * @example
+     * // Create one ScoringWeight
+     * const ScoringWeight = await prisma.scoringWeight.create({
+     *   data: {
+     *     // ... data to create a ScoringWeight
+     *   }
+     * })
+     * 
+     */
+    create<T extends ScoringWeightCreateArgs>(args: SelectSubset<T, ScoringWeightCreateArgs<ExtArgs>>): Prisma__ScoringWeightClient<$Result.GetResult<Prisma.$ScoringWeightPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many ScoringWeights.
+     * @param {ScoringWeightCreateManyArgs} args - Arguments to create many ScoringWeights.
+     * @example
+     * // Create many ScoringWeights
+     * const scoringWeight = await prisma.scoringWeight.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ScoringWeightCreateManyArgs>(args?: SelectSubset<T, ScoringWeightCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ScoringWeights and returns the data saved in the database.
+     * @param {ScoringWeightCreateManyAndReturnArgs} args - Arguments to create many ScoringWeights.
+     * @example
+     * // Create many ScoringWeights
+     * const scoringWeight = await prisma.scoringWeight.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ScoringWeights and only return the `id`
+     * const scoringWeightWithIdOnly = await prisma.scoringWeight.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ScoringWeightCreateManyAndReturnArgs>(args?: SelectSubset<T, ScoringWeightCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ScoringWeightPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a ScoringWeight.
+     * @param {ScoringWeightDeleteArgs} args - Arguments to delete one ScoringWeight.
+     * @example
+     * // Delete one ScoringWeight
+     * const ScoringWeight = await prisma.scoringWeight.delete({
+     *   where: {
+     *     // ... filter to delete one ScoringWeight
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ScoringWeightDeleteArgs>(args: SelectSubset<T, ScoringWeightDeleteArgs<ExtArgs>>): Prisma__ScoringWeightClient<$Result.GetResult<Prisma.$ScoringWeightPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one ScoringWeight.
+     * @param {ScoringWeightUpdateArgs} args - Arguments to update one ScoringWeight.
+     * @example
+     * // Update one ScoringWeight
+     * const scoringWeight = await prisma.scoringWeight.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ScoringWeightUpdateArgs>(args: SelectSubset<T, ScoringWeightUpdateArgs<ExtArgs>>): Prisma__ScoringWeightClient<$Result.GetResult<Prisma.$ScoringWeightPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more ScoringWeights.
+     * @param {ScoringWeightDeleteManyArgs} args - Arguments to filter ScoringWeights to delete.
+     * @example
+     * // Delete a few ScoringWeights
+     * const { count } = await prisma.scoringWeight.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ScoringWeightDeleteManyArgs>(args?: SelectSubset<T, ScoringWeightDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ScoringWeights.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScoringWeightUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ScoringWeights
+     * const scoringWeight = await prisma.scoringWeight.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ScoringWeightUpdateManyArgs>(args: SelectSubset<T, ScoringWeightUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ScoringWeight.
+     * @param {ScoringWeightUpsertArgs} args - Arguments to update or create a ScoringWeight.
+     * @example
+     * // Update or create a ScoringWeight
+     * const scoringWeight = await prisma.scoringWeight.upsert({
+     *   create: {
+     *     // ... data to create a ScoringWeight
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ScoringWeight we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ScoringWeightUpsertArgs>(args: SelectSubset<T, ScoringWeightUpsertArgs<ExtArgs>>): Prisma__ScoringWeightClient<$Result.GetResult<Prisma.$ScoringWeightPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of ScoringWeights.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScoringWeightCountArgs} args - Arguments to filter ScoringWeights to count.
+     * @example
+     * // Count the number of ScoringWeights
+     * const count = await prisma.scoringWeight.count({
+     *   where: {
+     *     // ... the filter for the ScoringWeights we want to count
+     *   }
+     * })
+    **/
+    count<T extends ScoringWeightCountArgs>(
+      args?: Subset<T, ScoringWeightCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ScoringWeightCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ScoringWeight.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScoringWeightAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ScoringWeightAggregateArgs>(args: Subset<T, ScoringWeightAggregateArgs>): Prisma.PrismaPromise<GetScoringWeightAggregateType<T>>
+
+    /**
+     * Group by ScoringWeight.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScoringWeightGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ScoringWeightGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ScoringWeightGroupByArgs['orderBy'] }
+        : { orderBy?: ScoringWeightGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ScoringWeightGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetScoringWeightGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ScoringWeight model
+   */
+  readonly fields: ScoringWeightFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ScoringWeight.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ScoringWeightClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ScoringWeight model
+   */ 
+  interface ScoringWeightFieldRefs {
+    readonly id: FieldRef<"ScoringWeight", 'String'>
+    readonly name: FieldRef<"ScoringWeight", 'String'>
+    readonly description: FieldRef<"ScoringWeight", 'String'>
+    readonly timeliness: FieldRef<"ScoringWeight", 'Float'>
+    readonly authority: FieldRef<"ScoringWeight", 'Float'>
+    readonly quality: FieldRef<"ScoringWeight", 'Float'>
+    readonly relevance: FieldRef<"ScoringWeight", 'Float'>
+    readonly aiImportance: FieldRef<"ScoringWeight", 'Float'>
+    readonly engagement: FieldRef<"ScoringWeight", 'Float'>
+    readonly isActive: FieldRef<"ScoringWeight", 'Boolean'>
+    readonly isDefault: FieldRef<"ScoringWeight", 'Boolean'>
+    readonly createdAt: FieldRef<"ScoringWeight", 'DateTime'>
+    readonly updatedAt: FieldRef<"ScoringWeight", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ScoringWeight findUnique
+   */
+  export type ScoringWeightFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoringWeight
+     */
+    select?: ScoringWeightSelect<ExtArgs> | null
+    /**
+     * Filter, which ScoringWeight to fetch.
+     */
+    where: ScoringWeightWhereUniqueInput
+  }
+
+  /**
+   * ScoringWeight findUniqueOrThrow
+   */
+  export type ScoringWeightFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoringWeight
+     */
+    select?: ScoringWeightSelect<ExtArgs> | null
+    /**
+     * Filter, which ScoringWeight to fetch.
+     */
+    where: ScoringWeightWhereUniqueInput
+  }
+
+  /**
+   * ScoringWeight findFirst
+   */
+  export type ScoringWeightFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoringWeight
+     */
+    select?: ScoringWeightSelect<ExtArgs> | null
+    /**
+     * Filter, which ScoringWeight to fetch.
+     */
+    where?: ScoringWeightWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ScoringWeights to fetch.
+     */
+    orderBy?: ScoringWeightOrderByWithRelationInput | ScoringWeightOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ScoringWeights.
+     */
+    cursor?: ScoringWeightWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ScoringWeights from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ScoringWeights.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ScoringWeights.
+     */
+    distinct?: ScoringWeightScalarFieldEnum | ScoringWeightScalarFieldEnum[]
+  }
+
+  /**
+   * ScoringWeight findFirstOrThrow
+   */
+  export type ScoringWeightFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoringWeight
+     */
+    select?: ScoringWeightSelect<ExtArgs> | null
+    /**
+     * Filter, which ScoringWeight to fetch.
+     */
+    where?: ScoringWeightWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ScoringWeights to fetch.
+     */
+    orderBy?: ScoringWeightOrderByWithRelationInput | ScoringWeightOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ScoringWeights.
+     */
+    cursor?: ScoringWeightWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ScoringWeights from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ScoringWeights.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ScoringWeights.
+     */
+    distinct?: ScoringWeightScalarFieldEnum | ScoringWeightScalarFieldEnum[]
+  }
+
+  /**
+   * ScoringWeight findMany
+   */
+  export type ScoringWeightFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoringWeight
+     */
+    select?: ScoringWeightSelect<ExtArgs> | null
+    /**
+     * Filter, which ScoringWeights to fetch.
+     */
+    where?: ScoringWeightWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ScoringWeights to fetch.
+     */
+    orderBy?: ScoringWeightOrderByWithRelationInput | ScoringWeightOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ScoringWeights.
+     */
+    cursor?: ScoringWeightWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ScoringWeights from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ScoringWeights.
+     */
+    skip?: number
+    distinct?: ScoringWeightScalarFieldEnum | ScoringWeightScalarFieldEnum[]
+  }
+
+  /**
+   * ScoringWeight create
+   */
+  export type ScoringWeightCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoringWeight
+     */
+    select?: ScoringWeightSelect<ExtArgs> | null
+    /**
+     * The data needed to create a ScoringWeight.
+     */
+    data: XOR<ScoringWeightCreateInput, ScoringWeightUncheckedCreateInput>
+  }
+
+  /**
+   * ScoringWeight createMany
+   */
+  export type ScoringWeightCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ScoringWeights.
+     */
+    data: ScoringWeightCreateManyInput | ScoringWeightCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ScoringWeight createManyAndReturn
+   */
+  export type ScoringWeightCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoringWeight
+     */
+    select?: ScoringWeightSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many ScoringWeights.
+     */
+    data: ScoringWeightCreateManyInput | ScoringWeightCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ScoringWeight update
+   */
+  export type ScoringWeightUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoringWeight
+     */
+    select?: ScoringWeightSelect<ExtArgs> | null
+    /**
+     * The data needed to update a ScoringWeight.
+     */
+    data: XOR<ScoringWeightUpdateInput, ScoringWeightUncheckedUpdateInput>
+    /**
+     * Choose, which ScoringWeight to update.
+     */
+    where: ScoringWeightWhereUniqueInput
+  }
+
+  /**
+   * ScoringWeight updateMany
+   */
+  export type ScoringWeightUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ScoringWeights.
+     */
+    data: XOR<ScoringWeightUpdateManyMutationInput, ScoringWeightUncheckedUpdateManyInput>
+    /**
+     * Filter which ScoringWeights to update
+     */
+    where?: ScoringWeightWhereInput
+  }
+
+  /**
+   * ScoringWeight upsert
+   */
+  export type ScoringWeightUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoringWeight
+     */
+    select?: ScoringWeightSelect<ExtArgs> | null
+    /**
+     * The filter to search for the ScoringWeight to update in case it exists.
+     */
+    where: ScoringWeightWhereUniqueInput
+    /**
+     * In case the ScoringWeight found by the `where` argument doesn't exist, create a new ScoringWeight with this data.
+     */
+    create: XOR<ScoringWeightCreateInput, ScoringWeightUncheckedCreateInput>
+    /**
+     * In case the ScoringWeight was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ScoringWeightUpdateInput, ScoringWeightUncheckedUpdateInput>
+  }
+
+  /**
+   * ScoringWeight delete
+   */
+  export type ScoringWeightDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoringWeight
+     */
+    select?: ScoringWeightSelect<ExtArgs> | null
+    /**
+     * Filter which ScoringWeight to delete.
+     */
+    where: ScoringWeightWhereUniqueInput
+  }
+
+  /**
+   * ScoringWeight deleteMany
+   */
+  export type ScoringWeightDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ScoringWeights to delete
+     */
+    where?: ScoringWeightWhereInput
+  }
+
+  /**
+   * ScoringWeight without action
+   */
+  export type ScoringWeightDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoringWeight
+     */
+    select?: ScoringWeightSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ABTestConfig
+   */
+
+  export type AggregateABTestConfig = {
+    _count: ABTestConfigCountAggregateOutputType | null
+    _min: ABTestConfigMinAggregateOutputType | null
+    _max: ABTestConfigMaxAggregateOutputType | null
+  }
+
+  export type ABTestConfigMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    description: string | null
+    weightConfigAId: string | null
+    weightConfigBId: string | null
+    startDate: Date | null
+    endDate: Date | null
+    status: string | null
+    winnerConfigId: string | null
+    createdAt: Date | null
+  }
+
+  export type ABTestConfigMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    description: string | null
+    weightConfigAId: string | null
+    weightConfigBId: string | null
+    startDate: Date | null
+    endDate: Date | null
+    status: string | null
+    winnerConfigId: string | null
+    createdAt: Date | null
+  }
+
+  export type ABTestConfigCountAggregateOutputType = {
+    id: number
+    name: number
+    description: number
+    weightConfigAId: number
+    weightConfigBId: number
+    startDate: number
+    endDate: number
+    status: number
+    winnerConfigId: number
+    metricsA: number
+    metricsB: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type ABTestConfigMinAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    weightConfigAId?: true
+    weightConfigBId?: true
+    startDate?: true
+    endDate?: true
+    status?: true
+    winnerConfigId?: true
+    createdAt?: true
+  }
+
+  export type ABTestConfigMaxAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    weightConfigAId?: true
+    weightConfigBId?: true
+    startDate?: true
+    endDate?: true
+    status?: true
+    winnerConfigId?: true
+    createdAt?: true
+  }
+
+  export type ABTestConfigCountAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    weightConfigAId?: true
+    weightConfigBId?: true
+    startDate?: true
+    endDate?: true
+    status?: true
+    winnerConfigId?: true
+    metricsA?: true
+    metricsB?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type ABTestConfigAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ABTestConfig to aggregate.
+     */
+    where?: ABTestConfigWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ABTestConfigs to fetch.
+     */
+    orderBy?: ABTestConfigOrderByWithRelationInput | ABTestConfigOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ABTestConfigWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ABTestConfigs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ABTestConfigs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ABTestConfigs
+    **/
+    _count?: true | ABTestConfigCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ABTestConfigMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ABTestConfigMaxAggregateInputType
+  }
+
+  export type GetABTestConfigAggregateType<T extends ABTestConfigAggregateArgs> = {
+        [P in keyof T & keyof AggregateABTestConfig]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateABTestConfig[P]>
+      : GetScalarType<T[P], AggregateABTestConfig[P]>
+  }
+
+
+
+
+  export type ABTestConfigGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ABTestConfigWhereInput
+    orderBy?: ABTestConfigOrderByWithAggregationInput | ABTestConfigOrderByWithAggregationInput[]
+    by: ABTestConfigScalarFieldEnum[] | ABTestConfigScalarFieldEnum
+    having?: ABTestConfigScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ABTestConfigCountAggregateInputType | true
+    _min?: ABTestConfigMinAggregateInputType
+    _max?: ABTestConfigMaxAggregateInputType
+  }
+
+  export type ABTestConfigGroupByOutputType = {
+    id: string
+    name: string
+    description: string | null
+    weightConfigAId: string
+    weightConfigBId: string
+    startDate: Date
+    endDate: Date | null
+    status: string
+    winnerConfigId: string | null
+    metricsA: JsonValue | null
+    metricsB: JsonValue | null
+    createdAt: Date
+    _count: ABTestConfigCountAggregateOutputType | null
+    _min: ABTestConfigMinAggregateOutputType | null
+    _max: ABTestConfigMaxAggregateOutputType | null
+  }
+
+  type GetABTestConfigGroupByPayload<T extends ABTestConfigGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ABTestConfigGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ABTestConfigGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ABTestConfigGroupByOutputType[P]>
+            : GetScalarType<T[P], ABTestConfigGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ABTestConfigSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    weightConfigAId?: boolean
+    weightConfigBId?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    status?: boolean
+    winnerConfigId?: boolean
+    metricsA?: boolean
+    metricsB?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["aBTestConfig"]>
+
+  export type ABTestConfigSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    weightConfigAId?: boolean
+    weightConfigBId?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    status?: boolean
+    winnerConfigId?: boolean
+    metricsA?: boolean
+    metricsB?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["aBTestConfig"]>
+
+  export type ABTestConfigSelectScalar = {
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    weightConfigAId?: boolean
+    weightConfigBId?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    status?: boolean
+    winnerConfigId?: boolean
+    metricsA?: boolean
+    metricsB?: boolean
+    createdAt?: boolean
+  }
+
+
+  export type $ABTestConfigPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ABTestConfig"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      description: string | null
+      weightConfigAId: string
+      weightConfigBId: string
+      startDate: Date
+      endDate: Date | null
+      status: string
+      winnerConfigId: string | null
+      metricsA: Prisma.JsonValue | null
+      metricsB: Prisma.JsonValue | null
+      createdAt: Date
+    }, ExtArgs["result"]["aBTestConfig"]>
+    composites: {}
+  }
+
+  type ABTestConfigGetPayload<S extends boolean | null | undefined | ABTestConfigDefaultArgs> = $Result.GetResult<Prisma.$ABTestConfigPayload, S>
+
+  type ABTestConfigCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<ABTestConfigFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: ABTestConfigCountAggregateInputType | true
+    }
+
+  export interface ABTestConfigDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ABTestConfig'], meta: { name: 'ABTestConfig' } }
+    /**
+     * Find zero or one ABTestConfig that matches the filter.
+     * @param {ABTestConfigFindUniqueArgs} args - Arguments to find a ABTestConfig
+     * @example
+     * // Get one ABTestConfig
+     * const aBTestConfig = await prisma.aBTestConfig.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ABTestConfigFindUniqueArgs>(args: SelectSubset<T, ABTestConfigFindUniqueArgs<ExtArgs>>): Prisma__ABTestConfigClient<$Result.GetResult<Prisma.$ABTestConfigPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one ABTestConfig that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {ABTestConfigFindUniqueOrThrowArgs} args - Arguments to find a ABTestConfig
+     * @example
+     * // Get one ABTestConfig
+     * const aBTestConfig = await prisma.aBTestConfig.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ABTestConfigFindUniqueOrThrowArgs>(args: SelectSubset<T, ABTestConfigFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ABTestConfigClient<$Result.GetResult<Prisma.$ABTestConfigPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first ABTestConfig that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ABTestConfigFindFirstArgs} args - Arguments to find a ABTestConfig
+     * @example
+     * // Get one ABTestConfig
+     * const aBTestConfig = await prisma.aBTestConfig.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ABTestConfigFindFirstArgs>(args?: SelectSubset<T, ABTestConfigFindFirstArgs<ExtArgs>>): Prisma__ABTestConfigClient<$Result.GetResult<Prisma.$ABTestConfigPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first ABTestConfig that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ABTestConfigFindFirstOrThrowArgs} args - Arguments to find a ABTestConfig
+     * @example
+     * // Get one ABTestConfig
+     * const aBTestConfig = await prisma.aBTestConfig.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ABTestConfigFindFirstOrThrowArgs>(args?: SelectSubset<T, ABTestConfigFindFirstOrThrowArgs<ExtArgs>>): Prisma__ABTestConfigClient<$Result.GetResult<Prisma.$ABTestConfigPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more ABTestConfigs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ABTestConfigFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ABTestConfigs
+     * const aBTestConfigs = await prisma.aBTestConfig.findMany()
+     * 
+     * // Get first 10 ABTestConfigs
+     * const aBTestConfigs = await prisma.aBTestConfig.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const aBTestConfigWithIdOnly = await prisma.aBTestConfig.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ABTestConfigFindManyArgs>(args?: SelectSubset<T, ABTestConfigFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ABTestConfigPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a ABTestConfig.
+     * @param {ABTestConfigCreateArgs} args - Arguments to create a ABTestConfig.
+     * @example
+     * // Create one ABTestConfig
+     * const ABTestConfig = await prisma.aBTestConfig.create({
+     *   data: {
+     *     // ... data to create a ABTestConfig
+     *   }
+     * })
+     * 
+     */
+    create<T extends ABTestConfigCreateArgs>(args: SelectSubset<T, ABTestConfigCreateArgs<ExtArgs>>): Prisma__ABTestConfigClient<$Result.GetResult<Prisma.$ABTestConfigPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many ABTestConfigs.
+     * @param {ABTestConfigCreateManyArgs} args - Arguments to create many ABTestConfigs.
+     * @example
+     * // Create many ABTestConfigs
+     * const aBTestConfig = await prisma.aBTestConfig.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ABTestConfigCreateManyArgs>(args?: SelectSubset<T, ABTestConfigCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ABTestConfigs and returns the data saved in the database.
+     * @param {ABTestConfigCreateManyAndReturnArgs} args - Arguments to create many ABTestConfigs.
+     * @example
+     * // Create many ABTestConfigs
+     * const aBTestConfig = await prisma.aBTestConfig.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ABTestConfigs and only return the `id`
+     * const aBTestConfigWithIdOnly = await prisma.aBTestConfig.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ABTestConfigCreateManyAndReturnArgs>(args?: SelectSubset<T, ABTestConfigCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ABTestConfigPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a ABTestConfig.
+     * @param {ABTestConfigDeleteArgs} args - Arguments to delete one ABTestConfig.
+     * @example
+     * // Delete one ABTestConfig
+     * const ABTestConfig = await prisma.aBTestConfig.delete({
+     *   where: {
+     *     // ... filter to delete one ABTestConfig
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ABTestConfigDeleteArgs>(args: SelectSubset<T, ABTestConfigDeleteArgs<ExtArgs>>): Prisma__ABTestConfigClient<$Result.GetResult<Prisma.$ABTestConfigPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one ABTestConfig.
+     * @param {ABTestConfigUpdateArgs} args - Arguments to update one ABTestConfig.
+     * @example
+     * // Update one ABTestConfig
+     * const aBTestConfig = await prisma.aBTestConfig.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ABTestConfigUpdateArgs>(args: SelectSubset<T, ABTestConfigUpdateArgs<ExtArgs>>): Prisma__ABTestConfigClient<$Result.GetResult<Prisma.$ABTestConfigPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more ABTestConfigs.
+     * @param {ABTestConfigDeleteManyArgs} args - Arguments to filter ABTestConfigs to delete.
+     * @example
+     * // Delete a few ABTestConfigs
+     * const { count } = await prisma.aBTestConfig.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ABTestConfigDeleteManyArgs>(args?: SelectSubset<T, ABTestConfigDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ABTestConfigs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ABTestConfigUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ABTestConfigs
+     * const aBTestConfig = await prisma.aBTestConfig.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ABTestConfigUpdateManyArgs>(args: SelectSubset<T, ABTestConfigUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ABTestConfig.
+     * @param {ABTestConfigUpsertArgs} args - Arguments to update or create a ABTestConfig.
+     * @example
+     * // Update or create a ABTestConfig
+     * const aBTestConfig = await prisma.aBTestConfig.upsert({
+     *   create: {
+     *     // ... data to create a ABTestConfig
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ABTestConfig we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ABTestConfigUpsertArgs>(args: SelectSubset<T, ABTestConfigUpsertArgs<ExtArgs>>): Prisma__ABTestConfigClient<$Result.GetResult<Prisma.$ABTestConfigPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of ABTestConfigs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ABTestConfigCountArgs} args - Arguments to filter ABTestConfigs to count.
+     * @example
+     * // Count the number of ABTestConfigs
+     * const count = await prisma.aBTestConfig.count({
+     *   where: {
+     *     // ... the filter for the ABTestConfigs we want to count
+     *   }
+     * })
+    **/
+    count<T extends ABTestConfigCountArgs>(
+      args?: Subset<T, ABTestConfigCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ABTestConfigCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ABTestConfig.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ABTestConfigAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ABTestConfigAggregateArgs>(args: Subset<T, ABTestConfigAggregateArgs>): Prisma.PrismaPromise<GetABTestConfigAggregateType<T>>
+
+    /**
+     * Group by ABTestConfig.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ABTestConfigGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ABTestConfigGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ABTestConfigGroupByArgs['orderBy'] }
+        : { orderBy?: ABTestConfigGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ABTestConfigGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetABTestConfigGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ABTestConfig model
+   */
+  readonly fields: ABTestConfigFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ABTestConfig.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ABTestConfigClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ABTestConfig model
+   */ 
+  interface ABTestConfigFieldRefs {
+    readonly id: FieldRef<"ABTestConfig", 'String'>
+    readonly name: FieldRef<"ABTestConfig", 'String'>
+    readonly description: FieldRef<"ABTestConfig", 'String'>
+    readonly weightConfigAId: FieldRef<"ABTestConfig", 'String'>
+    readonly weightConfigBId: FieldRef<"ABTestConfig", 'String'>
+    readonly startDate: FieldRef<"ABTestConfig", 'DateTime'>
+    readonly endDate: FieldRef<"ABTestConfig", 'DateTime'>
+    readonly status: FieldRef<"ABTestConfig", 'String'>
+    readonly winnerConfigId: FieldRef<"ABTestConfig", 'String'>
+    readonly metricsA: FieldRef<"ABTestConfig", 'Json'>
+    readonly metricsB: FieldRef<"ABTestConfig", 'Json'>
+    readonly createdAt: FieldRef<"ABTestConfig", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ABTestConfig findUnique
+   */
+  export type ABTestConfigFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ABTestConfig
+     */
+    select?: ABTestConfigSelect<ExtArgs> | null
+    /**
+     * Filter, which ABTestConfig to fetch.
+     */
+    where: ABTestConfigWhereUniqueInput
+  }
+
+  /**
+   * ABTestConfig findUniqueOrThrow
+   */
+  export type ABTestConfigFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ABTestConfig
+     */
+    select?: ABTestConfigSelect<ExtArgs> | null
+    /**
+     * Filter, which ABTestConfig to fetch.
+     */
+    where: ABTestConfigWhereUniqueInput
+  }
+
+  /**
+   * ABTestConfig findFirst
+   */
+  export type ABTestConfigFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ABTestConfig
+     */
+    select?: ABTestConfigSelect<ExtArgs> | null
+    /**
+     * Filter, which ABTestConfig to fetch.
+     */
+    where?: ABTestConfigWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ABTestConfigs to fetch.
+     */
+    orderBy?: ABTestConfigOrderByWithRelationInput | ABTestConfigOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ABTestConfigs.
+     */
+    cursor?: ABTestConfigWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ABTestConfigs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ABTestConfigs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ABTestConfigs.
+     */
+    distinct?: ABTestConfigScalarFieldEnum | ABTestConfigScalarFieldEnum[]
+  }
+
+  /**
+   * ABTestConfig findFirstOrThrow
+   */
+  export type ABTestConfigFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ABTestConfig
+     */
+    select?: ABTestConfigSelect<ExtArgs> | null
+    /**
+     * Filter, which ABTestConfig to fetch.
+     */
+    where?: ABTestConfigWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ABTestConfigs to fetch.
+     */
+    orderBy?: ABTestConfigOrderByWithRelationInput | ABTestConfigOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ABTestConfigs.
+     */
+    cursor?: ABTestConfigWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ABTestConfigs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ABTestConfigs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ABTestConfigs.
+     */
+    distinct?: ABTestConfigScalarFieldEnum | ABTestConfigScalarFieldEnum[]
+  }
+
+  /**
+   * ABTestConfig findMany
+   */
+  export type ABTestConfigFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ABTestConfig
+     */
+    select?: ABTestConfigSelect<ExtArgs> | null
+    /**
+     * Filter, which ABTestConfigs to fetch.
+     */
+    where?: ABTestConfigWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ABTestConfigs to fetch.
+     */
+    orderBy?: ABTestConfigOrderByWithRelationInput | ABTestConfigOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ABTestConfigs.
+     */
+    cursor?: ABTestConfigWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ABTestConfigs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ABTestConfigs.
+     */
+    skip?: number
+    distinct?: ABTestConfigScalarFieldEnum | ABTestConfigScalarFieldEnum[]
+  }
+
+  /**
+   * ABTestConfig create
+   */
+  export type ABTestConfigCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ABTestConfig
+     */
+    select?: ABTestConfigSelect<ExtArgs> | null
+    /**
+     * The data needed to create a ABTestConfig.
+     */
+    data: XOR<ABTestConfigCreateInput, ABTestConfigUncheckedCreateInput>
+  }
+
+  /**
+   * ABTestConfig createMany
+   */
+  export type ABTestConfigCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ABTestConfigs.
+     */
+    data: ABTestConfigCreateManyInput | ABTestConfigCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ABTestConfig createManyAndReturn
+   */
+  export type ABTestConfigCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ABTestConfig
+     */
+    select?: ABTestConfigSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many ABTestConfigs.
+     */
+    data: ABTestConfigCreateManyInput | ABTestConfigCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ABTestConfig update
+   */
+  export type ABTestConfigUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ABTestConfig
+     */
+    select?: ABTestConfigSelect<ExtArgs> | null
+    /**
+     * The data needed to update a ABTestConfig.
+     */
+    data: XOR<ABTestConfigUpdateInput, ABTestConfigUncheckedUpdateInput>
+    /**
+     * Choose, which ABTestConfig to update.
+     */
+    where: ABTestConfigWhereUniqueInput
+  }
+
+  /**
+   * ABTestConfig updateMany
+   */
+  export type ABTestConfigUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ABTestConfigs.
+     */
+    data: XOR<ABTestConfigUpdateManyMutationInput, ABTestConfigUncheckedUpdateManyInput>
+    /**
+     * Filter which ABTestConfigs to update
+     */
+    where?: ABTestConfigWhereInput
+  }
+
+  /**
+   * ABTestConfig upsert
+   */
+  export type ABTestConfigUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ABTestConfig
+     */
+    select?: ABTestConfigSelect<ExtArgs> | null
+    /**
+     * The filter to search for the ABTestConfig to update in case it exists.
+     */
+    where: ABTestConfigWhereUniqueInput
+    /**
+     * In case the ABTestConfig found by the `where` argument doesn't exist, create a new ABTestConfig with this data.
+     */
+    create: XOR<ABTestConfigCreateInput, ABTestConfigUncheckedCreateInput>
+    /**
+     * In case the ABTestConfig was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ABTestConfigUpdateInput, ABTestConfigUncheckedUpdateInput>
+  }
+
+  /**
+   * ABTestConfig delete
+   */
+  export type ABTestConfigDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ABTestConfig
+     */
+    select?: ABTestConfigSelect<ExtArgs> | null
+    /**
+     * Filter which ABTestConfig to delete.
+     */
+    where: ABTestConfigWhereUniqueInput
+  }
+
+  /**
+   * ABTestConfig deleteMany
+   */
+  export type ABTestConfigDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ABTestConfigs to delete
+     */
+    where?: ABTestConfigWhereInput
+  }
+
+  /**
+   * ABTestConfig without action
+   */
+  export type ABTestConfigDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ABTestConfig
+     */
+    select?: ABTestConfigSelect<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -28097,6 +31431,61 @@ export namespace Prisma {
   };
 
   export type GeminiNewsQueryScalarFieldEnum = (typeof GeminiNewsQueryScalarFieldEnum)[keyof typeof GeminiNewsQueryScalarFieldEnum]
+
+
+  export const ContentScoreScalarFieldEnum: {
+    id: 'id',
+    contentId: 'contentId',
+    totalScore: 'totalScore',
+    timelinessScore: 'timelinessScore',
+    authorityScore: 'authorityScore',
+    qualityScore: 'qualityScore',
+    relevanceScore: 'relevanceScore',
+    aiImportanceScore: 'aiImportanceScore',
+    engagementScore: 'engagementScore',
+    weightConfigId: 'weightConfigId',
+    explanation: 'explanation',
+    calculatedAt: 'calculatedAt'
+  };
+
+  export type ContentScoreScalarFieldEnum = (typeof ContentScoreScalarFieldEnum)[keyof typeof ContentScoreScalarFieldEnum]
+
+
+  export const ScoringWeightScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    description: 'description',
+    timeliness: 'timeliness',
+    authority: 'authority',
+    quality: 'quality',
+    relevance: 'relevance',
+    aiImportance: 'aiImportance',
+    engagement: 'engagement',
+    isActive: 'isActive',
+    isDefault: 'isDefault',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ScoringWeightScalarFieldEnum = (typeof ScoringWeightScalarFieldEnum)[keyof typeof ScoringWeightScalarFieldEnum]
+
+
+  export const ABTestConfigScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    description: 'description',
+    weightConfigAId: 'weightConfigAId',
+    weightConfigBId: 'weightConfigBId',
+    startDate: 'startDate',
+    endDate: 'endDate',
+    status: 'status',
+    winnerConfigId: 'winnerConfigId',
+    metricsA: 'metricsA',
+    metricsB: 'metricsB',
+    createdAt: 'createdAt'
+  };
+
+  export type ABTestConfigScalarFieldEnum = (typeof ABTestConfigScalarFieldEnum)[keyof typeof ABTestConfigScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -28914,6 +32303,7 @@ export namespace Prisma {
     reviews?: ContentReviewListRelationFilter
     contentTags?: ContentTagListRelationFilter
     versions?: ContentVersionListRelationFilter
+    contentScore?: XOR<ContentScoreNullableRelationFilter, ContentScoreWhereInput> | null
   }
 
   export type ContentOrderByWithRelationInput = {
@@ -28950,6 +32340,7 @@ export namespace Prisma {
     reviews?: ContentReviewOrderByRelationAggregateInput
     contentTags?: ContentTagOrderByRelationAggregateInput
     versions?: ContentVersionOrderByRelationAggregateInput
+    contentScore?: ContentScoreOrderByWithRelationInput
   }
 
   export type ContentWhereUniqueInput = Prisma.AtLeast<{
@@ -28989,6 +32380,7 @@ export namespace Prisma {
     reviews?: ContentReviewListRelationFilter
     contentTags?: ContentTagListRelationFilter
     versions?: ContentVersionListRelationFilter
+    contentScore?: XOR<ContentScoreNullableRelationFilter, ContentScoreWhereInput> | null
   }, "id">
 
   export type ContentOrderByWithAggregationInput = {
@@ -30469,6 +33861,279 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"GeminiNewsQuery"> | Date | string
   }
 
+  export type ContentScoreWhereInput = {
+    AND?: ContentScoreWhereInput | ContentScoreWhereInput[]
+    OR?: ContentScoreWhereInput[]
+    NOT?: ContentScoreWhereInput | ContentScoreWhereInput[]
+    id?: StringFilter<"ContentScore"> | string
+    contentId?: StringFilter<"ContentScore"> | string
+    totalScore?: FloatFilter<"ContentScore"> | number
+    timelinessScore?: FloatFilter<"ContentScore"> | number
+    authorityScore?: FloatFilter<"ContentScore"> | number
+    qualityScore?: FloatFilter<"ContentScore"> | number
+    relevanceScore?: FloatFilter<"ContentScore"> | number
+    aiImportanceScore?: FloatFilter<"ContentScore"> | number
+    engagementScore?: FloatFilter<"ContentScore"> | number
+    weightConfigId?: StringNullableFilter<"ContentScore"> | string | null
+    explanation?: StringNullableFilter<"ContentScore"> | string | null
+    calculatedAt?: DateTimeFilter<"ContentScore"> | Date | string
+    content?: XOR<ContentRelationFilter, ContentWhereInput>
+  }
+
+  export type ContentScoreOrderByWithRelationInput = {
+    id?: SortOrder
+    contentId?: SortOrder
+    totalScore?: SortOrder
+    timelinessScore?: SortOrder
+    authorityScore?: SortOrder
+    qualityScore?: SortOrder
+    relevanceScore?: SortOrder
+    aiImportanceScore?: SortOrder
+    engagementScore?: SortOrder
+    weightConfigId?: SortOrderInput | SortOrder
+    explanation?: SortOrderInput | SortOrder
+    calculatedAt?: SortOrder
+    content?: ContentOrderByWithRelationInput
+  }
+
+  export type ContentScoreWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    contentId?: string
+    AND?: ContentScoreWhereInput | ContentScoreWhereInput[]
+    OR?: ContentScoreWhereInput[]
+    NOT?: ContentScoreWhereInput | ContentScoreWhereInput[]
+    totalScore?: FloatFilter<"ContentScore"> | number
+    timelinessScore?: FloatFilter<"ContentScore"> | number
+    authorityScore?: FloatFilter<"ContentScore"> | number
+    qualityScore?: FloatFilter<"ContentScore"> | number
+    relevanceScore?: FloatFilter<"ContentScore"> | number
+    aiImportanceScore?: FloatFilter<"ContentScore"> | number
+    engagementScore?: FloatFilter<"ContentScore"> | number
+    weightConfigId?: StringNullableFilter<"ContentScore"> | string | null
+    explanation?: StringNullableFilter<"ContentScore"> | string | null
+    calculatedAt?: DateTimeFilter<"ContentScore"> | Date | string
+    content?: XOR<ContentRelationFilter, ContentWhereInput>
+  }, "id" | "contentId">
+
+  export type ContentScoreOrderByWithAggregationInput = {
+    id?: SortOrder
+    contentId?: SortOrder
+    totalScore?: SortOrder
+    timelinessScore?: SortOrder
+    authorityScore?: SortOrder
+    qualityScore?: SortOrder
+    relevanceScore?: SortOrder
+    aiImportanceScore?: SortOrder
+    engagementScore?: SortOrder
+    weightConfigId?: SortOrderInput | SortOrder
+    explanation?: SortOrderInput | SortOrder
+    calculatedAt?: SortOrder
+    _count?: ContentScoreCountOrderByAggregateInput
+    _avg?: ContentScoreAvgOrderByAggregateInput
+    _max?: ContentScoreMaxOrderByAggregateInput
+    _min?: ContentScoreMinOrderByAggregateInput
+    _sum?: ContentScoreSumOrderByAggregateInput
+  }
+
+  export type ContentScoreScalarWhereWithAggregatesInput = {
+    AND?: ContentScoreScalarWhereWithAggregatesInput | ContentScoreScalarWhereWithAggregatesInput[]
+    OR?: ContentScoreScalarWhereWithAggregatesInput[]
+    NOT?: ContentScoreScalarWhereWithAggregatesInput | ContentScoreScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ContentScore"> | string
+    contentId?: StringWithAggregatesFilter<"ContentScore"> | string
+    totalScore?: FloatWithAggregatesFilter<"ContentScore"> | number
+    timelinessScore?: FloatWithAggregatesFilter<"ContentScore"> | number
+    authorityScore?: FloatWithAggregatesFilter<"ContentScore"> | number
+    qualityScore?: FloatWithAggregatesFilter<"ContentScore"> | number
+    relevanceScore?: FloatWithAggregatesFilter<"ContentScore"> | number
+    aiImportanceScore?: FloatWithAggregatesFilter<"ContentScore"> | number
+    engagementScore?: FloatWithAggregatesFilter<"ContentScore"> | number
+    weightConfigId?: StringNullableWithAggregatesFilter<"ContentScore"> | string | null
+    explanation?: StringNullableWithAggregatesFilter<"ContentScore"> | string | null
+    calculatedAt?: DateTimeWithAggregatesFilter<"ContentScore"> | Date | string
+  }
+
+  export type ScoringWeightWhereInput = {
+    AND?: ScoringWeightWhereInput | ScoringWeightWhereInput[]
+    OR?: ScoringWeightWhereInput[]
+    NOT?: ScoringWeightWhereInput | ScoringWeightWhereInput[]
+    id?: StringFilter<"ScoringWeight"> | string
+    name?: StringFilter<"ScoringWeight"> | string
+    description?: StringNullableFilter<"ScoringWeight"> | string | null
+    timeliness?: FloatFilter<"ScoringWeight"> | number
+    authority?: FloatFilter<"ScoringWeight"> | number
+    quality?: FloatFilter<"ScoringWeight"> | number
+    relevance?: FloatFilter<"ScoringWeight"> | number
+    aiImportance?: FloatFilter<"ScoringWeight"> | number
+    engagement?: FloatFilter<"ScoringWeight"> | number
+    isActive?: BoolFilter<"ScoringWeight"> | boolean
+    isDefault?: BoolFilter<"ScoringWeight"> | boolean
+    createdAt?: DateTimeFilter<"ScoringWeight"> | Date | string
+    updatedAt?: DateTimeFilter<"ScoringWeight"> | Date | string
+  }
+
+  export type ScoringWeightOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    timeliness?: SortOrder
+    authority?: SortOrder
+    quality?: SortOrder
+    relevance?: SortOrder
+    aiImportance?: SortOrder
+    engagement?: SortOrder
+    isActive?: SortOrder
+    isDefault?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ScoringWeightWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ScoringWeightWhereInput | ScoringWeightWhereInput[]
+    OR?: ScoringWeightWhereInput[]
+    NOT?: ScoringWeightWhereInput | ScoringWeightWhereInput[]
+    name?: StringFilter<"ScoringWeight"> | string
+    description?: StringNullableFilter<"ScoringWeight"> | string | null
+    timeliness?: FloatFilter<"ScoringWeight"> | number
+    authority?: FloatFilter<"ScoringWeight"> | number
+    quality?: FloatFilter<"ScoringWeight"> | number
+    relevance?: FloatFilter<"ScoringWeight"> | number
+    aiImportance?: FloatFilter<"ScoringWeight"> | number
+    engagement?: FloatFilter<"ScoringWeight"> | number
+    isActive?: BoolFilter<"ScoringWeight"> | boolean
+    isDefault?: BoolFilter<"ScoringWeight"> | boolean
+    createdAt?: DateTimeFilter<"ScoringWeight"> | Date | string
+    updatedAt?: DateTimeFilter<"ScoringWeight"> | Date | string
+  }, "id">
+
+  export type ScoringWeightOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    timeliness?: SortOrder
+    authority?: SortOrder
+    quality?: SortOrder
+    relevance?: SortOrder
+    aiImportance?: SortOrder
+    engagement?: SortOrder
+    isActive?: SortOrder
+    isDefault?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ScoringWeightCountOrderByAggregateInput
+    _avg?: ScoringWeightAvgOrderByAggregateInput
+    _max?: ScoringWeightMaxOrderByAggregateInput
+    _min?: ScoringWeightMinOrderByAggregateInput
+    _sum?: ScoringWeightSumOrderByAggregateInput
+  }
+
+  export type ScoringWeightScalarWhereWithAggregatesInput = {
+    AND?: ScoringWeightScalarWhereWithAggregatesInput | ScoringWeightScalarWhereWithAggregatesInput[]
+    OR?: ScoringWeightScalarWhereWithAggregatesInput[]
+    NOT?: ScoringWeightScalarWhereWithAggregatesInput | ScoringWeightScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ScoringWeight"> | string
+    name?: StringWithAggregatesFilter<"ScoringWeight"> | string
+    description?: StringNullableWithAggregatesFilter<"ScoringWeight"> | string | null
+    timeliness?: FloatWithAggregatesFilter<"ScoringWeight"> | number
+    authority?: FloatWithAggregatesFilter<"ScoringWeight"> | number
+    quality?: FloatWithAggregatesFilter<"ScoringWeight"> | number
+    relevance?: FloatWithAggregatesFilter<"ScoringWeight"> | number
+    aiImportance?: FloatWithAggregatesFilter<"ScoringWeight"> | number
+    engagement?: FloatWithAggregatesFilter<"ScoringWeight"> | number
+    isActive?: BoolWithAggregatesFilter<"ScoringWeight"> | boolean
+    isDefault?: BoolWithAggregatesFilter<"ScoringWeight"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"ScoringWeight"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ScoringWeight"> | Date | string
+  }
+
+  export type ABTestConfigWhereInput = {
+    AND?: ABTestConfigWhereInput | ABTestConfigWhereInput[]
+    OR?: ABTestConfigWhereInput[]
+    NOT?: ABTestConfigWhereInput | ABTestConfigWhereInput[]
+    id?: StringFilter<"ABTestConfig"> | string
+    name?: StringFilter<"ABTestConfig"> | string
+    description?: StringNullableFilter<"ABTestConfig"> | string | null
+    weightConfigAId?: StringFilter<"ABTestConfig"> | string
+    weightConfigBId?: StringFilter<"ABTestConfig"> | string
+    startDate?: DateTimeFilter<"ABTestConfig"> | Date | string
+    endDate?: DateTimeNullableFilter<"ABTestConfig"> | Date | string | null
+    status?: StringFilter<"ABTestConfig"> | string
+    winnerConfigId?: StringNullableFilter<"ABTestConfig"> | string | null
+    metricsA?: JsonNullableFilter<"ABTestConfig">
+    metricsB?: JsonNullableFilter<"ABTestConfig">
+    createdAt?: DateTimeFilter<"ABTestConfig"> | Date | string
+  }
+
+  export type ABTestConfigOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    weightConfigAId?: SortOrder
+    weightConfigBId?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrderInput | SortOrder
+    status?: SortOrder
+    winnerConfigId?: SortOrderInput | SortOrder
+    metricsA?: SortOrderInput | SortOrder
+    metricsB?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ABTestConfigWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ABTestConfigWhereInput | ABTestConfigWhereInput[]
+    OR?: ABTestConfigWhereInput[]
+    NOT?: ABTestConfigWhereInput | ABTestConfigWhereInput[]
+    name?: StringFilter<"ABTestConfig"> | string
+    description?: StringNullableFilter<"ABTestConfig"> | string | null
+    weightConfigAId?: StringFilter<"ABTestConfig"> | string
+    weightConfigBId?: StringFilter<"ABTestConfig"> | string
+    startDate?: DateTimeFilter<"ABTestConfig"> | Date | string
+    endDate?: DateTimeNullableFilter<"ABTestConfig"> | Date | string | null
+    status?: StringFilter<"ABTestConfig"> | string
+    winnerConfigId?: StringNullableFilter<"ABTestConfig"> | string | null
+    metricsA?: JsonNullableFilter<"ABTestConfig">
+    metricsB?: JsonNullableFilter<"ABTestConfig">
+    createdAt?: DateTimeFilter<"ABTestConfig"> | Date | string
+  }, "id">
+
+  export type ABTestConfigOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    weightConfigAId?: SortOrder
+    weightConfigBId?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrderInput | SortOrder
+    status?: SortOrder
+    winnerConfigId?: SortOrderInput | SortOrder
+    metricsA?: SortOrderInput | SortOrder
+    metricsB?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: ABTestConfigCountOrderByAggregateInput
+    _max?: ABTestConfigMaxOrderByAggregateInput
+    _min?: ABTestConfigMinOrderByAggregateInput
+  }
+
+  export type ABTestConfigScalarWhereWithAggregatesInput = {
+    AND?: ABTestConfigScalarWhereWithAggregatesInput | ABTestConfigScalarWhereWithAggregatesInput[]
+    OR?: ABTestConfigScalarWhereWithAggregatesInput[]
+    NOT?: ABTestConfigScalarWhereWithAggregatesInput | ABTestConfigScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ABTestConfig"> | string
+    name?: StringWithAggregatesFilter<"ABTestConfig"> | string
+    description?: StringNullableWithAggregatesFilter<"ABTestConfig"> | string | null
+    weightConfigAId?: StringWithAggregatesFilter<"ABTestConfig"> | string
+    weightConfigBId?: StringWithAggregatesFilter<"ABTestConfig"> | string
+    startDate?: DateTimeWithAggregatesFilter<"ABTestConfig"> | Date | string
+    endDate?: DateTimeNullableWithAggregatesFilter<"ABTestConfig"> | Date | string | null
+    status?: StringWithAggregatesFilter<"ABTestConfig"> | string
+    winnerConfigId?: StringNullableWithAggregatesFilter<"ABTestConfig"> | string | null
+    metricsA?: JsonNullableWithAggregatesFilter<"ABTestConfig">
+    metricsB?: JsonNullableWithAggregatesFilter<"ABTestConfig">
+    createdAt?: DateTimeWithAggregatesFilter<"ABTestConfig"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     email: string
@@ -31059,6 +34724,7 @@ export namespace Prisma {
     reviews?: ContentReviewCreateNestedManyWithoutContentInput
     contentTags?: ContentTagCreateNestedManyWithoutContentInput
     versions?: ContentVersionCreateNestedManyWithoutContentItemInput
+    contentScore?: ContentScoreCreateNestedOneWithoutContentInput
   }
 
   export type ContentUncheckedCreateInput = {
@@ -31094,6 +34760,7 @@ export namespace Prisma {
     reviews?: ContentReviewUncheckedCreateNestedManyWithoutContentInput
     contentTags?: ContentTagUncheckedCreateNestedManyWithoutContentInput
     versions?: ContentVersionUncheckedCreateNestedManyWithoutContentItemInput
+    contentScore?: ContentScoreUncheckedCreateNestedOneWithoutContentInput
   }
 
   export type ContentUpdateInput = {
@@ -31129,6 +34796,7 @@ export namespace Prisma {
     reviews?: ContentReviewUpdateManyWithoutContentNestedInput
     contentTags?: ContentTagUpdateManyWithoutContentNestedInput
     versions?: ContentVersionUpdateManyWithoutContentItemNestedInput
+    contentScore?: ContentScoreUpdateOneWithoutContentNestedInput
   }
 
   export type ContentUncheckedUpdateInput = {
@@ -31164,6 +34832,7 @@ export namespace Prisma {
     reviews?: ContentReviewUncheckedUpdateManyWithoutContentNestedInput
     contentTags?: ContentTagUncheckedUpdateManyWithoutContentNestedInput
     versions?: ContentVersionUncheckedUpdateManyWithoutContentItemNestedInput
+    contentScore?: ContentScoreUncheckedUpdateOneWithoutContentNestedInput
   }
 
   export type ContentCreateManyInput = {
@@ -32853,6 +36522,327 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ContentScoreCreateInput = {
+    id?: string
+    totalScore: number
+    timelinessScore: number
+    authorityScore: number
+    qualityScore: number
+    relevanceScore: number
+    aiImportanceScore: number
+    engagementScore: number
+    weightConfigId?: string | null
+    explanation?: string | null
+    calculatedAt?: Date | string
+    content: ContentCreateNestedOneWithoutContentScoreInput
+  }
+
+  export type ContentScoreUncheckedCreateInput = {
+    id?: string
+    contentId: string
+    totalScore: number
+    timelinessScore: number
+    authorityScore: number
+    qualityScore: number
+    relevanceScore: number
+    aiImportanceScore: number
+    engagementScore: number
+    weightConfigId?: string | null
+    explanation?: string | null
+    calculatedAt?: Date | string
+  }
+
+  export type ContentScoreUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    totalScore?: FloatFieldUpdateOperationsInput | number
+    timelinessScore?: FloatFieldUpdateOperationsInput | number
+    authorityScore?: FloatFieldUpdateOperationsInput | number
+    qualityScore?: FloatFieldUpdateOperationsInput | number
+    relevanceScore?: FloatFieldUpdateOperationsInput | number
+    aiImportanceScore?: FloatFieldUpdateOperationsInput | number
+    engagementScore?: FloatFieldUpdateOperationsInput | number
+    weightConfigId?: NullableStringFieldUpdateOperationsInput | string | null
+    explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    calculatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    content?: ContentUpdateOneRequiredWithoutContentScoreNestedInput
+  }
+
+  export type ContentScoreUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contentId?: StringFieldUpdateOperationsInput | string
+    totalScore?: FloatFieldUpdateOperationsInput | number
+    timelinessScore?: FloatFieldUpdateOperationsInput | number
+    authorityScore?: FloatFieldUpdateOperationsInput | number
+    qualityScore?: FloatFieldUpdateOperationsInput | number
+    relevanceScore?: FloatFieldUpdateOperationsInput | number
+    aiImportanceScore?: FloatFieldUpdateOperationsInput | number
+    engagementScore?: FloatFieldUpdateOperationsInput | number
+    weightConfigId?: NullableStringFieldUpdateOperationsInput | string | null
+    explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    calculatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ContentScoreCreateManyInput = {
+    id?: string
+    contentId: string
+    totalScore: number
+    timelinessScore: number
+    authorityScore: number
+    qualityScore: number
+    relevanceScore: number
+    aiImportanceScore: number
+    engagementScore: number
+    weightConfigId?: string | null
+    explanation?: string | null
+    calculatedAt?: Date | string
+  }
+
+  export type ContentScoreUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    totalScore?: FloatFieldUpdateOperationsInput | number
+    timelinessScore?: FloatFieldUpdateOperationsInput | number
+    authorityScore?: FloatFieldUpdateOperationsInput | number
+    qualityScore?: FloatFieldUpdateOperationsInput | number
+    relevanceScore?: FloatFieldUpdateOperationsInput | number
+    aiImportanceScore?: FloatFieldUpdateOperationsInput | number
+    engagementScore?: FloatFieldUpdateOperationsInput | number
+    weightConfigId?: NullableStringFieldUpdateOperationsInput | string | null
+    explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    calculatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ContentScoreUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contentId?: StringFieldUpdateOperationsInput | string
+    totalScore?: FloatFieldUpdateOperationsInput | number
+    timelinessScore?: FloatFieldUpdateOperationsInput | number
+    authorityScore?: FloatFieldUpdateOperationsInput | number
+    qualityScore?: FloatFieldUpdateOperationsInput | number
+    relevanceScore?: FloatFieldUpdateOperationsInput | number
+    aiImportanceScore?: FloatFieldUpdateOperationsInput | number
+    engagementScore?: FloatFieldUpdateOperationsInput | number
+    weightConfigId?: NullableStringFieldUpdateOperationsInput | string | null
+    explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    calculatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ScoringWeightCreateInput = {
+    id?: string
+    name: string
+    description?: string | null
+    timeliness?: number
+    authority?: number
+    quality?: number
+    relevance?: number
+    aiImportance?: number
+    engagement?: number
+    isActive?: boolean
+    isDefault?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ScoringWeightUncheckedCreateInput = {
+    id?: string
+    name: string
+    description?: string | null
+    timeliness?: number
+    authority?: number
+    quality?: number
+    relevance?: number
+    aiImportance?: number
+    engagement?: number
+    isActive?: boolean
+    isDefault?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ScoringWeightUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    timeliness?: FloatFieldUpdateOperationsInput | number
+    authority?: FloatFieldUpdateOperationsInput | number
+    quality?: FloatFieldUpdateOperationsInput | number
+    relevance?: FloatFieldUpdateOperationsInput | number
+    aiImportance?: FloatFieldUpdateOperationsInput | number
+    engagement?: FloatFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ScoringWeightUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    timeliness?: FloatFieldUpdateOperationsInput | number
+    authority?: FloatFieldUpdateOperationsInput | number
+    quality?: FloatFieldUpdateOperationsInput | number
+    relevance?: FloatFieldUpdateOperationsInput | number
+    aiImportance?: FloatFieldUpdateOperationsInput | number
+    engagement?: FloatFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ScoringWeightCreateManyInput = {
+    id?: string
+    name: string
+    description?: string | null
+    timeliness?: number
+    authority?: number
+    quality?: number
+    relevance?: number
+    aiImportance?: number
+    engagement?: number
+    isActive?: boolean
+    isDefault?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ScoringWeightUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    timeliness?: FloatFieldUpdateOperationsInput | number
+    authority?: FloatFieldUpdateOperationsInput | number
+    quality?: FloatFieldUpdateOperationsInput | number
+    relevance?: FloatFieldUpdateOperationsInput | number
+    aiImportance?: FloatFieldUpdateOperationsInput | number
+    engagement?: FloatFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ScoringWeightUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    timeliness?: FloatFieldUpdateOperationsInput | number
+    authority?: FloatFieldUpdateOperationsInput | number
+    quality?: FloatFieldUpdateOperationsInput | number
+    relevance?: FloatFieldUpdateOperationsInput | number
+    aiImportance?: FloatFieldUpdateOperationsInput | number
+    engagement?: FloatFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ABTestConfigCreateInput = {
+    id?: string
+    name: string
+    description?: string | null
+    weightConfigAId: string
+    weightConfigBId: string
+    startDate: Date | string
+    endDate?: Date | string | null
+    status?: string
+    winnerConfigId?: string | null
+    metricsA?: NullableJsonNullValueInput | InputJsonValue
+    metricsB?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type ABTestConfigUncheckedCreateInput = {
+    id?: string
+    name: string
+    description?: string | null
+    weightConfigAId: string
+    weightConfigBId: string
+    startDate: Date | string
+    endDate?: Date | string | null
+    status?: string
+    winnerConfigId?: string | null
+    metricsA?: NullableJsonNullValueInput | InputJsonValue
+    metricsB?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type ABTestConfigUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    weightConfigAId?: StringFieldUpdateOperationsInput | string
+    weightConfigBId?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    winnerConfigId?: NullableStringFieldUpdateOperationsInput | string | null
+    metricsA?: NullableJsonNullValueInput | InputJsonValue
+    metricsB?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ABTestConfigUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    weightConfigAId?: StringFieldUpdateOperationsInput | string
+    weightConfigBId?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    winnerConfigId?: NullableStringFieldUpdateOperationsInput | string | null
+    metricsA?: NullableJsonNullValueInput | InputJsonValue
+    metricsB?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ABTestConfigCreateManyInput = {
+    id?: string
+    name: string
+    description?: string | null
+    weightConfigAId: string
+    weightConfigBId: string
+    startDate: Date | string
+    endDate?: Date | string | null
+    status?: string
+    winnerConfigId?: string | null
+    metricsA?: NullableJsonNullValueInput | InputJsonValue
+    metricsB?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type ABTestConfigUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    weightConfigAId?: StringFieldUpdateOperationsInput | string
+    weightConfigBId?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    winnerConfigId?: NullableStringFieldUpdateOperationsInput | string | null
+    metricsA?: NullableJsonNullValueInput | InputJsonValue
+    metricsB?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ABTestConfigUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    weightConfigAId?: StringFieldUpdateOperationsInput | string
+    weightConfigBId?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    winnerConfigId?: NullableStringFieldUpdateOperationsInput | string | null
+    metricsA?: NullableJsonNullValueInput | InputJsonValue
+    metricsB?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -33514,6 +37504,11 @@ export namespace Prisma {
     every?: ContentVersionWhereInput
     some?: ContentVersionWhereInput
     none?: ContentVersionWhereInput
+  }
+
+  export type ContentScoreNullableRelationFilter = {
+    is?: ContentScoreWhereInput | null
+    isNot?: ContentScoreWhereInput | null
   }
 
   export type ContentTagOrderByRelationAggregateInput = {
@@ -34737,6 +38732,178 @@ export namespace Prisma {
     _max?: NestedDecimalNullableFilter<$PrismaModel>
   }
 
+  export type ContentScoreCountOrderByAggregateInput = {
+    id?: SortOrder
+    contentId?: SortOrder
+    totalScore?: SortOrder
+    timelinessScore?: SortOrder
+    authorityScore?: SortOrder
+    qualityScore?: SortOrder
+    relevanceScore?: SortOrder
+    aiImportanceScore?: SortOrder
+    engagementScore?: SortOrder
+    weightConfigId?: SortOrder
+    explanation?: SortOrder
+    calculatedAt?: SortOrder
+  }
+
+  export type ContentScoreAvgOrderByAggregateInput = {
+    totalScore?: SortOrder
+    timelinessScore?: SortOrder
+    authorityScore?: SortOrder
+    qualityScore?: SortOrder
+    relevanceScore?: SortOrder
+    aiImportanceScore?: SortOrder
+    engagementScore?: SortOrder
+  }
+
+  export type ContentScoreMaxOrderByAggregateInput = {
+    id?: SortOrder
+    contentId?: SortOrder
+    totalScore?: SortOrder
+    timelinessScore?: SortOrder
+    authorityScore?: SortOrder
+    qualityScore?: SortOrder
+    relevanceScore?: SortOrder
+    aiImportanceScore?: SortOrder
+    engagementScore?: SortOrder
+    weightConfigId?: SortOrder
+    explanation?: SortOrder
+    calculatedAt?: SortOrder
+  }
+
+  export type ContentScoreMinOrderByAggregateInput = {
+    id?: SortOrder
+    contentId?: SortOrder
+    totalScore?: SortOrder
+    timelinessScore?: SortOrder
+    authorityScore?: SortOrder
+    qualityScore?: SortOrder
+    relevanceScore?: SortOrder
+    aiImportanceScore?: SortOrder
+    engagementScore?: SortOrder
+    weightConfigId?: SortOrder
+    explanation?: SortOrder
+    calculatedAt?: SortOrder
+  }
+
+  export type ContentScoreSumOrderByAggregateInput = {
+    totalScore?: SortOrder
+    timelinessScore?: SortOrder
+    authorityScore?: SortOrder
+    qualityScore?: SortOrder
+    relevanceScore?: SortOrder
+    aiImportanceScore?: SortOrder
+    engagementScore?: SortOrder
+  }
+
+  export type ScoringWeightCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    timeliness?: SortOrder
+    authority?: SortOrder
+    quality?: SortOrder
+    relevance?: SortOrder
+    aiImportance?: SortOrder
+    engagement?: SortOrder
+    isActive?: SortOrder
+    isDefault?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ScoringWeightAvgOrderByAggregateInput = {
+    timeliness?: SortOrder
+    authority?: SortOrder
+    quality?: SortOrder
+    relevance?: SortOrder
+    aiImportance?: SortOrder
+    engagement?: SortOrder
+  }
+
+  export type ScoringWeightMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    timeliness?: SortOrder
+    authority?: SortOrder
+    quality?: SortOrder
+    relevance?: SortOrder
+    aiImportance?: SortOrder
+    engagement?: SortOrder
+    isActive?: SortOrder
+    isDefault?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ScoringWeightMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    timeliness?: SortOrder
+    authority?: SortOrder
+    quality?: SortOrder
+    relevance?: SortOrder
+    aiImportance?: SortOrder
+    engagement?: SortOrder
+    isActive?: SortOrder
+    isDefault?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ScoringWeightSumOrderByAggregateInput = {
+    timeliness?: SortOrder
+    authority?: SortOrder
+    quality?: SortOrder
+    relevance?: SortOrder
+    aiImportance?: SortOrder
+    engagement?: SortOrder
+  }
+
+  export type ABTestConfigCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    weightConfigAId?: SortOrder
+    weightConfigBId?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    status?: SortOrder
+    winnerConfigId?: SortOrder
+    metricsA?: SortOrder
+    metricsB?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ABTestConfigMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    weightConfigAId?: SortOrder
+    weightConfigBId?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    status?: SortOrder
+    winnerConfigId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ABTestConfigMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    weightConfigAId?: SortOrder
+    weightConfigBId?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    status?: SortOrder
+    winnerConfigId?: SortOrder
+    createdAt?: SortOrder
+  }
+
   export type AccountCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -35062,6 +39229,12 @@ export namespace Prisma {
     connect?: ContentVersionWhereUniqueInput | ContentVersionWhereUniqueInput[]
   }
 
+  export type ContentScoreCreateNestedOneWithoutContentInput = {
+    create?: XOR<ContentScoreCreateWithoutContentInput, ContentScoreUncheckedCreateWithoutContentInput>
+    connectOrCreate?: ContentScoreCreateOrConnectWithoutContentInput
+    connect?: ContentScoreWhereUniqueInput
+  }
+
   export type ContentReviewUncheckedCreateNestedManyWithoutContentInput = {
     create?: XOR<ContentReviewCreateWithoutContentInput, ContentReviewUncheckedCreateWithoutContentInput> | ContentReviewCreateWithoutContentInput[] | ContentReviewUncheckedCreateWithoutContentInput[]
     connectOrCreate?: ContentReviewCreateOrConnectWithoutContentInput | ContentReviewCreateOrConnectWithoutContentInput[]
@@ -35081,6 +39254,12 @@ export namespace Prisma {
     connectOrCreate?: ContentVersionCreateOrConnectWithoutContentItemInput | ContentVersionCreateOrConnectWithoutContentItemInput[]
     createMany?: ContentVersionCreateManyContentItemInputEnvelope
     connect?: ContentVersionWhereUniqueInput | ContentVersionWhereUniqueInput[]
+  }
+
+  export type ContentScoreUncheckedCreateNestedOneWithoutContentInput = {
+    create?: XOR<ContentScoreCreateWithoutContentInput, ContentScoreUncheckedCreateWithoutContentInput>
+    connectOrCreate?: ContentScoreCreateOrConnectWithoutContentInput
+    connect?: ContentScoreWhereUniqueInput
   }
 
   export type ContentUpdatetagsInput = {
@@ -35159,6 +39338,16 @@ export namespace Prisma {
     deleteMany?: ContentVersionScalarWhereInput | ContentVersionScalarWhereInput[]
   }
 
+  export type ContentScoreUpdateOneWithoutContentNestedInput = {
+    create?: XOR<ContentScoreCreateWithoutContentInput, ContentScoreUncheckedCreateWithoutContentInput>
+    connectOrCreate?: ContentScoreCreateOrConnectWithoutContentInput
+    upsert?: ContentScoreUpsertWithoutContentInput
+    disconnect?: ContentScoreWhereInput | boolean
+    delete?: ContentScoreWhereInput | boolean
+    connect?: ContentScoreWhereUniqueInput
+    update?: XOR<XOR<ContentScoreUpdateToOneWithWhereWithoutContentInput, ContentScoreUpdateWithoutContentInput>, ContentScoreUncheckedUpdateWithoutContentInput>
+  }
+
   export type ContentReviewUncheckedUpdateManyWithoutContentNestedInput = {
     create?: XOR<ContentReviewCreateWithoutContentInput, ContentReviewUncheckedCreateWithoutContentInput> | ContentReviewCreateWithoutContentInput[] | ContentReviewUncheckedCreateWithoutContentInput[]
     connectOrCreate?: ContentReviewCreateOrConnectWithoutContentInput | ContentReviewCreateOrConnectWithoutContentInput[]
@@ -35199,6 +39388,16 @@ export namespace Prisma {
     update?: ContentVersionUpdateWithWhereUniqueWithoutContentItemInput | ContentVersionUpdateWithWhereUniqueWithoutContentItemInput[]
     updateMany?: ContentVersionUpdateManyWithWhereWithoutContentItemInput | ContentVersionUpdateManyWithWhereWithoutContentItemInput[]
     deleteMany?: ContentVersionScalarWhereInput | ContentVersionScalarWhereInput[]
+  }
+
+  export type ContentScoreUncheckedUpdateOneWithoutContentNestedInput = {
+    create?: XOR<ContentScoreCreateWithoutContentInput, ContentScoreUncheckedCreateWithoutContentInput>
+    connectOrCreate?: ContentScoreCreateOrConnectWithoutContentInput
+    upsert?: ContentScoreUpsertWithoutContentInput
+    disconnect?: ContentScoreWhereInput | boolean
+    delete?: ContentScoreWhereInput | boolean
+    connect?: ContentScoreWhereUniqueInput
+    update?: XOR<XOR<ContentScoreUpdateToOneWithWhereWithoutContentInput, ContentScoreUpdateWithoutContentInput>, ContentScoreUncheckedUpdateWithoutContentInput>
   }
 
   export type ContentTagCreateNestedManyWithoutTagInput = {
@@ -35640,6 +39839,20 @@ export namespace Prisma {
     decrement?: Decimal | DecimalJsLike | number | string
     multiply?: Decimal | DecimalJsLike | number | string
     divide?: Decimal | DecimalJsLike | number | string
+  }
+
+  export type ContentCreateNestedOneWithoutContentScoreInput = {
+    create?: XOR<ContentCreateWithoutContentScoreInput, ContentUncheckedCreateWithoutContentScoreInput>
+    connectOrCreate?: ContentCreateOrConnectWithoutContentScoreInput
+    connect?: ContentWhereUniqueInput
+  }
+
+  export type ContentUpdateOneRequiredWithoutContentScoreNestedInput = {
+    create?: XOR<ContentCreateWithoutContentScoreInput, ContentUncheckedCreateWithoutContentScoreInput>
+    connectOrCreate?: ContentCreateOrConnectWithoutContentScoreInput
+    upsert?: ContentUpsertWithoutContentScoreInput
+    connect?: ContentWhereUniqueInput
+    update?: XOR<XOR<ContentUpdateToOneWithWhereWithoutContentScoreInput, ContentUpdateWithoutContentScoreInput>, ContentUncheckedUpdateWithoutContentScoreInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -36651,6 +40864,7 @@ export namespace Prisma {
     reviews?: ContentReviewCreateNestedManyWithoutContentInput
     contentTags?: ContentTagCreateNestedManyWithoutContentInput
     versions?: ContentVersionCreateNestedManyWithoutContentItemInput
+    contentScore?: ContentScoreCreateNestedOneWithoutContentInput
   }
 
   export type ContentUncheckedCreateWithoutSourceInput = {
@@ -36685,6 +40899,7 @@ export namespace Prisma {
     reviews?: ContentReviewUncheckedCreateNestedManyWithoutContentInput
     contentTags?: ContentTagUncheckedCreateNestedManyWithoutContentInput
     versions?: ContentVersionUncheckedCreateNestedManyWithoutContentItemInput
+    contentScore?: ContentScoreUncheckedCreateNestedOneWithoutContentInput
   }
 
   export type ContentCreateOrConnectWithoutSourceInput = {
@@ -36873,6 +41088,39 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type ContentScoreCreateWithoutContentInput = {
+    id?: string
+    totalScore: number
+    timelinessScore: number
+    authorityScore: number
+    qualityScore: number
+    relevanceScore: number
+    aiImportanceScore: number
+    engagementScore: number
+    weightConfigId?: string | null
+    explanation?: string | null
+    calculatedAt?: Date | string
+  }
+
+  export type ContentScoreUncheckedCreateWithoutContentInput = {
+    id?: string
+    totalScore: number
+    timelinessScore: number
+    authorityScore: number
+    qualityScore: number
+    relevanceScore: number
+    aiImportanceScore: number
+    engagementScore: number
+    weightConfigId?: string | null
+    explanation?: string | null
+    calculatedAt?: Date | string
+  }
+
+  export type ContentScoreCreateOrConnectWithoutContentInput = {
+    where: ContentScoreWhereUniqueInput
+    create: XOR<ContentScoreCreateWithoutContentInput, ContentScoreUncheckedCreateWithoutContentInput>
+  }
+
   export type SourceUpsertWithoutContentInput = {
     update: XOR<SourceUpdateWithoutContentInput, SourceUncheckedUpdateWithoutContentInput>
     create: XOR<SourceCreateWithoutContentInput, SourceUncheckedCreateWithoutContentInput>
@@ -36990,6 +41238,45 @@ export namespace Prisma {
     changeNote?: StringNullableFilter<"ContentVersion"> | string | null
     changedBy?: StringNullableFilter<"ContentVersion"> | string | null
     createdAt?: DateTimeFilter<"ContentVersion"> | Date | string
+  }
+
+  export type ContentScoreUpsertWithoutContentInput = {
+    update: XOR<ContentScoreUpdateWithoutContentInput, ContentScoreUncheckedUpdateWithoutContentInput>
+    create: XOR<ContentScoreCreateWithoutContentInput, ContentScoreUncheckedCreateWithoutContentInput>
+    where?: ContentScoreWhereInput
+  }
+
+  export type ContentScoreUpdateToOneWithWhereWithoutContentInput = {
+    where?: ContentScoreWhereInput
+    data: XOR<ContentScoreUpdateWithoutContentInput, ContentScoreUncheckedUpdateWithoutContentInput>
+  }
+
+  export type ContentScoreUpdateWithoutContentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    totalScore?: FloatFieldUpdateOperationsInput | number
+    timelinessScore?: FloatFieldUpdateOperationsInput | number
+    authorityScore?: FloatFieldUpdateOperationsInput | number
+    qualityScore?: FloatFieldUpdateOperationsInput | number
+    relevanceScore?: FloatFieldUpdateOperationsInput | number
+    aiImportanceScore?: FloatFieldUpdateOperationsInput | number
+    engagementScore?: FloatFieldUpdateOperationsInput | number
+    weightConfigId?: NullableStringFieldUpdateOperationsInput | string | null
+    explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    calculatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ContentScoreUncheckedUpdateWithoutContentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    totalScore?: FloatFieldUpdateOperationsInput | number
+    timelinessScore?: FloatFieldUpdateOperationsInput | number
+    authorityScore?: FloatFieldUpdateOperationsInput | number
+    qualityScore?: FloatFieldUpdateOperationsInput | number
+    relevanceScore?: FloatFieldUpdateOperationsInput | number
+    aiImportanceScore?: FloatFieldUpdateOperationsInput | number
+    engagementScore?: FloatFieldUpdateOperationsInput | number
+    weightConfigId?: NullableStringFieldUpdateOperationsInput | string | null
+    explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    calculatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ContentTagCreateWithoutTagInput = {
@@ -37206,6 +41493,7 @@ export namespace Prisma {
     source: SourceCreateNestedOneWithoutContentInput
     reviews?: ContentReviewCreateNestedManyWithoutContentInput
     versions?: ContentVersionCreateNestedManyWithoutContentItemInput
+    contentScore?: ContentScoreCreateNestedOneWithoutContentInput
   }
 
   export type ContentUncheckedCreateWithoutContentTagsInput = {
@@ -37240,6 +41528,7 @@ export namespace Prisma {
     viewCount?: number
     reviews?: ContentReviewUncheckedCreateNestedManyWithoutContentInput
     versions?: ContentVersionUncheckedCreateNestedManyWithoutContentItemInput
+    contentScore?: ContentScoreUncheckedCreateNestedOneWithoutContentInput
   }
 
   export type ContentCreateOrConnectWithoutContentTagsInput = {
@@ -37323,6 +41612,7 @@ export namespace Prisma {
     source?: SourceUpdateOneRequiredWithoutContentNestedInput
     reviews?: ContentReviewUpdateManyWithoutContentNestedInput
     versions?: ContentVersionUpdateManyWithoutContentItemNestedInput
+    contentScore?: ContentScoreUpdateOneWithoutContentNestedInput
   }
 
   export type ContentUncheckedUpdateWithoutContentTagsInput = {
@@ -37357,6 +41647,7 @@ export namespace Prisma {
     viewCount?: IntFieldUpdateOperationsInput | number
     reviews?: ContentReviewUncheckedUpdateManyWithoutContentNestedInput
     versions?: ContentVersionUncheckedUpdateManyWithoutContentItemNestedInput
+    contentScore?: ContentScoreUncheckedUpdateOneWithoutContentNestedInput
   }
 
   export type TagUpsertWithoutContentTagsInput = {
@@ -37430,6 +41721,7 @@ export namespace Prisma {
     source: SourceCreateNestedOneWithoutContentInput
     contentTags?: ContentTagCreateNestedManyWithoutContentInput
     versions?: ContentVersionCreateNestedManyWithoutContentItemInput
+    contentScore?: ContentScoreCreateNestedOneWithoutContentInput
   }
 
   export type ContentUncheckedCreateWithoutReviewsInput = {
@@ -37464,6 +41756,7 @@ export namespace Prisma {
     viewCount?: number
     contentTags?: ContentTagUncheckedCreateNestedManyWithoutContentInput
     versions?: ContentVersionUncheckedCreateNestedManyWithoutContentItemInput
+    contentScore?: ContentScoreUncheckedCreateNestedOneWithoutContentInput
   }
 
   export type ContentCreateOrConnectWithoutReviewsInput = {
@@ -37565,6 +41858,7 @@ export namespace Prisma {
     source?: SourceUpdateOneRequiredWithoutContentNestedInput
     contentTags?: ContentTagUpdateManyWithoutContentNestedInput
     versions?: ContentVersionUpdateManyWithoutContentItemNestedInput
+    contentScore?: ContentScoreUpdateOneWithoutContentNestedInput
   }
 
   export type ContentUncheckedUpdateWithoutReviewsInput = {
@@ -37599,6 +41893,7 @@ export namespace Prisma {
     viewCount?: IntFieldUpdateOperationsInput | number
     contentTags?: ContentTagUncheckedUpdateManyWithoutContentNestedInput
     versions?: ContentVersionUncheckedUpdateManyWithoutContentItemNestedInput
+    contentScore?: ContentScoreUncheckedUpdateOneWithoutContentNestedInput
   }
 
   export type UserUpsertWithoutContentReviewsInput = {
@@ -37993,6 +42288,7 @@ export namespace Prisma {
     source: SourceCreateNestedOneWithoutContentInput
     reviews?: ContentReviewCreateNestedManyWithoutContentInput
     contentTags?: ContentTagCreateNestedManyWithoutContentInput
+    contentScore?: ContentScoreCreateNestedOneWithoutContentInput
   }
 
   export type ContentUncheckedCreateWithoutVersionsInput = {
@@ -38027,6 +42323,7 @@ export namespace Prisma {
     viewCount?: number
     reviews?: ContentReviewUncheckedCreateNestedManyWithoutContentInput
     contentTags?: ContentTagUncheckedCreateNestedManyWithoutContentInput
+    contentScore?: ContentScoreUncheckedCreateNestedOneWithoutContentInput
   }
 
   export type ContentCreateOrConnectWithoutVersionsInput = {
@@ -38077,6 +42374,7 @@ export namespace Prisma {
     source?: SourceUpdateOneRequiredWithoutContentNestedInput
     reviews?: ContentReviewUpdateManyWithoutContentNestedInput
     contentTags?: ContentTagUpdateManyWithoutContentNestedInput
+    contentScore?: ContentScoreUpdateOneWithoutContentNestedInput
   }
 
   export type ContentUncheckedUpdateWithoutVersionsInput = {
@@ -38111,6 +42409,7 @@ export namespace Prisma {
     viewCount?: IntFieldUpdateOperationsInput | number
     reviews?: ContentReviewUncheckedUpdateManyWithoutContentNestedInput
     contentTags?: ContentTagUncheckedUpdateManyWithoutContentNestedInput
+    contentScore?: ContentScoreUncheckedUpdateOneWithoutContentNestedInput
   }
 
   export type AiUsageLogCreateWithoutConfigInput = {
@@ -38389,6 +42688,162 @@ export namespace Prisma {
     usageLogs?: AiUsageLogUncheckedUpdateManyWithoutConfigNestedInput
   }
 
+  export type ContentCreateWithoutContentScoreInput = {
+    id?: string
+    title: string
+    description?: string | null
+    content?: string | null
+    url?: string | null
+    imageUrl?: string | null
+    category?: string | null
+    tags?: ContentCreatetagsInput | string[]
+    status?: $Enums.ContentStatus
+    score?: number | null
+    priority?: number
+    sourceUrl?: string | null
+    publishedAt?: Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    author?: string | null
+    contentHash?: string | null
+    duplicateOf?: string | null
+    keywords?: ContentCreatekeywordsInput | string[]
+    quality?: number | null
+    relevance?: number | null
+    searchVector?: string | null
+    shareCount?: number
+    summary?: string | null
+    titleHash?: string | null
+    type?: $Enums.ContentType
+    viewCount?: number
+    source: SourceCreateNestedOneWithoutContentInput
+    reviews?: ContentReviewCreateNestedManyWithoutContentInput
+    contentTags?: ContentTagCreateNestedManyWithoutContentInput
+    versions?: ContentVersionCreateNestedManyWithoutContentItemInput
+  }
+
+  export type ContentUncheckedCreateWithoutContentScoreInput = {
+    id?: string
+    title: string
+    description?: string | null
+    content?: string | null
+    url?: string | null
+    imageUrl?: string | null
+    category?: string | null
+    tags?: ContentCreatetagsInput | string[]
+    status?: $Enums.ContentStatus
+    score?: number | null
+    priority?: number
+    sourceId: string
+    sourceUrl?: string | null
+    publishedAt?: Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    author?: string | null
+    contentHash?: string | null
+    duplicateOf?: string | null
+    keywords?: ContentCreatekeywordsInput | string[]
+    quality?: number | null
+    relevance?: number | null
+    searchVector?: string | null
+    shareCount?: number
+    summary?: string | null
+    titleHash?: string | null
+    type?: $Enums.ContentType
+    viewCount?: number
+    reviews?: ContentReviewUncheckedCreateNestedManyWithoutContentInput
+    contentTags?: ContentTagUncheckedCreateNestedManyWithoutContentInput
+    versions?: ContentVersionUncheckedCreateNestedManyWithoutContentItemInput
+  }
+
+  export type ContentCreateOrConnectWithoutContentScoreInput = {
+    where: ContentWhereUniqueInput
+    create: XOR<ContentCreateWithoutContentScoreInput, ContentUncheckedCreateWithoutContentScoreInput>
+  }
+
+  export type ContentUpsertWithoutContentScoreInput = {
+    update: XOR<ContentUpdateWithoutContentScoreInput, ContentUncheckedUpdateWithoutContentScoreInput>
+    create: XOR<ContentCreateWithoutContentScoreInput, ContentUncheckedCreateWithoutContentScoreInput>
+    where?: ContentWhereInput
+  }
+
+  export type ContentUpdateToOneWithWhereWithoutContentScoreInput = {
+    where?: ContentWhereInput
+    data: XOR<ContentUpdateWithoutContentScoreInput, ContentUncheckedUpdateWithoutContentScoreInput>
+  }
+
+  export type ContentUpdateWithoutContentScoreInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: ContentUpdatetagsInput | string[]
+    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    score?: NullableFloatFieldUpdateOperationsInput | number | null
+    priority?: IntFieldUpdateOperationsInput | number
+    sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    author?: NullableStringFieldUpdateOperationsInput | string | null
+    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
+    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: ContentUpdatekeywordsInput | string[]
+    quality?: NullableFloatFieldUpdateOperationsInput | number | null
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
+    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
+    shareCount?: IntFieldUpdateOperationsInput | number
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    viewCount?: IntFieldUpdateOperationsInput | number
+    source?: SourceUpdateOneRequiredWithoutContentNestedInput
+    reviews?: ContentReviewUpdateManyWithoutContentNestedInput
+    contentTags?: ContentTagUpdateManyWithoutContentNestedInput
+    versions?: ContentVersionUpdateManyWithoutContentItemNestedInput
+  }
+
+  export type ContentUncheckedUpdateWithoutContentScoreInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: ContentUpdatetagsInput | string[]
+    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    score?: NullableFloatFieldUpdateOperationsInput | number | null
+    priority?: IntFieldUpdateOperationsInput | number
+    sourceId?: StringFieldUpdateOperationsInput | string
+    sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    author?: NullableStringFieldUpdateOperationsInput | string | null
+    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
+    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: ContentUpdatekeywordsInput | string[]
+    quality?: NullableFloatFieldUpdateOperationsInput | number | null
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
+    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
+    shareCount?: IntFieldUpdateOperationsInput | number
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    viewCount?: IntFieldUpdateOperationsInput | number
+    reviews?: ContentReviewUncheckedUpdateManyWithoutContentNestedInput
+    contentTags?: ContentTagUncheckedUpdateManyWithoutContentNestedInput
+    versions?: ContentVersionUncheckedUpdateManyWithoutContentItemNestedInput
+  }
+
   export type AccountCreateManyUserInput = {
     id?: string
     type: string
@@ -38616,6 +43071,7 @@ export namespace Prisma {
     reviews?: ContentReviewUpdateManyWithoutContentNestedInput
     contentTags?: ContentTagUpdateManyWithoutContentNestedInput
     versions?: ContentVersionUpdateManyWithoutContentItemNestedInput
+    contentScore?: ContentScoreUpdateOneWithoutContentNestedInput
   }
 
   export type ContentUncheckedUpdateWithoutSourceInput = {
@@ -38650,6 +43106,7 @@ export namespace Prisma {
     reviews?: ContentReviewUncheckedUpdateManyWithoutContentNestedInput
     contentTags?: ContentTagUncheckedUpdateManyWithoutContentNestedInput
     versions?: ContentVersionUncheckedUpdateManyWithoutContentItemNestedInput
+    contentScore?: ContentScoreUncheckedUpdateOneWithoutContentNestedInput
   }
 
   export type ContentUncheckedUpdateManyWithoutSourceInput = {
@@ -39164,6 +43621,18 @@ export namespace Prisma {
      * @deprecated Use GeminiNewsQueryDefaultArgs instead
      */
     export type GeminiNewsQueryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = GeminiNewsQueryDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ContentScoreDefaultArgs instead
+     */
+    export type ContentScoreArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ContentScoreDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ScoringWeightDefaultArgs instead
+     */
+    export type ScoringWeightArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ScoringWeightDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ABTestConfigDefaultArgs instead
+     */
+    export type ABTestConfigArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ABTestConfigDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany
