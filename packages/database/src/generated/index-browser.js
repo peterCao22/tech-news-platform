@@ -503,6 +503,43 @@ exports.Prisma.ABTestConfigScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.DailyTop10ScalarFieldEnum = {
+  id: 'id',
+  date: 'date',
+  status: 'status',
+  summaryReport: 'summaryReport',
+  categoryStats: 'categoryStats',
+  totalCandidates: 'totalCandidates',
+  generationTime: 'generationTime',
+  generatedBy: 'generatedBy',
+  publishedAt: 'publishedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.Top10ItemScalarFieldEnum = {
+  id: 'id',
+  top10Id: 'top10Id',
+  contentId: 'contentId',
+  position: 'position',
+  score: 'score',
+  reason: 'reason',
+  highlights: 'highlights',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.Top10AdjustmentScalarFieldEnum = {
+  id: 'id',
+  top10Id: 'top10Id',
+  adjustedBy: 'adjustedBy',
+  action: 'action',
+  contentId: 'contentId',
+  oldPosition: 'oldPosition',
+  newPosition: 'newPosition',
+  reason: 'reason',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -621,6 +658,12 @@ exports.AiProvider = exports.$Enums.AiProvider = {
   PERPLEXITY: 'PERPLEXITY'
 };
 
+exports.Top10Status = exports.$Enums.Top10Status = {
+  DRAFT: 'DRAFT',
+  PUBLISHED: 'PUBLISHED',
+  ARCHIVED: 'ARCHIVED'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Account: 'Account',
@@ -648,7 +691,10 @@ exports.Prisma.ModelName = {
   GeminiNewsQuery: 'GeminiNewsQuery',
   ContentScore: 'ContentScore',
   ScoringWeight: 'ScoringWeight',
-  ABTestConfig: 'ABTestConfig'
+  ABTestConfig: 'ABTestConfig',
+  DailyTop10: 'DailyTop10',
+  Top10Item: 'Top10Item',
+  Top10Adjustment: 'Top10Adjustment'
 };
 
 /**

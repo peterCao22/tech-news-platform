@@ -141,6 +141,7 @@ model Content {
   contentTags  ContentTag[]
   versions     ContentVersion[]
   contentScore ContentScore?
+  top10Items   Top10Item[]
 
   @@index([status])
   @@index([publishedAt])
@@ -604,4 +605,67 @@ model ABTestConfig {
 
   @@index([status])
   @@map("ab_test_configs")
+}
+
+// Story 2.6: 每日TOP10自动生成
+
+model DailyTop10 {
+  id              String          @id @default(cuid())
+  date            DateTime        @unique
+  status          Top10Status     @default(DRAFT)
+  summaryReport   String?
+  categoryStats   Json?
+  totalCandidates Int             @default(0) @map("total_candidates")
+  generationTime  Int?            @map("generation_time")
+  generatedBy     String?         @map("generated_by")
+  publishedAt     DateTime?       @map("published_at")
+  createdAt       DateTime        @default(now()) @map("created_at")
+  updatedAt       DateTime        @updatedAt @map("updated_at")
+  items           Top10Item[]
+  adjustments     Top10Adjustment[]
+
+  @@index([date])
+  @@index([status])
+  @@map("daily_top10")
+}
+
+model Top10Item {
+  id          String     @id @default(cuid())
+  top10Id     String     @map("top10_id")
+  contentId   String     @map("content_id")
+  position    Int
+  score       Float
+  reason      String?
+  highlights  String?
+  createdAt   DateTime   @default(now()) @map("created_at")
+  top10       DailyTop10 @relation(fields: [top10Id], references: [id], onDelete: Cascade)
+  content     Content    @relation(fields: [contentId], references: [id])
+
+  @@unique([top10Id, position])
+  @@index([top10Id])
+  @@index([contentId])
+  @@map("top10_items")
+}
+
+model Top10Adjustment {
+  id          String     @id @default(cuid())
+  top10Id     String     @map("top10_id")
+  adjustedBy  String     @map("adjusted_by")
+  action      String     @db.VarChar(50)
+  contentId   String?    @map("content_id")
+  oldPosition Int?       @map("old_position")
+  newPosition Int?       @map("new_position")
+  reason      String?
+  createdAt   DateTime   @default(now()) @map("created_at")
+  top10       DailyTop10 @relation(fields: [top10Id], references: [id], onDelete: Cascade)
+
+  @@index([top10Id])
+  @@index([adjustedBy])
+  @@map("top10_adjustments")
+}
+
+enum Top10Status {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
 }

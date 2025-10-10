@@ -32,6 +32,7 @@ import geminiNewsRoutes from './routes/gemini-news.routes';
 import claudeAnalysisRoutes from './routes/claude-analysis.routes';
 import deduplicationRoutes from './routes/deduplication.routes';
 import contentScoringRoutes from './routes/content-scoring.routes';
+import dailyTop10Routes from './routes/daily-top10.routes';
 
 // 加载环境变量
 dotenv.config({ path: '../../.env' });
@@ -102,6 +103,7 @@ app.use('/api/gemini-news', geminiNewsRoutes);
 app.use('/api/claude-analysis', claudeAnalysisRoutes);
 app.use('/api/deduplication', deduplicationRoutes);
 app.use('/api/content-scoring', contentScoringRoutes);
+app.use('/api/daily-top10', dailyTop10Routes);
 
 // 404 处理
 app.use(notFoundHandler);

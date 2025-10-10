@@ -5,6 +5,7 @@ import { alphaVantageService } from './alpha-vantage.service';
 import { finnhubService } from './finnhub.service';
 import { polygonService } from './polygon.service';
 import { geminiNewsService } from './gemini-news.service';
+import { dailyTop10Service } from './daily-top10.service';
 
 export class SchedulerService {
   private tasks: Map<string, cron.ScheduledTask> = new Map();
@@ -29,6 +30,9 @@ export class SchedulerService {
 
     // Gemini 新闻获取任务 - 每6小时执行一次
     this.scheduleGeminiNewsFetch();
+
+    // Daily TOP10 生成任务 - 每天早上9点执行
+    this.scheduleDailyTop10Generation();
 
     // 清理任务 - 每天凌晨2点执行
     this.scheduleCleanup();
@@ -494,6 +498,71 @@ export class SchedulerService {
     this.tasks.set(taskName, task);
     task.start();
     logger.info(`Gemini新闻获取任务已启动，执行频率: ${cronExpression}`);
+  }
+
+  /**
+   * 调度Daily TOP10生成任务
+   */
+  private scheduleDailyTop10Generation(): void {
+    const taskName = 'daily-top10-generation';
+    
+    // 每天早上9点执行: 0 9 * * *
+    // 开发环境可以设置更频繁: 0 */2 * * * * (每2小时)
+    const cronExpression = process.env.NODE_ENV === 'development'
+      ? '0 */2 * * * *'  // 开发环境每2小时
+      : '0 9 * * *'; // 生产环境每天早上9点
+
+    const task = cron.schedule(cronExpression, async () => {
+      logger.info('开始执行Daily TOP10生成任务');
+      
+      try {
+        const startTime = Date.now();
+        const result = await dailyTop10Service.generateDailyTop10();
+        const duration = Date.now() - startTime;
+
+        logger.info('Daily TOP10生成任务完成', {
+          duration: `${duration}ms`,
+          date: result.date,
+          itemCount: result.items.length,
+          totalCandidates: result.totalCandidates,
+          generationTime: result.generationTime
+        });
+
+        // 自动发布
+        if (result.id) {
+          await dailyTop10Service.publishTop10(result.id);
+          logger.info('Daily TOP10已自动发布', { id: result.id });
+        }
+
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        logger.error('Daily TOP10生成任务执行失败', { error: errorMessage });
+      }
+    }, {
+      timezone: 'Asia/Shanghai',
+    });
+
+    this.tasks.set(taskName, task);
+    task.start();
+    
+    logger.info(`Daily TOP10生成任务已启动，执行频率: ${cronExpression}`);
+  }
+
+  /**
+   * 手动触发Daily TOP10生成
+   */
+  public async triggerDailyTop10Generation(date?: Date): Promise<any> {
+    logger.info('手动触发Daily TOP10生成任务', { date });
+    
+    try {
+      const result = await dailyTop10Service.generateDailyTop10(date);
+      logger.info('手动Daily TOP10生成任务完成', result);
+      return result;
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      logger.error('手动Daily TOP10生成任务失败', { error: errorMessage });
+      throw error;
+    }
   }
 
   /**

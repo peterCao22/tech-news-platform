@@ -7,6 +7,7 @@ import { db } from '@tech-news-platform/database';
 import { logger } from '../utils/logger';
 import { contentScoringService } from './content-scoring.service';
 import { contentDeduplicationService } from './content-deduplication.service';
+import { ClaudeProvider } from './ai/claude-provider';
 
 /**
  * TOP10候选内容
@@ -17,6 +18,7 @@ interface Top10Candidate {
   description?: string;
   content?: string;
   sourceId: string;
+  sourceUrl?: string;
   source?: {
     name: string;
   };
@@ -309,11 +311,19 @@ export class DailyTop10Service {
     for (const item of selected) {
       try {
         const similarity = await contentDeduplicationService.calculateSimilarity(
-          candidate.id,
-          item.id
+          {
+            id: candidate.id,
+            title: candidate.title,
+            content: candidate.content || candidate.description || ''
+          },
+          {
+            id: item.id,
+            title: item.title,
+            content: item.content || item.description || ''
+          }
         );
         
-        if (similarity >= 80) {
+        if (similarity.overallSimilarity >= 80) {
           return true;
         }
       } catch (error) {
@@ -359,7 +369,7 @@ export class DailyTop10Service {
   }
 
   /**
-   * 生成摘要报告
+   * 生成摘要报告（使用Claude AI增强）
    */
   private async generateSummaryReport(
     top10: Top10Candidate[],
@@ -369,6 +379,8 @@ export class DailyTop10Service {
 
     // 标题
     lines.push('# 每日科技新闻 TOP 10 摘要');
+    lines.push('');
+    lines.push(`**生成时间**: ${new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' })}`);
     lines.push('');
 
     // 整体概览
@@ -396,6 +408,57 @@ export class DailyTop10Service {
     }
     lines.push('');
 
+    // 使用Claude AI生成趋势洞察
+    try {
+      const claudeConfig = {
+        apiKey: process.env.CLAUDE_API_KEY || '',
+        model: process.env.CLAUDE_MODEL || 'claude-3-5-sonnet-20241022',
+        name: 'Claude AI - Daily TOP10'
+      };
+      
+      if (!claudeConfig.apiKey) {
+        logger.warn('Claude API Key 未配置，跳过AI趋势洞察生成');
+        throw new Error('Claude API Key not configured');
+      }
+      
+      const claudeProvider = new ClaudeProvider(claudeConfig);
+      
+      // 准备TOP10摘要用于AI分析
+      const top10Summary = top10.map((item, idx) => ({
+        rank: idx + 1,
+        title: item.title,
+        category: item.category || 'Technology',
+        source: item.source?.name || 'Unknown',
+        score: item.score.toFixed(2)
+      }));
+
+      const prompt = `作为科技新闻分析师，请基于以下今日TOP10科技新闻，生成一份简洁的趋势洞察报告（200字以内）：
+
+${JSON.stringify(top10Summary, null, 2)}
+
+请分析：
+1. 今日科技新闻的主要趋势和热点
+2. 最值得关注的技术领域或公司
+3. 对读者的简要建议
+
+请用中文回复，保持专业且简洁。`;
+
+      const insights = await claudeProvider.generateText(prompt, {
+        temperature: 0.7,
+        maxTokens: 500
+      });
+
+      lines.push('## 🔍 趋势洞察（AI生成）');
+      lines.push('');
+      lines.push(insights);
+      lines.push('');
+
+      logger.info('Claude AI趋势洞察生成成功');
+    } catch (error) {
+      logger.error('Claude AI趋势洞察生成失败', { error });
+      // 如果AI生成失败，继续使用基础报告
+    }
+
     // TOP 10列表
     lines.push('## 🏆 TOP 10 内容');
     top10.forEach((item, index) => {
@@ -405,6 +468,13 @@ export class DailyTop10Service {
       lines.push(`- **评分**: ${item.score.toFixed(2)}分`);
       if (item.explanation) {
         lines.push(`- **评分说明**: ${item.explanation}`);
+      }
+      if (item.description) {
+        const shortDesc = item.description.substring(0, 150) + (item.description.length > 150 ? '...' : '');
+        lines.push(`- **简介**: ${shortDesc}`);
+      }
+      if (item.sourceUrl) {
+        lines.push(`- **链接**: ${item.sourceUrl}`);
       }
       lines.push('');
     });

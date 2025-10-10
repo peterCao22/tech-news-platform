@@ -148,6 +148,21 @@ export type ScoringWeight = $Result.DefaultSelection<Prisma.$ScoringWeightPayloa
  * 
  */
 export type ABTestConfig = $Result.DefaultSelection<Prisma.$ABTestConfigPayload>
+/**
+ * Model DailyTop10
+ * 
+ */
+export type DailyTop10 = $Result.DefaultSelection<Prisma.$DailyTop10Payload>
+/**
+ * Model Top10Item
+ * 
+ */
+export type Top10Item = $Result.DefaultSelection<Prisma.$Top10ItemPayload>
+/**
+ * Model Top10Adjustment
+ * 
+ */
+export type Top10Adjustment = $Result.DefaultSelection<Prisma.$Top10AdjustmentPayload>
 
 /**
  * Enums
@@ -274,6 +289,15 @@ export const AiProvider: {
 
 export type AiProvider = (typeof AiProvider)[keyof typeof AiProvider]
 
+
+export const Top10Status: {
+  DRAFT: 'DRAFT',
+  PUBLISHED: 'PUBLISHED',
+  ARCHIVED: 'ARCHIVED'
+};
+
+export type Top10Status = (typeof Top10Status)[keyof typeof Top10Status]
+
 }
 
 export type UserRole = $Enums.UserRole
@@ -319,6 +343,10 @@ export const ApiConfigStatus: typeof $Enums.ApiConfigStatus
 export type AiProvider = $Enums.AiProvider
 
 export const AiProvider: typeof $Enums.AiProvider
+
+export type Top10Status = $Enums.Top10Status
+
+export const Top10Status: typeof $Enums.Top10Status
 
 /**
  * ##  Prisma Client ʲˢ
@@ -712,6 +740,36 @@ export class PrismaClient<
     * ```
     */
   get aBTestConfig(): Prisma.ABTestConfigDelegate<ExtArgs>;
+
+  /**
+   * `prisma.dailyTop10`: Exposes CRUD operations for the **DailyTop10** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DailyTop10s
+    * const dailyTop10s = await prisma.dailyTop10.findMany()
+    * ```
+    */
+  get dailyTop10(): Prisma.DailyTop10Delegate<ExtArgs>;
+
+  /**
+   * `prisma.top10Item`: Exposes CRUD operations for the **Top10Item** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Top10Items
+    * const top10Items = await prisma.top10Item.findMany()
+    * ```
+    */
+  get top10Item(): Prisma.Top10ItemDelegate<ExtArgs>;
+
+  /**
+   * `prisma.top10Adjustment`: Exposes CRUD operations for the **Top10Adjustment** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Top10Adjustments
+    * const top10Adjustments = await prisma.top10Adjustment.findMany()
+    * ```
+    */
+  get top10Adjustment(): Prisma.Top10AdjustmentDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -1179,7 +1237,10 @@ export namespace Prisma {
     GeminiNewsQuery: 'GeminiNewsQuery',
     ContentScore: 'ContentScore',
     ScoringWeight: 'ScoringWeight',
-    ABTestConfig: 'ABTestConfig'
+    ABTestConfig: 'ABTestConfig',
+    DailyTop10: 'DailyTop10',
+    Top10Item: 'Top10Item',
+    Top10Adjustment: 'Top10Adjustment'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1195,7 +1256,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "user" | "account" | "session" | "verificationToken" | "passwordResetToken" | "source" | "content" | "tag" | "contentTag" | "contentReview" | "dailyDigest" | "userActivity" | "aITask" | "systemConfig" | "apiConfiguration" | "apiCallLog" | "contentVersion" | "contentAuditLog" | "contentDuplication" | "searchIndex" | "aiServiceConfig" | "aiUsageLog" | "aiServiceStatus" | "geminiNewsQuery" | "contentScore" | "scoringWeight" | "aBTestConfig"
+      modelProps: "user" | "account" | "session" | "verificationToken" | "passwordResetToken" | "source" | "content" | "tag" | "contentTag" | "contentReview" | "dailyDigest" | "userActivity" | "aITask" | "systemConfig" | "apiConfiguration" | "apiCallLog" | "contentVersion" | "contentAuditLog" | "contentDuplication" | "searchIndex" | "aiServiceConfig" | "aiUsageLog" | "aiServiceStatus" | "geminiNewsQuery" | "contentScore" | "scoringWeight" | "aBTestConfig" | "dailyTop10" | "top10Item" | "top10Adjustment"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3089,6 +3150,216 @@ export namespace Prisma {
           }
         }
       }
+      DailyTop10: {
+        payload: Prisma.$DailyTop10Payload<ExtArgs>
+        fields: Prisma.DailyTop10FieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DailyTop10FindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyTop10Payload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DailyTop10FindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyTop10Payload>
+          }
+          findFirst: {
+            args: Prisma.DailyTop10FindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyTop10Payload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DailyTop10FindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyTop10Payload>
+          }
+          findMany: {
+            args: Prisma.DailyTop10FindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyTop10Payload>[]
+          }
+          create: {
+            args: Prisma.DailyTop10CreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyTop10Payload>
+          }
+          createMany: {
+            args: Prisma.DailyTop10CreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DailyTop10CreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyTop10Payload>[]
+          }
+          delete: {
+            args: Prisma.DailyTop10DeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyTop10Payload>
+          }
+          update: {
+            args: Prisma.DailyTop10UpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyTop10Payload>
+          }
+          deleteMany: {
+            args: Prisma.DailyTop10DeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DailyTop10UpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.DailyTop10UpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyTop10Payload>
+          }
+          aggregate: {
+            args: Prisma.DailyTop10AggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDailyTop10>
+          }
+          groupBy: {
+            args: Prisma.DailyTop10GroupByArgs<ExtArgs>
+            result: $Utils.Optional<DailyTop10GroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DailyTop10CountArgs<ExtArgs>
+            result: $Utils.Optional<DailyTop10CountAggregateOutputType> | number
+          }
+        }
+      }
+      Top10Item: {
+        payload: Prisma.$Top10ItemPayload<ExtArgs>
+        fields: Prisma.Top10ItemFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Top10ItemFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Top10ItemPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Top10ItemFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Top10ItemPayload>
+          }
+          findFirst: {
+            args: Prisma.Top10ItemFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Top10ItemPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Top10ItemFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Top10ItemPayload>
+          }
+          findMany: {
+            args: Prisma.Top10ItemFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Top10ItemPayload>[]
+          }
+          create: {
+            args: Prisma.Top10ItemCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Top10ItemPayload>
+          }
+          createMany: {
+            args: Prisma.Top10ItemCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Top10ItemCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Top10ItemPayload>[]
+          }
+          delete: {
+            args: Prisma.Top10ItemDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Top10ItemPayload>
+          }
+          update: {
+            args: Prisma.Top10ItemUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Top10ItemPayload>
+          }
+          deleteMany: {
+            args: Prisma.Top10ItemDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Top10ItemUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Top10ItemUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Top10ItemPayload>
+          }
+          aggregate: {
+            args: Prisma.Top10ItemAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTop10Item>
+          }
+          groupBy: {
+            args: Prisma.Top10ItemGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Top10ItemGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Top10ItemCountArgs<ExtArgs>
+            result: $Utils.Optional<Top10ItemCountAggregateOutputType> | number
+          }
+        }
+      }
+      Top10Adjustment: {
+        payload: Prisma.$Top10AdjustmentPayload<ExtArgs>
+        fields: Prisma.Top10AdjustmentFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.Top10AdjustmentFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Top10AdjustmentPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.Top10AdjustmentFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Top10AdjustmentPayload>
+          }
+          findFirst: {
+            args: Prisma.Top10AdjustmentFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Top10AdjustmentPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.Top10AdjustmentFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Top10AdjustmentPayload>
+          }
+          findMany: {
+            args: Prisma.Top10AdjustmentFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Top10AdjustmentPayload>[]
+          }
+          create: {
+            args: Prisma.Top10AdjustmentCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Top10AdjustmentPayload>
+          }
+          createMany: {
+            args: Prisma.Top10AdjustmentCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.Top10AdjustmentCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Top10AdjustmentPayload>[]
+          }
+          delete: {
+            args: Prisma.Top10AdjustmentDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Top10AdjustmentPayload>
+          }
+          update: {
+            args: Prisma.Top10AdjustmentUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Top10AdjustmentPayload>
+          }
+          deleteMany: {
+            args: Prisma.Top10AdjustmentDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.Top10AdjustmentUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.Top10AdjustmentUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Top10AdjustmentPayload>
+          }
+          aggregate: {
+            args: Prisma.Top10AdjustmentAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTop10Adjustment>
+          }
+          groupBy: {
+            args: Prisma.Top10AdjustmentGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Top10AdjustmentGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.Top10AdjustmentCountArgs<ExtArgs>
+            result: $Utils.Optional<Top10AdjustmentCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -3342,12 +3613,14 @@ export namespace Prisma {
     reviews: number
     contentTags: number
     versions: number
+    top10Items: number
   }
 
   export type ContentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     reviews?: boolean | ContentCountOutputTypeCountReviewsArgs
     contentTags?: boolean | ContentCountOutputTypeCountContentTagsArgs
     versions?: boolean | ContentCountOutputTypeCountVersionsArgs
+    top10Items?: boolean | ContentCountOutputTypeCountTop10ItemsArgs
   }
 
   // Custom InputTypes
@@ -3380,6 +3653,13 @@ export namespace Prisma {
    */
   export type ContentCountOutputTypeCountVersionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ContentVersionWhereInput
+  }
+
+  /**
+   * ContentCountOutputType without action
+   */
+  export type ContentCountOutputTypeCountTop10ItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Top10ItemWhereInput
   }
 
 
@@ -3491,6 +3771,46 @@ export namespace Prisma {
    */
   export type AiServiceConfigCountOutputTypeCountServiceStatusArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AiServiceStatusWhereInput
+  }
+
+
+  /**
+   * Count Type DailyTop10CountOutputType
+   */
+
+  export type DailyTop10CountOutputType = {
+    items: number
+    adjustments: number
+  }
+
+  export type DailyTop10CountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    items?: boolean | DailyTop10CountOutputTypeCountItemsArgs
+    adjustments?: boolean | DailyTop10CountOutputTypeCountAdjustmentsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * DailyTop10CountOutputType without action
+   */
+  export type DailyTop10CountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyTop10CountOutputType
+     */
+    select?: DailyTop10CountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * DailyTop10CountOutputType without action
+   */
+  export type DailyTop10CountOutputTypeCountItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Top10ItemWhereInput
+  }
+
+  /**
+   * DailyTop10CountOutputType without action
+   */
+  export type DailyTop10CountOutputTypeCountAdjustmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Top10AdjustmentWhereInput
   }
 
 
@@ -9903,6 +10223,7 @@ export namespace Prisma {
     contentTags?: boolean | Content$contentTagsArgs<ExtArgs>
     versions?: boolean | Content$versionsArgs<ExtArgs>
     contentScore?: boolean | Content$contentScoreArgs<ExtArgs>
+    top10Items?: boolean | Content$top10ItemsArgs<ExtArgs>
     _count?: boolean | ContentCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["content"]>
 
@@ -9977,6 +10298,7 @@ export namespace Prisma {
     contentTags?: boolean | Content$contentTagsArgs<ExtArgs>
     versions?: boolean | Content$versionsArgs<ExtArgs>
     contentScore?: boolean | Content$contentScoreArgs<ExtArgs>
+    top10Items?: boolean | Content$top10ItemsArgs<ExtArgs>
     _count?: boolean | ContentCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ContentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -9991,6 +10313,7 @@ export namespace Prisma {
       contentTags: Prisma.$ContentTagPayload<ExtArgs>[]
       versions: Prisma.$ContentVersionPayload<ExtArgs>[]
       contentScore: Prisma.$ContentScorePayload<ExtArgs> | null
+      top10Items: Prisma.$Top10ItemPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -10391,6 +10714,7 @@ export namespace Prisma {
     contentTags<T extends Content$contentTagsArgs<ExtArgs> = {}>(args?: Subset<T, Content$contentTagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContentTagPayload<ExtArgs>, T, "findMany"> | Null>
     versions<T extends Content$versionsArgs<ExtArgs> = {}>(args?: Subset<T, Content$versionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContentVersionPayload<ExtArgs>, T, "findMany"> | Null>
     contentScore<T extends Content$contentScoreArgs<ExtArgs> = {}>(args?: Subset<T, Content$contentScoreArgs<ExtArgs>>): Prisma__ContentScoreClient<$Result.GetResult<Prisma.$ContentScorePayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    top10Items<T extends Content$top10ItemsArgs<ExtArgs> = {}>(args?: Subset<T, Content$top10ItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Top10ItemPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10839,6 +11163,26 @@ export namespace Prisma {
      */
     include?: ContentScoreInclude<ExtArgs> | null
     where?: ContentScoreWhereInput
+  }
+
+  /**
+   * Content.top10Items
+   */
+  export type Content$top10ItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Top10Item
+     */
+    select?: Top10ItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Top10ItemInclude<ExtArgs> | null
+    where?: Top10ItemWhereInput
+    orderBy?: Top10ItemOrderByWithRelationInput | Top10ItemOrderByWithRelationInput[]
+    cursor?: Top10ItemWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Top10ItemScalarFieldEnum | Top10ItemScalarFieldEnum[]
   }
 
   /**
@@ -31013,6 +31357,3116 @@ export namespace Prisma {
 
 
   /**
+   * Model DailyTop10
+   */
+
+  export type AggregateDailyTop10 = {
+    _count: DailyTop10CountAggregateOutputType | null
+    _avg: DailyTop10AvgAggregateOutputType | null
+    _sum: DailyTop10SumAggregateOutputType | null
+    _min: DailyTop10MinAggregateOutputType | null
+    _max: DailyTop10MaxAggregateOutputType | null
+  }
+
+  export type DailyTop10AvgAggregateOutputType = {
+    totalCandidates: number | null
+    generationTime: number | null
+  }
+
+  export type DailyTop10SumAggregateOutputType = {
+    totalCandidates: number | null
+    generationTime: number | null
+  }
+
+  export type DailyTop10MinAggregateOutputType = {
+    id: string | null
+    date: Date | null
+    status: $Enums.Top10Status | null
+    summaryReport: string | null
+    totalCandidates: number | null
+    generationTime: number | null
+    generatedBy: string | null
+    publishedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type DailyTop10MaxAggregateOutputType = {
+    id: string | null
+    date: Date | null
+    status: $Enums.Top10Status | null
+    summaryReport: string | null
+    totalCandidates: number | null
+    generationTime: number | null
+    generatedBy: string | null
+    publishedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type DailyTop10CountAggregateOutputType = {
+    id: number
+    date: number
+    status: number
+    summaryReport: number
+    categoryStats: number
+    totalCandidates: number
+    generationTime: number
+    generatedBy: number
+    publishedAt: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type DailyTop10AvgAggregateInputType = {
+    totalCandidates?: true
+    generationTime?: true
+  }
+
+  export type DailyTop10SumAggregateInputType = {
+    totalCandidates?: true
+    generationTime?: true
+  }
+
+  export type DailyTop10MinAggregateInputType = {
+    id?: true
+    date?: true
+    status?: true
+    summaryReport?: true
+    totalCandidates?: true
+    generationTime?: true
+    generatedBy?: true
+    publishedAt?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type DailyTop10MaxAggregateInputType = {
+    id?: true
+    date?: true
+    status?: true
+    summaryReport?: true
+    totalCandidates?: true
+    generationTime?: true
+    generatedBy?: true
+    publishedAt?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type DailyTop10CountAggregateInputType = {
+    id?: true
+    date?: true
+    status?: true
+    summaryReport?: true
+    categoryStats?: true
+    totalCandidates?: true
+    generationTime?: true
+    generatedBy?: true
+    publishedAt?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type DailyTop10AggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DailyTop10 to aggregate.
+     */
+    where?: DailyTop10WhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DailyTop10s to fetch.
+     */
+    orderBy?: DailyTop10OrderByWithRelationInput | DailyTop10OrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DailyTop10WhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DailyTop10s from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DailyTop10s.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DailyTop10s
+    **/
+    _count?: true | DailyTop10CountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DailyTop10AvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DailyTop10SumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DailyTop10MinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DailyTop10MaxAggregateInputType
+  }
+
+  export type GetDailyTop10AggregateType<T extends DailyTop10AggregateArgs> = {
+        [P in keyof T & keyof AggregateDailyTop10]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDailyTop10[P]>
+      : GetScalarType<T[P], AggregateDailyTop10[P]>
+  }
+
+
+
+
+  export type DailyTop10GroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DailyTop10WhereInput
+    orderBy?: DailyTop10OrderByWithAggregationInput | DailyTop10OrderByWithAggregationInput[]
+    by: DailyTop10ScalarFieldEnum[] | DailyTop10ScalarFieldEnum
+    having?: DailyTop10ScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DailyTop10CountAggregateInputType | true
+    _avg?: DailyTop10AvgAggregateInputType
+    _sum?: DailyTop10SumAggregateInputType
+    _min?: DailyTop10MinAggregateInputType
+    _max?: DailyTop10MaxAggregateInputType
+  }
+
+  export type DailyTop10GroupByOutputType = {
+    id: string
+    date: Date
+    status: $Enums.Top10Status
+    summaryReport: string | null
+    categoryStats: JsonValue | null
+    totalCandidates: number
+    generationTime: number | null
+    generatedBy: string | null
+    publishedAt: Date | null
+    createdAt: Date
+    updatedAt: Date
+    _count: DailyTop10CountAggregateOutputType | null
+    _avg: DailyTop10AvgAggregateOutputType | null
+    _sum: DailyTop10SumAggregateOutputType | null
+    _min: DailyTop10MinAggregateOutputType | null
+    _max: DailyTop10MaxAggregateOutputType | null
+  }
+
+  type GetDailyTop10GroupByPayload<T extends DailyTop10GroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DailyTop10GroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DailyTop10GroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DailyTop10GroupByOutputType[P]>
+            : GetScalarType<T[P], DailyTop10GroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DailyTop10Select<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    date?: boolean
+    status?: boolean
+    summaryReport?: boolean
+    categoryStats?: boolean
+    totalCandidates?: boolean
+    generationTime?: boolean
+    generatedBy?: boolean
+    publishedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    items?: boolean | DailyTop10$itemsArgs<ExtArgs>
+    adjustments?: boolean | DailyTop10$adjustmentsArgs<ExtArgs>
+    _count?: boolean | DailyTop10CountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dailyTop10"]>
+
+  export type DailyTop10SelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    date?: boolean
+    status?: boolean
+    summaryReport?: boolean
+    categoryStats?: boolean
+    totalCandidates?: boolean
+    generationTime?: boolean
+    generatedBy?: boolean
+    publishedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["dailyTop10"]>
+
+  export type DailyTop10SelectScalar = {
+    id?: boolean
+    date?: boolean
+    status?: boolean
+    summaryReport?: boolean
+    categoryStats?: boolean
+    totalCandidates?: boolean
+    generationTime?: boolean
+    generatedBy?: boolean
+    publishedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type DailyTop10Include<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    items?: boolean | DailyTop10$itemsArgs<ExtArgs>
+    adjustments?: boolean | DailyTop10$adjustmentsArgs<ExtArgs>
+    _count?: boolean | DailyTop10CountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type DailyTop10IncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $DailyTop10Payload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DailyTop10"
+    objects: {
+      items: Prisma.$Top10ItemPayload<ExtArgs>[]
+      adjustments: Prisma.$Top10AdjustmentPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      date: Date
+      status: $Enums.Top10Status
+      summaryReport: string | null
+      categoryStats: Prisma.JsonValue | null
+      totalCandidates: number
+      generationTime: number | null
+      generatedBy: string | null
+      publishedAt: Date | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["dailyTop10"]>
+    composites: {}
+  }
+
+  type DailyTop10GetPayload<S extends boolean | null | undefined | DailyTop10DefaultArgs> = $Result.GetResult<Prisma.$DailyTop10Payload, S>
+
+  type DailyTop10CountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<DailyTop10FindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: DailyTop10CountAggregateInputType | true
+    }
+
+  export interface DailyTop10Delegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DailyTop10'], meta: { name: 'DailyTop10' } }
+    /**
+     * Find zero or one DailyTop10 that matches the filter.
+     * @param {DailyTop10FindUniqueArgs} args - Arguments to find a DailyTop10
+     * @example
+     * // Get one DailyTop10
+     * const dailyTop10 = await prisma.dailyTop10.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DailyTop10FindUniqueArgs>(args: SelectSubset<T, DailyTop10FindUniqueArgs<ExtArgs>>): Prisma__DailyTop10Client<$Result.GetResult<Prisma.$DailyTop10Payload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one DailyTop10 that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {DailyTop10FindUniqueOrThrowArgs} args - Arguments to find a DailyTop10
+     * @example
+     * // Get one DailyTop10
+     * const dailyTop10 = await prisma.dailyTop10.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DailyTop10FindUniqueOrThrowArgs>(args: SelectSubset<T, DailyTop10FindUniqueOrThrowArgs<ExtArgs>>): Prisma__DailyTop10Client<$Result.GetResult<Prisma.$DailyTop10Payload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first DailyTop10 that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DailyTop10FindFirstArgs} args - Arguments to find a DailyTop10
+     * @example
+     * // Get one DailyTop10
+     * const dailyTop10 = await prisma.dailyTop10.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DailyTop10FindFirstArgs>(args?: SelectSubset<T, DailyTop10FindFirstArgs<ExtArgs>>): Prisma__DailyTop10Client<$Result.GetResult<Prisma.$DailyTop10Payload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first DailyTop10 that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DailyTop10FindFirstOrThrowArgs} args - Arguments to find a DailyTop10
+     * @example
+     * // Get one DailyTop10
+     * const dailyTop10 = await prisma.dailyTop10.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DailyTop10FindFirstOrThrowArgs>(args?: SelectSubset<T, DailyTop10FindFirstOrThrowArgs<ExtArgs>>): Prisma__DailyTop10Client<$Result.GetResult<Prisma.$DailyTop10Payload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more DailyTop10s that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DailyTop10FindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DailyTop10s
+     * const dailyTop10s = await prisma.dailyTop10.findMany()
+     * 
+     * // Get first 10 DailyTop10s
+     * const dailyTop10s = await prisma.dailyTop10.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const dailyTop10WithIdOnly = await prisma.dailyTop10.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DailyTop10FindManyArgs>(args?: SelectSubset<T, DailyTop10FindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DailyTop10Payload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a DailyTop10.
+     * @param {DailyTop10CreateArgs} args - Arguments to create a DailyTop10.
+     * @example
+     * // Create one DailyTop10
+     * const DailyTop10 = await prisma.dailyTop10.create({
+     *   data: {
+     *     // ... data to create a DailyTop10
+     *   }
+     * })
+     * 
+     */
+    create<T extends DailyTop10CreateArgs>(args: SelectSubset<T, DailyTop10CreateArgs<ExtArgs>>): Prisma__DailyTop10Client<$Result.GetResult<Prisma.$DailyTop10Payload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many DailyTop10s.
+     * @param {DailyTop10CreateManyArgs} args - Arguments to create many DailyTop10s.
+     * @example
+     * // Create many DailyTop10s
+     * const dailyTop10 = await prisma.dailyTop10.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DailyTop10CreateManyArgs>(args?: SelectSubset<T, DailyTop10CreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many DailyTop10s and returns the data saved in the database.
+     * @param {DailyTop10CreateManyAndReturnArgs} args - Arguments to create many DailyTop10s.
+     * @example
+     * // Create many DailyTop10s
+     * const dailyTop10 = await prisma.dailyTop10.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many DailyTop10s and only return the `id`
+     * const dailyTop10WithIdOnly = await prisma.dailyTop10.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DailyTop10CreateManyAndReturnArgs>(args?: SelectSubset<T, DailyTop10CreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DailyTop10Payload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a DailyTop10.
+     * @param {DailyTop10DeleteArgs} args - Arguments to delete one DailyTop10.
+     * @example
+     * // Delete one DailyTop10
+     * const DailyTop10 = await prisma.dailyTop10.delete({
+     *   where: {
+     *     // ... filter to delete one DailyTop10
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DailyTop10DeleteArgs>(args: SelectSubset<T, DailyTop10DeleteArgs<ExtArgs>>): Prisma__DailyTop10Client<$Result.GetResult<Prisma.$DailyTop10Payload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one DailyTop10.
+     * @param {DailyTop10UpdateArgs} args - Arguments to update one DailyTop10.
+     * @example
+     * // Update one DailyTop10
+     * const dailyTop10 = await prisma.dailyTop10.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DailyTop10UpdateArgs>(args: SelectSubset<T, DailyTop10UpdateArgs<ExtArgs>>): Prisma__DailyTop10Client<$Result.GetResult<Prisma.$DailyTop10Payload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more DailyTop10s.
+     * @param {DailyTop10DeleteManyArgs} args - Arguments to filter DailyTop10s to delete.
+     * @example
+     * // Delete a few DailyTop10s
+     * const { count } = await prisma.dailyTop10.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DailyTop10DeleteManyArgs>(args?: SelectSubset<T, DailyTop10DeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DailyTop10s.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DailyTop10UpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DailyTop10s
+     * const dailyTop10 = await prisma.dailyTop10.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DailyTop10UpdateManyArgs>(args: SelectSubset<T, DailyTop10UpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one DailyTop10.
+     * @param {DailyTop10UpsertArgs} args - Arguments to update or create a DailyTop10.
+     * @example
+     * // Update or create a DailyTop10
+     * const dailyTop10 = await prisma.dailyTop10.upsert({
+     *   create: {
+     *     // ... data to create a DailyTop10
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DailyTop10 we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DailyTop10UpsertArgs>(args: SelectSubset<T, DailyTop10UpsertArgs<ExtArgs>>): Prisma__DailyTop10Client<$Result.GetResult<Prisma.$DailyTop10Payload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of DailyTop10s.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DailyTop10CountArgs} args - Arguments to filter DailyTop10s to count.
+     * @example
+     * // Count the number of DailyTop10s
+     * const count = await prisma.dailyTop10.count({
+     *   where: {
+     *     // ... the filter for the DailyTop10s we want to count
+     *   }
+     * })
+    **/
+    count<T extends DailyTop10CountArgs>(
+      args?: Subset<T, DailyTop10CountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DailyTop10CountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DailyTop10.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DailyTop10AggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DailyTop10AggregateArgs>(args: Subset<T, DailyTop10AggregateArgs>): Prisma.PrismaPromise<GetDailyTop10AggregateType<T>>
+
+    /**
+     * Group by DailyTop10.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DailyTop10GroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DailyTop10GroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DailyTop10GroupByArgs['orderBy'] }
+        : { orderBy?: DailyTop10GroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DailyTop10GroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDailyTop10GroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DailyTop10 model
+   */
+  readonly fields: DailyTop10FieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DailyTop10.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DailyTop10Client<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    items<T extends DailyTop10$itemsArgs<ExtArgs> = {}>(args?: Subset<T, DailyTop10$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Top10ItemPayload<ExtArgs>, T, "findMany"> | Null>
+    adjustments<T extends DailyTop10$adjustmentsArgs<ExtArgs> = {}>(args?: Subset<T, DailyTop10$adjustmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Top10AdjustmentPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DailyTop10 model
+   */ 
+  interface DailyTop10FieldRefs {
+    readonly id: FieldRef<"DailyTop10", 'String'>
+    readonly date: FieldRef<"DailyTop10", 'DateTime'>
+    readonly status: FieldRef<"DailyTop10", 'Top10Status'>
+    readonly summaryReport: FieldRef<"DailyTop10", 'String'>
+    readonly categoryStats: FieldRef<"DailyTop10", 'Json'>
+    readonly totalCandidates: FieldRef<"DailyTop10", 'Int'>
+    readonly generationTime: FieldRef<"DailyTop10", 'Int'>
+    readonly generatedBy: FieldRef<"DailyTop10", 'String'>
+    readonly publishedAt: FieldRef<"DailyTop10", 'DateTime'>
+    readonly createdAt: FieldRef<"DailyTop10", 'DateTime'>
+    readonly updatedAt: FieldRef<"DailyTop10", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DailyTop10 findUnique
+   */
+  export type DailyTop10FindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyTop10
+     */
+    select?: DailyTop10Select<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyTop10Include<ExtArgs> | null
+    /**
+     * Filter, which DailyTop10 to fetch.
+     */
+    where: DailyTop10WhereUniqueInput
+  }
+
+  /**
+   * DailyTop10 findUniqueOrThrow
+   */
+  export type DailyTop10FindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyTop10
+     */
+    select?: DailyTop10Select<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyTop10Include<ExtArgs> | null
+    /**
+     * Filter, which DailyTop10 to fetch.
+     */
+    where: DailyTop10WhereUniqueInput
+  }
+
+  /**
+   * DailyTop10 findFirst
+   */
+  export type DailyTop10FindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyTop10
+     */
+    select?: DailyTop10Select<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyTop10Include<ExtArgs> | null
+    /**
+     * Filter, which DailyTop10 to fetch.
+     */
+    where?: DailyTop10WhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DailyTop10s to fetch.
+     */
+    orderBy?: DailyTop10OrderByWithRelationInput | DailyTop10OrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DailyTop10s.
+     */
+    cursor?: DailyTop10WhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DailyTop10s from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DailyTop10s.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DailyTop10s.
+     */
+    distinct?: DailyTop10ScalarFieldEnum | DailyTop10ScalarFieldEnum[]
+  }
+
+  /**
+   * DailyTop10 findFirstOrThrow
+   */
+  export type DailyTop10FindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyTop10
+     */
+    select?: DailyTop10Select<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyTop10Include<ExtArgs> | null
+    /**
+     * Filter, which DailyTop10 to fetch.
+     */
+    where?: DailyTop10WhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DailyTop10s to fetch.
+     */
+    orderBy?: DailyTop10OrderByWithRelationInput | DailyTop10OrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DailyTop10s.
+     */
+    cursor?: DailyTop10WhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DailyTop10s from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DailyTop10s.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DailyTop10s.
+     */
+    distinct?: DailyTop10ScalarFieldEnum | DailyTop10ScalarFieldEnum[]
+  }
+
+  /**
+   * DailyTop10 findMany
+   */
+  export type DailyTop10FindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyTop10
+     */
+    select?: DailyTop10Select<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyTop10Include<ExtArgs> | null
+    /**
+     * Filter, which DailyTop10s to fetch.
+     */
+    where?: DailyTop10WhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DailyTop10s to fetch.
+     */
+    orderBy?: DailyTop10OrderByWithRelationInput | DailyTop10OrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DailyTop10s.
+     */
+    cursor?: DailyTop10WhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DailyTop10s from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DailyTop10s.
+     */
+    skip?: number
+    distinct?: DailyTop10ScalarFieldEnum | DailyTop10ScalarFieldEnum[]
+  }
+
+  /**
+   * DailyTop10 create
+   */
+  export type DailyTop10CreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyTop10
+     */
+    select?: DailyTop10Select<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyTop10Include<ExtArgs> | null
+    /**
+     * The data needed to create a DailyTop10.
+     */
+    data: XOR<DailyTop10CreateInput, DailyTop10UncheckedCreateInput>
+  }
+
+  /**
+   * DailyTop10 createMany
+   */
+  export type DailyTop10CreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DailyTop10s.
+     */
+    data: DailyTop10CreateManyInput | DailyTop10CreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DailyTop10 createManyAndReturn
+   */
+  export type DailyTop10CreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyTop10
+     */
+    select?: DailyTop10SelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many DailyTop10s.
+     */
+    data: DailyTop10CreateManyInput | DailyTop10CreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DailyTop10 update
+   */
+  export type DailyTop10UpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyTop10
+     */
+    select?: DailyTop10Select<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyTop10Include<ExtArgs> | null
+    /**
+     * The data needed to update a DailyTop10.
+     */
+    data: XOR<DailyTop10UpdateInput, DailyTop10UncheckedUpdateInput>
+    /**
+     * Choose, which DailyTop10 to update.
+     */
+    where: DailyTop10WhereUniqueInput
+  }
+
+  /**
+   * DailyTop10 updateMany
+   */
+  export type DailyTop10UpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DailyTop10s.
+     */
+    data: XOR<DailyTop10UpdateManyMutationInput, DailyTop10UncheckedUpdateManyInput>
+    /**
+     * Filter which DailyTop10s to update
+     */
+    where?: DailyTop10WhereInput
+  }
+
+  /**
+   * DailyTop10 upsert
+   */
+  export type DailyTop10UpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyTop10
+     */
+    select?: DailyTop10Select<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyTop10Include<ExtArgs> | null
+    /**
+     * The filter to search for the DailyTop10 to update in case it exists.
+     */
+    where: DailyTop10WhereUniqueInput
+    /**
+     * In case the DailyTop10 found by the `where` argument doesn't exist, create a new DailyTop10 with this data.
+     */
+    create: XOR<DailyTop10CreateInput, DailyTop10UncheckedCreateInput>
+    /**
+     * In case the DailyTop10 was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DailyTop10UpdateInput, DailyTop10UncheckedUpdateInput>
+  }
+
+  /**
+   * DailyTop10 delete
+   */
+  export type DailyTop10DeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyTop10
+     */
+    select?: DailyTop10Select<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyTop10Include<ExtArgs> | null
+    /**
+     * Filter which DailyTop10 to delete.
+     */
+    where: DailyTop10WhereUniqueInput
+  }
+
+  /**
+   * DailyTop10 deleteMany
+   */
+  export type DailyTop10DeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DailyTop10s to delete
+     */
+    where?: DailyTop10WhereInput
+  }
+
+  /**
+   * DailyTop10.items
+   */
+  export type DailyTop10$itemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Top10Item
+     */
+    select?: Top10ItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Top10ItemInclude<ExtArgs> | null
+    where?: Top10ItemWhereInput
+    orderBy?: Top10ItemOrderByWithRelationInput | Top10ItemOrderByWithRelationInput[]
+    cursor?: Top10ItemWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Top10ItemScalarFieldEnum | Top10ItemScalarFieldEnum[]
+  }
+
+  /**
+   * DailyTop10.adjustments
+   */
+  export type DailyTop10$adjustmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Top10Adjustment
+     */
+    select?: Top10AdjustmentSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Top10AdjustmentInclude<ExtArgs> | null
+    where?: Top10AdjustmentWhereInput
+    orderBy?: Top10AdjustmentOrderByWithRelationInput | Top10AdjustmentOrderByWithRelationInput[]
+    cursor?: Top10AdjustmentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Top10AdjustmentScalarFieldEnum | Top10AdjustmentScalarFieldEnum[]
+  }
+
+  /**
+   * DailyTop10 without action
+   */
+  export type DailyTop10DefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyTop10
+     */
+    select?: DailyTop10Select<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyTop10Include<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Top10Item
+   */
+
+  export type AggregateTop10Item = {
+    _count: Top10ItemCountAggregateOutputType | null
+    _avg: Top10ItemAvgAggregateOutputType | null
+    _sum: Top10ItemSumAggregateOutputType | null
+    _min: Top10ItemMinAggregateOutputType | null
+    _max: Top10ItemMaxAggregateOutputType | null
+  }
+
+  export type Top10ItemAvgAggregateOutputType = {
+    position: number | null
+    score: number | null
+  }
+
+  export type Top10ItemSumAggregateOutputType = {
+    position: number | null
+    score: number | null
+  }
+
+  export type Top10ItemMinAggregateOutputType = {
+    id: string | null
+    top10Id: string | null
+    contentId: string | null
+    position: number | null
+    score: number | null
+    reason: string | null
+    highlights: string | null
+    createdAt: Date | null
+  }
+
+  export type Top10ItemMaxAggregateOutputType = {
+    id: string | null
+    top10Id: string | null
+    contentId: string | null
+    position: number | null
+    score: number | null
+    reason: string | null
+    highlights: string | null
+    createdAt: Date | null
+  }
+
+  export type Top10ItemCountAggregateOutputType = {
+    id: number
+    top10Id: number
+    contentId: number
+    position: number
+    score: number
+    reason: number
+    highlights: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type Top10ItemAvgAggregateInputType = {
+    position?: true
+    score?: true
+  }
+
+  export type Top10ItemSumAggregateInputType = {
+    position?: true
+    score?: true
+  }
+
+  export type Top10ItemMinAggregateInputType = {
+    id?: true
+    top10Id?: true
+    contentId?: true
+    position?: true
+    score?: true
+    reason?: true
+    highlights?: true
+    createdAt?: true
+  }
+
+  export type Top10ItemMaxAggregateInputType = {
+    id?: true
+    top10Id?: true
+    contentId?: true
+    position?: true
+    score?: true
+    reason?: true
+    highlights?: true
+    createdAt?: true
+  }
+
+  export type Top10ItemCountAggregateInputType = {
+    id?: true
+    top10Id?: true
+    contentId?: true
+    position?: true
+    score?: true
+    reason?: true
+    highlights?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type Top10ItemAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Top10Item to aggregate.
+     */
+    where?: Top10ItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Top10Items to fetch.
+     */
+    orderBy?: Top10ItemOrderByWithRelationInput | Top10ItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Top10ItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Top10Items from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Top10Items.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Top10Items
+    **/
+    _count?: true | Top10ItemCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Top10ItemAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Top10ItemSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Top10ItemMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Top10ItemMaxAggregateInputType
+  }
+
+  export type GetTop10ItemAggregateType<T extends Top10ItemAggregateArgs> = {
+        [P in keyof T & keyof AggregateTop10Item]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTop10Item[P]>
+      : GetScalarType<T[P], AggregateTop10Item[P]>
+  }
+
+
+
+
+  export type Top10ItemGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Top10ItemWhereInput
+    orderBy?: Top10ItemOrderByWithAggregationInput | Top10ItemOrderByWithAggregationInput[]
+    by: Top10ItemScalarFieldEnum[] | Top10ItemScalarFieldEnum
+    having?: Top10ItemScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Top10ItemCountAggregateInputType | true
+    _avg?: Top10ItemAvgAggregateInputType
+    _sum?: Top10ItemSumAggregateInputType
+    _min?: Top10ItemMinAggregateInputType
+    _max?: Top10ItemMaxAggregateInputType
+  }
+
+  export type Top10ItemGroupByOutputType = {
+    id: string
+    top10Id: string
+    contentId: string
+    position: number
+    score: number
+    reason: string | null
+    highlights: string | null
+    createdAt: Date
+    _count: Top10ItemCountAggregateOutputType | null
+    _avg: Top10ItemAvgAggregateOutputType | null
+    _sum: Top10ItemSumAggregateOutputType | null
+    _min: Top10ItemMinAggregateOutputType | null
+    _max: Top10ItemMaxAggregateOutputType | null
+  }
+
+  type GetTop10ItemGroupByPayload<T extends Top10ItemGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Top10ItemGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Top10ItemGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Top10ItemGroupByOutputType[P]>
+            : GetScalarType<T[P], Top10ItemGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Top10ItemSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    top10Id?: boolean
+    contentId?: boolean
+    position?: boolean
+    score?: boolean
+    reason?: boolean
+    highlights?: boolean
+    createdAt?: boolean
+    top10?: boolean | DailyTop10DefaultArgs<ExtArgs>
+    content?: boolean | ContentDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["top10Item"]>
+
+  export type Top10ItemSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    top10Id?: boolean
+    contentId?: boolean
+    position?: boolean
+    score?: boolean
+    reason?: boolean
+    highlights?: boolean
+    createdAt?: boolean
+    top10?: boolean | DailyTop10DefaultArgs<ExtArgs>
+    content?: boolean | ContentDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["top10Item"]>
+
+  export type Top10ItemSelectScalar = {
+    id?: boolean
+    top10Id?: boolean
+    contentId?: boolean
+    position?: boolean
+    score?: boolean
+    reason?: boolean
+    highlights?: boolean
+    createdAt?: boolean
+  }
+
+  export type Top10ItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    top10?: boolean | DailyTop10DefaultArgs<ExtArgs>
+    content?: boolean | ContentDefaultArgs<ExtArgs>
+  }
+  export type Top10ItemIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    top10?: boolean | DailyTop10DefaultArgs<ExtArgs>
+    content?: boolean | ContentDefaultArgs<ExtArgs>
+  }
+
+  export type $Top10ItemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Top10Item"
+    objects: {
+      top10: Prisma.$DailyTop10Payload<ExtArgs>
+      content: Prisma.$ContentPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      top10Id: string
+      contentId: string
+      position: number
+      score: number
+      reason: string | null
+      highlights: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["top10Item"]>
+    composites: {}
+  }
+
+  type Top10ItemGetPayload<S extends boolean | null | undefined | Top10ItemDefaultArgs> = $Result.GetResult<Prisma.$Top10ItemPayload, S>
+
+  type Top10ItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Top10ItemFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Top10ItemCountAggregateInputType | true
+    }
+
+  export interface Top10ItemDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Top10Item'], meta: { name: 'Top10Item' } }
+    /**
+     * Find zero or one Top10Item that matches the filter.
+     * @param {Top10ItemFindUniqueArgs} args - Arguments to find a Top10Item
+     * @example
+     * // Get one Top10Item
+     * const top10Item = await prisma.top10Item.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Top10ItemFindUniqueArgs>(args: SelectSubset<T, Top10ItemFindUniqueArgs<ExtArgs>>): Prisma__Top10ItemClient<$Result.GetResult<Prisma.$Top10ItemPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Top10Item that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Top10ItemFindUniqueOrThrowArgs} args - Arguments to find a Top10Item
+     * @example
+     * // Get one Top10Item
+     * const top10Item = await prisma.top10Item.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Top10ItemFindUniqueOrThrowArgs>(args: SelectSubset<T, Top10ItemFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Top10ItemClient<$Result.GetResult<Prisma.$Top10ItemPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Top10Item that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Top10ItemFindFirstArgs} args - Arguments to find a Top10Item
+     * @example
+     * // Get one Top10Item
+     * const top10Item = await prisma.top10Item.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Top10ItemFindFirstArgs>(args?: SelectSubset<T, Top10ItemFindFirstArgs<ExtArgs>>): Prisma__Top10ItemClient<$Result.GetResult<Prisma.$Top10ItemPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Top10Item that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Top10ItemFindFirstOrThrowArgs} args - Arguments to find a Top10Item
+     * @example
+     * // Get one Top10Item
+     * const top10Item = await prisma.top10Item.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Top10ItemFindFirstOrThrowArgs>(args?: SelectSubset<T, Top10ItemFindFirstOrThrowArgs<ExtArgs>>): Prisma__Top10ItemClient<$Result.GetResult<Prisma.$Top10ItemPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Top10Items that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Top10ItemFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Top10Items
+     * const top10Items = await prisma.top10Item.findMany()
+     * 
+     * // Get first 10 Top10Items
+     * const top10Items = await prisma.top10Item.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const top10ItemWithIdOnly = await prisma.top10Item.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Top10ItemFindManyArgs>(args?: SelectSubset<T, Top10ItemFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Top10ItemPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Top10Item.
+     * @param {Top10ItemCreateArgs} args - Arguments to create a Top10Item.
+     * @example
+     * // Create one Top10Item
+     * const Top10Item = await prisma.top10Item.create({
+     *   data: {
+     *     // ... data to create a Top10Item
+     *   }
+     * })
+     * 
+     */
+    create<T extends Top10ItemCreateArgs>(args: SelectSubset<T, Top10ItemCreateArgs<ExtArgs>>): Prisma__Top10ItemClient<$Result.GetResult<Prisma.$Top10ItemPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Top10Items.
+     * @param {Top10ItemCreateManyArgs} args - Arguments to create many Top10Items.
+     * @example
+     * // Create many Top10Items
+     * const top10Item = await prisma.top10Item.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Top10ItemCreateManyArgs>(args?: SelectSubset<T, Top10ItemCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Top10Items and returns the data saved in the database.
+     * @param {Top10ItemCreateManyAndReturnArgs} args - Arguments to create many Top10Items.
+     * @example
+     * // Create many Top10Items
+     * const top10Item = await prisma.top10Item.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Top10Items and only return the `id`
+     * const top10ItemWithIdOnly = await prisma.top10Item.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Top10ItemCreateManyAndReturnArgs>(args?: SelectSubset<T, Top10ItemCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Top10ItemPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Top10Item.
+     * @param {Top10ItemDeleteArgs} args - Arguments to delete one Top10Item.
+     * @example
+     * // Delete one Top10Item
+     * const Top10Item = await prisma.top10Item.delete({
+     *   where: {
+     *     // ... filter to delete one Top10Item
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Top10ItemDeleteArgs>(args: SelectSubset<T, Top10ItemDeleteArgs<ExtArgs>>): Prisma__Top10ItemClient<$Result.GetResult<Prisma.$Top10ItemPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Top10Item.
+     * @param {Top10ItemUpdateArgs} args - Arguments to update one Top10Item.
+     * @example
+     * // Update one Top10Item
+     * const top10Item = await prisma.top10Item.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Top10ItemUpdateArgs>(args: SelectSubset<T, Top10ItemUpdateArgs<ExtArgs>>): Prisma__Top10ItemClient<$Result.GetResult<Prisma.$Top10ItemPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Top10Items.
+     * @param {Top10ItemDeleteManyArgs} args - Arguments to filter Top10Items to delete.
+     * @example
+     * // Delete a few Top10Items
+     * const { count } = await prisma.top10Item.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Top10ItemDeleteManyArgs>(args?: SelectSubset<T, Top10ItemDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Top10Items.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Top10ItemUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Top10Items
+     * const top10Item = await prisma.top10Item.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Top10ItemUpdateManyArgs>(args: SelectSubset<T, Top10ItemUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Top10Item.
+     * @param {Top10ItemUpsertArgs} args - Arguments to update or create a Top10Item.
+     * @example
+     * // Update or create a Top10Item
+     * const top10Item = await prisma.top10Item.upsert({
+     *   create: {
+     *     // ... data to create a Top10Item
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Top10Item we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Top10ItemUpsertArgs>(args: SelectSubset<T, Top10ItemUpsertArgs<ExtArgs>>): Prisma__Top10ItemClient<$Result.GetResult<Prisma.$Top10ItemPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Top10Items.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Top10ItemCountArgs} args - Arguments to filter Top10Items to count.
+     * @example
+     * // Count the number of Top10Items
+     * const count = await prisma.top10Item.count({
+     *   where: {
+     *     // ... the filter for the Top10Items we want to count
+     *   }
+     * })
+    **/
+    count<T extends Top10ItemCountArgs>(
+      args?: Subset<T, Top10ItemCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Top10ItemCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Top10Item.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Top10ItemAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Top10ItemAggregateArgs>(args: Subset<T, Top10ItemAggregateArgs>): Prisma.PrismaPromise<GetTop10ItemAggregateType<T>>
+
+    /**
+     * Group by Top10Item.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Top10ItemGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Top10ItemGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Top10ItemGroupByArgs['orderBy'] }
+        : { orderBy?: Top10ItemGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Top10ItemGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTop10ItemGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Top10Item model
+   */
+  readonly fields: Top10ItemFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Top10Item.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Top10ItemClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    top10<T extends DailyTop10DefaultArgs<ExtArgs> = {}>(args?: Subset<T, DailyTop10DefaultArgs<ExtArgs>>): Prisma__DailyTop10Client<$Result.GetResult<Prisma.$DailyTop10Payload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    content<T extends ContentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ContentDefaultArgs<ExtArgs>>): Prisma__ContentClient<$Result.GetResult<Prisma.$ContentPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Top10Item model
+   */ 
+  interface Top10ItemFieldRefs {
+    readonly id: FieldRef<"Top10Item", 'String'>
+    readonly top10Id: FieldRef<"Top10Item", 'String'>
+    readonly contentId: FieldRef<"Top10Item", 'String'>
+    readonly position: FieldRef<"Top10Item", 'Int'>
+    readonly score: FieldRef<"Top10Item", 'Float'>
+    readonly reason: FieldRef<"Top10Item", 'String'>
+    readonly highlights: FieldRef<"Top10Item", 'String'>
+    readonly createdAt: FieldRef<"Top10Item", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Top10Item findUnique
+   */
+  export type Top10ItemFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Top10Item
+     */
+    select?: Top10ItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Top10ItemInclude<ExtArgs> | null
+    /**
+     * Filter, which Top10Item to fetch.
+     */
+    where: Top10ItemWhereUniqueInput
+  }
+
+  /**
+   * Top10Item findUniqueOrThrow
+   */
+  export type Top10ItemFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Top10Item
+     */
+    select?: Top10ItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Top10ItemInclude<ExtArgs> | null
+    /**
+     * Filter, which Top10Item to fetch.
+     */
+    where: Top10ItemWhereUniqueInput
+  }
+
+  /**
+   * Top10Item findFirst
+   */
+  export type Top10ItemFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Top10Item
+     */
+    select?: Top10ItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Top10ItemInclude<ExtArgs> | null
+    /**
+     * Filter, which Top10Item to fetch.
+     */
+    where?: Top10ItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Top10Items to fetch.
+     */
+    orderBy?: Top10ItemOrderByWithRelationInput | Top10ItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Top10Items.
+     */
+    cursor?: Top10ItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Top10Items from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Top10Items.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Top10Items.
+     */
+    distinct?: Top10ItemScalarFieldEnum | Top10ItemScalarFieldEnum[]
+  }
+
+  /**
+   * Top10Item findFirstOrThrow
+   */
+  export type Top10ItemFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Top10Item
+     */
+    select?: Top10ItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Top10ItemInclude<ExtArgs> | null
+    /**
+     * Filter, which Top10Item to fetch.
+     */
+    where?: Top10ItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Top10Items to fetch.
+     */
+    orderBy?: Top10ItemOrderByWithRelationInput | Top10ItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Top10Items.
+     */
+    cursor?: Top10ItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Top10Items from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Top10Items.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Top10Items.
+     */
+    distinct?: Top10ItemScalarFieldEnum | Top10ItemScalarFieldEnum[]
+  }
+
+  /**
+   * Top10Item findMany
+   */
+  export type Top10ItemFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Top10Item
+     */
+    select?: Top10ItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Top10ItemInclude<ExtArgs> | null
+    /**
+     * Filter, which Top10Items to fetch.
+     */
+    where?: Top10ItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Top10Items to fetch.
+     */
+    orderBy?: Top10ItemOrderByWithRelationInput | Top10ItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Top10Items.
+     */
+    cursor?: Top10ItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Top10Items from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Top10Items.
+     */
+    skip?: number
+    distinct?: Top10ItemScalarFieldEnum | Top10ItemScalarFieldEnum[]
+  }
+
+  /**
+   * Top10Item create
+   */
+  export type Top10ItemCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Top10Item
+     */
+    select?: Top10ItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Top10ItemInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Top10Item.
+     */
+    data: XOR<Top10ItemCreateInput, Top10ItemUncheckedCreateInput>
+  }
+
+  /**
+   * Top10Item createMany
+   */
+  export type Top10ItemCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Top10Items.
+     */
+    data: Top10ItemCreateManyInput | Top10ItemCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Top10Item createManyAndReturn
+   */
+  export type Top10ItemCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Top10Item
+     */
+    select?: Top10ItemSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Top10Items.
+     */
+    data: Top10ItemCreateManyInput | Top10ItemCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Top10ItemIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Top10Item update
+   */
+  export type Top10ItemUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Top10Item
+     */
+    select?: Top10ItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Top10ItemInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Top10Item.
+     */
+    data: XOR<Top10ItemUpdateInput, Top10ItemUncheckedUpdateInput>
+    /**
+     * Choose, which Top10Item to update.
+     */
+    where: Top10ItemWhereUniqueInput
+  }
+
+  /**
+   * Top10Item updateMany
+   */
+  export type Top10ItemUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Top10Items.
+     */
+    data: XOR<Top10ItemUpdateManyMutationInput, Top10ItemUncheckedUpdateManyInput>
+    /**
+     * Filter which Top10Items to update
+     */
+    where?: Top10ItemWhereInput
+  }
+
+  /**
+   * Top10Item upsert
+   */
+  export type Top10ItemUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Top10Item
+     */
+    select?: Top10ItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Top10ItemInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Top10Item to update in case it exists.
+     */
+    where: Top10ItemWhereUniqueInput
+    /**
+     * In case the Top10Item found by the `where` argument doesn't exist, create a new Top10Item with this data.
+     */
+    create: XOR<Top10ItemCreateInput, Top10ItemUncheckedCreateInput>
+    /**
+     * In case the Top10Item was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Top10ItemUpdateInput, Top10ItemUncheckedUpdateInput>
+  }
+
+  /**
+   * Top10Item delete
+   */
+  export type Top10ItemDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Top10Item
+     */
+    select?: Top10ItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Top10ItemInclude<ExtArgs> | null
+    /**
+     * Filter which Top10Item to delete.
+     */
+    where: Top10ItemWhereUniqueInput
+  }
+
+  /**
+   * Top10Item deleteMany
+   */
+  export type Top10ItemDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Top10Items to delete
+     */
+    where?: Top10ItemWhereInput
+  }
+
+  /**
+   * Top10Item without action
+   */
+  export type Top10ItemDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Top10Item
+     */
+    select?: Top10ItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Top10ItemInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Top10Adjustment
+   */
+
+  export type AggregateTop10Adjustment = {
+    _count: Top10AdjustmentCountAggregateOutputType | null
+    _avg: Top10AdjustmentAvgAggregateOutputType | null
+    _sum: Top10AdjustmentSumAggregateOutputType | null
+    _min: Top10AdjustmentMinAggregateOutputType | null
+    _max: Top10AdjustmentMaxAggregateOutputType | null
+  }
+
+  export type Top10AdjustmentAvgAggregateOutputType = {
+    oldPosition: number | null
+    newPosition: number | null
+  }
+
+  export type Top10AdjustmentSumAggregateOutputType = {
+    oldPosition: number | null
+    newPosition: number | null
+  }
+
+  export type Top10AdjustmentMinAggregateOutputType = {
+    id: string | null
+    top10Id: string | null
+    adjustedBy: string | null
+    action: string | null
+    contentId: string | null
+    oldPosition: number | null
+    newPosition: number | null
+    reason: string | null
+    createdAt: Date | null
+  }
+
+  export type Top10AdjustmentMaxAggregateOutputType = {
+    id: string | null
+    top10Id: string | null
+    adjustedBy: string | null
+    action: string | null
+    contentId: string | null
+    oldPosition: number | null
+    newPosition: number | null
+    reason: string | null
+    createdAt: Date | null
+  }
+
+  export type Top10AdjustmentCountAggregateOutputType = {
+    id: number
+    top10Id: number
+    adjustedBy: number
+    action: number
+    contentId: number
+    oldPosition: number
+    newPosition: number
+    reason: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type Top10AdjustmentAvgAggregateInputType = {
+    oldPosition?: true
+    newPosition?: true
+  }
+
+  export type Top10AdjustmentSumAggregateInputType = {
+    oldPosition?: true
+    newPosition?: true
+  }
+
+  export type Top10AdjustmentMinAggregateInputType = {
+    id?: true
+    top10Id?: true
+    adjustedBy?: true
+    action?: true
+    contentId?: true
+    oldPosition?: true
+    newPosition?: true
+    reason?: true
+    createdAt?: true
+  }
+
+  export type Top10AdjustmentMaxAggregateInputType = {
+    id?: true
+    top10Id?: true
+    adjustedBy?: true
+    action?: true
+    contentId?: true
+    oldPosition?: true
+    newPosition?: true
+    reason?: true
+    createdAt?: true
+  }
+
+  export type Top10AdjustmentCountAggregateInputType = {
+    id?: true
+    top10Id?: true
+    adjustedBy?: true
+    action?: true
+    contentId?: true
+    oldPosition?: true
+    newPosition?: true
+    reason?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type Top10AdjustmentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Top10Adjustment to aggregate.
+     */
+    where?: Top10AdjustmentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Top10Adjustments to fetch.
+     */
+    orderBy?: Top10AdjustmentOrderByWithRelationInput | Top10AdjustmentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: Top10AdjustmentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Top10Adjustments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Top10Adjustments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Top10Adjustments
+    **/
+    _count?: true | Top10AdjustmentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Top10AdjustmentAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Top10AdjustmentSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Top10AdjustmentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Top10AdjustmentMaxAggregateInputType
+  }
+
+  export type GetTop10AdjustmentAggregateType<T extends Top10AdjustmentAggregateArgs> = {
+        [P in keyof T & keyof AggregateTop10Adjustment]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTop10Adjustment[P]>
+      : GetScalarType<T[P], AggregateTop10Adjustment[P]>
+  }
+
+
+
+
+  export type Top10AdjustmentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Top10AdjustmentWhereInput
+    orderBy?: Top10AdjustmentOrderByWithAggregationInput | Top10AdjustmentOrderByWithAggregationInput[]
+    by: Top10AdjustmentScalarFieldEnum[] | Top10AdjustmentScalarFieldEnum
+    having?: Top10AdjustmentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Top10AdjustmentCountAggregateInputType | true
+    _avg?: Top10AdjustmentAvgAggregateInputType
+    _sum?: Top10AdjustmentSumAggregateInputType
+    _min?: Top10AdjustmentMinAggregateInputType
+    _max?: Top10AdjustmentMaxAggregateInputType
+  }
+
+  export type Top10AdjustmentGroupByOutputType = {
+    id: string
+    top10Id: string
+    adjustedBy: string
+    action: string
+    contentId: string | null
+    oldPosition: number | null
+    newPosition: number | null
+    reason: string | null
+    createdAt: Date
+    _count: Top10AdjustmentCountAggregateOutputType | null
+    _avg: Top10AdjustmentAvgAggregateOutputType | null
+    _sum: Top10AdjustmentSumAggregateOutputType | null
+    _min: Top10AdjustmentMinAggregateOutputType | null
+    _max: Top10AdjustmentMaxAggregateOutputType | null
+  }
+
+  type GetTop10AdjustmentGroupByPayload<T extends Top10AdjustmentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Top10AdjustmentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Top10AdjustmentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Top10AdjustmentGroupByOutputType[P]>
+            : GetScalarType<T[P], Top10AdjustmentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type Top10AdjustmentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    top10Id?: boolean
+    adjustedBy?: boolean
+    action?: boolean
+    contentId?: boolean
+    oldPosition?: boolean
+    newPosition?: boolean
+    reason?: boolean
+    createdAt?: boolean
+    top10?: boolean | DailyTop10DefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["top10Adjustment"]>
+
+  export type Top10AdjustmentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    top10Id?: boolean
+    adjustedBy?: boolean
+    action?: boolean
+    contentId?: boolean
+    oldPosition?: boolean
+    newPosition?: boolean
+    reason?: boolean
+    createdAt?: boolean
+    top10?: boolean | DailyTop10DefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["top10Adjustment"]>
+
+  export type Top10AdjustmentSelectScalar = {
+    id?: boolean
+    top10Id?: boolean
+    adjustedBy?: boolean
+    action?: boolean
+    contentId?: boolean
+    oldPosition?: boolean
+    newPosition?: boolean
+    reason?: boolean
+    createdAt?: boolean
+  }
+
+  export type Top10AdjustmentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    top10?: boolean | DailyTop10DefaultArgs<ExtArgs>
+  }
+  export type Top10AdjustmentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    top10?: boolean | DailyTop10DefaultArgs<ExtArgs>
+  }
+
+  export type $Top10AdjustmentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Top10Adjustment"
+    objects: {
+      top10: Prisma.$DailyTop10Payload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      top10Id: string
+      adjustedBy: string
+      action: string
+      contentId: string | null
+      oldPosition: number | null
+      newPosition: number | null
+      reason: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["top10Adjustment"]>
+    composites: {}
+  }
+
+  type Top10AdjustmentGetPayload<S extends boolean | null | undefined | Top10AdjustmentDefaultArgs> = $Result.GetResult<Prisma.$Top10AdjustmentPayload, S>
+
+  type Top10AdjustmentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<Top10AdjustmentFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: Top10AdjustmentCountAggregateInputType | true
+    }
+
+  export interface Top10AdjustmentDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Top10Adjustment'], meta: { name: 'Top10Adjustment' } }
+    /**
+     * Find zero or one Top10Adjustment that matches the filter.
+     * @param {Top10AdjustmentFindUniqueArgs} args - Arguments to find a Top10Adjustment
+     * @example
+     * // Get one Top10Adjustment
+     * const top10Adjustment = await prisma.top10Adjustment.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends Top10AdjustmentFindUniqueArgs>(args: SelectSubset<T, Top10AdjustmentFindUniqueArgs<ExtArgs>>): Prisma__Top10AdjustmentClient<$Result.GetResult<Prisma.$Top10AdjustmentPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Top10Adjustment that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {Top10AdjustmentFindUniqueOrThrowArgs} args - Arguments to find a Top10Adjustment
+     * @example
+     * // Get one Top10Adjustment
+     * const top10Adjustment = await prisma.top10Adjustment.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends Top10AdjustmentFindUniqueOrThrowArgs>(args: SelectSubset<T, Top10AdjustmentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Top10AdjustmentClient<$Result.GetResult<Prisma.$Top10AdjustmentPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Top10Adjustment that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Top10AdjustmentFindFirstArgs} args - Arguments to find a Top10Adjustment
+     * @example
+     * // Get one Top10Adjustment
+     * const top10Adjustment = await prisma.top10Adjustment.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends Top10AdjustmentFindFirstArgs>(args?: SelectSubset<T, Top10AdjustmentFindFirstArgs<ExtArgs>>): Prisma__Top10AdjustmentClient<$Result.GetResult<Prisma.$Top10AdjustmentPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Top10Adjustment that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Top10AdjustmentFindFirstOrThrowArgs} args - Arguments to find a Top10Adjustment
+     * @example
+     * // Get one Top10Adjustment
+     * const top10Adjustment = await prisma.top10Adjustment.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends Top10AdjustmentFindFirstOrThrowArgs>(args?: SelectSubset<T, Top10AdjustmentFindFirstOrThrowArgs<ExtArgs>>): Prisma__Top10AdjustmentClient<$Result.GetResult<Prisma.$Top10AdjustmentPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Top10Adjustments that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Top10AdjustmentFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Top10Adjustments
+     * const top10Adjustments = await prisma.top10Adjustment.findMany()
+     * 
+     * // Get first 10 Top10Adjustments
+     * const top10Adjustments = await prisma.top10Adjustment.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const top10AdjustmentWithIdOnly = await prisma.top10Adjustment.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends Top10AdjustmentFindManyArgs>(args?: SelectSubset<T, Top10AdjustmentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Top10AdjustmentPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Top10Adjustment.
+     * @param {Top10AdjustmentCreateArgs} args - Arguments to create a Top10Adjustment.
+     * @example
+     * // Create one Top10Adjustment
+     * const Top10Adjustment = await prisma.top10Adjustment.create({
+     *   data: {
+     *     // ... data to create a Top10Adjustment
+     *   }
+     * })
+     * 
+     */
+    create<T extends Top10AdjustmentCreateArgs>(args: SelectSubset<T, Top10AdjustmentCreateArgs<ExtArgs>>): Prisma__Top10AdjustmentClient<$Result.GetResult<Prisma.$Top10AdjustmentPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Top10Adjustments.
+     * @param {Top10AdjustmentCreateManyArgs} args - Arguments to create many Top10Adjustments.
+     * @example
+     * // Create many Top10Adjustments
+     * const top10Adjustment = await prisma.top10Adjustment.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends Top10AdjustmentCreateManyArgs>(args?: SelectSubset<T, Top10AdjustmentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Top10Adjustments and returns the data saved in the database.
+     * @param {Top10AdjustmentCreateManyAndReturnArgs} args - Arguments to create many Top10Adjustments.
+     * @example
+     * // Create many Top10Adjustments
+     * const top10Adjustment = await prisma.top10Adjustment.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Top10Adjustments and only return the `id`
+     * const top10AdjustmentWithIdOnly = await prisma.top10Adjustment.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends Top10AdjustmentCreateManyAndReturnArgs>(args?: SelectSubset<T, Top10AdjustmentCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Top10AdjustmentPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Top10Adjustment.
+     * @param {Top10AdjustmentDeleteArgs} args - Arguments to delete one Top10Adjustment.
+     * @example
+     * // Delete one Top10Adjustment
+     * const Top10Adjustment = await prisma.top10Adjustment.delete({
+     *   where: {
+     *     // ... filter to delete one Top10Adjustment
+     *   }
+     * })
+     * 
+     */
+    delete<T extends Top10AdjustmentDeleteArgs>(args: SelectSubset<T, Top10AdjustmentDeleteArgs<ExtArgs>>): Prisma__Top10AdjustmentClient<$Result.GetResult<Prisma.$Top10AdjustmentPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Top10Adjustment.
+     * @param {Top10AdjustmentUpdateArgs} args - Arguments to update one Top10Adjustment.
+     * @example
+     * // Update one Top10Adjustment
+     * const top10Adjustment = await prisma.top10Adjustment.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends Top10AdjustmentUpdateArgs>(args: SelectSubset<T, Top10AdjustmentUpdateArgs<ExtArgs>>): Prisma__Top10AdjustmentClient<$Result.GetResult<Prisma.$Top10AdjustmentPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Top10Adjustments.
+     * @param {Top10AdjustmentDeleteManyArgs} args - Arguments to filter Top10Adjustments to delete.
+     * @example
+     * // Delete a few Top10Adjustments
+     * const { count } = await prisma.top10Adjustment.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends Top10AdjustmentDeleteManyArgs>(args?: SelectSubset<T, Top10AdjustmentDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Top10Adjustments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Top10AdjustmentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Top10Adjustments
+     * const top10Adjustment = await prisma.top10Adjustment.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends Top10AdjustmentUpdateManyArgs>(args: SelectSubset<T, Top10AdjustmentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Top10Adjustment.
+     * @param {Top10AdjustmentUpsertArgs} args - Arguments to update or create a Top10Adjustment.
+     * @example
+     * // Update or create a Top10Adjustment
+     * const top10Adjustment = await prisma.top10Adjustment.upsert({
+     *   create: {
+     *     // ... data to create a Top10Adjustment
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Top10Adjustment we want to update
+     *   }
+     * })
+     */
+    upsert<T extends Top10AdjustmentUpsertArgs>(args: SelectSubset<T, Top10AdjustmentUpsertArgs<ExtArgs>>): Prisma__Top10AdjustmentClient<$Result.GetResult<Prisma.$Top10AdjustmentPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Top10Adjustments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Top10AdjustmentCountArgs} args - Arguments to filter Top10Adjustments to count.
+     * @example
+     * // Count the number of Top10Adjustments
+     * const count = await prisma.top10Adjustment.count({
+     *   where: {
+     *     // ... the filter for the Top10Adjustments we want to count
+     *   }
+     * })
+    **/
+    count<T extends Top10AdjustmentCountArgs>(
+      args?: Subset<T, Top10AdjustmentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Top10AdjustmentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Top10Adjustment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Top10AdjustmentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Top10AdjustmentAggregateArgs>(args: Subset<T, Top10AdjustmentAggregateArgs>): Prisma.PrismaPromise<GetTop10AdjustmentAggregateType<T>>
+
+    /**
+     * Group by Top10Adjustment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Top10AdjustmentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Top10AdjustmentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Top10AdjustmentGroupByArgs['orderBy'] }
+        : { orderBy?: Top10AdjustmentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Top10AdjustmentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTop10AdjustmentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Top10Adjustment model
+   */
+  readonly fields: Top10AdjustmentFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Top10Adjustment.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__Top10AdjustmentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    top10<T extends DailyTop10DefaultArgs<ExtArgs> = {}>(args?: Subset<T, DailyTop10DefaultArgs<ExtArgs>>): Prisma__DailyTop10Client<$Result.GetResult<Prisma.$DailyTop10Payload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Top10Adjustment model
+   */ 
+  interface Top10AdjustmentFieldRefs {
+    readonly id: FieldRef<"Top10Adjustment", 'String'>
+    readonly top10Id: FieldRef<"Top10Adjustment", 'String'>
+    readonly adjustedBy: FieldRef<"Top10Adjustment", 'String'>
+    readonly action: FieldRef<"Top10Adjustment", 'String'>
+    readonly contentId: FieldRef<"Top10Adjustment", 'String'>
+    readonly oldPosition: FieldRef<"Top10Adjustment", 'Int'>
+    readonly newPosition: FieldRef<"Top10Adjustment", 'Int'>
+    readonly reason: FieldRef<"Top10Adjustment", 'String'>
+    readonly createdAt: FieldRef<"Top10Adjustment", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Top10Adjustment findUnique
+   */
+  export type Top10AdjustmentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Top10Adjustment
+     */
+    select?: Top10AdjustmentSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Top10AdjustmentInclude<ExtArgs> | null
+    /**
+     * Filter, which Top10Adjustment to fetch.
+     */
+    where: Top10AdjustmentWhereUniqueInput
+  }
+
+  /**
+   * Top10Adjustment findUniqueOrThrow
+   */
+  export type Top10AdjustmentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Top10Adjustment
+     */
+    select?: Top10AdjustmentSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Top10AdjustmentInclude<ExtArgs> | null
+    /**
+     * Filter, which Top10Adjustment to fetch.
+     */
+    where: Top10AdjustmentWhereUniqueInput
+  }
+
+  /**
+   * Top10Adjustment findFirst
+   */
+  export type Top10AdjustmentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Top10Adjustment
+     */
+    select?: Top10AdjustmentSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Top10AdjustmentInclude<ExtArgs> | null
+    /**
+     * Filter, which Top10Adjustment to fetch.
+     */
+    where?: Top10AdjustmentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Top10Adjustments to fetch.
+     */
+    orderBy?: Top10AdjustmentOrderByWithRelationInput | Top10AdjustmentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Top10Adjustments.
+     */
+    cursor?: Top10AdjustmentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Top10Adjustments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Top10Adjustments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Top10Adjustments.
+     */
+    distinct?: Top10AdjustmentScalarFieldEnum | Top10AdjustmentScalarFieldEnum[]
+  }
+
+  /**
+   * Top10Adjustment findFirstOrThrow
+   */
+  export type Top10AdjustmentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Top10Adjustment
+     */
+    select?: Top10AdjustmentSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Top10AdjustmentInclude<ExtArgs> | null
+    /**
+     * Filter, which Top10Adjustment to fetch.
+     */
+    where?: Top10AdjustmentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Top10Adjustments to fetch.
+     */
+    orderBy?: Top10AdjustmentOrderByWithRelationInput | Top10AdjustmentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Top10Adjustments.
+     */
+    cursor?: Top10AdjustmentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Top10Adjustments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Top10Adjustments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Top10Adjustments.
+     */
+    distinct?: Top10AdjustmentScalarFieldEnum | Top10AdjustmentScalarFieldEnum[]
+  }
+
+  /**
+   * Top10Adjustment findMany
+   */
+  export type Top10AdjustmentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Top10Adjustment
+     */
+    select?: Top10AdjustmentSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Top10AdjustmentInclude<ExtArgs> | null
+    /**
+     * Filter, which Top10Adjustments to fetch.
+     */
+    where?: Top10AdjustmentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Top10Adjustments to fetch.
+     */
+    orderBy?: Top10AdjustmentOrderByWithRelationInput | Top10AdjustmentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Top10Adjustments.
+     */
+    cursor?: Top10AdjustmentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Top10Adjustments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Top10Adjustments.
+     */
+    skip?: number
+    distinct?: Top10AdjustmentScalarFieldEnum | Top10AdjustmentScalarFieldEnum[]
+  }
+
+  /**
+   * Top10Adjustment create
+   */
+  export type Top10AdjustmentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Top10Adjustment
+     */
+    select?: Top10AdjustmentSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Top10AdjustmentInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Top10Adjustment.
+     */
+    data: XOR<Top10AdjustmentCreateInput, Top10AdjustmentUncheckedCreateInput>
+  }
+
+  /**
+   * Top10Adjustment createMany
+   */
+  export type Top10AdjustmentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Top10Adjustments.
+     */
+    data: Top10AdjustmentCreateManyInput | Top10AdjustmentCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Top10Adjustment createManyAndReturn
+   */
+  export type Top10AdjustmentCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Top10Adjustment
+     */
+    select?: Top10AdjustmentSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Top10Adjustments.
+     */
+    data: Top10AdjustmentCreateManyInput | Top10AdjustmentCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Top10AdjustmentIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Top10Adjustment update
+   */
+  export type Top10AdjustmentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Top10Adjustment
+     */
+    select?: Top10AdjustmentSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Top10AdjustmentInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Top10Adjustment.
+     */
+    data: XOR<Top10AdjustmentUpdateInput, Top10AdjustmentUncheckedUpdateInput>
+    /**
+     * Choose, which Top10Adjustment to update.
+     */
+    where: Top10AdjustmentWhereUniqueInput
+  }
+
+  /**
+   * Top10Adjustment updateMany
+   */
+  export type Top10AdjustmentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Top10Adjustments.
+     */
+    data: XOR<Top10AdjustmentUpdateManyMutationInput, Top10AdjustmentUncheckedUpdateManyInput>
+    /**
+     * Filter which Top10Adjustments to update
+     */
+    where?: Top10AdjustmentWhereInput
+  }
+
+  /**
+   * Top10Adjustment upsert
+   */
+  export type Top10AdjustmentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Top10Adjustment
+     */
+    select?: Top10AdjustmentSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Top10AdjustmentInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Top10Adjustment to update in case it exists.
+     */
+    where: Top10AdjustmentWhereUniqueInput
+    /**
+     * In case the Top10Adjustment found by the `where` argument doesn't exist, create a new Top10Adjustment with this data.
+     */
+    create: XOR<Top10AdjustmentCreateInput, Top10AdjustmentUncheckedCreateInput>
+    /**
+     * In case the Top10Adjustment was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Top10AdjustmentUpdateInput, Top10AdjustmentUncheckedUpdateInput>
+  }
+
+  /**
+   * Top10Adjustment delete
+   */
+  export type Top10AdjustmentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Top10Adjustment
+     */
+    select?: Top10AdjustmentSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Top10AdjustmentInclude<ExtArgs> | null
+    /**
+     * Filter which Top10Adjustment to delete.
+     */
+    where: Top10AdjustmentWhereUniqueInput
+  }
+
+  /**
+   * Top10Adjustment deleteMany
+   */
+  export type Top10AdjustmentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Top10Adjustments to delete
+     */
+    where?: Top10AdjustmentWhereInput
+  }
+
+  /**
+   * Top10Adjustment without action
+   */
+  export type Top10AdjustmentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Top10Adjustment
+     */
+    select?: Top10AdjustmentSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Top10AdjustmentInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -31488,6 +34942,52 @@ export namespace Prisma {
   export type ABTestConfigScalarFieldEnum = (typeof ABTestConfigScalarFieldEnum)[keyof typeof ABTestConfigScalarFieldEnum]
 
 
+  export const DailyTop10ScalarFieldEnum: {
+    id: 'id',
+    date: 'date',
+    status: 'status',
+    summaryReport: 'summaryReport',
+    categoryStats: 'categoryStats',
+    totalCandidates: 'totalCandidates',
+    generationTime: 'generationTime',
+    generatedBy: 'generatedBy',
+    publishedAt: 'publishedAt',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type DailyTop10ScalarFieldEnum = (typeof DailyTop10ScalarFieldEnum)[keyof typeof DailyTop10ScalarFieldEnum]
+
+
+  export const Top10ItemScalarFieldEnum: {
+    id: 'id',
+    top10Id: 'top10Id',
+    contentId: 'contentId',
+    position: 'position',
+    score: 'score',
+    reason: 'reason',
+    highlights: 'highlights',
+    createdAt: 'createdAt'
+  };
+
+  export type Top10ItemScalarFieldEnum = (typeof Top10ItemScalarFieldEnum)[keyof typeof Top10ItemScalarFieldEnum]
+
+
+  export const Top10AdjustmentScalarFieldEnum: {
+    id: 'id',
+    top10Id: 'top10Id',
+    adjustedBy: 'adjustedBy',
+    action: 'action',
+    contentId: 'contentId',
+    oldPosition: 'oldPosition',
+    newPosition: 'newPosition',
+    reason: 'reason',
+    createdAt: 'createdAt'
+  };
+
+  export type Top10AdjustmentScalarFieldEnum = (typeof Top10AdjustmentScalarFieldEnum)[keyof typeof Top10AdjustmentScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -31776,6 +35276,20 @@ export namespace Prisma {
    * Reference to a field of type 'Decimal[]'
    */
   export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Top10Status'
+   */
+  export type EnumTop10StatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Top10Status'>
+    
+
+
+  /**
+   * Reference to a field of type 'Top10Status[]'
+   */
+  export type ListEnumTop10StatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Top10Status[]'>
     
   /**
    * Deep Input Types
@@ -32304,6 +35818,7 @@ export namespace Prisma {
     contentTags?: ContentTagListRelationFilter
     versions?: ContentVersionListRelationFilter
     contentScore?: XOR<ContentScoreNullableRelationFilter, ContentScoreWhereInput> | null
+    top10Items?: Top10ItemListRelationFilter
   }
 
   export type ContentOrderByWithRelationInput = {
@@ -32341,6 +35856,7 @@ export namespace Prisma {
     contentTags?: ContentTagOrderByRelationAggregateInput
     versions?: ContentVersionOrderByRelationAggregateInput
     contentScore?: ContentScoreOrderByWithRelationInput
+    top10Items?: Top10ItemOrderByRelationAggregateInput
   }
 
   export type ContentWhereUniqueInput = Prisma.AtLeast<{
@@ -32381,6 +35897,7 @@ export namespace Prisma {
     contentTags?: ContentTagListRelationFilter
     versions?: ContentVersionListRelationFilter
     contentScore?: XOR<ContentScoreNullableRelationFilter, ContentScoreWhereInput> | null
+    top10Items?: Top10ItemListRelationFilter
   }, "id">
 
   export type ContentOrderByWithAggregationInput = {
@@ -34134,6 +37651,249 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"ABTestConfig"> | Date | string
   }
 
+  export type DailyTop10WhereInput = {
+    AND?: DailyTop10WhereInput | DailyTop10WhereInput[]
+    OR?: DailyTop10WhereInput[]
+    NOT?: DailyTop10WhereInput | DailyTop10WhereInput[]
+    id?: StringFilter<"DailyTop10"> | string
+    date?: DateTimeFilter<"DailyTop10"> | Date | string
+    status?: EnumTop10StatusFilter<"DailyTop10"> | $Enums.Top10Status
+    summaryReport?: StringNullableFilter<"DailyTop10"> | string | null
+    categoryStats?: JsonNullableFilter<"DailyTop10">
+    totalCandidates?: IntFilter<"DailyTop10"> | number
+    generationTime?: IntNullableFilter<"DailyTop10"> | number | null
+    generatedBy?: StringNullableFilter<"DailyTop10"> | string | null
+    publishedAt?: DateTimeNullableFilter<"DailyTop10"> | Date | string | null
+    createdAt?: DateTimeFilter<"DailyTop10"> | Date | string
+    updatedAt?: DateTimeFilter<"DailyTop10"> | Date | string
+    items?: Top10ItemListRelationFilter
+    adjustments?: Top10AdjustmentListRelationFilter
+  }
+
+  export type DailyTop10OrderByWithRelationInput = {
+    id?: SortOrder
+    date?: SortOrder
+    status?: SortOrder
+    summaryReport?: SortOrderInput | SortOrder
+    categoryStats?: SortOrderInput | SortOrder
+    totalCandidates?: SortOrder
+    generationTime?: SortOrderInput | SortOrder
+    generatedBy?: SortOrderInput | SortOrder
+    publishedAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    items?: Top10ItemOrderByRelationAggregateInput
+    adjustments?: Top10AdjustmentOrderByRelationAggregateInput
+  }
+
+  export type DailyTop10WhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    date?: Date | string
+    AND?: DailyTop10WhereInput | DailyTop10WhereInput[]
+    OR?: DailyTop10WhereInput[]
+    NOT?: DailyTop10WhereInput | DailyTop10WhereInput[]
+    status?: EnumTop10StatusFilter<"DailyTop10"> | $Enums.Top10Status
+    summaryReport?: StringNullableFilter<"DailyTop10"> | string | null
+    categoryStats?: JsonNullableFilter<"DailyTop10">
+    totalCandidates?: IntFilter<"DailyTop10"> | number
+    generationTime?: IntNullableFilter<"DailyTop10"> | number | null
+    generatedBy?: StringNullableFilter<"DailyTop10"> | string | null
+    publishedAt?: DateTimeNullableFilter<"DailyTop10"> | Date | string | null
+    createdAt?: DateTimeFilter<"DailyTop10"> | Date | string
+    updatedAt?: DateTimeFilter<"DailyTop10"> | Date | string
+    items?: Top10ItemListRelationFilter
+    adjustments?: Top10AdjustmentListRelationFilter
+  }, "id" | "date">
+
+  export type DailyTop10OrderByWithAggregationInput = {
+    id?: SortOrder
+    date?: SortOrder
+    status?: SortOrder
+    summaryReport?: SortOrderInput | SortOrder
+    categoryStats?: SortOrderInput | SortOrder
+    totalCandidates?: SortOrder
+    generationTime?: SortOrderInput | SortOrder
+    generatedBy?: SortOrderInput | SortOrder
+    publishedAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: DailyTop10CountOrderByAggregateInput
+    _avg?: DailyTop10AvgOrderByAggregateInput
+    _max?: DailyTop10MaxOrderByAggregateInput
+    _min?: DailyTop10MinOrderByAggregateInput
+    _sum?: DailyTop10SumOrderByAggregateInput
+  }
+
+  export type DailyTop10ScalarWhereWithAggregatesInput = {
+    AND?: DailyTop10ScalarWhereWithAggregatesInput | DailyTop10ScalarWhereWithAggregatesInput[]
+    OR?: DailyTop10ScalarWhereWithAggregatesInput[]
+    NOT?: DailyTop10ScalarWhereWithAggregatesInput | DailyTop10ScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"DailyTop10"> | string
+    date?: DateTimeWithAggregatesFilter<"DailyTop10"> | Date | string
+    status?: EnumTop10StatusWithAggregatesFilter<"DailyTop10"> | $Enums.Top10Status
+    summaryReport?: StringNullableWithAggregatesFilter<"DailyTop10"> | string | null
+    categoryStats?: JsonNullableWithAggregatesFilter<"DailyTop10">
+    totalCandidates?: IntWithAggregatesFilter<"DailyTop10"> | number
+    generationTime?: IntNullableWithAggregatesFilter<"DailyTop10"> | number | null
+    generatedBy?: StringNullableWithAggregatesFilter<"DailyTop10"> | string | null
+    publishedAt?: DateTimeNullableWithAggregatesFilter<"DailyTop10"> | Date | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"DailyTop10"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"DailyTop10"> | Date | string
+  }
+
+  export type Top10ItemWhereInput = {
+    AND?: Top10ItemWhereInput | Top10ItemWhereInput[]
+    OR?: Top10ItemWhereInput[]
+    NOT?: Top10ItemWhereInput | Top10ItemWhereInput[]
+    id?: StringFilter<"Top10Item"> | string
+    top10Id?: StringFilter<"Top10Item"> | string
+    contentId?: StringFilter<"Top10Item"> | string
+    position?: IntFilter<"Top10Item"> | number
+    score?: FloatFilter<"Top10Item"> | number
+    reason?: StringNullableFilter<"Top10Item"> | string | null
+    highlights?: StringNullableFilter<"Top10Item"> | string | null
+    createdAt?: DateTimeFilter<"Top10Item"> | Date | string
+    top10?: XOR<DailyTop10RelationFilter, DailyTop10WhereInput>
+    content?: XOR<ContentRelationFilter, ContentWhereInput>
+  }
+
+  export type Top10ItemOrderByWithRelationInput = {
+    id?: SortOrder
+    top10Id?: SortOrder
+    contentId?: SortOrder
+    position?: SortOrder
+    score?: SortOrder
+    reason?: SortOrderInput | SortOrder
+    highlights?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    top10?: DailyTop10OrderByWithRelationInput
+    content?: ContentOrderByWithRelationInput
+  }
+
+  export type Top10ItemWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    top10Id_position?: Top10ItemTop10IdPositionCompoundUniqueInput
+    AND?: Top10ItemWhereInput | Top10ItemWhereInput[]
+    OR?: Top10ItemWhereInput[]
+    NOT?: Top10ItemWhereInput | Top10ItemWhereInput[]
+    top10Id?: StringFilter<"Top10Item"> | string
+    contentId?: StringFilter<"Top10Item"> | string
+    position?: IntFilter<"Top10Item"> | number
+    score?: FloatFilter<"Top10Item"> | number
+    reason?: StringNullableFilter<"Top10Item"> | string | null
+    highlights?: StringNullableFilter<"Top10Item"> | string | null
+    createdAt?: DateTimeFilter<"Top10Item"> | Date | string
+    top10?: XOR<DailyTop10RelationFilter, DailyTop10WhereInput>
+    content?: XOR<ContentRelationFilter, ContentWhereInput>
+  }, "id" | "top10Id_position">
+
+  export type Top10ItemOrderByWithAggregationInput = {
+    id?: SortOrder
+    top10Id?: SortOrder
+    contentId?: SortOrder
+    position?: SortOrder
+    score?: SortOrder
+    reason?: SortOrderInput | SortOrder
+    highlights?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: Top10ItemCountOrderByAggregateInput
+    _avg?: Top10ItemAvgOrderByAggregateInput
+    _max?: Top10ItemMaxOrderByAggregateInput
+    _min?: Top10ItemMinOrderByAggregateInput
+    _sum?: Top10ItemSumOrderByAggregateInput
+  }
+
+  export type Top10ItemScalarWhereWithAggregatesInput = {
+    AND?: Top10ItemScalarWhereWithAggregatesInput | Top10ItemScalarWhereWithAggregatesInput[]
+    OR?: Top10ItemScalarWhereWithAggregatesInput[]
+    NOT?: Top10ItemScalarWhereWithAggregatesInput | Top10ItemScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Top10Item"> | string
+    top10Id?: StringWithAggregatesFilter<"Top10Item"> | string
+    contentId?: StringWithAggregatesFilter<"Top10Item"> | string
+    position?: IntWithAggregatesFilter<"Top10Item"> | number
+    score?: FloatWithAggregatesFilter<"Top10Item"> | number
+    reason?: StringNullableWithAggregatesFilter<"Top10Item"> | string | null
+    highlights?: StringNullableWithAggregatesFilter<"Top10Item"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Top10Item"> | Date | string
+  }
+
+  export type Top10AdjustmentWhereInput = {
+    AND?: Top10AdjustmentWhereInput | Top10AdjustmentWhereInput[]
+    OR?: Top10AdjustmentWhereInput[]
+    NOT?: Top10AdjustmentWhereInput | Top10AdjustmentWhereInput[]
+    id?: StringFilter<"Top10Adjustment"> | string
+    top10Id?: StringFilter<"Top10Adjustment"> | string
+    adjustedBy?: StringFilter<"Top10Adjustment"> | string
+    action?: StringFilter<"Top10Adjustment"> | string
+    contentId?: StringNullableFilter<"Top10Adjustment"> | string | null
+    oldPosition?: IntNullableFilter<"Top10Adjustment"> | number | null
+    newPosition?: IntNullableFilter<"Top10Adjustment"> | number | null
+    reason?: StringNullableFilter<"Top10Adjustment"> | string | null
+    createdAt?: DateTimeFilter<"Top10Adjustment"> | Date | string
+    top10?: XOR<DailyTop10RelationFilter, DailyTop10WhereInput>
+  }
+
+  export type Top10AdjustmentOrderByWithRelationInput = {
+    id?: SortOrder
+    top10Id?: SortOrder
+    adjustedBy?: SortOrder
+    action?: SortOrder
+    contentId?: SortOrderInput | SortOrder
+    oldPosition?: SortOrderInput | SortOrder
+    newPosition?: SortOrderInput | SortOrder
+    reason?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    top10?: DailyTop10OrderByWithRelationInput
+  }
+
+  export type Top10AdjustmentWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: Top10AdjustmentWhereInput | Top10AdjustmentWhereInput[]
+    OR?: Top10AdjustmentWhereInput[]
+    NOT?: Top10AdjustmentWhereInput | Top10AdjustmentWhereInput[]
+    top10Id?: StringFilter<"Top10Adjustment"> | string
+    adjustedBy?: StringFilter<"Top10Adjustment"> | string
+    action?: StringFilter<"Top10Adjustment"> | string
+    contentId?: StringNullableFilter<"Top10Adjustment"> | string | null
+    oldPosition?: IntNullableFilter<"Top10Adjustment"> | number | null
+    newPosition?: IntNullableFilter<"Top10Adjustment"> | number | null
+    reason?: StringNullableFilter<"Top10Adjustment"> | string | null
+    createdAt?: DateTimeFilter<"Top10Adjustment"> | Date | string
+    top10?: XOR<DailyTop10RelationFilter, DailyTop10WhereInput>
+  }, "id">
+
+  export type Top10AdjustmentOrderByWithAggregationInput = {
+    id?: SortOrder
+    top10Id?: SortOrder
+    adjustedBy?: SortOrder
+    action?: SortOrder
+    contentId?: SortOrderInput | SortOrder
+    oldPosition?: SortOrderInput | SortOrder
+    newPosition?: SortOrderInput | SortOrder
+    reason?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: Top10AdjustmentCountOrderByAggregateInput
+    _avg?: Top10AdjustmentAvgOrderByAggregateInput
+    _max?: Top10AdjustmentMaxOrderByAggregateInput
+    _min?: Top10AdjustmentMinOrderByAggregateInput
+    _sum?: Top10AdjustmentSumOrderByAggregateInput
+  }
+
+  export type Top10AdjustmentScalarWhereWithAggregatesInput = {
+    AND?: Top10AdjustmentScalarWhereWithAggregatesInput | Top10AdjustmentScalarWhereWithAggregatesInput[]
+    OR?: Top10AdjustmentScalarWhereWithAggregatesInput[]
+    NOT?: Top10AdjustmentScalarWhereWithAggregatesInput | Top10AdjustmentScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Top10Adjustment"> | string
+    top10Id?: StringWithAggregatesFilter<"Top10Adjustment"> | string
+    adjustedBy?: StringWithAggregatesFilter<"Top10Adjustment"> | string
+    action?: StringWithAggregatesFilter<"Top10Adjustment"> | string
+    contentId?: StringNullableWithAggregatesFilter<"Top10Adjustment"> | string | null
+    oldPosition?: IntNullableWithAggregatesFilter<"Top10Adjustment"> | number | null
+    newPosition?: IntNullableWithAggregatesFilter<"Top10Adjustment"> | number | null
+    reason?: StringNullableWithAggregatesFilter<"Top10Adjustment"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Top10Adjustment"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     email: string
@@ -34725,6 +38485,7 @@ export namespace Prisma {
     contentTags?: ContentTagCreateNestedManyWithoutContentInput
     versions?: ContentVersionCreateNestedManyWithoutContentItemInput
     contentScore?: ContentScoreCreateNestedOneWithoutContentInput
+    top10Items?: Top10ItemCreateNestedManyWithoutContentInput
   }
 
   export type ContentUncheckedCreateInput = {
@@ -34761,6 +38522,7 @@ export namespace Prisma {
     contentTags?: ContentTagUncheckedCreateNestedManyWithoutContentInput
     versions?: ContentVersionUncheckedCreateNestedManyWithoutContentItemInput
     contentScore?: ContentScoreUncheckedCreateNestedOneWithoutContentInput
+    top10Items?: Top10ItemUncheckedCreateNestedManyWithoutContentInput
   }
 
   export type ContentUpdateInput = {
@@ -34797,6 +38559,7 @@ export namespace Prisma {
     contentTags?: ContentTagUpdateManyWithoutContentNestedInput
     versions?: ContentVersionUpdateManyWithoutContentItemNestedInput
     contentScore?: ContentScoreUpdateOneWithoutContentNestedInput
+    top10Items?: Top10ItemUpdateManyWithoutContentNestedInput
   }
 
   export type ContentUncheckedUpdateInput = {
@@ -34833,6 +38596,7 @@ export namespace Prisma {
     contentTags?: ContentTagUncheckedUpdateManyWithoutContentNestedInput
     versions?: ContentVersionUncheckedUpdateManyWithoutContentItemNestedInput
     contentScore?: ContentScoreUncheckedUpdateOneWithoutContentNestedInput
+    top10Items?: Top10ItemUncheckedUpdateManyWithoutContentNestedInput
   }
 
   export type ContentCreateManyInput = {
@@ -36843,6 +40607,270 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type DailyTop10CreateInput = {
+    id?: string
+    date: Date | string
+    status?: $Enums.Top10Status
+    summaryReport?: string | null
+    categoryStats?: NullableJsonNullValueInput | InputJsonValue
+    totalCandidates?: number
+    generationTime?: number | null
+    generatedBy?: string | null
+    publishedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    items?: Top10ItemCreateNestedManyWithoutTop10Input
+    adjustments?: Top10AdjustmentCreateNestedManyWithoutTop10Input
+  }
+
+  export type DailyTop10UncheckedCreateInput = {
+    id?: string
+    date: Date | string
+    status?: $Enums.Top10Status
+    summaryReport?: string | null
+    categoryStats?: NullableJsonNullValueInput | InputJsonValue
+    totalCandidates?: number
+    generationTime?: number | null
+    generatedBy?: string | null
+    publishedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    items?: Top10ItemUncheckedCreateNestedManyWithoutTop10Input
+    adjustments?: Top10AdjustmentUncheckedCreateNestedManyWithoutTop10Input
+  }
+
+  export type DailyTop10UpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumTop10StatusFieldUpdateOperationsInput | $Enums.Top10Status
+    summaryReport?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryStats?: NullableJsonNullValueInput | InputJsonValue
+    totalCandidates?: IntFieldUpdateOperationsInput | number
+    generationTime?: NullableIntFieldUpdateOperationsInput | number | null
+    generatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    items?: Top10ItemUpdateManyWithoutTop10NestedInput
+    adjustments?: Top10AdjustmentUpdateManyWithoutTop10NestedInput
+  }
+
+  export type DailyTop10UncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumTop10StatusFieldUpdateOperationsInput | $Enums.Top10Status
+    summaryReport?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryStats?: NullableJsonNullValueInput | InputJsonValue
+    totalCandidates?: IntFieldUpdateOperationsInput | number
+    generationTime?: NullableIntFieldUpdateOperationsInput | number | null
+    generatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    items?: Top10ItemUncheckedUpdateManyWithoutTop10NestedInput
+    adjustments?: Top10AdjustmentUncheckedUpdateManyWithoutTop10NestedInput
+  }
+
+  export type DailyTop10CreateManyInput = {
+    id?: string
+    date: Date | string
+    status?: $Enums.Top10Status
+    summaryReport?: string | null
+    categoryStats?: NullableJsonNullValueInput | InputJsonValue
+    totalCandidates?: number
+    generationTime?: number | null
+    generatedBy?: string | null
+    publishedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DailyTop10UpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumTop10StatusFieldUpdateOperationsInput | $Enums.Top10Status
+    summaryReport?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryStats?: NullableJsonNullValueInput | InputJsonValue
+    totalCandidates?: IntFieldUpdateOperationsInput | number
+    generationTime?: NullableIntFieldUpdateOperationsInput | number | null
+    generatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DailyTop10UncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumTop10StatusFieldUpdateOperationsInput | $Enums.Top10Status
+    summaryReport?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryStats?: NullableJsonNullValueInput | InputJsonValue
+    totalCandidates?: IntFieldUpdateOperationsInput | number
+    generationTime?: NullableIntFieldUpdateOperationsInput | number | null
+    generatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Top10ItemCreateInput = {
+    id?: string
+    position: number
+    score: number
+    reason?: string | null
+    highlights?: string | null
+    createdAt?: Date | string
+    top10: DailyTop10CreateNestedOneWithoutItemsInput
+    content: ContentCreateNestedOneWithoutTop10ItemsInput
+  }
+
+  export type Top10ItemUncheckedCreateInput = {
+    id?: string
+    top10Id: string
+    contentId: string
+    position: number
+    score: number
+    reason?: string | null
+    highlights?: string | null
+    createdAt?: Date | string
+  }
+
+  export type Top10ItemUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    position?: IntFieldUpdateOperationsInput | number
+    score?: FloatFieldUpdateOperationsInput | number
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    highlights?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    top10?: DailyTop10UpdateOneRequiredWithoutItemsNestedInput
+    content?: ContentUpdateOneRequiredWithoutTop10ItemsNestedInput
+  }
+
+  export type Top10ItemUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    top10Id?: StringFieldUpdateOperationsInput | string
+    contentId?: StringFieldUpdateOperationsInput | string
+    position?: IntFieldUpdateOperationsInput | number
+    score?: FloatFieldUpdateOperationsInput | number
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    highlights?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Top10ItemCreateManyInput = {
+    id?: string
+    top10Id: string
+    contentId: string
+    position: number
+    score: number
+    reason?: string | null
+    highlights?: string | null
+    createdAt?: Date | string
+  }
+
+  export type Top10ItemUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    position?: IntFieldUpdateOperationsInput | number
+    score?: FloatFieldUpdateOperationsInput | number
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    highlights?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Top10ItemUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    top10Id?: StringFieldUpdateOperationsInput | string
+    contentId?: StringFieldUpdateOperationsInput | string
+    position?: IntFieldUpdateOperationsInput | number
+    score?: FloatFieldUpdateOperationsInput | number
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    highlights?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Top10AdjustmentCreateInput = {
+    id?: string
+    adjustedBy: string
+    action: string
+    contentId?: string | null
+    oldPosition?: number | null
+    newPosition?: number | null
+    reason?: string | null
+    createdAt?: Date | string
+    top10: DailyTop10CreateNestedOneWithoutAdjustmentsInput
+  }
+
+  export type Top10AdjustmentUncheckedCreateInput = {
+    id?: string
+    top10Id: string
+    adjustedBy: string
+    action: string
+    contentId?: string | null
+    oldPosition?: number | null
+    newPosition?: number | null
+    reason?: string | null
+    createdAt?: Date | string
+  }
+
+  export type Top10AdjustmentUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    adjustedBy?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    contentId?: NullableStringFieldUpdateOperationsInput | string | null
+    oldPosition?: NullableIntFieldUpdateOperationsInput | number | null
+    newPosition?: NullableIntFieldUpdateOperationsInput | number | null
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    top10?: DailyTop10UpdateOneRequiredWithoutAdjustmentsNestedInput
+  }
+
+  export type Top10AdjustmentUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    top10Id?: StringFieldUpdateOperationsInput | string
+    adjustedBy?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    contentId?: NullableStringFieldUpdateOperationsInput | string | null
+    oldPosition?: NullableIntFieldUpdateOperationsInput | number | null
+    newPosition?: NullableIntFieldUpdateOperationsInput | number | null
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Top10AdjustmentCreateManyInput = {
+    id?: string
+    top10Id: string
+    adjustedBy: string
+    action: string
+    contentId?: string | null
+    oldPosition?: number | null
+    newPosition?: number | null
+    reason?: string | null
+    createdAt?: Date | string
+  }
+
+  export type Top10AdjustmentUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    adjustedBy?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    contentId?: NullableStringFieldUpdateOperationsInput | string | null
+    oldPosition?: NullableIntFieldUpdateOperationsInput | number | null
+    newPosition?: NullableIntFieldUpdateOperationsInput | number | null
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Top10AdjustmentUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    top10Id?: StringFieldUpdateOperationsInput | string
+    adjustedBy?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    contentId?: NullableStringFieldUpdateOperationsInput | string | null
+    oldPosition?: NullableIntFieldUpdateOperationsInput | number | null
+    newPosition?: NullableIntFieldUpdateOperationsInput | number | null
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -37511,11 +41539,21 @@ export namespace Prisma {
     isNot?: ContentScoreWhereInput | null
   }
 
+  export type Top10ItemListRelationFilter = {
+    every?: Top10ItemWhereInput
+    some?: Top10ItemWhereInput
+    none?: Top10ItemWhereInput
+  }
+
   export type ContentTagOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type ContentVersionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type Top10ItemOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -38904,6 +42942,182 @@ export namespace Prisma {
     createdAt?: SortOrder
   }
 
+  export type EnumTop10StatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.Top10Status | EnumTop10StatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Top10Status[] | ListEnumTop10StatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Top10Status[] | ListEnumTop10StatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumTop10StatusFilter<$PrismaModel> | $Enums.Top10Status
+  }
+
+  export type Top10AdjustmentListRelationFilter = {
+    every?: Top10AdjustmentWhereInput
+    some?: Top10AdjustmentWhereInput
+    none?: Top10AdjustmentWhereInput
+  }
+
+  export type Top10AdjustmentOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type DailyTop10CountOrderByAggregateInput = {
+    id?: SortOrder
+    date?: SortOrder
+    status?: SortOrder
+    summaryReport?: SortOrder
+    categoryStats?: SortOrder
+    totalCandidates?: SortOrder
+    generationTime?: SortOrder
+    generatedBy?: SortOrder
+    publishedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DailyTop10AvgOrderByAggregateInput = {
+    totalCandidates?: SortOrder
+    generationTime?: SortOrder
+  }
+
+  export type DailyTop10MaxOrderByAggregateInput = {
+    id?: SortOrder
+    date?: SortOrder
+    status?: SortOrder
+    summaryReport?: SortOrder
+    totalCandidates?: SortOrder
+    generationTime?: SortOrder
+    generatedBy?: SortOrder
+    publishedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DailyTop10MinOrderByAggregateInput = {
+    id?: SortOrder
+    date?: SortOrder
+    status?: SortOrder
+    summaryReport?: SortOrder
+    totalCandidates?: SortOrder
+    generationTime?: SortOrder
+    generatedBy?: SortOrder
+    publishedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DailyTop10SumOrderByAggregateInput = {
+    totalCandidates?: SortOrder
+    generationTime?: SortOrder
+  }
+
+  export type EnumTop10StatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Top10Status | EnumTop10StatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Top10Status[] | ListEnumTop10StatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Top10Status[] | ListEnumTop10StatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumTop10StatusWithAggregatesFilter<$PrismaModel> | $Enums.Top10Status
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTop10StatusFilter<$PrismaModel>
+    _max?: NestedEnumTop10StatusFilter<$PrismaModel>
+  }
+
+  export type DailyTop10RelationFilter = {
+    is?: DailyTop10WhereInput
+    isNot?: DailyTop10WhereInput
+  }
+
+  export type Top10ItemTop10IdPositionCompoundUniqueInput = {
+    top10Id: string
+    position: number
+  }
+
+  export type Top10ItemCountOrderByAggregateInput = {
+    id?: SortOrder
+    top10Id?: SortOrder
+    contentId?: SortOrder
+    position?: SortOrder
+    score?: SortOrder
+    reason?: SortOrder
+    highlights?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type Top10ItemAvgOrderByAggregateInput = {
+    position?: SortOrder
+    score?: SortOrder
+  }
+
+  export type Top10ItemMaxOrderByAggregateInput = {
+    id?: SortOrder
+    top10Id?: SortOrder
+    contentId?: SortOrder
+    position?: SortOrder
+    score?: SortOrder
+    reason?: SortOrder
+    highlights?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type Top10ItemMinOrderByAggregateInput = {
+    id?: SortOrder
+    top10Id?: SortOrder
+    contentId?: SortOrder
+    position?: SortOrder
+    score?: SortOrder
+    reason?: SortOrder
+    highlights?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type Top10ItemSumOrderByAggregateInput = {
+    position?: SortOrder
+    score?: SortOrder
+  }
+
+  export type Top10AdjustmentCountOrderByAggregateInput = {
+    id?: SortOrder
+    top10Id?: SortOrder
+    adjustedBy?: SortOrder
+    action?: SortOrder
+    contentId?: SortOrder
+    oldPosition?: SortOrder
+    newPosition?: SortOrder
+    reason?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type Top10AdjustmentAvgOrderByAggregateInput = {
+    oldPosition?: SortOrder
+    newPosition?: SortOrder
+  }
+
+  export type Top10AdjustmentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    top10Id?: SortOrder
+    adjustedBy?: SortOrder
+    action?: SortOrder
+    contentId?: SortOrder
+    oldPosition?: SortOrder
+    newPosition?: SortOrder
+    reason?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type Top10AdjustmentMinOrderByAggregateInput = {
+    id?: SortOrder
+    top10Id?: SortOrder
+    adjustedBy?: SortOrder
+    action?: SortOrder
+    contentId?: SortOrder
+    oldPosition?: SortOrder
+    newPosition?: SortOrder
+    reason?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type Top10AdjustmentSumOrderByAggregateInput = {
+    oldPosition?: SortOrder
+    newPosition?: SortOrder
+  }
+
   export type AccountCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -39235,6 +43449,13 @@ export namespace Prisma {
     connect?: ContentScoreWhereUniqueInput
   }
 
+  export type Top10ItemCreateNestedManyWithoutContentInput = {
+    create?: XOR<Top10ItemCreateWithoutContentInput, Top10ItemUncheckedCreateWithoutContentInput> | Top10ItemCreateWithoutContentInput[] | Top10ItemUncheckedCreateWithoutContentInput[]
+    connectOrCreate?: Top10ItemCreateOrConnectWithoutContentInput | Top10ItemCreateOrConnectWithoutContentInput[]
+    createMany?: Top10ItemCreateManyContentInputEnvelope
+    connect?: Top10ItemWhereUniqueInput | Top10ItemWhereUniqueInput[]
+  }
+
   export type ContentReviewUncheckedCreateNestedManyWithoutContentInput = {
     create?: XOR<ContentReviewCreateWithoutContentInput, ContentReviewUncheckedCreateWithoutContentInput> | ContentReviewCreateWithoutContentInput[] | ContentReviewUncheckedCreateWithoutContentInput[]
     connectOrCreate?: ContentReviewCreateOrConnectWithoutContentInput | ContentReviewCreateOrConnectWithoutContentInput[]
@@ -39260,6 +43481,13 @@ export namespace Prisma {
     create?: XOR<ContentScoreCreateWithoutContentInput, ContentScoreUncheckedCreateWithoutContentInput>
     connectOrCreate?: ContentScoreCreateOrConnectWithoutContentInput
     connect?: ContentScoreWhereUniqueInput
+  }
+
+  export type Top10ItemUncheckedCreateNestedManyWithoutContentInput = {
+    create?: XOR<Top10ItemCreateWithoutContentInput, Top10ItemUncheckedCreateWithoutContentInput> | Top10ItemCreateWithoutContentInput[] | Top10ItemUncheckedCreateWithoutContentInput[]
+    connectOrCreate?: Top10ItemCreateOrConnectWithoutContentInput | Top10ItemCreateOrConnectWithoutContentInput[]
+    createMany?: Top10ItemCreateManyContentInputEnvelope
+    connect?: Top10ItemWhereUniqueInput | Top10ItemWhereUniqueInput[]
   }
 
   export type ContentUpdatetagsInput = {
@@ -39348,6 +43576,20 @@ export namespace Prisma {
     update?: XOR<XOR<ContentScoreUpdateToOneWithWhereWithoutContentInput, ContentScoreUpdateWithoutContentInput>, ContentScoreUncheckedUpdateWithoutContentInput>
   }
 
+  export type Top10ItemUpdateManyWithoutContentNestedInput = {
+    create?: XOR<Top10ItemCreateWithoutContentInput, Top10ItemUncheckedCreateWithoutContentInput> | Top10ItemCreateWithoutContentInput[] | Top10ItemUncheckedCreateWithoutContentInput[]
+    connectOrCreate?: Top10ItemCreateOrConnectWithoutContentInput | Top10ItemCreateOrConnectWithoutContentInput[]
+    upsert?: Top10ItemUpsertWithWhereUniqueWithoutContentInput | Top10ItemUpsertWithWhereUniqueWithoutContentInput[]
+    createMany?: Top10ItemCreateManyContentInputEnvelope
+    set?: Top10ItemWhereUniqueInput | Top10ItemWhereUniqueInput[]
+    disconnect?: Top10ItemWhereUniqueInput | Top10ItemWhereUniqueInput[]
+    delete?: Top10ItemWhereUniqueInput | Top10ItemWhereUniqueInput[]
+    connect?: Top10ItemWhereUniqueInput | Top10ItemWhereUniqueInput[]
+    update?: Top10ItemUpdateWithWhereUniqueWithoutContentInput | Top10ItemUpdateWithWhereUniqueWithoutContentInput[]
+    updateMany?: Top10ItemUpdateManyWithWhereWithoutContentInput | Top10ItemUpdateManyWithWhereWithoutContentInput[]
+    deleteMany?: Top10ItemScalarWhereInput | Top10ItemScalarWhereInput[]
+  }
+
   export type ContentReviewUncheckedUpdateManyWithoutContentNestedInput = {
     create?: XOR<ContentReviewCreateWithoutContentInput, ContentReviewUncheckedCreateWithoutContentInput> | ContentReviewCreateWithoutContentInput[] | ContentReviewUncheckedCreateWithoutContentInput[]
     connectOrCreate?: ContentReviewCreateOrConnectWithoutContentInput | ContentReviewCreateOrConnectWithoutContentInput[]
@@ -39398,6 +43640,20 @@ export namespace Prisma {
     delete?: ContentScoreWhereInput | boolean
     connect?: ContentScoreWhereUniqueInput
     update?: XOR<XOR<ContentScoreUpdateToOneWithWhereWithoutContentInput, ContentScoreUpdateWithoutContentInput>, ContentScoreUncheckedUpdateWithoutContentInput>
+  }
+
+  export type Top10ItemUncheckedUpdateManyWithoutContentNestedInput = {
+    create?: XOR<Top10ItemCreateWithoutContentInput, Top10ItemUncheckedCreateWithoutContentInput> | Top10ItemCreateWithoutContentInput[] | Top10ItemUncheckedCreateWithoutContentInput[]
+    connectOrCreate?: Top10ItemCreateOrConnectWithoutContentInput | Top10ItemCreateOrConnectWithoutContentInput[]
+    upsert?: Top10ItemUpsertWithWhereUniqueWithoutContentInput | Top10ItemUpsertWithWhereUniqueWithoutContentInput[]
+    createMany?: Top10ItemCreateManyContentInputEnvelope
+    set?: Top10ItemWhereUniqueInput | Top10ItemWhereUniqueInput[]
+    disconnect?: Top10ItemWhereUniqueInput | Top10ItemWhereUniqueInput[]
+    delete?: Top10ItemWhereUniqueInput | Top10ItemWhereUniqueInput[]
+    connect?: Top10ItemWhereUniqueInput | Top10ItemWhereUniqueInput[]
+    update?: Top10ItemUpdateWithWhereUniqueWithoutContentInput | Top10ItemUpdateWithWhereUniqueWithoutContentInput[]
+    updateMany?: Top10ItemUpdateManyWithWhereWithoutContentInput | Top10ItemUpdateManyWithWhereWithoutContentInput[]
+    deleteMany?: Top10ItemScalarWhereInput | Top10ItemScalarWhereInput[]
   }
 
   export type ContentTagCreateNestedManyWithoutTagInput = {
@@ -39853,6 +44109,136 @@ export namespace Prisma {
     upsert?: ContentUpsertWithoutContentScoreInput
     connect?: ContentWhereUniqueInput
     update?: XOR<XOR<ContentUpdateToOneWithWhereWithoutContentScoreInput, ContentUpdateWithoutContentScoreInput>, ContentUncheckedUpdateWithoutContentScoreInput>
+  }
+
+  export type Top10ItemCreateNestedManyWithoutTop10Input = {
+    create?: XOR<Top10ItemCreateWithoutTop10Input, Top10ItemUncheckedCreateWithoutTop10Input> | Top10ItemCreateWithoutTop10Input[] | Top10ItemUncheckedCreateWithoutTop10Input[]
+    connectOrCreate?: Top10ItemCreateOrConnectWithoutTop10Input | Top10ItemCreateOrConnectWithoutTop10Input[]
+    createMany?: Top10ItemCreateManyTop10InputEnvelope
+    connect?: Top10ItemWhereUniqueInput | Top10ItemWhereUniqueInput[]
+  }
+
+  export type Top10AdjustmentCreateNestedManyWithoutTop10Input = {
+    create?: XOR<Top10AdjustmentCreateWithoutTop10Input, Top10AdjustmentUncheckedCreateWithoutTop10Input> | Top10AdjustmentCreateWithoutTop10Input[] | Top10AdjustmentUncheckedCreateWithoutTop10Input[]
+    connectOrCreate?: Top10AdjustmentCreateOrConnectWithoutTop10Input | Top10AdjustmentCreateOrConnectWithoutTop10Input[]
+    createMany?: Top10AdjustmentCreateManyTop10InputEnvelope
+    connect?: Top10AdjustmentWhereUniqueInput | Top10AdjustmentWhereUniqueInput[]
+  }
+
+  export type Top10ItemUncheckedCreateNestedManyWithoutTop10Input = {
+    create?: XOR<Top10ItemCreateWithoutTop10Input, Top10ItemUncheckedCreateWithoutTop10Input> | Top10ItemCreateWithoutTop10Input[] | Top10ItemUncheckedCreateWithoutTop10Input[]
+    connectOrCreate?: Top10ItemCreateOrConnectWithoutTop10Input | Top10ItemCreateOrConnectWithoutTop10Input[]
+    createMany?: Top10ItemCreateManyTop10InputEnvelope
+    connect?: Top10ItemWhereUniqueInput | Top10ItemWhereUniqueInput[]
+  }
+
+  export type Top10AdjustmentUncheckedCreateNestedManyWithoutTop10Input = {
+    create?: XOR<Top10AdjustmentCreateWithoutTop10Input, Top10AdjustmentUncheckedCreateWithoutTop10Input> | Top10AdjustmentCreateWithoutTop10Input[] | Top10AdjustmentUncheckedCreateWithoutTop10Input[]
+    connectOrCreate?: Top10AdjustmentCreateOrConnectWithoutTop10Input | Top10AdjustmentCreateOrConnectWithoutTop10Input[]
+    createMany?: Top10AdjustmentCreateManyTop10InputEnvelope
+    connect?: Top10AdjustmentWhereUniqueInput | Top10AdjustmentWhereUniqueInput[]
+  }
+
+  export type EnumTop10StatusFieldUpdateOperationsInput = {
+    set?: $Enums.Top10Status
+  }
+
+  export type Top10ItemUpdateManyWithoutTop10NestedInput = {
+    create?: XOR<Top10ItemCreateWithoutTop10Input, Top10ItemUncheckedCreateWithoutTop10Input> | Top10ItemCreateWithoutTop10Input[] | Top10ItemUncheckedCreateWithoutTop10Input[]
+    connectOrCreate?: Top10ItemCreateOrConnectWithoutTop10Input | Top10ItemCreateOrConnectWithoutTop10Input[]
+    upsert?: Top10ItemUpsertWithWhereUniqueWithoutTop10Input | Top10ItemUpsertWithWhereUniqueWithoutTop10Input[]
+    createMany?: Top10ItemCreateManyTop10InputEnvelope
+    set?: Top10ItemWhereUniqueInput | Top10ItemWhereUniqueInput[]
+    disconnect?: Top10ItemWhereUniqueInput | Top10ItemWhereUniqueInput[]
+    delete?: Top10ItemWhereUniqueInput | Top10ItemWhereUniqueInput[]
+    connect?: Top10ItemWhereUniqueInput | Top10ItemWhereUniqueInput[]
+    update?: Top10ItemUpdateWithWhereUniqueWithoutTop10Input | Top10ItemUpdateWithWhereUniqueWithoutTop10Input[]
+    updateMany?: Top10ItemUpdateManyWithWhereWithoutTop10Input | Top10ItemUpdateManyWithWhereWithoutTop10Input[]
+    deleteMany?: Top10ItemScalarWhereInput | Top10ItemScalarWhereInput[]
+  }
+
+  export type Top10AdjustmentUpdateManyWithoutTop10NestedInput = {
+    create?: XOR<Top10AdjustmentCreateWithoutTop10Input, Top10AdjustmentUncheckedCreateWithoutTop10Input> | Top10AdjustmentCreateWithoutTop10Input[] | Top10AdjustmentUncheckedCreateWithoutTop10Input[]
+    connectOrCreate?: Top10AdjustmentCreateOrConnectWithoutTop10Input | Top10AdjustmentCreateOrConnectWithoutTop10Input[]
+    upsert?: Top10AdjustmentUpsertWithWhereUniqueWithoutTop10Input | Top10AdjustmentUpsertWithWhereUniqueWithoutTop10Input[]
+    createMany?: Top10AdjustmentCreateManyTop10InputEnvelope
+    set?: Top10AdjustmentWhereUniqueInput | Top10AdjustmentWhereUniqueInput[]
+    disconnect?: Top10AdjustmentWhereUniqueInput | Top10AdjustmentWhereUniqueInput[]
+    delete?: Top10AdjustmentWhereUniqueInput | Top10AdjustmentWhereUniqueInput[]
+    connect?: Top10AdjustmentWhereUniqueInput | Top10AdjustmentWhereUniqueInput[]
+    update?: Top10AdjustmentUpdateWithWhereUniqueWithoutTop10Input | Top10AdjustmentUpdateWithWhereUniqueWithoutTop10Input[]
+    updateMany?: Top10AdjustmentUpdateManyWithWhereWithoutTop10Input | Top10AdjustmentUpdateManyWithWhereWithoutTop10Input[]
+    deleteMany?: Top10AdjustmentScalarWhereInput | Top10AdjustmentScalarWhereInput[]
+  }
+
+  export type Top10ItemUncheckedUpdateManyWithoutTop10NestedInput = {
+    create?: XOR<Top10ItemCreateWithoutTop10Input, Top10ItemUncheckedCreateWithoutTop10Input> | Top10ItemCreateWithoutTop10Input[] | Top10ItemUncheckedCreateWithoutTop10Input[]
+    connectOrCreate?: Top10ItemCreateOrConnectWithoutTop10Input | Top10ItemCreateOrConnectWithoutTop10Input[]
+    upsert?: Top10ItemUpsertWithWhereUniqueWithoutTop10Input | Top10ItemUpsertWithWhereUniqueWithoutTop10Input[]
+    createMany?: Top10ItemCreateManyTop10InputEnvelope
+    set?: Top10ItemWhereUniqueInput | Top10ItemWhereUniqueInput[]
+    disconnect?: Top10ItemWhereUniqueInput | Top10ItemWhereUniqueInput[]
+    delete?: Top10ItemWhereUniqueInput | Top10ItemWhereUniqueInput[]
+    connect?: Top10ItemWhereUniqueInput | Top10ItemWhereUniqueInput[]
+    update?: Top10ItemUpdateWithWhereUniqueWithoutTop10Input | Top10ItemUpdateWithWhereUniqueWithoutTop10Input[]
+    updateMany?: Top10ItemUpdateManyWithWhereWithoutTop10Input | Top10ItemUpdateManyWithWhereWithoutTop10Input[]
+    deleteMany?: Top10ItemScalarWhereInput | Top10ItemScalarWhereInput[]
+  }
+
+  export type Top10AdjustmentUncheckedUpdateManyWithoutTop10NestedInput = {
+    create?: XOR<Top10AdjustmentCreateWithoutTop10Input, Top10AdjustmentUncheckedCreateWithoutTop10Input> | Top10AdjustmentCreateWithoutTop10Input[] | Top10AdjustmentUncheckedCreateWithoutTop10Input[]
+    connectOrCreate?: Top10AdjustmentCreateOrConnectWithoutTop10Input | Top10AdjustmentCreateOrConnectWithoutTop10Input[]
+    upsert?: Top10AdjustmentUpsertWithWhereUniqueWithoutTop10Input | Top10AdjustmentUpsertWithWhereUniqueWithoutTop10Input[]
+    createMany?: Top10AdjustmentCreateManyTop10InputEnvelope
+    set?: Top10AdjustmentWhereUniqueInput | Top10AdjustmentWhereUniqueInput[]
+    disconnect?: Top10AdjustmentWhereUniqueInput | Top10AdjustmentWhereUniqueInput[]
+    delete?: Top10AdjustmentWhereUniqueInput | Top10AdjustmentWhereUniqueInput[]
+    connect?: Top10AdjustmentWhereUniqueInput | Top10AdjustmentWhereUniqueInput[]
+    update?: Top10AdjustmentUpdateWithWhereUniqueWithoutTop10Input | Top10AdjustmentUpdateWithWhereUniqueWithoutTop10Input[]
+    updateMany?: Top10AdjustmentUpdateManyWithWhereWithoutTop10Input | Top10AdjustmentUpdateManyWithWhereWithoutTop10Input[]
+    deleteMany?: Top10AdjustmentScalarWhereInput | Top10AdjustmentScalarWhereInput[]
+  }
+
+  export type DailyTop10CreateNestedOneWithoutItemsInput = {
+    create?: XOR<DailyTop10CreateWithoutItemsInput, DailyTop10UncheckedCreateWithoutItemsInput>
+    connectOrCreate?: DailyTop10CreateOrConnectWithoutItemsInput
+    connect?: DailyTop10WhereUniqueInput
+  }
+
+  export type ContentCreateNestedOneWithoutTop10ItemsInput = {
+    create?: XOR<ContentCreateWithoutTop10ItemsInput, ContentUncheckedCreateWithoutTop10ItemsInput>
+    connectOrCreate?: ContentCreateOrConnectWithoutTop10ItemsInput
+    connect?: ContentWhereUniqueInput
+  }
+
+  export type DailyTop10UpdateOneRequiredWithoutItemsNestedInput = {
+    create?: XOR<DailyTop10CreateWithoutItemsInput, DailyTop10UncheckedCreateWithoutItemsInput>
+    connectOrCreate?: DailyTop10CreateOrConnectWithoutItemsInput
+    upsert?: DailyTop10UpsertWithoutItemsInput
+    connect?: DailyTop10WhereUniqueInput
+    update?: XOR<XOR<DailyTop10UpdateToOneWithWhereWithoutItemsInput, DailyTop10UpdateWithoutItemsInput>, DailyTop10UncheckedUpdateWithoutItemsInput>
+  }
+
+  export type ContentUpdateOneRequiredWithoutTop10ItemsNestedInput = {
+    create?: XOR<ContentCreateWithoutTop10ItemsInput, ContentUncheckedCreateWithoutTop10ItemsInput>
+    connectOrCreate?: ContentCreateOrConnectWithoutTop10ItemsInput
+    upsert?: ContentUpsertWithoutTop10ItemsInput
+    connect?: ContentWhereUniqueInput
+    update?: XOR<XOR<ContentUpdateToOneWithWhereWithoutTop10ItemsInput, ContentUpdateWithoutTop10ItemsInput>, ContentUncheckedUpdateWithoutTop10ItemsInput>
+  }
+
+  export type DailyTop10CreateNestedOneWithoutAdjustmentsInput = {
+    create?: XOR<DailyTop10CreateWithoutAdjustmentsInput, DailyTop10UncheckedCreateWithoutAdjustmentsInput>
+    connectOrCreate?: DailyTop10CreateOrConnectWithoutAdjustmentsInput
+    connect?: DailyTop10WhereUniqueInput
+  }
+
+  export type DailyTop10UpdateOneRequiredWithoutAdjustmentsNestedInput = {
+    create?: XOR<DailyTop10CreateWithoutAdjustmentsInput, DailyTop10UncheckedCreateWithoutAdjustmentsInput>
+    connectOrCreate?: DailyTop10CreateOrConnectWithoutAdjustmentsInput
+    upsert?: DailyTop10UpsertWithoutAdjustmentsInput
+    connect?: DailyTop10WhereUniqueInput
+    update?: XOR<XOR<DailyTop10UpdateToOneWithWhereWithoutAdjustmentsInput, DailyTop10UpdateWithoutAdjustmentsInput>, DailyTop10UncheckedUpdateWithoutAdjustmentsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -40373,6 +44759,23 @@ export namespace Prisma {
     _max?: NestedDecimalNullableFilter<$PrismaModel>
   }
 
+  export type NestedEnumTop10StatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.Top10Status | EnumTop10StatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Top10Status[] | ListEnumTop10StatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Top10Status[] | ListEnumTop10StatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumTop10StatusFilter<$PrismaModel> | $Enums.Top10Status
+  }
+
+  export type NestedEnumTop10StatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Top10Status | EnumTop10StatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Top10Status[] | ListEnumTop10StatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Top10Status[] | ListEnumTop10StatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumTop10StatusWithAggregatesFilter<$PrismaModel> | $Enums.Top10Status
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTop10StatusFilter<$PrismaModel>
+    _max?: NestedEnumTop10StatusFilter<$PrismaModel>
+  }
+
   export type AccountCreateWithoutUserInput = {
     id?: string
     type: string
@@ -40865,6 +45268,7 @@ export namespace Prisma {
     contentTags?: ContentTagCreateNestedManyWithoutContentInput
     versions?: ContentVersionCreateNestedManyWithoutContentItemInput
     contentScore?: ContentScoreCreateNestedOneWithoutContentInput
+    top10Items?: Top10ItemCreateNestedManyWithoutContentInput
   }
 
   export type ContentUncheckedCreateWithoutSourceInput = {
@@ -40900,6 +45304,7 @@ export namespace Prisma {
     contentTags?: ContentTagUncheckedCreateNestedManyWithoutContentInput
     versions?: ContentVersionUncheckedCreateNestedManyWithoutContentItemInput
     contentScore?: ContentScoreUncheckedCreateNestedOneWithoutContentInput
+    top10Items?: Top10ItemUncheckedCreateNestedManyWithoutContentInput
   }
 
   export type ContentCreateOrConnectWithoutSourceInput = {
@@ -41121,6 +45526,36 @@ export namespace Prisma {
     create: XOR<ContentScoreCreateWithoutContentInput, ContentScoreUncheckedCreateWithoutContentInput>
   }
 
+  export type Top10ItemCreateWithoutContentInput = {
+    id?: string
+    position: number
+    score: number
+    reason?: string | null
+    highlights?: string | null
+    createdAt?: Date | string
+    top10: DailyTop10CreateNestedOneWithoutItemsInput
+  }
+
+  export type Top10ItemUncheckedCreateWithoutContentInput = {
+    id?: string
+    top10Id: string
+    position: number
+    score: number
+    reason?: string | null
+    highlights?: string | null
+    createdAt?: Date | string
+  }
+
+  export type Top10ItemCreateOrConnectWithoutContentInput = {
+    where: Top10ItemWhereUniqueInput
+    create: XOR<Top10ItemCreateWithoutContentInput, Top10ItemUncheckedCreateWithoutContentInput>
+  }
+
+  export type Top10ItemCreateManyContentInputEnvelope = {
+    data: Top10ItemCreateManyContentInput | Top10ItemCreateManyContentInput[]
+    skipDuplicates?: boolean
+  }
+
   export type SourceUpsertWithoutContentInput = {
     update: XOR<SourceUpdateWithoutContentInput, SourceUncheckedUpdateWithoutContentInput>
     create: XOR<SourceCreateWithoutContentInput, SourceUncheckedCreateWithoutContentInput>
@@ -41277,6 +45712,36 @@ export namespace Prisma {
     weightConfigId?: NullableStringFieldUpdateOperationsInput | string | null
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
     calculatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Top10ItemUpsertWithWhereUniqueWithoutContentInput = {
+    where: Top10ItemWhereUniqueInput
+    update: XOR<Top10ItemUpdateWithoutContentInput, Top10ItemUncheckedUpdateWithoutContentInput>
+    create: XOR<Top10ItemCreateWithoutContentInput, Top10ItemUncheckedCreateWithoutContentInput>
+  }
+
+  export type Top10ItemUpdateWithWhereUniqueWithoutContentInput = {
+    where: Top10ItemWhereUniqueInput
+    data: XOR<Top10ItemUpdateWithoutContentInput, Top10ItemUncheckedUpdateWithoutContentInput>
+  }
+
+  export type Top10ItemUpdateManyWithWhereWithoutContentInput = {
+    where: Top10ItemScalarWhereInput
+    data: XOR<Top10ItemUpdateManyMutationInput, Top10ItemUncheckedUpdateManyWithoutContentInput>
+  }
+
+  export type Top10ItemScalarWhereInput = {
+    AND?: Top10ItemScalarWhereInput | Top10ItemScalarWhereInput[]
+    OR?: Top10ItemScalarWhereInput[]
+    NOT?: Top10ItemScalarWhereInput | Top10ItemScalarWhereInput[]
+    id?: StringFilter<"Top10Item"> | string
+    top10Id?: StringFilter<"Top10Item"> | string
+    contentId?: StringFilter<"Top10Item"> | string
+    position?: IntFilter<"Top10Item"> | number
+    score?: FloatFilter<"Top10Item"> | number
+    reason?: StringNullableFilter<"Top10Item"> | string | null
+    highlights?: StringNullableFilter<"Top10Item"> | string | null
+    createdAt?: DateTimeFilter<"Top10Item"> | Date | string
   }
 
   export type ContentTagCreateWithoutTagInput = {
@@ -41494,6 +45959,7 @@ export namespace Prisma {
     reviews?: ContentReviewCreateNestedManyWithoutContentInput
     versions?: ContentVersionCreateNestedManyWithoutContentItemInput
     contentScore?: ContentScoreCreateNestedOneWithoutContentInput
+    top10Items?: Top10ItemCreateNestedManyWithoutContentInput
   }
 
   export type ContentUncheckedCreateWithoutContentTagsInput = {
@@ -41529,6 +45995,7 @@ export namespace Prisma {
     reviews?: ContentReviewUncheckedCreateNestedManyWithoutContentInput
     versions?: ContentVersionUncheckedCreateNestedManyWithoutContentItemInput
     contentScore?: ContentScoreUncheckedCreateNestedOneWithoutContentInput
+    top10Items?: Top10ItemUncheckedCreateNestedManyWithoutContentInput
   }
 
   export type ContentCreateOrConnectWithoutContentTagsInput = {
@@ -41613,6 +46080,7 @@ export namespace Prisma {
     reviews?: ContentReviewUpdateManyWithoutContentNestedInput
     versions?: ContentVersionUpdateManyWithoutContentItemNestedInput
     contentScore?: ContentScoreUpdateOneWithoutContentNestedInput
+    top10Items?: Top10ItemUpdateManyWithoutContentNestedInput
   }
 
   export type ContentUncheckedUpdateWithoutContentTagsInput = {
@@ -41648,6 +46116,7 @@ export namespace Prisma {
     reviews?: ContentReviewUncheckedUpdateManyWithoutContentNestedInput
     versions?: ContentVersionUncheckedUpdateManyWithoutContentItemNestedInput
     contentScore?: ContentScoreUncheckedUpdateOneWithoutContentNestedInput
+    top10Items?: Top10ItemUncheckedUpdateManyWithoutContentNestedInput
   }
 
   export type TagUpsertWithoutContentTagsInput = {
@@ -41722,6 +46191,7 @@ export namespace Prisma {
     contentTags?: ContentTagCreateNestedManyWithoutContentInput
     versions?: ContentVersionCreateNestedManyWithoutContentItemInput
     contentScore?: ContentScoreCreateNestedOneWithoutContentInput
+    top10Items?: Top10ItemCreateNestedManyWithoutContentInput
   }
 
   export type ContentUncheckedCreateWithoutReviewsInput = {
@@ -41757,6 +46227,7 @@ export namespace Prisma {
     contentTags?: ContentTagUncheckedCreateNestedManyWithoutContentInput
     versions?: ContentVersionUncheckedCreateNestedManyWithoutContentItemInput
     contentScore?: ContentScoreUncheckedCreateNestedOneWithoutContentInput
+    top10Items?: Top10ItemUncheckedCreateNestedManyWithoutContentInput
   }
 
   export type ContentCreateOrConnectWithoutReviewsInput = {
@@ -41859,6 +46330,7 @@ export namespace Prisma {
     contentTags?: ContentTagUpdateManyWithoutContentNestedInput
     versions?: ContentVersionUpdateManyWithoutContentItemNestedInput
     contentScore?: ContentScoreUpdateOneWithoutContentNestedInput
+    top10Items?: Top10ItemUpdateManyWithoutContentNestedInput
   }
 
   export type ContentUncheckedUpdateWithoutReviewsInput = {
@@ -41894,6 +46366,7 @@ export namespace Prisma {
     contentTags?: ContentTagUncheckedUpdateManyWithoutContentNestedInput
     versions?: ContentVersionUncheckedUpdateManyWithoutContentItemNestedInput
     contentScore?: ContentScoreUncheckedUpdateOneWithoutContentNestedInput
+    top10Items?: Top10ItemUncheckedUpdateManyWithoutContentNestedInput
   }
 
   export type UserUpsertWithoutContentReviewsInput = {
@@ -42289,6 +46762,7 @@ export namespace Prisma {
     reviews?: ContentReviewCreateNestedManyWithoutContentInput
     contentTags?: ContentTagCreateNestedManyWithoutContentInput
     contentScore?: ContentScoreCreateNestedOneWithoutContentInput
+    top10Items?: Top10ItemCreateNestedManyWithoutContentInput
   }
 
   export type ContentUncheckedCreateWithoutVersionsInput = {
@@ -42324,6 +46798,7 @@ export namespace Prisma {
     reviews?: ContentReviewUncheckedCreateNestedManyWithoutContentInput
     contentTags?: ContentTagUncheckedCreateNestedManyWithoutContentInput
     contentScore?: ContentScoreUncheckedCreateNestedOneWithoutContentInput
+    top10Items?: Top10ItemUncheckedCreateNestedManyWithoutContentInput
   }
 
   export type ContentCreateOrConnectWithoutVersionsInput = {
@@ -42375,6 +46850,7 @@ export namespace Prisma {
     reviews?: ContentReviewUpdateManyWithoutContentNestedInput
     contentTags?: ContentTagUpdateManyWithoutContentNestedInput
     contentScore?: ContentScoreUpdateOneWithoutContentNestedInput
+    top10Items?: Top10ItemUpdateManyWithoutContentNestedInput
   }
 
   export type ContentUncheckedUpdateWithoutVersionsInput = {
@@ -42410,6 +46886,7 @@ export namespace Prisma {
     reviews?: ContentReviewUncheckedUpdateManyWithoutContentNestedInput
     contentTags?: ContentTagUncheckedUpdateManyWithoutContentNestedInput
     contentScore?: ContentScoreUncheckedUpdateOneWithoutContentNestedInput
+    top10Items?: Top10ItemUncheckedUpdateManyWithoutContentNestedInput
   }
 
   export type AiUsageLogCreateWithoutConfigInput = {
@@ -42721,6 +47198,7 @@ export namespace Prisma {
     reviews?: ContentReviewCreateNestedManyWithoutContentInput
     contentTags?: ContentTagCreateNestedManyWithoutContentInput
     versions?: ContentVersionCreateNestedManyWithoutContentItemInput
+    top10Items?: Top10ItemCreateNestedManyWithoutContentInput
   }
 
   export type ContentUncheckedCreateWithoutContentScoreInput = {
@@ -42756,6 +47234,7 @@ export namespace Prisma {
     reviews?: ContentReviewUncheckedCreateNestedManyWithoutContentInput
     contentTags?: ContentTagUncheckedCreateNestedManyWithoutContentInput
     versions?: ContentVersionUncheckedCreateNestedManyWithoutContentItemInput
+    top10Items?: Top10ItemUncheckedCreateNestedManyWithoutContentInput
   }
 
   export type ContentCreateOrConnectWithoutContentScoreInput = {
@@ -42807,6 +47286,7 @@ export namespace Prisma {
     reviews?: ContentReviewUpdateManyWithoutContentNestedInput
     contentTags?: ContentTagUpdateManyWithoutContentNestedInput
     versions?: ContentVersionUpdateManyWithoutContentItemNestedInput
+    top10Items?: Top10ItemUpdateManyWithoutContentNestedInput
   }
 
   export type ContentUncheckedUpdateWithoutContentScoreInput = {
@@ -42842,6 +47322,428 @@ export namespace Prisma {
     reviews?: ContentReviewUncheckedUpdateManyWithoutContentNestedInput
     contentTags?: ContentTagUncheckedUpdateManyWithoutContentNestedInput
     versions?: ContentVersionUncheckedUpdateManyWithoutContentItemNestedInput
+    top10Items?: Top10ItemUncheckedUpdateManyWithoutContentNestedInput
+  }
+
+  export type Top10ItemCreateWithoutTop10Input = {
+    id?: string
+    position: number
+    score: number
+    reason?: string | null
+    highlights?: string | null
+    createdAt?: Date | string
+    content: ContentCreateNestedOneWithoutTop10ItemsInput
+  }
+
+  export type Top10ItemUncheckedCreateWithoutTop10Input = {
+    id?: string
+    contentId: string
+    position: number
+    score: number
+    reason?: string | null
+    highlights?: string | null
+    createdAt?: Date | string
+  }
+
+  export type Top10ItemCreateOrConnectWithoutTop10Input = {
+    where: Top10ItemWhereUniqueInput
+    create: XOR<Top10ItemCreateWithoutTop10Input, Top10ItemUncheckedCreateWithoutTop10Input>
+  }
+
+  export type Top10ItemCreateManyTop10InputEnvelope = {
+    data: Top10ItemCreateManyTop10Input | Top10ItemCreateManyTop10Input[]
+    skipDuplicates?: boolean
+  }
+
+  export type Top10AdjustmentCreateWithoutTop10Input = {
+    id?: string
+    adjustedBy: string
+    action: string
+    contentId?: string | null
+    oldPosition?: number | null
+    newPosition?: number | null
+    reason?: string | null
+    createdAt?: Date | string
+  }
+
+  export type Top10AdjustmentUncheckedCreateWithoutTop10Input = {
+    id?: string
+    adjustedBy: string
+    action: string
+    contentId?: string | null
+    oldPosition?: number | null
+    newPosition?: number | null
+    reason?: string | null
+    createdAt?: Date | string
+  }
+
+  export type Top10AdjustmentCreateOrConnectWithoutTop10Input = {
+    where: Top10AdjustmentWhereUniqueInput
+    create: XOR<Top10AdjustmentCreateWithoutTop10Input, Top10AdjustmentUncheckedCreateWithoutTop10Input>
+  }
+
+  export type Top10AdjustmentCreateManyTop10InputEnvelope = {
+    data: Top10AdjustmentCreateManyTop10Input | Top10AdjustmentCreateManyTop10Input[]
+    skipDuplicates?: boolean
+  }
+
+  export type Top10ItemUpsertWithWhereUniqueWithoutTop10Input = {
+    where: Top10ItemWhereUniqueInput
+    update: XOR<Top10ItemUpdateWithoutTop10Input, Top10ItemUncheckedUpdateWithoutTop10Input>
+    create: XOR<Top10ItemCreateWithoutTop10Input, Top10ItemUncheckedCreateWithoutTop10Input>
+  }
+
+  export type Top10ItemUpdateWithWhereUniqueWithoutTop10Input = {
+    where: Top10ItemWhereUniqueInput
+    data: XOR<Top10ItemUpdateWithoutTop10Input, Top10ItemUncheckedUpdateWithoutTop10Input>
+  }
+
+  export type Top10ItemUpdateManyWithWhereWithoutTop10Input = {
+    where: Top10ItemScalarWhereInput
+    data: XOR<Top10ItemUpdateManyMutationInput, Top10ItemUncheckedUpdateManyWithoutTop10Input>
+  }
+
+  export type Top10AdjustmentUpsertWithWhereUniqueWithoutTop10Input = {
+    where: Top10AdjustmentWhereUniqueInput
+    update: XOR<Top10AdjustmentUpdateWithoutTop10Input, Top10AdjustmentUncheckedUpdateWithoutTop10Input>
+    create: XOR<Top10AdjustmentCreateWithoutTop10Input, Top10AdjustmentUncheckedCreateWithoutTop10Input>
+  }
+
+  export type Top10AdjustmentUpdateWithWhereUniqueWithoutTop10Input = {
+    where: Top10AdjustmentWhereUniqueInput
+    data: XOR<Top10AdjustmentUpdateWithoutTop10Input, Top10AdjustmentUncheckedUpdateWithoutTop10Input>
+  }
+
+  export type Top10AdjustmentUpdateManyWithWhereWithoutTop10Input = {
+    where: Top10AdjustmentScalarWhereInput
+    data: XOR<Top10AdjustmentUpdateManyMutationInput, Top10AdjustmentUncheckedUpdateManyWithoutTop10Input>
+  }
+
+  export type Top10AdjustmentScalarWhereInput = {
+    AND?: Top10AdjustmentScalarWhereInput | Top10AdjustmentScalarWhereInput[]
+    OR?: Top10AdjustmentScalarWhereInput[]
+    NOT?: Top10AdjustmentScalarWhereInput | Top10AdjustmentScalarWhereInput[]
+    id?: StringFilter<"Top10Adjustment"> | string
+    top10Id?: StringFilter<"Top10Adjustment"> | string
+    adjustedBy?: StringFilter<"Top10Adjustment"> | string
+    action?: StringFilter<"Top10Adjustment"> | string
+    contentId?: StringNullableFilter<"Top10Adjustment"> | string | null
+    oldPosition?: IntNullableFilter<"Top10Adjustment"> | number | null
+    newPosition?: IntNullableFilter<"Top10Adjustment"> | number | null
+    reason?: StringNullableFilter<"Top10Adjustment"> | string | null
+    createdAt?: DateTimeFilter<"Top10Adjustment"> | Date | string
+  }
+
+  export type DailyTop10CreateWithoutItemsInput = {
+    id?: string
+    date: Date | string
+    status?: $Enums.Top10Status
+    summaryReport?: string | null
+    categoryStats?: NullableJsonNullValueInput | InputJsonValue
+    totalCandidates?: number
+    generationTime?: number | null
+    generatedBy?: string | null
+    publishedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    adjustments?: Top10AdjustmentCreateNestedManyWithoutTop10Input
+  }
+
+  export type DailyTop10UncheckedCreateWithoutItemsInput = {
+    id?: string
+    date: Date | string
+    status?: $Enums.Top10Status
+    summaryReport?: string | null
+    categoryStats?: NullableJsonNullValueInput | InputJsonValue
+    totalCandidates?: number
+    generationTime?: number | null
+    generatedBy?: string | null
+    publishedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    adjustments?: Top10AdjustmentUncheckedCreateNestedManyWithoutTop10Input
+  }
+
+  export type DailyTop10CreateOrConnectWithoutItemsInput = {
+    where: DailyTop10WhereUniqueInput
+    create: XOR<DailyTop10CreateWithoutItemsInput, DailyTop10UncheckedCreateWithoutItemsInput>
+  }
+
+  export type ContentCreateWithoutTop10ItemsInput = {
+    id?: string
+    title: string
+    description?: string | null
+    content?: string | null
+    url?: string | null
+    imageUrl?: string | null
+    category?: string | null
+    tags?: ContentCreatetagsInput | string[]
+    status?: $Enums.ContentStatus
+    score?: number | null
+    priority?: number
+    sourceUrl?: string | null
+    publishedAt?: Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    author?: string | null
+    contentHash?: string | null
+    duplicateOf?: string | null
+    keywords?: ContentCreatekeywordsInput | string[]
+    quality?: number | null
+    relevance?: number | null
+    searchVector?: string | null
+    shareCount?: number
+    summary?: string | null
+    titleHash?: string | null
+    type?: $Enums.ContentType
+    viewCount?: number
+    source: SourceCreateNestedOneWithoutContentInput
+    reviews?: ContentReviewCreateNestedManyWithoutContentInput
+    contentTags?: ContentTagCreateNestedManyWithoutContentInput
+    versions?: ContentVersionCreateNestedManyWithoutContentItemInput
+    contentScore?: ContentScoreCreateNestedOneWithoutContentInput
+  }
+
+  export type ContentUncheckedCreateWithoutTop10ItemsInput = {
+    id?: string
+    title: string
+    description?: string | null
+    content?: string | null
+    url?: string | null
+    imageUrl?: string | null
+    category?: string | null
+    tags?: ContentCreatetagsInput | string[]
+    status?: $Enums.ContentStatus
+    score?: number | null
+    priority?: number
+    sourceId: string
+    sourceUrl?: string | null
+    publishedAt?: Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    author?: string | null
+    contentHash?: string | null
+    duplicateOf?: string | null
+    keywords?: ContentCreatekeywordsInput | string[]
+    quality?: number | null
+    relevance?: number | null
+    searchVector?: string | null
+    shareCount?: number
+    summary?: string | null
+    titleHash?: string | null
+    type?: $Enums.ContentType
+    viewCount?: number
+    reviews?: ContentReviewUncheckedCreateNestedManyWithoutContentInput
+    contentTags?: ContentTagUncheckedCreateNestedManyWithoutContentInput
+    versions?: ContentVersionUncheckedCreateNestedManyWithoutContentItemInput
+    contentScore?: ContentScoreUncheckedCreateNestedOneWithoutContentInput
+  }
+
+  export type ContentCreateOrConnectWithoutTop10ItemsInput = {
+    where: ContentWhereUniqueInput
+    create: XOR<ContentCreateWithoutTop10ItemsInput, ContentUncheckedCreateWithoutTop10ItemsInput>
+  }
+
+  export type DailyTop10UpsertWithoutItemsInput = {
+    update: XOR<DailyTop10UpdateWithoutItemsInput, DailyTop10UncheckedUpdateWithoutItemsInput>
+    create: XOR<DailyTop10CreateWithoutItemsInput, DailyTop10UncheckedCreateWithoutItemsInput>
+    where?: DailyTop10WhereInput
+  }
+
+  export type DailyTop10UpdateToOneWithWhereWithoutItemsInput = {
+    where?: DailyTop10WhereInput
+    data: XOR<DailyTop10UpdateWithoutItemsInput, DailyTop10UncheckedUpdateWithoutItemsInput>
+  }
+
+  export type DailyTop10UpdateWithoutItemsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumTop10StatusFieldUpdateOperationsInput | $Enums.Top10Status
+    summaryReport?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryStats?: NullableJsonNullValueInput | InputJsonValue
+    totalCandidates?: IntFieldUpdateOperationsInput | number
+    generationTime?: NullableIntFieldUpdateOperationsInput | number | null
+    generatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    adjustments?: Top10AdjustmentUpdateManyWithoutTop10NestedInput
+  }
+
+  export type DailyTop10UncheckedUpdateWithoutItemsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumTop10StatusFieldUpdateOperationsInput | $Enums.Top10Status
+    summaryReport?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryStats?: NullableJsonNullValueInput | InputJsonValue
+    totalCandidates?: IntFieldUpdateOperationsInput | number
+    generationTime?: NullableIntFieldUpdateOperationsInput | number | null
+    generatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    adjustments?: Top10AdjustmentUncheckedUpdateManyWithoutTop10NestedInput
+  }
+
+  export type ContentUpsertWithoutTop10ItemsInput = {
+    update: XOR<ContentUpdateWithoutTop10ItemsInput, ContentUncheckedUpdateWithoutTop10ItemsInput>
+    create: XOR<ContentCreateWithoutTop10ItemsInput, ContentUncheckedCreateWithoutTop10ItemsInput>
+    where?: ContentWhereInput
+  }
+
+  export type ContentUpdateToOneWithWhereWithoutTop10ItemsInput = {
+    where?: ContentWhereInput
+    data: XOR<ContentUpdateWithoutTop10ItemsInput, ContentUncheckedUpdateWithoutTop10ItemsInput>
+  }
+
+  export type ContentUpdateWithoutTop10ItemsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: ContentUpdatetagsInput | string[]
+    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    score?: NullableFloatFieldUpdateOperationsInput | number | null
+    priority?: IntFieldUpdateOperationsInput | number
+    sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    author?: NullableStringFieldUpdateOperationsInput | string | null
+    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
+    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: ContentUpdatekeywordsInput | string[]
+    quality?: NullableFloatFieldUpdateOperationsInput | number | null
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
+    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
+    shareCount?: IntFieldUpdateOperationsInput | number
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    viewCount?: IntFieldUpdateOperationsInput | number
+    source?: SourceUpdateOneRequiredWithoutContentNestedInput
+    reviews?: ContentReviewUpdateManyWithoutContentNestedInput
+    contentTags?: ContentTagUpdateManyWithoutContentNestedInput
+    versions?: ContentVersionUpdateManyWithoutContentItemNestedInput
+    contentScore?: ContentScoreUpdateOneWithoutContentNestedInput
+  }
+
+  export type ContentUncheckedUpdateWithoutTop10ItemsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: ContentUpdatetagsInput | string[]
+    status?: EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+    score?: NullableFloatFieldUpdateOperationsInput | number | null
+    priority?: IntFieldUpdateOperationsInput | number
+    sourceId?: StringFieldUpdateOperationsInput | string
+    sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    author?: NullableStringFieldUpdateOperationsInput | string | null
+    contentHash?: NullableStringFieldUpdateOperationsInput | string | null
+    duplicateOf?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: ContentUpdatekeywordsInput | string[]
+    quality?: NullableFloatFieldUpdateOperationsInput | number | null
+    relevance?: NullableFloatFieldUpdateOperationsInput | number | null
+    searchVector?: NullableStringFieldUpdateOperationsInput | string | null
+    shareCount?: IntFieldUpdateOperationsInput | number
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    titleHash?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    viewCount?: IntFieldUpdateOperationsInput | number
+    reviews?: ContentReviewUncheckedUpdateManyWithoutContentNestedInput
+    contentTags?: ContentTagUncheckedUpdateManyWithoutContentNestedInput
+    versions?: ContentVersionUncheckedUpdateManyWithoutContentItemNestedInput
+    contentScore?: ContentScoreUncheckedUpdateOneWithoutContentNestedInput
+  }
+
+  export type DailyTop10CreateWithoutAdjustmentsInput = {
+    id?: string
+    date: Date | string
+    status?: $Enums.Top10Status
+    summaryReport?: string | null
+    categoryStats?: NullableJsonNullValueInput | InputJsonValue
+    totalCandidates?: number
+    generationTime?: number | null
+    generatedBy?: string | null
+    publishedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    items?: Top10ItemCreateNestedManyWithoutTop10Input
+  }
+
+  export type DailyTop10UncheckedCreateWithoutAdjustmentsInput = {
+    id?: string
+    date: Date | string
+    status?: $Enums.Top10Status
+    summaryReport?: string | null
+    categoryStats?: NullableJsonNullValueInput | InputJsonValue
+    totalCandidates?: number
+    generationTime?: number | null
+    generatedBy?: string | null
+    publishedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    items?: Top10ItemUncheckedCreateNestedManyWithoutTop10Input
+  }
+
+  export type DailyTop10CreateOrConnectWithoutAdjustmentsInput = {
+    where: DailyTop10WhereUniqueInput
+    create: XOR<DailyTop10CreateWithoutAdjustmentsInput, DailyTop10UncheckedCreateWithoutAdjustmentsInput>
+  }
+
+  export type DailyTop10UpsertWithoutAdjustmentsInput = {
+    update: XOR<DailyTop10UpdateWithoutAdjustmentsInput, DailyTop10UncheckedUpdateWithoutAdjustmentsInput>
+    create: XOR<DailyTop10CreateWithoutAdjustmentsInput, DailyTop10UncheckedCreateWithoutAdjustmentsInput>
+    where?: DailyTop10WhereInput
+  }
+
+  export type DailyTop10UpdateToOneWithWhereWithoutAdjustmentsInput = {
+    where?: DailyTop10WhereInput
+    data: XOR<DailyTop10UpdateWithoutAdjustmentsInput, DailyTop10UncheckedUpdateWithoutAdjustmentsInput>
+  }
+
+  export type DailyTop10UpdateWithoutAdjustmentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumTop10StatusFieldUpdateOperationsInput | $Enums.Top10Status
+    summaryReport?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryStats?: NullableJsonNullValueInput | InputJsonValue
+    totalCandidates?: IntFieldUpdateOperationsInput | number
+    generationTime?: NullableIntFieldUpdateOperationsInput | number | null
+    generatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    items?: Top10ItemUpdateManyWithoutTop10NestedInput
+  }
+
+  export type DailyTop10UncheckedUpdateWithoutAdjustmentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumTop10StatusFieldUpdateOperationsInput | $Enums.Top10Status
+    summaryReport?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryStats?: NullableJsonNullValueInput | InputJsonValue
+    totalCandidates?: IntFieldUpdateOperationsInput | number
+    generationTime?: NullableIntFieldUpdateOperationsInput | number | null
+    generatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    items?: Top10ItemUncheckedUpdateManyWithoutTop10NestedInput
   }
 
   export type AccountCreateManyUserInput = {
@@ -43072,6 +47974,7 @@ export namespace Prisma {
     contentTags?: ContentTagUpdateManyWithoutContentNestedInput
     versions?: ContentVersionUpdateManyWithoutContentItemNestedInput
     contentScore?: ContentScoreUpdateOneWithoutContentNestedInput
+    top10Items?: Top10ItemUpdateManyWithoutContentNestedInput
   }
 
   export type ContentUncheckedUpdateWithoutSourceInput = {
@@ -43107,6 +48010,7 @@ export namespace Prisma {
     contentTags?: ContentTagUncheckedUpdateManyWithoutContentNestedInput
     versions?: ContentVersionUncheckedUpdateManyWithoutContentItemNestedInput
     contentScore?: ContentScoreUncheckedUpdateOneWithoutContentNestedInput
+    top10Items?: Top10ItemUncheckedUpdateManyWithoutContentNestedInput
   }
 
   export type ContentUncheckedUpdateManyWithoutSourceInput = {
@@ -43167,6 +48071,16 @@ export namespace Prisma {
     changeType: string
     changeNote?: string | null
     changedBy?: string | null
+    createdAt?: Date | string
+  }
+
+  export type Top10ItemCreateManyContentInput = {
+    id?: string
+    top10Id: string
+    position: number
+    score: number
+    reason?: string | null
+    highlights?: string | null
     createdAt?: Date | string
   }
 
@@ -43257,6 +48171,36 @@ export namespace Prisma {
     changeType?: StringFieldUpdateOperationsInput | string
     changeNote?: NullableStringFieldUpdateOperationsInput | string | null
     changedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Top10ItemUpdateWithoutContentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    position?: IntFieldUpdateOperationsInput | number
+    score?: FloatFieldUpdateOperationsInput | number
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    highlights?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    top10?: DailyTop10UpdateOneRequiredWithoutItemsNestedInput
+  }
+
+  export type Top10ItemUncheckedUpdateWithoutContentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    top10Id?: StringFieldUpdateOperationsInput | string
+    position?: IntFieldUpdateOperationsInput | number
+    score?: FloatFieldUpdateOperationsInput | number
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    highlights?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Top10ItemUncheckedUpdateManyWithoutContentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    top10Id?: StringFieldUpdateOperationsInput | string
+    position?: IntFieldUpdateOperationsInput | number
+    score?: FloatFieldUpdateOperationsInput | number
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    highlights?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -43496,6 +48440,90 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type Top10ItemCreateManyTop10Input = {
+    id?: string
+    contentId: string
+    position: number
+    score: number
+    reason?: string | null
+    highlights?: string | null
+    createdAt?: Date | string
+  }
+
+  export type Top10AdjustmentCreateManyTop10Input = {
+    id?: string
+    adjustedBy: string
+    action: string
+    contentId?: string | null
+    oldPosition?: number | null
+    newPosition?: number | null
+    reason?: string | null
+    createdAt?: Date | string
+  }
+
+  export type Top10ItemUpdateWithoutTop10Input = {
+    id?: StringFieldUpdateOperationsInput | string
+    position?: IntFieldUpdateOperationsInput | number
+    score?: FloatFieldUpdateOperationsInput | number
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    highlights?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    content?: ContentUpdateOneRequiredWithoutTop10ItemsNestedInput
+  }
+
+  export type Top10ItemUncheckedUpdateWithoutTop10Input = {
+    id?: StringFieldUpdateOperationsInput | string
+    contentId?: StringFieldUpdateOperationsInput | string
+    position?: IntFieldUpdateOperationsInput | number
+    score?: FloatFieldUpdateOperationsInput | number
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    highlights?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Top10ItemUncheckedUpdateManyWithoutTop10Input = {
+    id?: StringFieldUpdateOperationsInput | string
+    contentId?: StringFieldUpdateOperationsInput | string
+    position?: IntFieldUpdateOperationsInput | number
+    score?: FloatFieldUpdateOperationsInput | number
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    highlights?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Top10AdjustmentUpdateWithoutTop10Input = {
+    id?: StringFieldUpdateOperationsInput | string
+    adjustedBy?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    contentId?: NullableStringFieldUpdateOperationsInput | string | null
+    oldPosition?: NullableIntFieldUpdateOperationsInput | number | null
+    newPosition?: NullableIntFieldUpdateOperationsInput | number | null
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Top10AdjustmentUncheckedUpdateWithoutTop10Input = {
+    id?: StringFieldUpdateOperationsInput | string
+    adjustedBy?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    contentId?: NullableStringFieldUpdateOperationsInput | string | null
+    oldPosition?: NullableIntFieldUpdateOperationsInput | number | null
+    newPosition?: NullableIntFieldUpdateOperationsInput | number | null
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Top10AdjustmentUncheckedUpdateManyWithoutTop10Input = {
+    id?: StringFieldUpdateOperationsInput | string
+    adjustedBy?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    contentId?: NullableStringFieldUpdateOperationsInput | string | null
+    oldPosition?: NullableIntFieldUpdateOperationsInput | number | null
+    newPosition?: NullableIntFieldUpdateOperationsInput | number | null
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
 
 
   /**
@@ -43525,6 +48553,10 @@ export namespace Prisma {
      * @deprecated Use AiServiceConfigCountOutputTypeDefaultArgs instead
      */
     export type AiServiceConfigCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = AiServiceConfigCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use DailyTop10CountOutputTypeDefaultArgs instead
+     */
+    export type DailyTop10CountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = DailyTop10CountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use UserDefaultArgs instead
      */
@@ -43633,6 +48665,18 @@ export namespace Prisma {
      * @deprecated Use ABTestConfigDefaultArgs instead
      */
     export type ABTestConfigArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ABTestConfigDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use DailyTop10DefaultArgs instead
+     */
+    export type DailyTop10Args<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = DailyTop10DefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Top10ItemDefaultArgs instead
+     */
+    export type Top10ItemArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Top10ItemDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use Top10AdjustmentDefaultArgs instead
+     */
+    export type Top10AdjustmentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Top10AdjustmentDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany
