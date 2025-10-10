@@ -170,11 +170,11 @@ export class DailyTop10Service {
     startDate: Date,
     endDate: Date
   ): Promise<Top10Candidate[]> {
-    // 获取时间范围内的内容
+    // 获取时间范围内的内容（排除已归档和已拒绝的）
     const content = await db.content.findMany({
       where: {
-        status: 'PUBLISHED',
-        publishedAt: {
+        status: { notIn: ['ARCHIVED', 'REJECTED'] },
+        createdAt: {
           gte: startDate,
           lte: endDate
         }
@@ -184,8 +184,9 @@ export class DailyTop10Service {
         contentScore: true
       },
       orderBy: {
-        publishedAt: 'desc'
-      }
+        createdAt: 'desc'
+      },
+      take: 200 // 限制候选数量，提高性能
     });
 
     // 转换为候选格式

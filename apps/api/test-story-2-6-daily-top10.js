@@ -49,8 +49,8 @@ async function testAdminLogin() {
   
   try {
     const response = await axios.post(`${BASE_URL}/api/auth/login`, {
-      email: 'admin@example.com',
-      password: 'Admin123!@#'
+      email: 'admin@mkbl.com',
+      password: 'Wm@123456'
     });
     
     if (response.data.success && response.data.data.token) {
