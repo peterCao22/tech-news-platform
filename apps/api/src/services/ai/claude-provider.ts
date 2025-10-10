@@ -37,8 +37,8 @@ export class ClaudeProvider extends BaseAIProvider {
    * 健康检查
    */
   async healthCheck(): Promise<boolean> {
+    const startTime = Date.now();
     try {
-      const startTime = Date.now();
       const response = await this.makeRequest('/messages', 'POST', {
         model: this.config.model,
         max_tokens: 10,
@@ -52,7 +52,7 @@ export class ClaudeProvider extends BaseAIProvider {
       await this.recordUsage('health_check', 0, 0, responseTime, true);
       return response && response.content && response.content.length > 0;
     } catch (error) {
-      const responseTime = Date.now();
+      const responseTime = Date.now() - startTime;
       await this.recordUsage('health_check', 0, 0, responseTime, false, error instanceof Error ? error.message : 'Unknown error');
       logger.error('Claude健康检查失败', { error });
       return false;
@@ -63,8 +63,8 @@ export class ClaudeProvider extends BaseAIProvider {
    * 生成文本
    */
   async generateText(prompt: string, options?: AIOptions): Promise<string> {
+    const startTime = Date.now();
     try {
-      const startTime = Date.now();
       const model = options?.model || this.config.model;
       const maxTokens = options?.maxTokens || this.config.maxTokens || 1000;
 
@@ -91,7 +91,7 @@ export class ClaudeProvider extends BaseAIProvider {
       await this.recordUsage('generate_text', inputTokens, outputTokens, responseTime, true);
       return text;
     } catch (error) {
-      const responseTime = Date.now();
+      const responseTime = Date.now() - startTime;
       await this.recordUsage('generate_text', 0, 0, responseTime, false, error instanceof Error ? error.message : 'Unknown error');
       throw this.handleError(error, 'generateText');
     }
