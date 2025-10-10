@@ -73,8 +73,8 @@ export class DailyTop10Service {
   // 单一来源限制
   private readonly sourceLimit = 3;
 
-  // 最小评分阈值
-  private readonly minScoreThreshold = 50;
+  // 最小评分阈值（降低以确保有足够候选内容）
+  private readonly minScoreThreshold = 30;
 
   /**
    * 生成每日TOP10
@@ -83,10 +83,12 @@ export class DailyTop10Service {
     date: Date = new Date(),
     forceRegenerate: boolean = false
   ): Promise<any> {
-    const startDate = new Date(date);
-    startDate.setHours(0, 0, 0, 0);
+    // 使用过去7天的内容作为候选池
     const endDate = new Date(date);
     endDate.setHours(23, 59, 59, 999);
+    const startDate = new Date(endDate);
+    startDate.setDate(startDate.getDate() - 3); // 过去3天
+    startDate.setHours(0, 0, 0, 0);
 
     logger.info('开始生成每日TOP10', { date: startDate });
 
@@ -164,7 +166,7 @@ export class DailyTop10Service {
   }
 
   /**
-   * 获取候选内容（过去24小时）
+   * 获取候选内容（时间范围内）
    */
   private async getCandidateContent(
     startDate: Date,
