@@ -109,10 +109,30 @@ export abstract class BaseAIProvider {
       const costPerToken = this.name === 'gemini' ? 0.000001 : 0.000003; // Gemini便宜，Claude贵
       const costUsd = (inputTokens + outputTokens) * costPerToken;
       
+      // 确保存在对应的配置ID，如果不存在则创建或跳过
+      const configId = `env-${this.name}`;
+      const config = await db.aiServiceConfig.findUnique({ where: { id: configId } });
+      
+      if (!config) {
+        // 如果配置不存在，创建一个默认配置
+        await db.aiServiceConfig.create({
+          data: {
+            id: configId,
+            name: `${this.name.toUpperCase()} (环境变量)`,
+            provider: this.name.toUpperCase() as any,
+            apiKey: process.env[`${this.name.toUpperCase()}_API_KEY`] || '',
+            model: process.env[`${this.name.toUpperCase()}_MODEL`] || 'default',
+            isActive: true
+          }
+        }).catch(() => {
+          // 如果创建失败（可能并发创建），忽略错误
+        });
+      }
+      
       // 写入数据库
       await db.aiUsageLog.create({
         data: {
-          configId: `env-${this.name}`, // 使用环境变量配置的标识
+          configId,
           provider: this.name.toUpperCase() as any,
           operation,
           inputTokens,

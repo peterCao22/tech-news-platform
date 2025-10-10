@@ -12,20 +12,28 @@ interface EmbeddingConfig {
 }
 
 export class EmbeddingService {
-  private client: GoogleGenAI;
+  private client: GoogleGenAI | null = null;
   private defaultModel: string = 'gemini-embedding-001';
-  private apiKey: string;
+  private apiKey: string | null = null;
+  private initialized: boolean = false;
 
-  constructor() {
-    this.apiKey = process.env.GEMINI_API_KEY || '';
+  /**
+   * 延迟初始化（确保环境变量已加载）
+   */
+  private ensureInitialized(): void {
+    if (this.initialized) {
+      return;
+    }
+
+    this.apiKey = process.env.GEMINI_API_KEY || null;
     
     if (!this.apiKey) {
       logger.warn('GEMINI_API_KEY 未配置，embedding服务将不可用');
-      // 创建一个空客户端以避免 null 检查
-      this.client = new GoogleGenAI({ apiKey: '' });
     } else {
       this.client = new GoogleGenAI({ apiKey: this.apiKey });
     }
+
+    this.initialized = true;
   }
 
   /**
@@ -46,7 +54,9 @@ export class EmbeddingService {
     texts: string[],
     config?: Partial<EmbeddingConfig>
   ): Promise<number[][]> {
-    if (!this.apiKey) {
+    this.ensureInitialized();
+    
+    if (!this.apiKey || !this.client) {
       throw new Error('GEMINI_API_KEY 未配置');
     }
 
@@ -180,7 +190,9 @@ export class EmbeddingService {
    * 健康检查
    */
   async healthCheck(): Promise<boolean> {
-    if (!this.apiKey) {
+    this.ensureInitialized();
+    
+    if (!this.apiKey || !this.client) {
       return false;
     }
 

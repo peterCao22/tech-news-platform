@@ -198,19 +198,8 @@ export class ContentItemRepository extends BaseRepository {
     const duplicationCheck = await this.checkDuplication(data.title, data.content, data.url);
     
     if (duplicationCheck.isDuplicate) {
-      // 记录重复检测结果
-      await this.prisma.contentDuplication.create({
-        data: {
-          originalId: duplicationCheck.duplicateId!,
-          duplicateId: 'temp', // 临时ID，稍后更新
-          titleSimilarity: duplicationCheck.method === 'TITLE_HASH' ? 1.0 : (duplicationCheck.similarity || 0),
-          contentSimilarity: duplicationCheck.method === 'CONTENT_HASH' ? 1.0 : 0,
-          overallSimilarity: duplicationCheck.similarity || 1.0,
-          detectionMethod: duplicationCheck.method!,
-          confidence: duplicationCheck.similarity || 1.0,
-        },
-      });
-
+      // 跳过记录重复检测结果到数据库（避免约束违规）
+      // 直接抛出错误，让调用者处理
       throw new Error(`检测到重复内容，相似度: ${(duplicationCheck.similarity! * 100).toFixed(1)}%`);
     }
 
