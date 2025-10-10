@@ -219,9 +219,17 @@ export abstract class BaseApiClient {
     switch (auth.type) {
       case AuthType.API_KEY:
         if (auth.apiKey) {
+          // 支持Header认证
           const headerName = auth.headerName || 'X-API-Key';
           config.headers = config.headers || {};
           config.headers[headerName] = auth.apiKey;
+          
+          // Finnhub同时支持URL参数认证，添加到params
+          // 这是Finnhub推荐的方式
+          if (headerName === 'X-Finnhub-Token') {
+            config.params = config.params || {};
+            config.params.token = auth.apiKey;
+          }
         }
         break;
 

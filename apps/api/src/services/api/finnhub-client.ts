@@ -94,70 +94,62 @@ export class FinnhubClient extends BaseApiClient {
 
   /**
    * 获取公司新闻
+   * @param symbol 股票代码（必需）
+   * @param from 开始日期 YYYY-MM-DD（必需）
+   * @param to 结束日期 YYYY-MM-DD（必需）
    */
-  public async getCompanyNews(options?: {
-    symbol?: string; // 股票代码
-    from?: string; // 开始日期 (YYYY-MM-DD)
-    to?: string; // 结束日期 (YYYY-MM-DD)
-  }): Promise<FinnhubNewsResponse> {
+  public async getCompanyNews(
+    symbol: string,
+    from: string,
+    to: string
+  ): Promise<FinnhubNewsItem[]> {
     try {
       const params: any = {
-        category: 'general'
+        symbol,
+        from,
+        to
       };
 
-      if (options?.symbol) {
-        params.symbol = options.symbol;
-      }
-
-      if (options?.from) {
-        params.from = options.from;
-      }
-
-      if (options?.to) {
-        params.to = options.to;
-      }
-
       const response = await this.get('/company-news', { params });
-      return response;
+      // Finnhub company-news 直接返回数组，不是包装在对象中
+      return Array.isArray(response) ? response : [];
     } catch (error) {
-      logger.error('获取Finnhub公司新闻失败', { error });
+      logger.error('获取Finnhub公司新闻失败', { error, symbol, from, to });
       throw error;
     }
   }
 
   /**
    * 获取市场新闻
+   * @param category 新闻类别（必需），如 'general', 'forex', 'crypto', 'merger'
    */
-  public async getMarketNews(options?: {
-    category?: string; // 新闻类别
-    minId?: number; // 最小ID
-  }): Promise<FinnhubNewsResponse> {
+  public async getMarketNews(category: string = 'general'): Promise<FinnhubNewsItem[]> {
     try {
-      const params: any = {};
-
-      if (options?.category) {
-        params.category = options.category;
-      }
-
-      if (options?.minId) {
-        params.minId = options.minId;
-      }
+      const params: any = {
+        category
+      };
 
       const response = await this.get('/news', { params });
-      return response;
+      // Finnhub /news 直接返回数组
+      return Array.isArray(response) ? response : [];
     } catch (error) {
-      logger.error('获取Finnhub市场新闻失败', { error });
+      logger.error('获取Finnhub市场新闻失败', { error, category });
       throw error;
     }
   }
 
   /**
-   * 获取科技新闻
+   * 获取科技新闻（实际上Finnhub没有单独的technology分类，使用general并过滤）
    */
   public async getTechNews(): Promise<FinnhubNewsItem[]> {
     try {
-      const response = await this.getMarketNews({ category: 'technology' });
-      return response.data || [];
+      const news = await this.getMarketNews('general');
+      // 过滤科技相关新闻
+      return news.filter(item => 
+        item.headline.toLowerCase().includes('tech') ||
+        item.summary.toLowerCase().includes('tech') ||
+        item.category.toLowerCase() === 'technology'
+      );
     } catch (error) {
       logger.error('获取Finnhub科技新闻失败', { error });
       throw error;
@@ -169,16 +161,15 @@ export class FinnhubClient extends BaseApiClient {
    */
   public async getAINews(): Promise<FinnhubNewsItem[]> {
     try {
-      const response = await this.getMarketNews({ category: 'general' });
+      const news = await this.getMarketNews('general');
       // 过滤AI相关新闻
-      const aiNews = (response.data || []).filter(news => 
-        news.headline.toLowerCase().includes('ai') ||
-        news.headline.toLowerCase().includes('artificial intelligence') ||
-        news.headline.toLowerCase().includes('machine learning') ||
-        news.summary.toLowerCase().includes('ai') ||
-        news.summary.toLowerCase().includes('artificial intelligence')
+      return news.filter(item => 
+        item.headline.toLowerCase().includes('ai') ||
+        item.headline.toLowerCase().includes('artificial intelligence') ||
+        item.headline.toLowerCase().includes('machine learning') ||
+        item.summary.toLowerCase().includes('ai') ||
+        item.summary.toLowerCase().includes('artificial intelligence')
       );
-      return aiNews;
     } catch (error) {
       logger.error('获取Finnhub AI新闻失败', { error });
       throw error;
@@ -187,15 +178,21 @@ export class FinnhubClient extends BaseApiClient {
 
   /**
    * 搜索公司新闻
+   * @param symbol 股票代码
+   * @param from 开始日期 YYYY-MM-DD（默认7天前）
+   * @param to 结束日期 YYYY-MM-DD（默认今天）
    */
-  public async searchCompanyNews(symbol: string, from?: string, to?: string): Promise<FinnhubNewsItem[]> {
+  public async searchCompanyNews(
+    symbol: string, 
+    from?: string, 
+    to?: string
+  ): Promise<FinnhubNewsItem[]> {
     try {
-      const response = await this.getCompanyNews({
-        symbol,
-        from,
-        to
-      });
-      return response.data || [];
+      // 如果没有提供日期，默认查询最近7天
+      const toDate = to || new Date().toISOString().split('T')[0];
+      const fromDate = from || new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+      
+      return await this.getCompanyNews(symbol, fromDate, toDate);
     } catch (error) {
       logger.error('搜索Finnhub公司新闻失败', { error, symbol });
       throw error;
