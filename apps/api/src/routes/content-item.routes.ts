@@ -9,7 +9,7 @@ import { authenticate, authorize } from '../middleware/auth.middleware';
 import { validateRequest } from '../middleware/validation.middleware';
 import { body, param, query } from 'express-validator';
 
-const router = Router();
+const router: Router = Router();
 const contentController = new ContentItemController();
 
 // 验证规则

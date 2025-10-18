@@ -5,6 +5,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useAuthStore } from '@/stores/auth.store';
+import DashboardLayout from '@/components/layouts/DashboardLayout';
 import { Card } from '@tech-news-platform/ui';
 import { Button } from '@tech-news-platform/ui';
 import { Input } from '@tech-news-platform/ui';
@@ -26,6 +28,7 @@ import { apiConfigService, ApiConfiguration, ApiConfigStats } from '../../servic
 
 const ApiConfigsPage: React.FC = () => {
   const router = useRouter();
+  const { user, isAuthenticated } = useAuthStore();
   const [configs, setConfigs] = useState<ApiConfiguration[]>([]);
   const [stats, setStats] = useState<ApiConfigStats | null>(null);
   const [loading, setLoading] = useState(true);
@@ -33,10 +36,24 @@ const ApiConfigsPage: React.FC = () => {
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [providerFilter, setProviderFilter] = useState<string>('all');
 
+  // 身份验证检查
+  useEffect(() => {
+    if (!isAuthenticated || !user) {
+      router.push('/auth/login');
+      return;
+    }
+    if (user.role !== 'ADMIN') {
+      router.push('/dashboard');
+      return;
+    }
+  }, [isAuthenticated, user, router]);
+
   // 加载数据
   useEffect(() => {
-    loadData();
-  }, []);
+    if (isAuthenticated && user?.role === 'ADMIN') {
+      loadData();
+    }
+  }, [isAuthenticated, user]);
 
   const loadData = async () => {
     try {
@@ -136,16 +153,19 @@ const ApiConfigsPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex justify-center items-center h-64">
-          <div className="text-lg">加载中...</div>
+      <DashboardLayout>
+        <div className="container mx-auto px-4 py-8">
+          <div className="flex justify-center items-center h-64">
+            <div className="text-lg">加载中...</div>
+          </div>
         </div>
-      </div>
+      </DashboardLayout>
     );
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <DashboardLayout>
+      <div className="container mx-auto px-4 py-8">
       {/* 页面标题和操作 */}
       <div className="flex justify-between items-center mb-8">
         <div>
@@ -365,7 +385,8 @@ const ApiConfigsPage: React.FC = () => {
           )}
         </Card>
       )}
-    </div>
+      </div>
+    </DashboardLayout>
   );
 };
 

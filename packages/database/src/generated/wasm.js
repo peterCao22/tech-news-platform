@@ -223,12 +223,17 @@ exports.Prisma.ContentScalarFieldEnum = {
   keywords: 'keywords',
   quality: 'quality',
   relevance: 'relevance',
-  searchVector: 'searchVector',
   shareCount: 'shareCount',
   summary: 'summary',
   titleHash: 'titleHash',
   type: 'type',
-  viewCount: 'viewCount'
+  viewCount: 'viewCount',
+  reviewStatus: 'reviewStatus',
+  reviewedBy: 'reviewedBy',
+  reviewedAt: 'reviewedAt',
+  reviewNotes: 'reviewNotes',
+  lastEditedBy: 'lastEditedBy',
+  lastEditedAt: 'lastEditedAt'
 };
 
 exports.Prisma.TagScalarFieldEnum = {
@@ -368,6 +373,10 @@ exports.Prisma.ContentAuditLogScalarFieldEnum = {
   action: 'action',
   tableName: 'tableName',
   recordId: 'recordId',
+  oldStatus: 'oldStatus',
+  newStatus: 'newStatus',
+  changes: 'changes',
+  notes: 'notes',
   oldValues: 'oldValues',
   newValues: 'newValues',
   ipAddress: 'ipAddress',
@@ -540,6 +549,276 @@ exports.Prisma.Top10AdjustmentScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.FilterRuleScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  ruleType: 'ruleType',
+  status: 'status',
+  priority: 'priority',
+  config: 'config',
+  version: 'version',
+  isPublished: 'isPublished',
+  publishedAt: 'publishedAt',
+  publishedBy: 'publishedBy',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  updatedBy: 'updatedBy',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.RuleVersionScalarFieldEnum = {
+  id: 'id',
+  ruleId: 'ruleId',
+  version: 'version',
+  config: 'config',
+  changeLog: 'changeLog',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.SourceListScalarFieldEnum = {
+  id: 'id',
+  listType: 'listType',
+  sourceId: 'sourceId',
+  sourceName: 'sourceName',
+  sourceDomain: 'sourceDomain',
+  weight: 'weight',
+  reason: 'reason',
+  isActive: 'isActive',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.RuleAnalyticsScalarFieldEnum = {
+  id: 'id',
+  ruleId: 'ruleId',
+  date: 'date',
+  affectedCount: 'affectedCount',
+  boostedCount: 'boostedCount',
+  penaltyCount: 'penaltyCount',
+  blockedCount: 'blockedCount',
+  avgScoreBefore: 'avgScoreBefore',
+  avgScoreAfter: 'avgScoreAfter',
+  top10HitRate: 'top10HitRate',
+  details: 'details'
+};
+
+exports.Prisma.ContentTemplateScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  category: 'category',
+  template: 'template',
+  isActive: 'isActive',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.BatchImportScalarFieldEnum = {
+  id: 'id',
+  fileName: 'fileName',
+  importType: 'importType',
+  totalItems: 'totalItems',
+  successCount: 'successCount',
+  failedCount: 'failedCount',
+  status: 'status',
+  errorLog: 'errorLog',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.UserPreferenceScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  preferredLanguage: 'preferredLanguage',
+  timezone: 'timezone',
+  contentTypes: 'contentTypes',
+  emailNotifications: 'emailNotifications',
+  pushNotifications: 'pushNotifications',
+  notificationFrequency: 'notificationFrequency',
+  itemsPerPage: 'itemsPerPage',
+  defaultSortBy: 'defaultSortBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.UserInterestScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  category: 'category',
+  name: 'name',
+  weight: 'weight',
+  isActive: 'isActive',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.UserFollowingScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  followType: 'followType',
+  name: 'name',
+  identifier: 'identifier',
+  weight: 'weight',
+  isActive: 'isActive',
+  notifyOnNews: 'notifyOnNews',
+  notifyOnPrice: 'notifyOnPrice',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SourceWeightScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  sourceId: 'sourceId',
+  weight: 'weight',
+  reason: 'reason',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.PreferenceTemplateScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  category: 'category',
+  isPublic: 'isPublic',
+  config: 'config',
+  usageCount: 'usageCount',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.UserBehaviorScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  eventType: 'eventType',
+  contentId: 'contentId',
+  duration: 'duration',
+  scrollDepth: 'scrollDepth',
+  deviceType: 'deviceType',
+  source: 'source',
+  metadata: 'metadata',
+  timestamp: 'timestamp',
+  sessionId: 'sessionId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.UserReadingHistoryScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  contentId: 'contentId',
+  readCount: 'readCount',
+  totalDuration: 'totalDuration',
+  maxScrollDepth: 'maxScrollDepth',
+  isCompleted: 'isCompleted',
+  isBookmarked: 'isBookmarked',
+  isLiked: 'isLiked',
+  isShared: 'isShared',
+  firstReadAt: 'firstReadAt',
+  lastReadAt: 'lastReadAt'
+};
+
+exports.Prisma.UserEngagementScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  totalViews: 'totalViews',
+  totalReads: 'totalReads',
+  totalClicks: 'totalClicks',
+  totalShares: 'totalShares',
+  totalBookmarks: 'totalBookmarks',
+  totalLikes: 'totalLikes',
+  totalReadingTime: 'totalReadingTime',
+  avgSessionTime: 'avgSessionTime',
+  categoryPreferences: 'categoryPreferences',
+  sourcePreferences: 'sourcePreferences',
+  topicPreferences: 'topicPreferences',
+  dailyActiveStreak: 'dailyActiveStreak',
+  lastActiveDate: 'lastActiveDate',
+  updatedAt: 'updatedAt',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ImplicitPreferenceScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  preferenceType: 'preferenceType',
+  preferenceKey: 'preferenceKey',
+  weight: 'weight',
+  interactionCount: 'interactionCount',
+  lastInteraction: 'lastInteraction',
+  confidence: 'confidence',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.KeywordTrendScalarFieldEnum = {
+  id: 'id',
+  keyword: 'keyword',
+  date: 'date',
+  count: 'count',
+  contentIds: 'contentIds',
+  avgScore: 'avgScore',
+  categories: 'categories',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.CategoryTrendScalarFieldEnum = {
+  id: 'id',
+  category: 'category',
+  date: 'date',
+  count: 'count',
+  avgScore: 'avgScore',
+  topKeywords: 'topKeywords',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.NotificationPreferenceScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  stockAlertEnabled: 'stockAlertEnabled',
+  importantNewsEnabled: 'importantNewsEnabled',
+  top10DigestEnabled: 'top10DigestEnabled',
+  frequency: 'frequency',
+  quietHoursStart: 'quietHoursStart',
+  quietHoursEnd: 'quietHoursEnd',
+  digestTime: 'digestTime',
+  stockAlertThreshold: 'stockAlertThreshold',
+  minNewsScore: 'minNewsScore',
+  emailEnabled: 'emailEnabled',
+  email: 'email',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.NotificationLogScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  channel: 'channel',
+  subject: 'subject',
+  content: 'content',
+  status: 'status',
+  sentAt: 'sentAt',
+  errorMessage: 'errorMessage',
+  metadata: 'metadata',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.StockPriceHistoryScalarFieldEnum = {
+  id: 'id',
+  symbol: 'symbol',
+  name: 'name',
+  price: 'price',
+  change: 'change',
+  changePercent: 'changePercent',
+  timestamp: 'timestamp',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -618,6 +897,14 @@ exports.ContentType = exports.$Enums.ContentType = {
   OTHER: 'OTHER'
 };
 
+exports.ContentReviewStatus = exports.$Enums.ContentReviewStatus = {
+  DRAFT: 'DRAFT',
+  PENDING_REVIEW: 'PENDING_REVIEW',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED',
+  PUBLISHED: 'PUBLISHED'
+};
+
 exports.TagType = exports.$Enums.TagType = {
   CATEGORY: 'CATEGORY',
   TECHNOLOGY: 'TECHNOLOGY',
@@ -664,6 +951,71 @@ exports.Top10Status = exports.$Enums.Top10Status = {
   ARCHIVED: 'ARCHIVED'
 };
 
+exports.RuleType = exports.$Enums.RuleType = {
+  KEYWORD_BOOST: 'KEYWORD_BOOST',
+  KEYWORD_PENALTY: 'KEYWORD_PENALTY',
+  SOURCE_WHITELIST: 'SOURCE_WHITELIST',
+  SOURCE_BLACKLIST: 'SOURCE_BLACKLIST',
+  CATEGORY_BOOST: 'CATEGORY_BOOST',
+  CATEGORY_PENALTY: 'CATEGORY_PENALTY',
+  CUSTOM: 'CUSTOM'
+};
+
+exports.RuleStatus = exports.$Enums.RuleStatus = {
+  DRAFT: 'DRAFT',
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE',
+  ARCHIVED: 'ARCHIVED'
+};
+
+exports.ListType = exports.$Enums.ListType = {
+  WHITELIST: 'WHITELIST',
+  BLACKLIST: 'BLACKLIST'
+};
+
+exports.FollowType = exports.$Enums.FollowType = {
+  COMPANY: 'COMPANY',
+  STOCK: 'STOCK',
+  PERSON: 'PERSON',
+  ORGANIZATION: 'ORGANIZATION'
+};
+
+exports.BehaviorEventType = exports.$Enums.BehaviorEventType = {
+  VIEW: 'VIEW',
+  CLICK: 'CLICK',
+  READ: 'READ',
+  SHARE: 'SHARE',
+  BOOKMARK: 'BOOKMARK',
+  LIKE: 'LIKE',
+  SEARCH: 'SEARCH',
+  COMMENT: 'COMMENT'
+};
+
+exports.NotificationFrequency = exports.$Enums.NotificationFrequency = {
+  REALTIME: 'REALTIME',
+  DAILY: 'DAILY',
+  WEEKLY: 'WEEKLY',
+  OFF: 'OFF'
+};
+
+exports.NotificationType = exports.$Enums.NotificationType = {
+  STOCK_ALERT: 'STOCK_ALERT',
+  IMPORTANT_NEWS: 'IMPORTANT_NEWS',
+  TOP10_DIGEST: 'TOP10_DIGEST'
+};
+
+exports.NotificationChannel = exports.$Enums.NotificationChannel = {
+  EMAIL: 'EMAIL',
+  WEB_PUSH: 'WEB_PUSH',
+  SMS: 'SMS'
+};
+
+exports.NotificationStatus = exports.$Enums.NotificationStatus = {
+  PENDING: 'PENDING',
+  SENT: 'SENT',
+  FAILED: 'FAILED'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Account: 'Account',
@@ -694,7 +1046,27 @@ exports.Prisma.ModelName = {
   ABTestConfig: 'ABTestConfig',
   DailyTop10: 'DailyTop10',
   Top10Item: 'Top10Item',
-  Top10Adjustment: 'Top10Adjustment'
+  Top10Adjustment: 'Top10Adjustment',
+  FilterRule: 'FilterRule',
+  RuleVersion: 'RuleVersion',
+  SourceList: 'SourceList',
+  RuleAnalytics: 'RuleAnalytics',
+  ContentTemplate: 'ContentTemplate',
+  BatchImport: 'BatchImport',
+  UserPreference: 'UserPreference',
+  UserInterest: 'UserInterest',
+  UserFollowing: 'UserFollowing',
+  SourceWeight: 'SourceWeight',
+  PreferenceTemplate: 'PreferenceTemplate',
+  UserBehavior: 'UserBehavior',
+  UserReadingHistory: 'UserReadingHistory',
+  UserEngagement: 'UserEngagement',
+  ImplicitPreference: 'ImplicitPreference',
+  KeywordTrend: 'KeywordTrend',
+  CategoryTrend: 'CategoryTrend',
+  NotificationPreference: 'NotificationPreference',
+  NotificationLog: 'NotificationLog',
+  StockPriceHistory: 'StockPriceHistory'
 };
 
 /**

@@ -69,6 +69,31 @@ export type {
   SystemConfig,
   ApiConfiguration,
   ApiCallLog,
+  ContentAuditLog,
+  FilterRule,
+  RuleVersion,
+  SourceList,
+  RuleAnalytics,
+  ContentTemplate,
+  BatchImport,
+  // Story 4.1: User Preferences
+  UserPreference,
+  UserInterest,
+  UserFollowing,
+  SourceWeight,
+  PreferenceTemplate,
+  // Story 4.4: User Behavior Analytics
+  UserBehavior,
+  UserReadingHistory,
+  UserEngagement,
+  ImplicitPreference,
+  // Story 4.3: Content History & Trends
+  KeywordTrend,
+  CategoryTrend,
+  // Story 4.5: Smart Notifications
+  NotificationPreference,
+  NotificationLog,
+  StockPriceHistory,
   Prisma
 } from './generated';
 
@@ -81,5 +106,18 @@ export {
   ContentStatus,
   ReviewAction,
   ApiConfigStatus,
-  ApiAuthType
+  ApiAuthType,
+  ContentReviewStatus,
+  RuleType,
+  RuleStatus,
+  ListType,
+  // Story 4.1: User Preferences
+  FollowType,
+  // Story 4.4: User Behavior Analytics
+  BehaviorEventType,
+  // Story 4.5: Smart Notifications
+  NotificationFrequency,
+  NotificationType,
+  NotificationChannel,
+  NotificationStatus
 } from './generated';

@@ -20,10 +20,13 @@ import {
   RefreshCw,
   Edit,
   Trash2,
-  Share2
+  Share2,
+  Eye
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
+import { useContentTracking } from '@/hooks/useContentTracking';
+import { behaviorTracker } from '@/lib/behaviorTracker';
 
 // 状态图标映射
 const statusIcons = {
@@ -64,6 +67,19 @@ export default function ContentDetailPage() {
   const [content, setContent] = useState<Content | null>(null);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
+
+  // 行为追踪
+  const { readingTime, scrollDepth } = useContentTracking({
+    contentId: contentId || '',
+    enabled: !!contentId && !!content,
+    trackView: true,
+    trackRead: true,
+    minReadTime: 3, // 最小阅读3秒
+    metadata: {
+      category: content?.category,
+      source: content?.source.name,
+    },
+  });
 
   // 加载内容详情
   const loadContent = async () => {
@@ -119,6 +135,12 @@ export default function ContentDetailPage() {
   const handleShare = async () => {
     if (!content) return;
     
+    // 追踪分享行为
+    behaviorTracker.trackShare(content.id, {
+      method: navigator.share ? 'native' : 'clipboard',
+      category: content.category,
+    });
+    
     if (navigator.share) {
       try {
         await navigator.share({
@@ -126,6 +148,7 @@ export default function ContentDetailPage() {
           text: content.description,
           url: content.url || window.location.href,
         });
+        toast.success('分享成功');
       } catch (error) {
         // 用户取消分享或其他错误
       }
@@ -415,16 +438,16 @@ export default function ContentDetailPage() {
                   <span className="font-medium text-gray-700">更新时间:</span>
                   <span className="ml-2 text-gray-600">{formatDate(content.updatedAt)}</span>
                 </div>
-                {content.sourceUrl && (
+                {content.url && (
                   <div className="md:col-span-2">
                     <span className="font-medium text-gray-700">原文链接:</span>
                     <a 
-                      href={content.sourceUrl} 
+                      href={content.url} 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="ml-2 text-blue-600 hover:underline break-all"
                     >
-                      {content.sourceUrl}
+                      {content.url}
                     </a>
                   </div>
                 )}

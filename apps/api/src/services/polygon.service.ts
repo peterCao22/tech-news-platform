@@ -93,7 +93,6 @@ export class PolygonNewsService {
         keywords: [],
         quality: null,
         relevance: null,
-        searchVector: null,
         shareCount: 0,
         summary: newsItem.description,
         titleHash: null,

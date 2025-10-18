@@ -1,12 +1,15 @@
 // 科技新闻聚合平台 API 服务器
 // Express.js 服务器主入口文件
 
+// ⚠️ 重要：必须在所有其他导入之前加载环境变量
+import dotenv from 'dotenv';
+dotenv.config({ path: '../../.env' });
+
 import express, { Express } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import compression from 'compression';
-import dotenv from 'dotenv';
 
 import { errorHandler } from './middleware/error.middleware';
 import { notFoundHandler } from './middleware/not-found.middleware';
@@ -33,9 +36,14 @@ import claudeAnalysisRoutes from './routes/claude-analysis.routes';
 import deduplicationRoutes from './routes/deduplication.routes';
 import contentScoringRoutes from './routes/content-scoring.routes';
 import dailyTop10Routes from './routes/daily-top10.routes';
-
-// 加载环境变量
-dotenv.config({ path: '../../.env' });
+import contentReviewRoutes from './routes/content-review.routes';
+import filterRulesRoutes from './routes/filter-rules.routes';
+import contentManagementRoutes from './routes/content-management.routes';
+import preferencesRoutes from './routes/preferences.routes';
+import behaviorRoutes from './routes/behavior.routes';
+import searchRoutes from './routes/search.routes';
+import historyRoutes from './routes/history.routes';
+import notificationRoutes from './routes/notification.routes';
 
 const app: Express = express();
 const PORT = parseInt(process.env.PORT || '3001', 10);
@@ -104,6 +112,14 @@ app.use('/api/claude-analysis', claudeAnalysisRoutes);
 app.use('/api/deduplication', deduplicationRoutes);
 app.use('/api/content-scoring', contentScoringRoutes);
 app.use('/api/daily-top10', dailyTop10Routes);
+app.use('/api/content-review', contentReviewRoutes);
+app.use('/api/filter-rules', filterRulesRoutes);
+app.use('/api/content-management', contentManagementRoutes);
+app.use('/api/preferences', preferencesRoutes);
+app.use('/api/behavior', behaviorRoutes);
+app.use('/api/search', searchRoutes);
+app.use('/api/history', historyRoutes);
+app.use('/api/notifications', notificationRoutes);
 
 // 404 处理
 app.use(notFoundHandler);

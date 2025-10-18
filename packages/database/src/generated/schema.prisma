@@ -9,27 +9,51 @@ datasource db {
 }
 
 model User {
-  id             String          @id @default(cuid())
-  email          String          @unique
-  emailVerified  DateTime?       @map("email_verified")
-  name           String?
-  image          String?
-  role           UserRole        @default(USER)
-  status         UserStatus      @default(PENDING)
-  password       String?
-  firstName      String?         @map("first_name")
-  lastName       String?         @map("last_name")
-  bio            String?
-  timezone       String?         @default("UTC")
-  language       String?         @default("zh-CN")
-  preferences    Json?
-  createdAt      DateTime        @default(now()) @map("created_at")
-  updatedAt      DateTime        @updatedAt @map("updated_at")
-  lastLoginAt    DateTime?       @map("last_login_at")
-  accounts       Account[]
-  contentReviews ContentReview[]
-  sessions       Session[]
-  userActivities UserActivity[]
+  id                         String                  @id @default(cuid())
+  email                      String                  @unique
+  emailVerified              DateTime?               @map("email_verified")
+  name                       String?
+  image                      String?
+  role                       UserRole                @default(USER)
+  status                     UserStatus              @default(PENDING)
+  password                   String?
+  firstName                  String?                 @map("first_name")
+  lastName                   String?                 @map("last_name")
+  bio                        String?
+  timezone                   String?                 @default("UTC")
+  language                   String?                 @default("zh-CN")
+  preferences                Json?
+  createdAt                  DateTime                @default(now()) @map("created_at")
+  updatedAt                  DateTime                @updatedAt @map("updated_at")
+  lastLoginAt                DateTime?               @map("last_login_at")
+  accounts                   Account[]
+  contentReviews             ContentReview[]
+  sessions                   Session[]
+  userActivities             UserActivity[]
+  // Story 3.1: Content Review Workbench - 审核关联
+  reviewedContents           Content[]               @relation("ReviewedContent")
+  editedContents             Content[]               @relation("EditedContent")
+  contentAuditLogs           ContentAuditLog[]
+  // Story 3.2: Intelligent Filter Rules - 规则关联
+  createdRules               FilterRule[]            @relation("CreatedRules")
+  updatedRules               FilterRule[]            @relation("UpdatedRules")
+  publishedRules             FilterRule[]            @relation("PublishedRules")
+  ruleVersions               RuleVersion[]
+  sourceLists                SourceList[]
+  // Story 3.3: Manual Content Management - 手工内容管理关联
+  contentTemplates           ContentTemplate[]       @relation("ContentTemplates")
+  batchImports               BatchImport[]           @relation("BatchImports")
+  // Story 4.1: User Preferences - 用户个性化偏好关联
+  preference                 UserPreference?
+  preferenceTemplatesCreated PreferenceTemplate[]    @relation("CreatedTemplates")
+  // Story 4.4: User Behavior Analytics - 用户行为分析关联
+  behaviors                  UserBehavior[]
+  readingHistory             UserReadingHistory[]
+  engagement                 UserEngagement?
+  implicitPreferences        ImplicitPreference[]
+  // Story 4.5: Smart Notifications - 智能通知关联
+  notificationPreference     NotificationPreference?
+  notificationLogs           NotificationLog[]
 
   @@map("users")
 }
@@ -89,59 +113,74 @@ model PasswordResetToken {
 }
 
 model Source {
-  id          String       @id @default(cuid())
-  name        String
-  type        SourceType
-  url         String?
-  status      SourceStatus @default(ACTIVE)
-  config      Json?
-  lastFetchAt DateTime?    @map("last_fetch_at")
-  fetchCount  Int          @default(0) @map("fetch_count")
-  errorCount  Int          @default(0) @map("error_count")
-  lastError   String?      @map("last_error")
-  createdAt   DateTime     @default(now()) @map("created_at")
-  updatedAt   DateTime     @updatedAt @map("updated_at")
-  content     Content[]
+  id            String         @id @default(cuid())
+  name          String
+  type          SourceType
+  url           String?
+  status        SourceStatus   @default(ACTIVE)
+  config        Json?
+  lastFetchAt   DateTime?      @map("last_fetch_at")
+  fetchCount    Int            @default(0) @map("fetch_count")
+  errorCount    Int            @default(0) @map("error_count")
+  lastError     String?        @map("last_error")
+  createdAt     DateTime       @default(now()) @map("created_at")
+  updatedAt     DateTime       @updatedAt @map("updated_at")
+  content       Content[]
+  sourceLists   SourceList[] // Story 3.2: Source whitelist/blacklist
+  sourceWeights SourceWeight[] // Story 4.1: User source weights
 
   @@map("sources")
 }
 
 model Content {
-  id           String           @id @default(cuid())
-  title        String           @db.VarChar(500)
-  description  String?
-  content      String?
-  url          String?          @db.VarChar(2000)
-  imageUrl     String?          @map("image_url") @db.VarChar(2000)
-  category     String?          @db.VarChar(100)
-  tags         String[]         @default([])
-  status       ContentStatus    @default(RAW)
-  score        Float?
-  priority     Int              @default(0)
-  sourceId     String           @map("source_id")
-  sourceUrl    String?          @map("source_url") @db.VarChar(2000)
-  publishedAt  DateTime?        @map("published_at")
-  metadata     Json?
-  createdAt    DateTime         @default(now()) @map("created_at")
-  updatedAt    DateTime         @updatedAt @map("updated_at")
-  author       String?          @db.VarChar(200)
-  contentHash  String?          @map("content_hash") @db.VarChar(64)
-  duplicateOf  String?          @map("duplicate_of")
-  keywords     String[]         @default([])
-  quality      Float?
-  relevance    Float?
-  searchVector String?          @map("search_vector")
-  shareCount   Int              @default(0) @map("share_count")
-  summary      String?
-  titleHash    String?          @map("title_hash") @db.VarChar(64)
-  type         ContentType      @default(NEWS)
-  viewCount    Int              @default(0) @map("view_count")
-  source       Source           @relation(fields: [sourceId], references: [id])
-  reviews      ContentReview[]
-  contentTags  ContentTag[]
-  versions     ContentVersion[]
-  contentScore ContentScore?
-  top10Items   Top10Item[]
+  id                    String                   @id @default(cuid())
+  title                 String                   @db.VarChar(500)
+  description           String?
+  content               String?
+  url                   String?                  @db.VarChar(2000)
+  imageUrl              String?                  @map("image_url") @db.VarChar(2000)
+  category              String?                  @db.VarChar(100)
+  tags                  String[]                 @default([])
+  status                ContentStatus            @default(RAW)
+  score                 Float?
+  priority              Int                      @default(0)
+  sourceId              String                   @map("source_id")
+  sourceUrl             String?                  @map("source_url") @db.VarChar(2000)
+  publishedAt           DateTime?                @map("published_at")
+  metadata              Json?
+  createdAt             DateTime                 @default(now()) @map("created_at")
+  updatedAt             DateTime                 @updatedAt @map("updated_at")
+  author                String?                  @db.VarChar(200)
+  contentHash           String?                  @map("content_hash") @db.VarChar(64)
+  duplicateOf           String?                  @map("duplicate_of")
+  keywords              String[]                 @default([])
+  quality               Float?
+  relevance             Float?
+  searchVector          Unsupported("tsvector")? @map("search_vector")
+  shareCount            Int                      @default(0) @map("share_count")
+  summary               String?
+  titleHash             String?                  @map("title_hash") @db.VarChar(64)
+  type                  ContentType              @default(NEWS)
+  viewCount             Int                      @default(0) @map("view_count")
+  // Story 3.1: Content Review Workbench - 审核相关字段
+  reviewStatus          ContentReviewStatus      @default(PENDING_REVIEW) @map("review_status")
+  reviewedBy            String?                  @map("reviewed_by")
+  reviewedAt            DateTime?                @map("reviewed_at")
+  reviewNotes           String?                  @map("review_notes") @db.Text
+  lastEditedBy          String?                  @map("last_edited_by")
+  lastEditedAt          DateTime?                @map("last_edited_at")
+  source                Source                   @relation(fields: [sourceId], references: [id])
+  reviews               ContentReview[]
+  contentTags           ContentTag[]
+  versions              ContentVersion[]
+  contentScore          ContentScore?
+  top10Items            Top10Item[]
+  reviewer              User?                    @relation("ReviewedContent", fields: [reviewedBy], references: [id])
+  editor                User?                    @relation("EditedContent", fields: [lastEditedBy], references: [id])
+  auditLogs             ContentAuditLog[]
+  // Story 4.4: User Behavior Analytics - 用户行为关联
+  behaviors             UserBehavior[]
+  readingHistoryRecords UserReadingHistory[]
 
   @@index([status])
   @@index([publishedAt])
@@ -150,6 +189,9 @@ model Content {
   @@index([titleHash])
   @@index([category])
   @@index([createdAt])
+  @@index([reviewStatus])
+  @@index([reviewedBy])
+  @@index([reviewedAt])
   @@map("content")
 }
 
@@ -321,19 +363,26 @@ model ContentVersion {
   @@map("content_versions")
 }
 
+// Story 3.1: Content Review Workbench - 审核日志表
 model ContentAuditLog {
   id        String   @id @default(cuid())
   contentId String   @map("content_id")
   userId    String?  @map("user_id")
-  action    String
+  action    String   @db.VarChar(50)
   tableName String   @map("table_name")
   recordId  String   @map("record_id")
+  oldStatus String?  @map("old_status") @db.VarChar(50)
+  newStatus String?  @map("new_status") @db.VarChar(50)
+  changes   Json? // 详细变更记录
+  notes     String?  @db.Text
   oldValues Json?    @map("old_values")
   newValues Json?    @map("new_values")
   ipAddress String?  @map("ip_address")
   userAgent String?  @map("user_agent")
   sessionId String?  @map("session_id")
   createdAt DateTime @default(now()) @map("created_at")
+  content   Content  @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  user      User?    @relation(fields: [userId], references: [id])
 
   @@index([contentId])
   @@index([userId])
@@ -496,6 +545,15 @@ enum ContentStatus {
   REJECTED
   ARCHIVED
   DUPLICATE
+}
+
+// Story 3.1: Content Review Workbench - 审核状态枚举
+enum ContentReviewStatus {
+  DRAFT // 草稿
+  PENDING_REVIEW // 待审核
+  APPROVED // 已通过
+  REJECTED // 已拒绝
+  PUBLISHED // 已发布
 }
 
 enum ContentType {
@@ -668,4 +726,582 @@ enum Top10Status {
   DRAFT
   PUBLISHED
   ARCHIVED
+}
+
+// ============================================
+// Story 3.2: Intelligent Filter Rules
+// ============================================
+
+enum RuleType {
+  KEYWORD_BOOST // 关键词加权
+  KEYWORD_PENALTY // 关键词降权
+  SOURCE_WHITELIST // 来源白名单
+  SOURCE_BLACKLIST // 来源黑名单
+  CATEGORY_BOOST // 分类加权
+  CATEGORY_PENALTY // 分类降权
+  CUSTOM // 自定义规则
+}
+
+enum RuleStatus {
+  DRAFT // 草稿
+  ACTIVE // 激活
+  INACTIVE // 停用
+  ARCHIVED // 归档
+}
+
+enum ListType {
+  WHITELIST
+  BLACKLIST
+}
+
+model FilterRule {
+  id          String     @id @default(cuid())
+  name        String     @db.VarChar(200)
+  description String?    @db.Text
+  ruleType    RuleType   @map("rule_type")
+  status      RuleStatus @default(DRAFT)
+  priority    Int        @default(0) // 规则优先级，数字越大优先级越高
+
+  // 规则配置 (JSON格式存储规则细节)
+  config Json // { keywords: [], weight: 1.5, conditions: {} }
+
+  // 版本控制
+  version     Int       @default(1)
+  isPublished Boolean   @default(false) @map("is_published")
+  publishedAt DateTime? @map("published_at")
+  publishedBy String?   @map("published_by")
+
+  // 创建和更新信息
+  createdBy String   @map("created_by")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedBy String?  @map("updated_by")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // 关联
+  creator   User            @relation("CreatedRules", fields: [createdBy], references: [id])
+  updater   User?           @relation("UpdatedRules", fields: [updatedBy], references: [id])
+  publisher User?           @relation("PublishedRules", fields: [publishedBy], references: [id])
+  versions  RuleVersion[]
+  analytics RuleAnalytics[]
+
+  @@index([ruleType])
+  @@index([status])
+  @@index([priority])
+  @@index([isPublished])
+  @@map("filter_rules")
+}
+
+model RuleVersion {
+  id        String  @id @default(cuid())
+  ruleId    String  @map("rule_id")
+  version   Int
+  config    Json // 该版本的规则配置快照
+  changeLog String? @map("change_log") @db.Text
+
+  createdBy String   @map("created_by")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  rule    FilterRule @relation(fields: [ruleId], references: [id], onDelete: Cascade)
+  creator User       @relation(fields: [createdBy], references: [id])
+
+  @@unique([ruleId, version])
+  @@index([ruleId])
+  @@map("rule_versions")
+}
+
+model SourceList {
+  id           String   @id @default(cuid())
+  listType     ListType @map("list_type")
+  sourceId     String?  @map("source_id") // 关联已有来源
+  sourceName   String   @map("source_name") @db.VarChar(200)
+  sourceDomain String?  @map("source_domain") @db.VarChar(200)
+
+  weight Float   @default(1.0) // 权重调整 (0.0-2.0)
+  reason String? @db.Text // 加入白/黑名单的原因
+
+  isActive  Boolean  @default(true) @map("is_active")
+  createdBy String   @map("created_by")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  source  Source? @relation(fields: [sourceId], references: [id])
+  creator User    @relation(fields: [createdBy], references: [id])
+
+  @@index([listType])
+  @@index([sourceId])
+  @@index([isActive])
+  @@map("source_lists")
+}
+
+model RuleAnalytics {
+  id     String   @id @default(cuid())
+  ruleId String   @map("rule_id")
+  date   DateTime @default(now()) @db.Date
+
+  // 影响统计
+  affectedCount Int @default(0) @map("affected_count") // 影响的内容数量
+  boostedCount  Int @default(0) @map("boosted_count") // 加权数量
+  penaltyCount  Int @default(0) @map("penalty_count") // 降权数量
+  blockedCount  Int @default(0) @map("blocked_count") // 阻止数量
+
+  // 质量指标
+  avgScoreBefore Float? @map("avg_score_before") // 应用前平均分
+  avgScoreAfter  Float? @map("avg_score_after") // 应用后平均分
+  top10HitRate   Float? @map("top10_hit_rate") // TOP10命中率
+
+  // 详细数据
+  details Json? // 详细统计数据
+
+  rule FilterRule @relation(fields: [ruleId], references: [id], onDelete: Cascade)
+
+  @@unique([ruleId, date])
+  @@index([ruleId])
+  @@index([date])
+  @@map("rule_analytics")
+}
+
+// ==========================================
+// Story 3.3: Manual Content Management
+// ==========================================
+
+model ContentTemplate {
+  id          String   @id @default(cuid())
+  name        String
+  description String?  @db.Text
+  category    String?
+  template    Json // 模板字段配置
+  isActive    Boolean  @default(true) @map("is_active")
+  createdBy   String   @map("created_by")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  creator User @relation("ContentTemplates", fields: [createdBy], references: [id])
+
+  @@index([createdBy])
+  @@index([isActive])
+  @@map("content_templates")
+}
+
+model BatchImport {
+  id           String   @id @default(cuid())
+  fileName     String?  @map("file_name")
+  importType   String   @map("import_type") // 'url', 'text', 'file', 'json'
+  totalItems   Int      @map("total_items")
+  successCount Int      @default(0) @map("success_count")
+  failedCount  Int      @default(0) @map("failed_count")
+  status       String // 'processing', 'completed', 'failed'
+  errorLog     Json?    @map("error_log")
+  createdBy    String   @map("created_by")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  creator User @relation("BatchImports", fields: [createdBy], references: [id])
+
+  @@index([createdBy])
+  @@index([status])
+  @@index([createdAt])
+  @@map("batch_imports")
+}
+
+// ==========================================
+// Story 4.1: User Preferences Models
+// ==========================================
+
+model UserPreference {
+  id     String @id @default(cuid())
+  userId String @unique @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // 基础偏好
+  preferredLanguage String @default("zh-CN") @map("preferred_language")
+  timezone          String @default("Asia/Shanghai")
+
+  // 内容偏好
+  contentTypes Json @map("content_types") // ['news', 'analysis', 'technical']
+
+  // 通知偏好
+  emailNotifications    Boolean @default(true) @map("email_notifications")
+  pushNotifications     Boolean @default(false) @map("push_notifications")
+  notificationFrequency String  @default("daily") @map("notification_frequency") // 'realtime', 'daily', 'weekly'
+
+  // 显示偏好
+  itemsPerPage  Int    @default(20) @map("items_per_page")
+  defaultSortBy String @default("score") @map("default_sort_by") // 'score', 'date', 'relevance'
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // 关联
+  interests         UserInterest[]
+  followedCompanies UserFollowing[]
+  sourceWeights     SourceWeight[]
+
+  @@map("user_preferences")
+}
+
+model UserInterest {
+  id         String         @id @default(cuid())
+  userId     String         @map("user_id")
+  preference UserPreference @relation(fields: [userId], references: [userId], onDelete: Cascade)
+
+  category String // 'technology_field', 'topic', 'keyword'
+  name     String // 'AI', 'Blockchain', 'Quantum Computing'
+  weight   Float   @default(1.0) // 权重 0.5-2.0
+  isActive Boolean @default(true) @map("is_active")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@unique([userId, category, name])
+  @@index([userId, isActive])
+  @@map("user_interests")
+}
+
+model UserFollowing {
+  id         String         @id @default(cuid())
+  userId     String         @map("user_id")
+  preference UserPreference @relation(fields: [userId], references: [userId], onDelete: Cascade)
+
+  followType FollowType @map("follow_type") // 'company', 'stock', 'person'
+  name       String // 'NVIDIA', 'Microsoft', 'Elon Musk'
+  identifier String? // 股票代码 'NVDA', 'MSFT' 或 公司ID
+  weight     Float      @default(1.5) // 权重 1.0-3.0
+  isActive   Boolean    @default(true) @map("is_active")
+
+  // 通知设置
+  notifyOnNews  Boolean @default(true) @map("notify_on_news")
+  notifyOnPrice Boolean @default(false) @map("notify_on_price") // 仅股票
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([userId, followType, identifier])
+  @@index([userId, isActive])
+  @@map("user_followings")
+}
+
+enum FollowType {
+  COMPANY
+  STOCK
+  PERSON
+  ORGANIZATION
+}
+
+model SourceWeight {
+  id         String         @id @default(cuid())
+  userId     String         @map("user_id")
+  preference UserPreference @relation(fields: [userId], references: [userId], onDelete: Cascade)
+
+  sourceId String @map("source_id")
+  source   Source @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+
+  weight Float   @default(1.0) // 权重 0.1-2.0
+  reason String? @db.Text // 用户设置的原因
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([userId, sourceId])
+  @@index([userId])
+  @@map("source_weights")
+}
+
+model PreferenceTemplate {
+  id          String  @id @default(cuid())
+  name        String
+  description String? @db.Text
+  category    String // 'tech_investor', 'ai_researcher', 'startup_founder'
+  isPublic    Boolean @default(true) @map("is_public")
+
+  // 模板配置
+  config Json // 预设的偏好配置
+
+  usageCount Int @default(0) @map("usage_count")
+
+  createdBy String? @map("created_by")
+  creator   User?   @relation("CreatedTemplates", fields: [createdBy], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("preference_templates")
+}
+
+// ============================================
+// Story 4.4: User Behavior Analytics Models
+// ============================================
+
+enum BehaviorEventType {
+  VIEW // 查看
+  CLICK // 点击
+  READ // 阅读（停留超过阈值）
+  SHARE // 分享
+  BOOKMARK // 收藏
+  LIKE // 点赞
+  SEARCH // 搜索
+  COMMENT // 评论
+}
+
+model UserBehavior {
+  id        String            @id @default(cuid())
+  userId    String            @map("user_id")
+  user      User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  eventType BehaviorEventType @map("event_type")
+
+  contentId String?  @map("content_id")
+  content   Content? @relation(fields: [contentId], references: [id], onDelete: SetNull)
+
+  // 行为元数据
+  duration    Int?    @map("duration") // 停留时长（秒）
+  scrollDepth Float?  @map("scroll_depth") // 滚动深度 (0-1)
+  deviceType  String? @map("device_type") @db.VarChar(50) // desktop, mobile, tablet
+  source      String? @db.VarChar(500) // 来源页面
+  metadata    Json? // 其他元数据
+
+  // 时间戳
+  timestamp DateTime @default(now())
+  sessionId String?  @map("session_id") @db.VarChar(100)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([userId, timestamp])
+  @@index([contentId, eventType])
+  @@index([timestamp])
+  @@index([eventType])
+  @@map("user_behaviors")
+}
+
+model UserReadingHistory {
+  id        String  @id @default(cuid())
+  userId    String  @map("user_id")
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  contentId String  @map("content_id")
+  content   Content @relation(fields: [contentId], references: [id], onDelete: Cascade)
+
+  // 阅读详情
+  readCount      Int     @default(1) @map("read_count") // 阅读次数
+  totalDuration  Int     @default(0) @map("total_duration") // 总停留时长（秒）
+  maxScrollDepth Float   @default(0) @map("max_scroll_depth") // 最大滚动深度
+  isCompleted    Boolean @default(false) @map("is_completed") // 是否读完
+
+  // 用户反馈
+  isBookmarked Boolean @default(false) @map("is_bookmarked")
+  isLiked      Boolean @default(false) @map("is_liked")
+  isShared     Boolean @default(false) @map("is_shared")
+
+  // 时间戳
+  firstReadAt DateTime @default(now()) @map("first_read_at")
+  lastReadAt  DateTime @updatedAt @map("last_read_at")
+
+  @@unique([userId, contentId])
+  @@index([userId, lastReadAt])
+  @@index([contentId])
+  @@index([isBookmarked])
+  @@index([isLiked])
+  @@map("user_reading_history")
+}
+
+model UserEngagement {
+  id     String @id @default(cuid())
+  userId String @unique @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // 总体统计
+  totalViews     Int @default(0) @map("total_views")
+  totalReads     Int @default(0) @map("total_reads")
+  totalClicks    Int @default(0) @map("total_clicks")
+  totalShares    Int @default(0) @map("total_shares")
+  totalBookmarks Int @default(0) @map("total_bookmarks")
+  totalLikes     Int @default(0) @map("total_likes")
+
+  // 时间统计
+  totalReadingTime Int @default(0) @map("total_reading_time") // 总阅读时长（秒）
+  avgSessionTime   Int @default(0) @map("avg_session_time") // 平均会话时长（秒）
+
+  // 偏好统计（JSON存储）
+  categoryPreferences Json? @map("category_preferences") // 分类偏好分布
+  sourcePreferences   Json? @map("source_preferences") // 信息源偏好分布
+  topicPreferences    Json? @map("topic_preferences") // 话题偏好分布
+
+  // 活跃度指标
+  dailyActiveStreak Int       @default(0) @map("daily_active_streak") // 连续活跃天数
+  lastActiveDate    DateTime? @map("last_active_date")
+
+  // 时间戳
+  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("user_engagement")
+}
+
+model ImplicitPreference {
+  id     String @id @default(cuid())
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // 偏好类型
+  preferenceType String @map("preference_type") @db.VarChar(50) // category, source, topic, company
+  preferenceKey  String @map("preference_key") @db.VarChar(200) // 具体的值（如 "AI", "TechCrunch"）
+
+  // 权重计算
+  weight           Float     @default(0) @map("weight") // 偏好权重 (0-1)
+  interactionCount Int       @default(0) @map("interaction_count") // 交互次数
+  lastInteraction  DateTime? @map("last_interaction")
+
+  // 置信度
+  confidence Float @default(0) @map("confidence") // 置信度 (0-1)
+
+  // 时间戳
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([userId, preferenceType, preferenceKey])
+  @@index([userId, weight])
+  @@index([preferenceType])
+  @@map("implicit_preferences")
+}
+
+// ============================================================
+// Story 4.3: 历史内容分析与趋势 - Trend Analysis Models
+// ============================================================
+
+// 关键词趋势统计（每日聚合）
+model KeywordTrend {
+  id         String   @id @default(cuid())
+  keyword    String   @db.VarChar(100) // 关键词
+  date       DateTime @db.Date // 统计日期
+  count      Int      @default(0) // 出现次数
+  contentIds String[] // 包含该关键词的内容ID数组
+  avgScore   Float?   @map("avg_score") // 平均评分
+  categories String[] // 相关分类
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  @@unique([keyword, date])
+  @@index([date, count])
+  @@index([keyword])
+  @@map("keyword_trends")
+}
+
+// 分类趋势统计（每日聚合）
+model CategoryTrend {
+  id          String   @id @default(cuid())
+  category    String   @db.VarChar(100) // 分类名称
+  date        DateTime @db.Date // 统计日期
+  count       Int      @default(0) // 内容数量
+  avgScore    Float    @default(0) @map("avg_score") // 平均评分
+  topKeywords String[] @map("top_keywords") // 热门关键词（前10个）
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@unique([category, date])
+  @@index([date])
+  @@index([category])
+  @@map("category_trends")
+}
+
+// ============================================================
+// Story 4.5: 智能通知与提醒 - Notification Models
+// ============================================================
+
+// 通知偏好设置
+model NotificationPreference {
+  id     String @id @default(cuid())
+  userId String @unique @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // 类型开关
+  stockAlertEnabled    Boolean @default(true) @map("stock_alert_enabled")
+  importantNewsEnabled Boolean @default(true) @map("important_news_enabled")
+  top10DigestEnabled   Boolean @default(true) @map("top10_digest_enabled")
+
+  // 频率设置
+  frequency NotificationFrequency @default(DAILY)
+
+  // 时间设置
+  quietHoursStart String? @map("quiet_hours_start") @db.VarChar(5) // "22:00"
+  quietHoursEnd   String? @map("quiet_hours_end") @db.VarChar(5) // "08:00"
+  digestTime      String? @map("digest_time") @db.VarChar(5) // "08:00"
+
+  // 阈值设置
+  stockAlertThreshold Float @default(5.0) @map("stock_alert_threshold") // 股票异动阈值 (%)
+  minNewsScore        Float @default(85.0) @map("min_news_score") // 最低新闻评分
+
+  // 渠道设置
+  emailEnabled Boolean @default(true) @map("email_enabled")
+  email        String? @db.VarChar(255)
+
+  // 时间戳
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("notification_preferences")
+}
+
+// 通知日志
+model NotificationLog {
+  id     String @id @default(cuid())
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // 通知信息
+  type         NotificationType
+  channel      NotificationChannel
+  subject      String              @db.VarChar(500)
+  content      String              @db.Text
+  status       NotificationStatus
+  sentAt       DateTime?           @map("sent_at")
+  errorMessage String?             @map("error_message") @db.Text
+  metadata     Json? // 额外信息（如股票代码、新闻ID等）
+
+  // 时间戳
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([userId, type])
+  @@index([createdAt])
+  @@index([status])
+  @@map("notification_logs")
+}
+
+// 股票价格历史
+model StockPriceHistory {
+  id            String   @id @default(cuid())
+  symbol        String   @db.VarChar(20) // 股票代码
+  name          String   @db.VarChar(100) // 股票名称
+  price         Float // 当前价格
+  change        Float // 涨跌额
+  changePercent Float    @map("change_percent") // 涨跌幅 (%)
+  timestamp     DateTime // 价格时间戳
+
+  // 时间戳
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@unique([symbol, timestamp])
+  @@index([symbol])
+  @@index([timestamp])
+  @@map("stock_price_history")
+}
+
+// 通知频率枚举
+enum NotificationFrequency {
+  REALTIME // 实时
+  DAILY // 每日
+  WEEKLY // 每周
+  OFF // 关闭
+}
+
+// 通知类型枚举
+enum NotificationType {
+  STOCK_ALERT // 股票异动
+  IMPORTANT_NEWS // 重要新闻
+  TOP10_DIGEST // TOP10摘要
+}
+
+// 通知渠道枚举
+enum NotificationChannel {
+  EMAIL // 邮件
+  WEB_PUSH // 网页推送
+  SMS // 短信
+}
+
+// 通知状态枚举
+enum NotificationStatus {
+  PENDING // 待发送
+  SENT // 已发送
+  FAILED // 发送失败
 }

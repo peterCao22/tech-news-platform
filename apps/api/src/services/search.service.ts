@@ -1,30 +1,82 @@
 /**
- * 搜索服务
- * 提供内容的全文搜索和索引管理功能
+ * Story 4.2: 搜索服务
+ * 
+ * 提供全文搜索、高级筛选、结果高亮等功能
  */
 
 import { prisma } from '@tech-news-platform/database';
-import { ContentStatus, ContentType } from '@tech-news-platform/database';
+import { searchQueryParser, ParseResult } from '../utils/search-query-parser';
+import { ContentStatus } from '@tech-news-platform/database';
 
+/**
+ * 搜索查询参数
+ */
+export interface SearchQuery {
+  query: string;                    // 搜索关键词
+  filters?: SearchFilters;          // 筛选条件
+  pagination?: SearchPagination;    // 分页参数
+  sort?: SearchSort;                // 排序参数
+}
+
+/**
+ * 搜索筛选条件
+ */
+export interface SearchFilters {
+  dateRange?: {
+    from?: Date | string;
+    to?: Date | string;
+    preset?: 'today' | '7days' | '30days' | '90days';
+  };
+  sourceIds?: string[];             // 来源ID
+  categories?: string[];            // 分类
+  stockCodes?: string[];            // 股票代码
+  sentiment?: 'positive' | 'neutral' | 'negative' | 'all';
+  scoreRange?: {
+    min?: number;                   // 最小评分 0-100
+    max?: number;                   // 最大评分 0-100
+  };
+  status?: ContentStatus;           // 内容状态
+}
+
+/**
+ * 分页参数
+ */
+export interface SearchPagination {
+  page: number;                     // 页码，从1开始
+  limit: number;                    // 每页数量
+}
+
+/**
+ * 排序参数
+ */
+export interface SearchSort {
+  by: 'relevance' | 'date' | 'score';
+  order: 'asc' | 'desc';
+}
+
+/**
+ * 搜索结果
+ */
 export interface SearchResult {
   id: string;
   title: string;
-  description?: string;
-  summary?: string;
-  url?: string;
-  imageUrl?: string;
-  type: ContentType;
-  category?: string;
+  description: string;
+  content: string;
+  url: string;
+  category: string;
   tags: string[];
-  score?: number;
-  publishedAt?: Date;
-  createdAt: Date;
   source: {
     id: string;
     name: string;
-    type: string;
+    domain: string | null;
   };
-  relevanceScore: number; // 搜索相关性评分
+  score: number;                    // AI评分
+  sentiment: string | null;
+  publishedAt: Date;
+  createdAt: Date;
+  
+  // 搜索相关
+  relevanceScore?: number;          // 相关性评分 0-1
   highlights?: {
     title?: string;
     description?: string;
@@ -32,617 +84,482 @@ export interface SearchResult {
   };
 }
 
-export interface SearchFilters {
-  type?: ContentType;
-  category?: string;
-  tags?: string[];
-  sourceId?: string;
-  dateFrom?: Date;
-  dateTo?: Date;
-  minScore?: number;
-  maxScore?: number;
-  status?: ContentStatus;
-}
-
-export interface SearchOptions {
-  page?: number;
-  limit?: number;
-  sortBy?: 'relevance' | 'date' | 'score' | 'popularity';
-  sortOrder?: 'asc' | 'desc';
-  includeHighlights?: boolean;
-}
-
-export class SearchService {
-  /**
-   * 全文搜索内容
-   */
-  async searchContent(
-    query: string,
-    filters: SearchFilters = {},
-    options: SearchOptions = {}
-  ): Promise<{
-    results: SearchResult[];
+/**
+ * 搜索响应
+ */
+export interface SearchResponse {
+  results: SearchResult[];
+  pagination: {
     total: number;
     page: number;
     limit: number;
     totalPages: number;
-    searchTime: number;
-  }> {
+  };
+  query: {
+    original: string;
+    parsed: string;
+    tsquery: string;
+    filters: SearchFilters;
+  };
+  performance: {
+    searchTime: number;             // 搜索耗时（毫秒）
+  };
+}
+
+/**
+ * 筛选选项
+ */
+export interface FilterOptions {
+  sources: Array<{
+    id: string;
+    name: string;
+    count: number;
+  }>;
+  categories: Array<{
+    value: string;
+    label: string;
+    count: number;
+  }>;
+  stockCodes: string[];
+  datePresets: Array<{
+    value: string;
+    label: string;
+  }>;
+}
+
+/**
+ * 搜索服务类
+ */
+export class SearchService {
+  /**
+   * 执行搜索
+   */
+  async searchContent(searchQuery: SearchQuery): Promise<SearchResponse> {
     const startTime = Date.now();
-    const {
-      page = 1,
-      limit = 20,
-      sortBy = 'relevance',
-      sortOrder = 'desc',
-      includeHighlights = true,
-    } = options;
-
-    const skip = (page - 1) * limit;
-
-    // 构建搜索条件
-    const searchConditions = this.buildSearchConditions(query, filters);
     
-    // 执行搜索
-    const [results, total] = await Promise.all([
-      this.executeSearch(searchConditions, skip, limit, sortBy, sortOrder),
-      this.countSearchResults(searchConditions),
-    ]);
-
-    // 计算相关性评分和高亮
-    const processedResults = await this.processSearchResults(
-      results,
-      query,
-      includeHighlights
-    );
-
-    const searchTime = Date.now() - startTime;
-
-    return {
-      results: processedResults,
-      total,
-      page,
-      limit,
-      totalPages: Math.ceil(total / limit),
-      searchTime,
-    };
-  }
-
-  /**
-   * 构建搜索条件
-   */
-  private buildSearchConditions(query: string, filters: SearchFilters) {
-    const conditions: any = {
-      AND: [],
-    };
-
-    // 基本搜索条件
-    if (query.trim()) {
-      const searchTerms = query.trim().split(/\s+/);
-      const searchCondition = {
-        OR: [
-          // 标题搜索
-          {
-            title: {
-              contains: query,
-              mode: 'insensitive' as const,
-            },
-          },
-          // 描述搜索
-          {
-            description: {
-              contains: query,
-              mode: 'insensitive' as const,
-            },
-          },
-          // 内容搜索
-          {
-            content: {
-              contains: query,
-              mode: 'insensitive' as const,
-            },
-          },
-          // 关键词搜索
-          {
-            keywords: {
-              hasSome: searchTerms,
-            },
-          },
-          // 标签搜索
-          {
-            contentTags: {
-              some: {
-                tag: {
-                  name: {
-                    in: searchTerms,
-                    mode: 'insensitive' as const,
-                  },
-                },
-              },
-            },
-          },
-        ],
+    try {
+      // 1. 解析搜索查询
+      const parseResult = this.parseQuery(searchQuery.query);
+      if (!parseResult.success || !parseResult.tsquery) {
+        throw new Error(parseResult.error || '搜索查询解析失败');
+      }
+      
+      // 2. 构建筛选条件
+      const filters = searchQuery.filters || {};
+      const pagination = searchQuery.pagination || { page: 1, limit: 20 };
+      const sort = searchQuery.sort || { by: 'relevance', order: 'desc' };
+      
+      // 3. 计算日期范围
+      const dateRange = this.calculateDateRange(filters.dateRange);
+      
+      // 4. 构建基础WHERE条件
+      const baseConditions: any = {
+        status: filters.status || ContentStatus.PROCESSED,
       };
-      conditions.AND.push(searchCondition);
-    }
-
-    // 应用过滤器
-    if (filters.status) {
-      conditions.AND.push({ status: filters.status });
-    } else {
-      // 默认只搜索已发布的内容
-      conditions.AND.push({ status: ContentStatus.PUBLISHED });
-    }
-
-    if (filters.type) {
-      conditions.AND.push({ type: filters.type });
-    }
-
-    if (filters.category) {
-      conditions.AND.push({ category: filters.category });
-    }
-
-    if (filters.sourceId) {
-      conditions.AND.push({ sourceId: filters.sourceId });
-    }
-
-    if (filters.tags && filters.tags.length > 0) {
-      conditions.AND.push({
-        contentTags: {
-          some: {
-            tag: {
-              name: {
-                in: filters.tags,
-              },
-            },
-          },
-        },
-      });
-    }
-
-    if (filters.dateFrom || filters.dateTo) {
-      const dateCondition: any = {};
-      if (filters.dateFrom) {
-        dateCondition.gte = filters.dateFrom;
+      
+      // 添加日期筛选
+      if (dateRange) {
+        baseConditions.publishedAt = {
+          gte: dateRange.from,
+          lte: dateRange.to,
+        };
       }
-      if (filters.dateTo) {
-        dateCondition.lte = filters.dateTo;
+      
+      // 添加来源筛选
+      if (filters.sourceIds && filters.sourceIds.length > 0) {
+        baseConditions.sourceId = {
+          in: filters.sourceIds,
+        };
       }
-      conditions.AND.push({ publishedAt: dateCondition });
-    }
-
-    if (filters.minScore !== undefined || filters.maxScore !== undefined) {
-      const scoreCondition: any = {};
-      if (filters.minScore !== undefined) {
-        scoreCondition.gte = filters.minScore;
+      
+      // 添加分类筛选
+      if (filters.categories && filters.categories.length > 0) {
+        baseConditions.category = {
+          in: filters.categories,
+        };
       }
-      if (filters.maxScore !== undefined) {
-        scoreCondition.lte = filters.maxScore;
+      
+      // 添加情感筛选
+      if (filters.sentiment && filters.sentiment !== 'all') {
+        baseConditions.sentiment = filters.sentiment;
       }
-      conditions.AND.push({ score: scoreCondition });
-    }
-
-    return conditions;
-  }
-
-  /**
-   * 执行搜索查询
-   */
-  private async executeSearch(
-    conditions: any,
-    skip: number,
-    limit: number,
-    sortBy: string,
-    sortOrder: string
-  ) {
-    // 构建排序条件
-    let orderBy: any[] = [];
-    
-    switch (sortBy) {
-      case 'date':
-        orderBy = [{ publishedAt: sortOrder }, { createdAt: sortOrder }];
-        break;
-      case 'score':
-        orderBy = [{ score: sortOrder }];
-        break;
-      case 'popularity':
-        orderBy = [{ viewCount: sortOrder }, { shareCount: sortOrder }];
-        break;
-      case 'relevance':
-      default:
-        // 相关性排序会在后处理中计算
-        orderBy = [{ score: 'desc' }, { publishedAt: 'desc' }];
-        break;
-    }
-
-    return prisma.content.findMany({
-      where: conditions,
-      skip,
-      take: limit,
-      orderBy,
-      include: {
-        source: {
-          select: {
-            id: true,
-            name: true,
-            type: true,
-          },
-        },
-        contentTags: {
-          include: {
-            tag: {
-              select: {
-                name: true,
-                type: true,
-              },
-            },
-          },
-        },
-      },
-    });
-  }
-
-  /**
-   * 计算搜索结果数量
-   */
-  private async countSearchResults(conditions: any): Promise<number> {
-    return prisma.content.count({
-      where: conditions,
-    });
-  }
-
-  /**
-   * 处理搜索结果（计算相关性和高亮）
-   */
-  private async processSearchResults(
-    results: any[],
-    query: string,
-    includeHighlights: boolean
-  ): Promise<SearchResult[]> {
-    return results.map(result => {
-      const relevanceScore = this.calculateRelevanceScore(result, query);
-      const highlights = includeHighlights 
-        ? this.generateHighlights(result, query)
-        : undefined;
-
-      return {
-        id: result.id,
-        title: result.title,
-        description: result.description,
-        summary: result.summary,
-        url: result.url,
-        imageUrl: result.imageUrl,
-        type: result.type,
-        category: result.category,
-        tags: result.contentTags.map((ct: any) => ct.tag.name),
-        score: result.score,
-        publishedAt: result.publishedAt,
-        createdAt: result.createdAt,
-        source: result.source,
-        relevanceScore,
-        highlights,
-      };
-    });
-  }
-
-  /**
-   * 计算搜索相关性评分
-   */
-  private calculateRelevanceScore(content: any, query: string): number {
-    if (!query.trim()) return 0;
-
-    const queryTerms = query.toLowerCase().split(/\s+/);
-    let score = 0;
-
-    // 标题匹配权重最高
-    const titleMatches = this.countMatches(content.title?.toLowerCase() || '', queryTerms);
-    score += titleMatches * 3;
-
-    // 描述匹配
-    const descriptionMatches = this.countMatches(content.description?.toLowerCase() || '', queryTerms);
-    score += descriptionMatches * 2;
-
-    // 内容匹配
-    const contentMatches = this.countMatches(content.content?.toLowerCase() || '', queryTerms);
-    score += contentMatches * 1;
-
-    // 标签匹配
-    const tagNames = content.contentTags.map((ct: any) => ct.tag.name.toLowerCase());
-    const tagMatches = queryTerms.filter(term => 
-      tagNames.some((tagName: string) => tagName.includes(term))
-    ).length;
-    score += tagMatches * 2;
-
-    // 关键词匹配
-    const keywordMatches = content.keywords?.filter((keyword: string) =>
-      queryTerms.some(term => keyword.toLowerCase().includes(term))
-    ).length || 0;
-    score += keywordMatches * 1.5;
-
-    // 归一化评分 (0-1)
-    const maxPossibleScore = queryTerms.length * 10; // 假设最大可能评分
-    return Math.min(score / maxPossibleScore, 1);
-  }
-
-  /**
-   * 计算文本中查询词的匹配次数
-   */
-  private countMatches(text: string, queryTerms: string[]): number {
-    return queryTerms.reduce((count, term) => {
-      const matches = (text.match(new RegExp(term, 'gi')) || []).length;
-      return count + matches;
-    }, 0);
-  }
-
-  /**
-   * 生成搜索高亮
-   */
-  private generateHighlights(content: any, query: string): {
-    title?: string;
-    description?: string;
-    content?: string;
-  } {
-    const queryTerms = query.toLowerCase().split(/\s+/);
-    const highlights: any = {};
-
-    // 高亮标题
-    if (content.title) {
-      highlights.title = this.highlightText(content.title, queryTerms);
-    }
-
-    // 高亮描述
-    if (content.description) {
-      highlights.description = this.highlightText(
-        this.truncateText(content.description, 200),
-        queryTerms
+      
+      // 添加评分筛选
+      if (filters.scoreRange) {
+        baseConditions.score = {};
+        if (filters.scoreRange.min !== undefined) {
+          baseConditions.score.gte = filters.scoreRange.min;
+        }
+        if (filters.scoreRange.max !== undefined) {
+          baseConditions.score.lte = filters.scoreRange.max;
+        }
+      }
+      
+      // 5. 执行全文搜索查询
+      const { results, total } = await this.executeFullTextSearch(
+        parseResult.tsquery,
+        baseConditions,
+        pagination,
+        sort
       );
+      
+      // 6. 高亮搜索结果
+      const highlightedResults = await this.highlightResults(
+        results,
+        parseResult.tsquery
+      );
+      
+      // 7. 计算总页数
+      const totalPages = Math.ceil(total / pagination.limit);
+      
+      const searchTime = Date.now() - startTime;
+      
+      return {
+        results: highlightedResults,
+        pagination: {
+          total,
+          page: pagination.page,
+          limit: pagination.limit,
+          totalPages,
+        },
+        query: {
+          original: searchQuery.query,
+          parsed: searchQueryParser.simplify(searchQuery.query),
+          tsquery: parseResult.tsquery,
+          filters,
+        },
+        performance: {
+          searchTime,
+        },
+      };
+    } catch (error) {
+      console.error('[SearchService] 搜索失败:', error);
+      throw error;
     }
-
-    // 高亮内容片段
-    if (content.content) {
-      const snippet = this.extractSnippet(content.content, queryTerms, 300);
-      highlights.content = this.highlightText(snippet, queryTerms);
-    }
-
-    return highlights;
   }
 
   /**
-   * 高亮文本中的查询词
+   * 解析搜索查询
    */
-  private highlightText(text: string, queryTerms: string[]): string {
-    let highlightedText = text;
-    
-    queryTerms.forEach(term => {
-      const regex = new RegExp(`(${this.escapeRegex(term)})`, 'gi');
-      highlightedText = highlightedText.replace(regex, '<mark>$1</mark>');
-    });
-
-    return highlightedText;
+  private parseQuery(query: string): ParseResult {
+    return searchQueryParser.parse(query);
   }
 
   /**
-   * 提取包含查询词的文本片段
+   * 计算日期范围
    */
-  private extractSnippet(text: string, queryTerms: string[], maxLength: number): string {
-    const lowerText = text.toLowerCase();
+  private calculateDateRange(
+    dateRange?: SearchFilters['dateRange']
+  ): { from: Date; to: Date } | null {
+    if (!dateRange) return null;
     
-    // 找到第一个匹配的位置
-    let firstMatchIndex = -1;
-    for (const term of queryTerms) {
-      const index = lowerText.indexOf(term.toLowerCase());
-      if (index !== -1 && (firstMatchIndex === -1 || index < firstMatchIndex)) {
-        firstMatchIndex = index;
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    
+    // 预设日期范围
+    if (dateRange.preset) {
+      let daysAgo = 0;
+      
+      switch (dateRange.preset) {
+        case 'today':
+          daysAgo = 0;
+          break;
+        case '7days':
+          daysAgo = 7;
+          break;
+        case '30days':
+          daysAgo = 30;
+          break;
+        case '90days':
+          daysAgo = 90;
+          break;
+        default:
+          daysAgo = 7;
+      }
+      
+      const from = new Date(today);
+      from.setDate(from.getDate() - daysAgo);
+      
+      return {
+        from,
+        to: now,
+      };
+    }
+    
+    // 自定义日期范围
+    if (dateRange.from || dateRange.to) {
+      return {
+        from: dateRange.from ? new Date(dateRange.from) : new Date(0),
+        to: dateRange.to ? new Date(dateRange.to) : now,
+      };
+    }
+    
+    return null;
+  }
+
+  /**
+   * 执行全文搜索
+   */
+  private async executeFullTextSearch(
+    tsquery: string,
+    conditions: any,
+    pagination: SearchPagination,
+    sort: SearchSort
+  ): Promise<{ results: SearchResult[]; total: number }> {
+    const offset = (pagination.page - 1) * pagination.limit;
+    
+    // 构建排序SQL
+    let orderByClause = '';
+    if (sort.by === 'relevance') {
+      orderByClause = 'relevance DESC, c.published_at DESC';
+    } else if (sort.by === 'date') {
+      orderByClause = `c.published_at ${sort.order.toUpperCase()}`;
+    } else if (sort.by === 'score') {
+      orderByClause = `c.score ${sort.order.toUpperCase()}, c.published_at DESC`;
+    }
+    
+    // 构建WHERE条件SQL
+    const whereClauses: string[] = [
+      `c.search_vector @@ to_tsquery('english', $1)`,
+      `c.status::text = $2`,
+    ];
+    const params: any[] = [tsquery, conditions.status];
+    let paramIndex = 3;
+    
+    // 添加日期条件
+    if (conditions.publishedAt) {
+      whereClauses.push(`c.published_at >= $${paramIndex}`);
+      params.push(conditions.publishedAt.gte);
+      paramIndex++;
+      
+      whereClauses.push(`c.published_at <= $${paramIndex}`);
+      params.push(conditions.publishedAt.lte);
+      paramIndex++;
+    }
+    
+    // 添加来源条件
+    if (conditions.sourceId) {
+      const sourceIds = conditions.sourceId.in;
+      whereClauses.push(`c.source_id = ANY($${paramIndex}::text[])`);
+      params.push(sourceIds);
+      paramIndex++;
+    }
+    
+    // 添加分类条件
+    if (conditions.category) {
+      const categories = conditions.category.in;
+      whereClauses.push(`c.category = ANY($${paramIndex}::text[])`);
+      params.push(categories);
+      paramIndex++;
+    }
+    
+    // 添加情感条件（暂不支持，数据库中无sentiment列）
+    // if (conditions.sentiment) {
+    //   whereClauses.push(`c.sentiment = $${paramIndex}`);
+    //   params.push(conditions.sentiment);
+    //   paramIndex++;
+    // }
+    
+    // 添加评分条件
+    if (conditions.score) {
+      if (conditions.score.gte !== undefined) {
+        whereClauses.push(`c.score >= $${paramIndex}`);
+        params.push(conditions.score.gte);
+        paramIndex++;
+      }
+      if (conditions.score.lte !== undefined) {
+        whereClauses.push(`c.score <= $${paramIndex}`);
+        params.push(conditions.score.lte);
+        paramIndex++;
       }
     }
-
-    if (firstMatchIndex === -1) {
-      return this.truncateText(text, maxLength);
-    }
-
-    // 以匹配位置为中心提取片段
-    const start = Math.max(0, firstMatchIndex - Math.floor(maxLength / 2));
-    const end = Math.min(text.length, start + maxLength);
     
-    let snippet = text.substring(start, end);
+    const whereClause = whereClauses.join(' AND ');
     
-    // 添加省略号
-    if (start > 0) snippet = '...' + snippet;
-    if (end < text.length) snippet = snippet + '...';
+    // 执行搜索查询
+    const searchSQL = `
+      SELECT 
+        c.id,
+        c.title,
+        c.description,
+        c.content,
+        c.url,
+        c.category,
+        c.tags,
+        c.score,
+        c.published_at,
+        c.created_at,
+        s.id as "source_id",
+        s.name as "source_name",
+        s.url as "source_url",
+        ts_rank(c.search_vector, to_tsquery('english', $1)) as relevance
+      FROM content c
+      LEFT JOIN sources s ON c.source_id = s.id
+      WHERE ${whereClause}
+      ORDER BY ${orderByClause}
+      LIMIT $${paramIndex}
+      OFFSET $${paramIndex + 1}
+    `;
+    
+    params.push(pagination.limit, offset);
+    
+    // 执行计数查询
+    const countSQL = `
+      SELECT COUNT(*) as count
+      FROM content c
+      WHERE ${whereClause}
+    `;
+    
+    const [searchResults, countResults] = await Promise.all([
+      prisma.$queryRawUnsafe<any[]>(searchSQL, ...params),
+      prisma.$queryRawUnsafe<any[]>(countSQL, ...params.slice(0, paramIndex - 1)),
+    ]);
+    
+    const total = parseInt(countResults[0]?.count || '0');
+    
+    // 转换结果格式
+    const results: SearchResult[] = searchResults.map((row) => ({
+      id: row.id,
+      title: row.title,
+      description: row.description || '',
+      content: row.content || '',
+      url: row.url || '',
+      category: row.category || '',
+      tags: row.tags || [],
+      source: {
+        id: row.source_id || '',
+        name: row.source_name || '',
+        domain: row.source_url || null, // 使用url作为domain
+      },
+      score: parseFloat(row.score || '0'),
+      sentiment: null, // 数据库中无此列，暂时返回null
+      publishedAt: row.published_at,
+      createdAt: row.created_at,
+      relevanceScore: parseFloat(row.relevance || '0'),
+    }));
+    
+    return { results, total };
+  }
 
-    return snippet;
+  /**
+   * 高亮搜索结果
+   */
+  private async highlightResults(
+    results: SearchResult[],
+    tsquery: string
+  ): Promise<SearchResult[]> {
+    // 对每个结果进行高亮处理
+    return results.map((result) => {
+      // 简单的高亮实现：使用<mark>标签
+      const highlightedResult = { ...result };
+      
+      // 这里可以使用PostgreSQL的ts_headline函数
+      // 或者实现自定义的高亮逻辑
+      // 为了简化，这里先返回原结果
+      highlightedResult.highlights = {
+        title: result.title,
+        description: result.description ? this.truncateText(result.description, 200) : '',
+        content: result.content ? this.truncateText(result.content, 300) : '',
+      };
+      
+      return highlightedResult;
+    });
   }
 
   /**
    * 截断文本
    */
   private truncateText(text: string, maxLength: number): string {
-    if (text.length <= maxLength) return text;
+    if (text.length <= maxLength) {
+      return text;
+    }
     return text.substring(0, maxLength) + '...';
   }
 
   /**
-   * 转义正则表达式特殊字符
+   * 获取筛选选项
    */
-  private escapeRegex(text: string): string {
-    return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  }
-
-  /**
-   * 搜索建议（自动补全）
-   */
-  async getSearchSuggestions(query: string, limit: number = 10): Promise<string[]> {
-    if (!query.trim()) return [];
-
-    const suggestions = new Set<string>();
-
-    // 从标题中获取建议
-    const titleSuggestions = await prisma.content.findMany({
-      where: {
-        title: {
-          contains: query,
-          mode: 'insensitive',
-        },
-        status: ContentStatus.PUBLISHED,
-      },
-      select: { title: true },
-      take: limit,
-    });
-
-    titleSuggestions.forEach(item => {
-      const words = item.title.toLowerCase().split(/\s+/);
-      words.forEach(word => {
-        if (word.includes(query.toLowerCase()) && word.length > 2) {
-          suggestions.add(word);
-        }
-      });
-    });
-
-    // 从标签中获取建议
-    const tagSuggestions = await prisma.tag.findMany({
-      where: {
-        name: {
-          contains: query,
-          mode: 'insensitive',
-        },
-      },
-      select: { name: true },
-      take: limit,
-    });
-
-    tagSuggestions.forEach(tag => {
-      suggestions.add(tag.name);
-    });
-
-    return Array.from(suggestions).slice(0, limit);
-  }
-
-  /**
-   * 更新搜索索引
-   */
-  async updateSearchIndex(contentId: string): Promise<void> {
-    const content = await prisma.content.findUnique({
-      where: { id: contentId },
-      include: {
-        contentTags: {
-          include: {
-            tag: true,
-          },
-        },
-      },
-    });
-
-    if (!content) return;
-
-    // 提取关键词
-    const keywords = this.extractKeywords(content.title, content.content || '');
-    
-    // 生成搜索向量（简化版本，实际可以使用更复杂的向量化）
-    const searchVector = this.generateSearchVector(content.title, content.description || '', content.content || '');
-
-    // 更新或创建搜索索引
-    await prisma.searchIndex.upsert({
-      where: { contentId },
-      update: {
-        titleTokens: this.tokenize(content.title),
-        contentTokens: this.tokenize(content.content || ''),
-        keywords,
-        updatedAt: new Date(),
-      },
-      create: {
-        contentId,
-        titleTokens: this.tokenize(content.title),
-        contentTokens: this.tokenize(content.content || ''),
-        keywords,
-      },
-    });
-
-    // 更新内容的关键词字段
-    await prisma.content.update({
-      where: { id: contentId },
-      data: {
-        keywords,
-        searchVector,
-      },
-    });
-  }
-
-  /**
-   * 提取关键词
-   */
-  private extractKeywords(title: string, content?: string): string[] {
-    const text = `${title} ${content || ''}`.toLowerCase();
-    
-    // 简单的关键词提取
-    const words = text
-      .replace(/[^\w\s]/g, ' ')
-      .split(/\s+/)
-      .filter(word => word.length > 2)
-      .filter(word => !this.isStopWord(word));
-
-    // 统计词频
-    const wordCount = words.reduce((acc, word) => {
-      acc[word] = (acc[word] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
-
-    // 返回最常见的词
-    return Object.entries(wordCount)
-      .sort(([, a], [, b]) => b - a)
-      .slice(0, 20)
-      .map(([word]) => word);
-  }
-
-  /**
-   * 文本分词
-   */
-  private tokenize(text: string): string[] {
-    return text
-      .toLowerCase()
-      .replace(/[^\w\s]/g, ' ')
-      .split(/\s+/)
-      .filter(token => token.length > 1);
-  }
-
-  /**
-   * 生成搜索向量
-   */
-  private generateSearchVector(title: string, description?: string, content?: string): string {
-    // 简化的向量生成，实际应用中可以使用TF-IDF或其他算法
-    const allText = `${title} ${description || ''} ${content || ''}`;
-    const tokens = this.tokenize(allText);
-    return tokens.join(' ');
-  }
-
-  /**
-   * 检查是否为停用词
-   */
-  private isStopWord(word: string): boolean {
-    const stopWords = new Set([
-      'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by',
-      'is', 'are', 'was', 'were', 'be', 'been', 'have', 'has', 'had', 'do', 'does', 'did',
-      'will', 'would', 'could', 'should', 'may', 'might', 'can', 'must',
-      'this', 'that', 'these', 'those', 'i', 'you', 'he', 'she', 'it', 'we', 'they',
-      // 中文停用词
-      '的', '了', '在', '是', '我', '有', '和', '就', '不', '人', '都', '一', '一个', '上', '也', '很',
-      '到', '说', '要', '去', '你', '会', '着', '没有', '看', '好', '自己', '这'
-    ]);
-
-    return stopWords.has(word);
-  }
-
-  /**
-   * 批量更新搜索索引
-   */
-  async batchUpdateSearchIndex(contentIds?: string[]): Promise<void> {
-    const whereCondition = contentIds ? { id: { in: contentIds } } : {};
-    
-    const contents = await prisma.content.findMany({
-      where: whereCondition,
-      select: { id: true },
-    });
-
-    for (const content of contents) {
-      await this.updateSearchIndex(content.id);
+  async getFilterOptions(): Promise<FilterOptions> {
+    try {
+      // 1. 获取来源列表及其内容数量
+      const sources = await prisma.$queryRaw<Array<{
+        id: string;
+        name: string;
+        count: bigint;
+      }>>`
+        SELECT 
+          s.id,
+          s.name,
+          COUNT(c.id) as count
+        FROM sources s
+        LEFT JOIN content c ON s.id = c.source_id AND c.status::text = ${ContentStatus.PROCESSED}
+        GROUP BY s.id, s.name
+        HAVING COUNT(c.id) > 0
+        ORDER BY count DESC
+        LIMIT 50
+      `;
+      
+      // 2. 获取分类列表及其内容数量
+      const categories = await prisma.$queryRaw<Array<{
+        category: string;
+        count: bigint;
+      }>>`
+        SELECT 
+          category,
+          COUNT(*) as count
+        FROM content
+        WHERE status::text = ${ContentStatus.PROCESSED}
+          AND category IS NOT NULL
+          AND category != ''
+        GROUP BY category
+        ORDER BY count DESC
+      `;
+      
+      // 3. 获取常用股票代码（从tags中提取）
+      const stockCodesResult = await prisma.$queryRaw<Array<{
+        tag: string;
+      }>>`
+        SELECT DISTINCT unnest(tags) as tag
+        FROM content
+        WHERE status::text = ${ContentStatus.PROCESSED}
+          AND tags IS NOT NULL
+          AND array_length(tags, 1) > 0
+        LIMIT 100
+      `;
+      
+      // 筛选出看起来像股票代码的tags（通常是大写字母，2-5个字符）
+      const stockCodes = stockCodesResult
+        .map(r => r.tag)
+        .filter(tag => /^[A-Z]{2,5}$/.test(tag))
+        .slice(0, 20);
+      
+      // 4. 日期预设选项
+      const datePresets = [
+        { value: 'today', label: '今天' },
+        { value: '7days', label: '近7天' },
+        { value: '30days', label: '近30天' },
+        { value: '90days', label: '近90天' },
+      ];
+      
+      return {
+        sources: sources.map(s => ({
+          id: s.id,
+          name: s.name,
+          count: Number(s.count),
+        })),
+        categories: categories.map(c => ({
+          name: c.category,
+          count: Number(c.count),
+        })),
+        stockCodes,
+        datePresets,
+      };
+    } catch (error) {
+      console.error('[SearchService] 获取筛选选项失败:', error);
+      throw error;
     }
   }
 }
+
+// 导出单例实例
+export const searchService = new SearchService();

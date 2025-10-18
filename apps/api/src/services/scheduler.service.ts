@@ -6,6 +6,10 @@ import { finnhubService } from './finnhub.service';
 import { polygonService } from './polygon.service';
 import { geminiNewsService } from './gemini-news.service';
 import { dailyTop10Service } from './daily-top10.service';
+import { stockAlertService } from './stock-alert.service';
+import { newsPushService } from './news-push.service';
+import { digestService } from './digest.service';
+import { notificationService } from './notification.service';
 
 export class SchedulerService {
   private tasks: Map<string, cron.ScheduledTask> = new Map();
@@ -33,6 +37,16 @@ export class SchedulerService {
 
     // Daily TOP10 生成任务 - 每天早上9点执行
     this.scheduleDailyTop10Generation();
+
+    // Story 4.5: 智能通知与提醒
+    // 批量推送新闻 - 每5分钟执行一次
+    this.scheduleNewsPush();
+    
+    // 股票异动检测 - 每15分钟执行一次
+    this.scheduleStockAlerts();
+    
+    // TOP10摘要发送 - 每天早上8点执行
+    this.scheduleDigestSend();
 
     // 清理任务 - 每天凌晨2点执行
     this.scheduleCleanup();
@@ -599,6 +613,84 @@ export class SchedulerService {
       logger.error('手动Gemini新闻获取任务失败', { error: errorMessage });
       throw error;
     }
+  }
+
+  /**
+   * Story 4.5: 调度批量新闻推送任务
+   */
+  private scheduleNewsPush(): void {
+    const taskName = 'news-push';
+    const cronExpression = '*/5 * * * *'; // 每5分钟执行一次
+
+    const task = cron.schedule(cronExpression, async () => {
+      logger.info('开始执行批量新闻推送任务');
+      
+      try {
+        const result = await newsPushService.batchPushNews();
+        logger.info('批量新闻推送任务完成', result);
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        logger.error('批量新闻推送任务执行失败', { error: errorMessage });
+      }
+    }, {
+      timezone: 'Asia/Shanghai',
+    });
+
+    this.tasks.set(taskName, task);
+    task.start();
+    logger.info(`批量新闻推送任务已启动，执行频率: ${cronExpression}`);
+  }
+
+  /**
+   * Story 4.5: 调度股票异动检测任务
+   */
+  private scheduleStockAlerts(): void {
+    const taskName = 'stock-alerts';
+    const cronExpression = '*/15 * * * *'; // 每15分钟执行一次
+
+    const task = cron.schedule(cronExpression, async () => {
+      logger.info('开始执行股票异动检测任务');
+      
+      try {
+        const alerts = await stockAlertService.checkStockAlerts();
+        logger.info('股票异动检测任务完成', { alertCount: alerts.length });
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        logger.error('股票异动检测任务执行失败', { error: errorMessage });
+      }
+    }, {
+      timezone: 'Asia/Shanghai',
+    });
+
+    this.tasks.set(taskName, task);
+    task.start();
+    logger.info(`股票异动检测任务已启动，执行频率: ${cronExpression}`);
+  }
+
+  /**
+   * Story 4.5: 调度TOP10摘要发送任务
+   */
+  private scheduleDigestSend(): void {
+    const taskName = 'digest-send';
+    const cronExpression = '0 8 * * *'; // 每天早上8点执行
+
+    const task = cron.schedule(cronExpression, async () => {
+      logger.info('开始执行TOP10摘要发送任务');
+      
+      try {
+        const result = await digestService.scheduleDigestSend();
+        logger.info('TOP10摘要发送任务完成', result);
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        logger.error('TOP10摘要发送任务执行失败', { error: errorMessage });
+      }
+    }, {
+      timezone: 'Asia/Shanghai',
+    });
+
+    this.tasks.set(taskName, task);
+    task.start();
+    logger.info(`TOP10摘要发送任务已启动，执行频率: ${cronExpression}`);
   }
 }
 

@@ -7,8 +7,7 @@ import { schedulerService } from '../services/scheduler.service';
 import { authenticate, authorize } from '../middleware/auth.middleware';
 import { logger } from '../utils/logger';
 
-const router = Router();
-
+const router: Router = Router();
 /**
  * 手动触发 Alpha Vantage 数据获取
  * POST /api/alpha-vantage/fetch

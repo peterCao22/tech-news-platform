@@ -25,7 +25,7 @@ import {
   ChevronRight
 } from 'lucide-react';
 import toast from 'react-hot-toast';
-import ProtectedRoute from '@/components/auth/ProtectedRoute';
+import DashboardLayout from '@/components/layouts/DashboardLayout';
 
 // 状态图标映射
 const statusIcons = {
@@ -227,19 +227,19 @@ export default function ContentPage() {
 
   if (loading && contents.length === 0) {
     return (
-      <ProtectedRoute>
+      <DashboardLayout>
         <div className="min-h-screen bg-gray-100 flex items-center justify-center">
           <div className="text-center">
             <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-4 text-blue-600" />
             <p className="text-gray-600">加载内容...</p>
           </div>
         </div>
-      </ProtectedRoute>
+      </DashboardLayout>
     );
   }
 
   return (
-    <ProtectedRoute>
+    <DashboardLayout>
       <div className="min-h-screen bg-gray-100 p-4">
         <div className="max-w-7xl mx-auto space-y-6">
           {/* 页面标题和操作 */}
@@ -558,6 +558,6 @@ export default function ContentPage() {
           )}
         </div>
       </div>
-    </ProtectedRoute>
+    </DashboardLayout>
   );
 }
