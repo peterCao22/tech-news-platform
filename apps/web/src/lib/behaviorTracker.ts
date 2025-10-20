@@ -60,8 +60,8 @@ class BehaviorTracker {
     // 默认配置
     this.config = {
       apiBaseUrl: this.getApiBaseUrl(),
-      batchSize: config.batchSize || 10,
-      flushInterval: config.flushInterval || 5000, // 5秒
+      batchSize: config.batchSize || 20, // 增加批量大小从10到20
+      flushInterval: config.flushInterval || 10000, // 增加间隔从5秒到10秒
       enabled: config.enabled !== false, // 默认启用
       debug: config.debug || false,
     };
@@ -287,7 +287,7 @@ class BehaviorTracker {
       if (sync && typeof navigator !== 'undefined' && 'sendBeacon' in navigator) {
         // 使用sendBeacon进行同步发送（页面卸载时）
         const blob = new Blob(
-          [JSON.stringify({ behaviors: eventsToSend })],
+          [JSON.stringify({ events: eventsToSend })],
           { type: 'application/json' }
         );
         navigator.sendBeacon(url, blob);
@@ -296,7 +296,7 @@ class BehaviorTracker {
         // 使用axios异步发送
         await axios.post(
           url,
-          { behaviors: eventsToSend },
+          { events: eventsToSend },
           {
             headers: {
               Authorization: `Bearer ${this.authToken}`,

@@ -13,7 +13,7 @@ import compression from 'compression';
 
 import { errorHandler } from './middleware/error.middleware';
 import { notFoundHandler } from './middleware/not-found.middleware';
-import { rateLimitMiddleware } from './middleware/rate-limit.middleware';
+import { rateLimitMiddleware, behaviorTrackingRateLimit } from './middleware/rate-limit.middleware';
 import { logger } from './utils/logger';
 import { checkDatabaseConnection } from '@tech-news-platform/database';
 import { schedulerService } from './services/scheduler.service';
@@ -91,7 +91,10 @@ app.use(morgan('combined', { stream: { write: message => logger.info(message.tri
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// 速率限制
+// 行为追踪路由 - 使用宽松的速率限制（需要在全局速率限制之前注册）
+app.use('/api/behavior', behaviorTrackingRateLimit, behaviorRoutes);
+
+// 全局速率限制（应用于其他所有路由）
 app.use(rateLimitMiddleware);
 
 // 路由
@@ -116,7 +119,6 @@ app.use('/api/content-review', contentReviewRoutes);
 app.use('/api/filter-rules', filterRulesRoutes);
 app.use('/api/content-management', contentManagementRoutes);
 app.use('/api/preferences', preferencesRoutes);
-app.use('/api/behavior', behaviorRoutes);
 app.use('/api/search', searchRoutes);
 app.use('/api/history', historyRoutes);
 app.use('/api/notifications', notificationRoutes);

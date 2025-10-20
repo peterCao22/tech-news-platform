@@ -80,3 +80,31 @@ export const passwordResetRateLimit = rateLimit({
     });
   },
 });
+
+// 行为追踪的宽松速率限制
+// 针对用户行为追踪API，需要支持频繁的批量上报
+export const behaviorTrackingRateLimit = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15分钟
+  max: 1000, // 限制每个IP在15分钟内最多1000个请求（比通用限制宽松10倍）
+  message: {
+    success: false,
+    message: '行为追踪请求过于频繁，请稍后再试',
+    code: 'BEHAVIOR_TRACKING_RATE_LIMIT_EXCEEDED',
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+  handler: (req, res) => {
+    logger.warn('行为追踪速率限制触发', {
+      ip: req.ip,
+      url: req.url,
+      method: req.method,
+      userAgent: req.get('User-Agent'),
+    });
+
+    res.status(429).json({
+      success: false,
+      message: '行为追踪请求过于频繁，请稍后再试',
+      code: 'BEHAVIOR_TRACKING_RATE_LIMIT_EXCEEDED',
+    });
+  },
+});
