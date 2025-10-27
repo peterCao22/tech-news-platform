@@ -22,7 +22,7 @@
     "seed:clear": "tsx src/seeds/index.ts clear"
   },
   "dependencies": {
-    "@prisma/client": "^5.7.0",
+    "@prisma/client": "^6.18.0",
     "@types/nodemailer": "^6.4.19",
     "bcryptjs": "^2.4.3",
     "handlebars": "^4.7.8",
